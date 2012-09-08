@@ -623,6 +623,7 @@ public final class Rules {
                 for (View viewKey : keySet) {
                     Rule rule = viewsAndRules.get(viewKey);
                     valid &= rule.isValid(view);
+                    if (!valid) break;
                 }
 
                 return valid;
@@ -652,6 +653,7 @@ public final class Rules {
                 for (View viewKey : keySet) {
                     Rule rule = viewsAndRules.get(viewKey);
                     valid |= rule.isValid(viewKey);
+                    if (valid) break;
                 }
 
                 return valid;
