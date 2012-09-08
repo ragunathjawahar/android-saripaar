@@ -296,6 +296,7 @@ public class Validator {
 
     /**
      * Validates all rules added to this Validator.
+     *
      * @return <code>null</code> if all {@link Rule}s are valid, else returns the failed
      *          {@link ViewRulePair}.
      */
