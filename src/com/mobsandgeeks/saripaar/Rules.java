@@ -155,6 +155,32 @@ public final class Rules {
     }
 
     /**
+     * Checks if the contents of two {@link TextView}s are equal. Ideal for password and confirm
+     * password.
+     *
+     * @param failureMessage The failure message for this {@link Rule}.
+     * @param anotherTextView The {@link TextView} whose contents have to be checked against the
+     *          {@link TextView} that is being validated.
+     *
+     * @throws IllegalArgumentException If <code>anotherTextView</code> is <code>null</code>.
+     *
+     * @return True if both the {@link TextView} contents are equal.
+     */
+    public static Rule<TextView> eq(final String failureMessage, final TextView anotherTextView) {
+        if (anotherTextView == null) {
+            throw new IllegalArgumentException("\'anotherTextView\' cannot be null");
+        }
+
+        return new Rule<TextView>(failureMessage) {
+
+            @Override
+            public boolean isValid(TextView view) {
+                return view.getText().equals(anotherTextView.getText());
+            }
+        };
+    }
+
+    /**
      * Checks if the {@link TextView} or its subclass {@link View}'s displayed text value equals
      * the given {@link String} value.
      *
