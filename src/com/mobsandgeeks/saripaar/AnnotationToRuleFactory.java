@@ -18,8 +18,10 @@ import java.lang.reflect.Field;
 
 import android.util.Log;
 import android.view.View;
+import android.widget.Checkable;
 import android.widget.TextView;
 
+import com.mobsandgeeks.saripaar.annotation.Checked;
 import com.mobsandgeeks.saripaar.annotation.Required;
 
 /**
@@ -31,12 +33,16 @@ class AnnotationToRuleFactory {
     static final String TAG = AnnotationToRuleFactory.class.getSimpleName();
 
     // Constants
-    static final String WARN_TEMPLATE = "%s is a %s. @%s can be applied to %s and " +
-            "its subclasses only.";
+    static final String WARN_TEMPLATE = "%s is a %s. @%s can only be applied to %s and " +
+            "its subclasses.";
 
     public static Rule<?> getRule(Field field, View view, Annotation annotation) {
-        if (Required.class.isAssignableFrom(annotation.getClass())) {
+        Class<?> annotationClass = annotation.getClass();
+
+        if (Required.class.isAssignableFrom(annotationClass)) {
             return getRequiredRule(field, view, (Required) annotation);
+        } else if (Checked.class.isAssignableFrom(annotationClass)) {
+            return getCheckedRule(field, view, (Checked) annotation);
         }
 
         return null;
@@ -45,8 +51,8 @@ class AnnotationToRuleFactory {
     private static Rule<TextView> getRequiredRule(Field field, View view, Required required) {
         if (!TextView.class.isAssignableFrom(view.getClass())) {
             Log.w(TAG, String.format(WARN_TEMPLATE,
-                    field.getName(), field.getType().getSimpleName(), "TextViews",
-                    Required.class.getSimpleName()));
+                    field.getName(), field.getType().getSimpleName(),
+                    Required.class.getSimpleName(), "TextViews"));
             return null;
         }
 
@@ -56,6 +62,22 @@ class AnnotationToRuleFactory {
         }
 
         return Rules.required(message, required.trim());
+    }
+
+    private static Rule<Checkable> getCheckedRule(Field field, View view, Checked checked) {
+        if (!Checkable.class.isAssignableFrom(view.getClass())) {
+            Log.w(TAG, String.format(WARN_TEMPLATE,
+                    field.getName(), field.getType().getSimpleName(),
+                    Checked.class.getSimpleName(), "Checkables"));
+            return null;
+        }
+
+        String message = checked.message();
+        if (checked.messageResId() != 0) {
+            message = view.getContext().getString(checked.messageResId());
+        }
+
+        return Rules.checked(message, checked.checked());
     }
 
 }
