@@ -62,7 +62,7 @@ public class Validator {
     }
 
     /**
-     * Interface definition for a callback to be invoked when <code>validate()</code> is called.
+     * Interface definition for a callback to be invoked when {@code validate()} is called.
      */
     public interface ValidationListener {
 
@@ -86,7 +86,7 @@ public class Validator {
 
         /**
          * Called after the validation is cancelled. This callback is called only if you run the
-         * Validator asynchronously by calling the <code>validateAsync()</code> method.
+         * Validator asynchronously by calling the {@code validateAsync()} method.
          */
         public void onValidationCancelled();
     }
@@ -97,7 +97,7 @@ public class Validator {
      * @param view The {@link View} to be validated.
      * @param rule The {@link Rule} associated with the view.
      *
-     * @throws IllegalArgumentException If <code>rule</code> is <code>null</code>.
+     * @throws IllegalArgumentException If {@code rule} is {@code null}.
      */
     public void put(View view, Rule<?> rule) {
         if (rule == null) {
@@ -113,7 +113,7 @@ public class Validator {
      * @param view The {@link View} to be validated.
      * @param rules {@link List} of {@link Rule}s associated with the view.
      *
-     * @throws IllegalArgumentException If <code>rules</code> is <code>null</code>.
+     * @throws IllegalArgumentException If {@code rules} is {@code null}.
      */
     public void put(View view, List<Rule<?>> rules) {
         if (rules == null) {
@@ -209,7 +209,7 @@ public class Validator {
 
     /**
      * Used to find if the asynchronous validation task is running, useful only when you run the
-     * Validator in asynchronous mode using the <code>validateAsync</code> method.
+     * Validator in asynchronous mode using the {@code validateAsync} method.
      *
      * @return True if the asynchronous task is running, false otherwise.
      */
@@ -220,7 +220,7 @@ public class Validator {
 
     /**
      * Cancels the asynchronous validation task if running, useful only when you run the
-     * Validator in asynchronous mode using the <code>validateAsync</code> method.
+     * Validator in asynchronous mode using the {@code validateAsync} method.
      *
      * @return True if the asynchronous task was cancelled.
      */
@@ -244,7 +244,7 @@ public class Validator {
     }
 
     /**
-     * Register a callback to be invoked when <code>validate()</code> is called.
+     * Register a callback to be invoked when {@code validate()} is called.
      *
      * @param validationListener The callback that will run.
      */
@@ -258,7 +258,7 @@ public class Validator {
      * @param name The property name.
      * @param value Value of the property.
      *
-     * @throws IllegalArgumentException If <code>name</code> is <code>null</code>.
+     * @throws IllegalArgumentException If {@code name} is {@code null}.
      */
     public void setProperty(String name, Object value) {
         if (name == null) {
@@ -273,9 +273,9 @@ public class Validator {
      *
      * @param name The property name.
      *
-     * @throws IllegalArgumentException If <code>name</code> is <code>null</code>.
+     * @throws IllegalArgumentException If {@code name} is {@code null}.
      *
-     * @return Value of the property or <code>null</code> if the property does not exist.
+     * @return Value of the property or {@code null} if the property does not exist.
      */
     public Object getProperty(String name) {
         if (name == null) {
@@ -290,7 +290,7 @@ public class Validator {
      *
      * @param name The property name.
      *
-     * @return The value of the removed property or <code>null</code> if the property was not found.
+     * @return The value of the removed property or {@code null} if the property was not found.
      */
     public Object removeProperty(String name) {
         return name != null ? mProperties.remove(name) : null;
@@ -316,15 +316,9 @@ public class Validator {
 
     /**
      * Validates all rules added to this Validator.
-<<<<<<< HEAD
-     *
-     * @return <code>null</code> if all {@link Rule}s are valid, else returns the failed
-     *          {@link ViewRulePair}.
-=======
      * 
      * @return {@code null} if all {@code Rule}s are valid, else returns the failed
      *          {@code ViewRulePair}.
->>>>>>> Added generic annotation processing.
      */
     private ViewRulePair validateAllRules() {
         if (!mAnnotationsProcessed) {
