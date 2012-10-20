@@ -13,12 +13,18 @@
  */
 package com.mobsandgeeks.saripaar;
 
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import android.app.Activity;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.view.View;
 
 /**
@@ -28,15 +34,29 @@ import android.view.View;
  * @version 0.1
  */
 public class Validator {
+    // Debug
+    static final String TAG = Validator.class.getSimpleName();
+    static final boolean DEBUG = true;
+
+    private Activity mActivity;
+    private boolean mAnnotationsProcessed;
     private List<ViewRulePair> mViewsAndRules;
     private Map<String, Object> mProperties;
-    private AsyncTask<?, ?, ViewRulePair> mAsyncValidationTask;
+    private AsyncTask<Void, Void, ViewRulePair> mAsyncValidationTask;
     private ValidationListener mValidationListener;
 
     /**
-     * Creates a new Validator.
+     * Creates a new {@link Validator}.
+     * 
+     * @param activity The {@code Activity} to be validated.
      */
-    public Validator() {
+    public Validator(Activity activity) {
+        if (activity == null) {
+            throw new IllegalArgumentException("\'activity\' cannot be null");
+        }
+
+        mActivity = activity;
+        mAnnotationsProcessed = false;
         mViewsAndRules = new ArrayList<Validator.ViewRulePair>();
         mProperties = new HashMap<String, Object>();
     }
@@ -154,7 +174,7 @@ public class Validator {
         }
 
         // Start a new one ;)
-        mAsyncValidationTask = new AsyncTask<Object, Object, ViewRulePair>() {
+        mAsyncValidationTask = new AsyncTask<Void, Void, ViewRulePair>() {
 
             @Override
             protected void onPreExecute() {
@@ -162,7 +182,7 @@ public class Validator {
             }
 
             @Override
-            protected ViewRulePair doInBackground(Object... params) {
+            protected ViewRulePair doInBackground(Void... params) {
                 return validateAllRules();
             }
 
@@ -184,7 +204,7 @@ public class Validator {
             }
         };
 
-        mAsyncValidationTask.execute(null);
+        mAsyncValidationTask.execute((Void[]) null);
     }
 
     /**
@@ -296,11 +316,22 @@ public class Validator {
 
     /**
      * Validates all rules added to this Validator.
+<<<<<<< HEAD
      *
      * @return <code>null</code> if all {@link Rule}s are valid, else returns the failed
      *          {@link ViewRulePair}.
+=======
+     * 
+     * @return {@code null} if all {@code Rule}s are valid, else returns the failed
+     *          {@code ViewRulePair}.
+>>>>>>> Added generic annotation processing.
      */
     private ViewRulePair validateAllRules() {
+        if (!mAnnotationsProcessed) {
+            createRulesFromAnnotations(getViewFieldsWithAnnotations());
+            mAnnotationsProcessed = true;
+        }
+
         ViewRulePair failedViewRulePair = null;
         for (ViewRulePair pair : mViewsAndRules) {
             if (pair == null) continue;
@@ -312,6 +343,77 @@ public class Validator {
         }
 
         return failedViewRulePair;
+    }
+
+    private void createRulesFromAnnotations(List<Field> annotatedFields) {
+        Collections.reverse(annotatedFields); // Reverse list to preserve order
+
+        for (Field field : annotatedFields) {
+            field.setAccessible(true);
+            Annotation[] annotations = field.getAnnotations();
+            Collections.reverse(Arrays.asList(annotations)); // Reverse array to preserve order
+            for (Annotation annotation : annotations) {
+                ViewRulePair viewRulePair = getViewAndRule(field, annotation);
+
+                if (viewRulePair != null) {
+                    if (DEBUG) {
+                        Log.d(TAG, String.format("Adding @%s rule for %s",
+                                annotation.annotationType().getSimpleName(), field.getName()));
+                    }
+
+                    mViewsAndRules.add(0, viewRulePair);
+                }
+            }
+        }
+    }
+
+    private ViewRulePair getViewAndRule(Field field, Annotation annotation) {
+        View view = getView(field);
+
+        if (view == null) {
+            Log.w(TAG, String.format("Your %s - %s is null. Please check your field assignment(s).",
+                    field.getType().getSimpleName(), field.getName()));
+            return null;
+        }
+        Rule<?> rule = AnnotationToRuleFactory.getRule(field, view, annotation);
+
+        return rule == null ? null : new ViewRulePair(view, rule);
+    }
+
+    private View getView(Field field) {
+        try {
+            return (View) field.get(mActivity);
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private List<Field> getViewFieldsWithAnnotations() {
+        List<Field> fieldsWithAnnotations = new ArrayList<Field>();
+        List<Field> declaredViewFields = getDeclaredViewFields();
+        for (Field viewField : declaredViewFields) {
+            Annotation[] annotations = viewField.getAnnotations();
+            if (annotations == null || annotations.length == 0) {
+                continue;
+            }
+            fieldsWithAnnotations.add(viewField);
+        }
+        return fieldsWithAnnotations;
+    }
+
+    private List<Field> getDeclaredViewFields() {
+        List<Field> viewFields = new ArrayList<Field>();
+        Field[] declaredFields = mActivity.getClass().getDeclaredFields();
+
+        for (Field f : declaredFields) {
+            if (View.class.isAssignableFrom(f.getType())) {
+                viewFields.add(f);
+            }
+        }
+        return viewFields;
     }
 
     @SuppressWarnings("rawtypes") 
