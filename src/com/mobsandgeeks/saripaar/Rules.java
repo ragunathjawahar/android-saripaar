@@ -58,10 +58,10 @@ public final class Rules {
      * {@link View}'s displayed text is not empty.
      *
      * @param failureMessage The failure message for this {@link Rule}.
-     * @param trimInput Specifies whether to trim the text returned by <code>getText()</code>.
+     * @param trimInput Specifies whether to trim the text returned by {@code getText()}.
      *
      * @return True if the {@link View} is not empty, false otherwise. The return value is affected
-     * by the <code>trimInput</code> parameter.
+     * by the {@code trimInput} parameter.
      */
     public static Rule<TextView> required(final String failureMessage, final boolean trimInput) {
         return new Rule<TextView>(failureMessage) {
@@ -79,13 +79,13 @@ public final class Rules {
      *
      * @param failureMessage The failure message for this {@link Rule}.
      * @param regex Regular expression pattern to be matched against the text returned by
-     *          <code>getText()</code>.
-     * @param trimInput Specifies whether to trim the text returned by <code>getText()</code>.
+     *          {@code getText()}.
+     * @param trimInput Specifies whether to trim the text returned by {@code getText()}.
      *
-     * @throws IllegalArgumentException If <code>regex</code> is <code>null</code>.
+     * @throws IllegalArgumentException If {@code regex} is {@code null}.
      *
      * @return True if the text matches the regular expression. The return value is affected
-     * by the <code>trimInput</code> parameter.
+     * by the {@code trimInput} parameter.
      */
     public static Rule<TextView> regex(final String failureMessage, final String regex, 
             final boolean trimInput) {
@@ -109,9 +109,9 @@ public final class Rules {
      *
      * @param failureMessage The failure message for this {@link Rule}.
      * @param minLength Minimum number of characters required in the text returned by
-     *          <code>getText()</code>. The returned text is affected by the <code>trimInput</code>
+     *          {@code getText()}. The returned text is affected by the {@code trimInput}
      *          parameter.
-     * @param trimInput Specifies whether to trim the text returned by <code>getText()</code>.
+     * @param trimInput Specifies whether to trim the text returned by {@code getText()}.
      *
      * @return True if the text has the minimum number of characters specified, false otherwise.
      */
@@ -134,9 +134,9 @@ public final class Rules {
      *
      * @param failureMessage The failure message for this {@link Rule}.
      * @param maxLength Maximum number of characters allowed in the text returned by
-     *          <code>getText()</code>. The returned text is affected by the <code>trimInput</code>
+     *          {@code getText()}. The returned text is affected by the {@code trimInput}
      *          parameter.
-     * @param trimInput Specifies whether to trim the text returned by <code>getText()</code>.
+     * @param trimInput Specifies whether to trim the text returned by {@code getText()}.
      *
      * @return True if the text length is less than or equal to the maximum number of characters
      *          specified, false otherwise.
@@ -162,7 +162,7 @@ public final class Rules {
      * @param anotherTextView The {@link TextView} whose contents have to be checked against the
      *          {@link TextView} that is being validated.
      *
-     * @throws IllegalArgumentException If <code>anotherTextView</code> is <code>null</code>.
+     * @throws IllegalArgumentException If {@code anotherTextView} is {@code null}.
      *
      * @return True if both the {@link TextView} contents are equal.
      */
@@ -186,9 +186,9 @@ public final class Rules {
      *
      * @param failureMessage The failure message for this {@link Rule}.
      * @param expectedString {@link String} value to be compared with the text returned by
-     *          <code>getText()</code>. <code>null</code> is treated as empty {@link String}.
+     *          {@code getText()}. {@code null} is treated as empty {@link String}.
      *
-     * @return True if the text matches the <code>expectedString<code> value, false otherwise.
+     * @return True if the text matches the {@code expectedString{@code  value, false otherwise.
      */
     public static Rule<TextView> eq(final String failureMessage, final String expectedString) {
         return eq(failureMessage, expectedString, false, false);
@@ -200,12 +200,12 @@ public final class Rules {
      *
      * @param failureMessage The failure message for this {@link Rule}.
      * @param expectedString {@link String} value to be compared with the text returned by
-     *          <code>getText()</code>. <code>null</code> is treated as empty {@link String}.
+     *          {@code getText()}. {@code null} is treated as empty {@link String}.
      * @param ignoreCase Specifies whether the text's case differences should be ignored.
-     * @param trimInput Specifies whether to trim the text returned by <code>getText()</code>.
+     * @param trimInput Specifies whether to trim the text returned by {@code getText()}.
      *
-     * @return True if the text matches the <code>expectedString<code> value, false otherwise. The
-     *          return value is affected by <code>ignoreCase</code> and <code>trimInput</code>
+     * @return True if the text matches the {@code expectedString{@code  value, false otherwise. The
+     *          return value is affected by {@code ignoreCase} and {@code trimInput}
      *          parameters.
      */
     public static Rule<TextView> eq(final String failureMessage, final String expectedString,
@@ -231,13 +231,13 @@ public final class Rules {
 
     /**
      * Checks if the {@link TextView} or its subclass {@link View}'s displayed text value equals
-     * the specified <code>int</code> value.
+     * the specified {@code int} value.
      *
      * @param failureMessage The failure message for this {@link Rule}.
-     * @param expectedInt <code>int</code> value to be compared with the text returned by
-     *          <code>getText()</code>.
+     * @param expectedInt {@code int} value to be compared with the text returned by
+     *          {@code getText()}.
      *
-     * @return True if the input text is equal to the <code>expectedInt<code> value.
+     * @return True if the input text is equal to the {@code expectedInt{@code  value.
      */
     public static Rule<TextView> eq(final String failureMessage, final int expectedInt) {
         return eq(failureMessage, (long) expectedInt);
@@ -245,13 +245,13 @@ public final class Rules {
 
     /**
      * Checks if the {@link TextView} or its subclass {@link View}'s displayed text value is
-     * greater than the specified <code>int</code> value.
+     * greater than the specified {@code int} value.
      *
      * @param failureMessage The failure message for this {@link Rule}.
-     * @param expectedInt <code>int</code> value to be compared with the text returned by
-     *          <code>getText()</code>.
+     * @param expectedInt {@code int} value to be compared with the text returned by
+     *          {@code getText()}.
      *
-     * @return True if the input text is greater to the <code>expectedInt<code> value.
+     * @return True if the input text is greater to the {@code expectedInt{@code  value.
      */
     public static Rule<TextView> gt(final String failureMessage, final int expectedInt) {
         return gt(failureMessage, (long) expectedInt);
@@ -259,13 +259,13 @@ public final class Rules {
 
     /**
      * Checks if the {@link TextView} or its subclass {@link View}'s displayed text value is less 
-     * than the specified <code>int</code> value.
+     * than the specified {@code int} value.
      *
      * @param failureMessage The failure message for this {@link Rule}.
-     * @param expectedInt <code>int</code> value to be compared with the text returned by
-     *          <code>getText()</code>.
+     * @param expectedInt {@code int} value to be compared with the text returned by
+     *          {@code getText()}.
      *
-     * @return True if the input text is less than the <code>expectedInt<code> value.
+     * @return True if the input text is less than the {@code expectedInt{@code  value.
      */
     public static Rule<TextView> lt(final String failureMessage, final int expectedInt) {
         return lt(failureMessage, (long) expectedInt);
@@ -273,13 +273,13 @@ public final class Rules {
 
     /**
      * Checks if the {@link TextView} or its subclass {@link View}'s displayed text value equals
-     * the specified <code>long</code> value.
+     * the specified {@code long} value.
      *
      * @param failureMessage The failure message for this {@link Rule}.
-     * @param expectedLong <code>long</code> value to be compared with the text returned by
-     *          <code>getText()</code>.
+     * @param expectedLong {@code long} value to be compared with the text returned by
+     *          {@code getText()}.
      *
-     * @return True if the input text is equal to the <code>expectedLong<code> value.
+     * @return True if the input text is equal to the {@code expectedLong{@code  value.
      */
     public static Rule<TextView> eq(final String failureMessage, final long expectedLong) {
         return new Rule<TextView>(failureMessage) {
@@ -300,13 +300,13 @@ public final class Rules {
 
     /**
      * Checks if the {@link TextView} or its subclass {@link View}'s displayed text value is
-     * greater than the specified <code>long</code> value.
+     * greater than the specified {@code long} value.
      *
      * @param failureMessage The failure message for this {@link Rule}.
-     * @param expectedLong <code>long</code> value to be compared with the text returned by
-     *          <code>getText()</code>.
+     * @param expectedLong {@code long} value to be compared with the text returned by
+     *          {@code getText()}.
      *
-     * @return True if the input text is greater than the <code>expectedLong<code> value.
+     * @return True if the input text is greater than the {@code expectedLong{@code  value.
      */
     public static Rule<TextView> gt(final String failureMessage, final long expectedLong) {
         return new Rule<TextView>(failureMessage) {
@@ -327,13 +327,13 @@ public final class Rules {
 
     /**
      * Checks if the {@link TextView} or its subclass {@link View}'s displayed text value is less
-     * than the specified <code>long</code> value.
+     * than the specified {@code long} value.
      *
      * @param failureMessage The failure message for this {@link Rule}.
-     * @param expectedLong <code>long</code> value to be compared with the text returned by
-     *          <code>getText()</code>.
+     * @param expectedLong {@code long} value to be compared with the text returned by
+     *          {@code getText()}.
      *
-     * @return True if the input text is less than the <code>expectedLong<code> value.
+     * @return True if the input text is less than the {@code expectedLong{@code  value.
      */
     public static Rule<TextView> lt(final String failureMessage, final long expectedLong) {
         return new Rule<TextView>(failureMessage) {
@@ -354,13 +354,13 @@ public final class Rules {
 
     /**
      * Checks if the {@link TextView} or its subclass {@link View}'s displayed text value equals
-     * the specified <code>float</code> value.
+     * the specified {@code float} value.
      *
      * @param failureMessage The failure message for this {@link Rule}.
-     * @param expectedFloat <code>float</code> value to be compared with the text returned by
-     *          <code>getText()</code>.
+     * @param expectedFloat {@code float} value to be compared with the text returned by
+     *          {@code getText()}.
      *
-     * @return True if the input text is equal to the <code>expectedFloat<code> value.
+     * @return True if the input text is equal to the {@code expectedFloat{@code  value.
      */
     public static Rule<TextView> eq(final String failureMessage, final float expectedFloat) {
         return eq(failureMessage, (double) expectedFloat);
@@ -368,13 +368,13 @@ public final class Rules {
 
     /**
      * Checks if the {@link TextView} or its subclass {@link View}'s displayed text value is
-     * greater than the specified <code>float</code> value.
+     * greater than the specified {@code float} value.
      *
      * @param failureMessage The failure message for this {@link Rule}.
-     * @param expectedFloat <code>float</code> value to be compared with the text returned by
-     *          <code>getText()</code>.
+     * @param expectedFloat {@code float} value to be compared with the text returned by
+     *          {@code getText()}.
      *
-     * @return True if the input text is equal to the <code>expectedFloat<code> value.
+     * @return True if the input text is equal to the {@code expectedFloat{@code  value.
      */
     public static Rule<TextView> gt(final String failureMessage, final float expectedFloat) {
         return gt(failureMessage, (double) expectedFloat);
@@ -382,13 +382,13 @@ public final class Rules {
 
     /**
      * Checks if the {@link TextView} or its subclass {@link View}'s displayed text value is
-     * less than the specified <code>float</code> value.
+     * less than the specified {@code float} value.
      *
      * @param failureMessage The failure message for this {@link Rule}.
-     * @param expectedFloat <code>float</code> value to be compared with the text returned by
-     *          <code>getText()</code>.
+     * @param expectedFloat {@code float} value to be compared with the text returned by
+     *          {@code getText()}.
      *
-     * @return True if the input text is less than the <code>expectedFloat<code> value.
+     * @return True if the input text is less than the {@code expectedFloat{@code  value.
      */
     public static Rule<TextView> lt(final String failureMessage, final float expectedFloat) {
         return lt(failureMessage, (double) expectedFloat);
@@ -396,13 +396,13 @@ public final class Rules {
 
     /**
      * Checks if the {@link TextView} or its subclass {@link View}'s displayed text value equals
-     * the specified <code>double</code> value.
+     * the specified {@code double} value.
      *
      * @param failureMessage The failure message for this {@link Rule}.
-     * @param expectedDouble <code>double</code> value to be compared with the text returned by
-     *          <code>getText()</code>.
+     * @param expectedDouble {@code double} value to be compared with the text returned by
+     *          {@code getText()}.
      *
-     * @return True if the input text is equal to the <code>expectedDouble<code> value.
+     * @return True if the input text is equal to the {@code expectedDouble{@code  value.
      */
     public static Rule<TextView> eq(final String failureMessage, final double expectedDouble) {
         return new Rule<TextView>(failureMessage) {
@@ -423,13 +423,13 @@ public final class Rules {
 
     /**
      * Checks if the {@link TextView} or its subclass {@link View}'s displayed text value is
-     * greater than the specified <code>double</code> value.
+     * greater than the specified {@code double} value.
      *
      * @param failureMessage The failure message for this {@link Rule}.
-     * @param expectedDouble <code>double</code> value to be compared with the text returned by
-     *          <code>getText()</code>.
+     * @param expectedDouble {@code double} value to be compared with the text returned by
+     *          {@code getText()}.
      *
-     * @return True if the input text is greater than the <code>expectedDouble<code> value.
+     * @return True if the input text is greater than the {@code expectedDouble{@code  value.
      */
     public static Rule<TextView> gt(final String failureMessage, final double expectedDouble) {
         return new Rule<TextView>(failureMessage) {
@@ -450,13 +450,13 @@ public final class Rules {
 
     /**
      * Checks if the {@link TextView} or its subclass {@link View}'s displayed text value is
-     * less than the specified <code>double</code> value.
+     * less than the specified {@code double} value.
      *
      * @param failureMessage The failure message for this {@link Rule}.
-     * @param expectedDouble <code>double</code> value to be compared with the text returned by
-     *          <code>getText()</code>.
+     * @param expectedDouble {@code double} value to be compared with the text returned by
+     *          {@code getText()}.
      *
-     * @return True if the input text is less than the <code>expectedDouble<code> value.
+     * @return True if the input text is less than the {@code expectedDouble{@code  value.
      */
     public static Rule<TextView> lt(final String failureMessage, final double expectedDouble) {
         return new Rule<TextView>(failureMessage) {
@@ -482,7 +482,7 @@ public final class Rules {
      * @param failureMessage The failure message for this {@link Rule}.
      * @param checked The expected state of the {@link Checkable} widget.
      *
-     * @return True if the state is same as <code>checked</code>.
+     * @return True if the state is same as {@code checked}.
      */
     public static Rule<Checkable> checked(final String failureMessage, final boolean checked) {
         return new Rule<Checkable>(failureMessage) {
@@ -496,13 +496,13 @@ public final class Rules {
 
     /**
      * Checks if the {@link Spinner}'s selected item's {@link String} value (obtained by calling
-     * <code>toString()</code> on the selected item) equals the expected {@link String} value.
+     * {@code toString()} on the selected item) equals the expected {@link String} value.
      *
      * @param failureMessage The failure message for this {@link Rule}.
      * @param expectedString {@link String} value to be compared with the text returned by
-     *          calling <code>toString()</code> on the selected {@link Spinner} item.
+     *          calling {@code toString()} on the selected {@link Spinner} item.
      * @param ignoreCase Specifies whether the text's case differences should be ignored.
-     * @param trimInput Specifies whether to trim the String returned by <code>toString()</code>
+     * @param trimInput Specifies whether to trim the String returned by {@code toString()}
      *          on the selected item.
      *
      * @return True if both the {@link String} values are equal.
@@ -534,11 +534,11 @@ public final class Rules {
 
     /**
      * Checks if the {@link Spinner}'s selected item's position (obtained by calling
-     * <code>getSelectionItemPosition()</code>) equals the expected selection index.
+     * {@code getSelectionItemPosition()}) equals the expected selection index.
      *
      * @param failureMessage The failure message for this {@link Rule}.
      * @param expectedPosition The position to be compared with the position returned by
-     *          calling <code>getSelectedItemPosition()</code> on the {@link Spinner}.
+     *          calling {@code getSelectedItemPosition()} on the {@link Spinner}.
      *
      * @return True if both the {@link String} values are equal.
      */
