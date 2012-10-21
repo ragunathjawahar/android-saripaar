@@ -92,7 +92,10 @@ class AnnotationToRuleConverter {
             rules.add(Rules.maxLength(null, textRule.maxLength(), textRule.trim()));
         }
 
-        return Rules.and(message, (Rule<TextView>[]) rules.toArray());
+        Rule<?>[] ruleArray = new Rule<?>[rules.size()];
+        rules.toArray(ruleArray);
+
+        return Rules.and(message, ruleArray);
     }
 
     private static Rule<Checkable> getCheckedRule(Field field, View view, Checked checked) {
