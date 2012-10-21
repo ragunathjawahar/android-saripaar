@@ -37,8 +37,10 @@ class AnnotationToRuleConverter {
     static final String TAG = AnnotationToRuleConverter.class.getSimpleName();
  
     // Constants
-    static final String WARN_TEMPLATE = "%s is a %s. @%s can only be applied to %s and " +
+    static final String WARN_TEXT = "%s - @%s can only be applied to TextView and " +
             "its subclasses.";
+    static final String WARN_CHECKABLE = "%s - @%s can only be applied to Checkable, " +
+            "its implementations and subclasses.";
 
     public static Rule<?> getRule(Field field, View view, Annotation annotation) {
         Class<?> annotationClass = annotation.getClass();
@@ -58,9 +60,7 @@ class AnnotationToRuleConverter {
 
     private static Rule<TextView> getRequiredRule(Field field, View view, Required required) {
         if (!TextView.class.isAssignableFrom(view.getClass())) {
-            Log.w(TAG, String.format(WARN_TEMPLATE,
-                    field.getName(), field.getType().getSimpleName(),
-                    Required.class.getSimpleName(), "TextViews"));
+            Log.w(TAG, String.format(WARN_TEXT, field.getName(), Required.class.getSimpleName()));
             return null;
         }
 
@@ -72,27 +72,9 @@ class AnnotationToRuleConverter {
         return Rules.required(message, required.trim());
     }
 
-    private static Rule<Checkable> getCheckedRule(Field field, View view, Checked checked) {
-        if (!Checkable.class.isAssignableFrom(view.getClass())) {
-            Log.w(TAG, String.format(WARN_TEMPLATE,
-                    field.getName(), field.getType().getSimpleName(),
-                    Checked.class.getSimpleName(), "Checkables"));
-            return null;
-        }
-
-        String message = checked.message();
-        if (checked.messageResId() != 0) {
-            message = view.getContext().getString(checked.messageResId());
-        }
-
-        return Rules.checked(message, checked.checked());
-    }
-
     private static Rule<View> getTextRule(Field field, View view, TextRule textRule) {
         if (!TextView.class.isAssignableFrom(view.getClass())) {
-            Log.w(TAG, String.format(WARN_TEMPLATE,
-                    field.getName(), field.getType().getSimpleName(),
-                    TextRule.class.getSimpleName(), "TextViews"));
+            Log.w(TAG, String.format(WARN_TEXT, field.getName(), TextRule.class.getSimpleName()));
             return null;
         }
 
@@ -116,9 +98,8 @@ class AnnotationToRuleConverter {
 
     private static Rule<TextView> getRegexRule(Field field, View view, Regex regexRule) {
         if (!TextView.class.isAssignableFrom(view.getClass())) {
-            Log.w(TAG, String.format(WARN_TEMPLATE,
-                    field.getName(), field.getType().getSimpleName(),
-                    Regex.class.getSimpleName(), "TextViews"));
+            Log.w(TAG, String.format(WARN_TEXT, field.getName(),
+                    field.getType().getSimpleName()));
             return null;
         }
 
@@ -129,4 +110,21 @@ class AnnotationToRuleConverter {
 
         return Rules.regex(message, regexRule.pattern(), regexRule.trim());
     }
+
+
+    private static Rule<Checkable> getCheckedRule(Field field, View view, Checked checked) {
+        if (!Checkable.class.isAssignableFrom(view.getClass())) {
+            Log.w(TAG, String.format(WARN_CHECKABLE, field.getName(),
+                    Checked.class.getSimpleName()));
+            return null;
+        }
+
+        String message = checked.message();
+        if (checked.messageResId() != 0) {
+            message = view.getContext().getString(checked.messageResId());
+        }
+
+        return Rules.checked(message, checked.checked());
+    }
+
 }
