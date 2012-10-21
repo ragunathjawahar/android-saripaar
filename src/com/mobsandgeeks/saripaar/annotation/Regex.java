@@ -26,9 +26,8 @@ import com.mobsandgeeks.saripaar.Rules;
  */
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface TextRule {
-    public int minLength()      default 0;
-    public int maxLength()      default Integer.MAX_VALUE;
+public @interface Regex {
+    public String pattern();
     public boolean trim()       default true;
     public String message()     default Rules.EMPTY_STRING;
     public int messageResId()   default 0;

@@ -24,6 +24,7 @@ import android.widget.Checkable;
 import android.widget.TextView;
 
 import com.mobsandgeeks.saripaar.annotation.Checked;
+import com.mobsandgeeks.saripaar.annotation.Regex;
 import com.mobsandgeeks.saripaar.annotation.Required;
 import com.mobsandgeeks.saripaar.annotation.TextRule;
 
@@ -48,6 +49,8 @@ class AnnotationToRuleConverter {
             return getCheckedRule(field, view, (Checked) annotation);
         } else if (TextRule.class.isAssignableFrom(annotationClass)) {
             return getTextRule(field, view, (TextRule) annotation);
+        } else if (Regex.class.isAssignableFrom(annotationClass)) {
+            return getRegexRule(field, view, (Regex) annotation);
         }
 
         return null;
@@ -69,35 +72,6 @@ class AnnotationToRuleConverter {
         return Rules.required(message, required.trim());
     }
 
-    private static Rule<View> getTextRule(Field field, View view, TextRule textRule) {
-        if (!TextView.class.isAssignableFrom(view.getClass())) {
-            Log.w(TAG, String.format(WARN_TEMPLATE,
-                    field.getName(), field.getType().getSimpleName(),
-                    TextRule.class.getSimpleName(), "TextViews"));
-            return null;
-        }
-
-        List<Rule<?>> rules = new ArrayList<Rule<?>>();
-        String message = textRule.message();
-        if (textRule.messageResId() != 0) {
-            message = view.getContext().getString(textRule.messageResId());
-        }
-        if (!textRule.regex().equals(Rules.EMPTY_STRING)) {
-            rules.add(Rules.regex(null, textRule.regex(), textRule.trim()));
-        }
-        if (textRule.minLength() > 0) {
-            rules.add(Rules.minLength(null, textRule.minLength(), textRule.trim()));
-        }
-        if (textRule.maxLength() != Integer.MAX_VALUE) {
-            rules.add(Rules.maxLength(null, textRule.maxLength(), textRule.trim()));
-        }
-
-        Rule<?>[] ruleArray = new Rule<?>[rules.size()];
-        rules.toArray(ruleArray);
-
-        return Rules.and(message, ruleArray);
-    }
-
     private static Rule<Checkable> getCheckedRule(Field field, View view, Checked checked) {
         if (!Checkable.class.isAssignableFrom(view.getClass())) {
             Log.w(TAG, String.format(WARN_TEMPLATE,
@@ -114,4 +88,45 @@ class AnnotationToRuleConverter {
         return Rules.checked(message, checked.checked());
     }
 
+    private static Rule<View> getTextRule(Field field, View view, TextRule textRule) {
+        if (!TextView.class.isAssignableFrom(view.getClass())) {
+            Log.w(TAG, String.format(WARN_TEMPLATE,
+                    field.getName(), field.getType().getSimpleName(),
+                    TextRule.class.getSimpleName(), "TextViews"));
+            return null;
+        }
+
+        List<Rule<?>> rules = new ArrayList<Rule<?>>();
+        String message = textRule.message();
+        if (textRule.messageResId() != 0) {
+            message = view.getContext().getString(textRule.messageResId());
+        }
+        if (textRule.minLength() > 0) {
+            rules.add(Rules.minLength(null, textRule.minLength(), textRule.trim()));
+        }
+        if (textRule.maxLength() != Integer.MAX_VALUE) {
+            rules.add(Rules.maxLength(null, textRule.maxLength(), textRule.trim()));
+        }
+
+        Rule<?>[] ruleArray = new Rule<?>[rules.size()];
+        rules.toArray(ruleArray);
+
+        return Rules.and(message, ruleArray);
+    }
+
+    private static Rule<TextView> getRegexRule(Field field, View view, Regex regexRule) {
+        if (!TextView.class.isAssignableFrom(view.getClass())) {
+            Log.w(TAG, String.format(WARN_TEMPLATE,
+                    field.getName(), field.getType().getSimpleName(),
+                    Regex.class.getSimpleName(), "TextViews"));
+            return null;
+        }
+
+        String message = regexRule.message();
+        if (regexRule.messageResId() != 0) {
+            message = view.getContext().getString(regexRule.messageResId());
+        }
+
+        return Rules.regex(message, regexRule.pattern(), regexRule.trim());
+    }
 }

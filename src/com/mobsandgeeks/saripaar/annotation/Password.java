@@ -18,8 +18,6 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import com.mobsandgeeks.saripaar.Rules;
-
 /**
  * @author Ragunath Jawahar <rj@mobsandgeeks.com>
  * @version 0.1
@@ -27,7 +25,6 @@ import com.mobsandgeeks.saripaar.Rules;
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Password {
-    public String regex()       default Rules.EMPTY_STRING;
     public String message()     default "Password is required";
     public int messageResId()   default 0;
 }

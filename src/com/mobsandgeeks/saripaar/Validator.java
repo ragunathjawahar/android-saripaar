@@ -16,7 +16,6 @@ package com.mobsandgeeks.saripaar;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -345,7 +344,6 @@ public class Validator {
         for (Field field : annotatedFields) {
             field.setAccessible(true);
             Annotation[] annotations = field.getAnnotations();
-            Collections.reverse(Arrays.asList(annotations)); // Reverse array to preserve order
             for (Annotation annotation : annotations) {
                 ViewRulePair viewRulePair = getViewAndRule(field, annotation);
                 if (viewRulePair != null) {
@@ -365,7 +363,7 @@ public class Validator {
         }
         Rule<?> rule = AnnotationToRuleConverter.getRule(field, view, annotation);
 
-        return rule == null ? null : new ViewRulePair(view, rule);
+        return rule != null ? new ViewRulePair(view, rule) : null;
     }
 
     private View getView(Field field) {
