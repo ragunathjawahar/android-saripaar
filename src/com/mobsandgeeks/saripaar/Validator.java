@@ -348,13 +348,7 @@ public class Validator {
             Collections.reverse(Arrays.asList(annotations)); // Reverse array to preserve order
             for (Annotation annotation : annotations) {
                 ViewRulePair viewRulePair = getViewAndRule(field, annotation);
-
                 if (viewRulePair != null) {
-                    if (DEBUG) {
-                        Log.d(TAG, String.format("Adding @%s rule for %s",
-                                annotation.annotationType().getSimpleName(), field.getName()));
-                    }
-
                     mViewsAndRules.add(0, viewRulePair);
                 }
             }
@@ -369,7 +363,7 @@ public class Validator {
                     field.getType().getSimpleName(), field.getName()));
             return null;
         }
-        Rule<?> rule = AnnotationToRuleFactory.getRule(field, view, annotation);
+        Rule<?> rule = AnnotationToRuleConverter.getRule(field, view, annotation);
 
         return rule == null ? null : new ViewRulePair(view, rule);
     }
