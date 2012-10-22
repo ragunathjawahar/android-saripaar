@@ -25,6 +25,7 @@ import android.widget.TextView;
 
 import com.mobsandgeeks.saripaar.annotation.Checked;
 import com.mobsandgeeks.saripaar.annotation.NumberRule;
+import com.mobsandgeeks.saripaar.annotation.Password;
 import com.mobsandgeeks.saripaar.annotation.Regex;
 import com.mobsandgeeks.saripaar.annotation.Required;
 import com.mobsandgeeks.saripaar.annotation.TextRule;
@@ -56,6 +57,8 @@ class AnnotationToRuleConverter {
             return getRegexRule(field, view, (Regex) annotation);
         } else if (NumberRule.class.isAssignableFrom(annotationClass)) {
             return getNumberRule(field, view, (NumberRule) annotation);
+        } else if (Password.class.isAssignableFrom(annotationClass)) {
+            return getPasswordRule(field, view, (Password) annotation);
         }
 
         return null;
@@ -166,6 +169,20 @@ class AnnotationToRuleConverter {
         rules.toArray(ruleArray);
 
         return Rules.and(message, ruleArray);
+    }
+
+    private static Rule<TextView> getPasswordRule(Field field, View view, Password password) {
+        if (!TextView.class.isAssignableFrom(view.getClass())) {
+            Log.w(TAG, String.format(WARN_TEXT, field.getName(), Password.class.getSimpleName()));
+            return null;
+        }
+
+        String message = password.message();
+        if (password.messageResId() != 0) {
+            message = view.getContext().getString(password.messageResId());
+        }
+
+        return Rules.required(message, false);
     }
 
     private static Rule<Checkable> getCheckedRule(Field field, View view, Checked checked) {
