@@ -25,6 +25,7 @@ import java.lang.annotation.Target;
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Password {
+    public int order();
     public String message()     default "Password is required";
     public int messageResId()   default 0;
 }

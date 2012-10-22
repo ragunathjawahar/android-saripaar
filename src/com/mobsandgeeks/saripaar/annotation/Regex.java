@@ -27,6 +27,7 @@ import com.mobsandgeeks.saripaar.Rules;
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Regex {
+    public int order();
     public String pattern();
     public boolean trim()       default true;
     public String message()     default Rules.EMPTY_STRING;

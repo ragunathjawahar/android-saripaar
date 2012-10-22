@@ -27,6 +27,7 @@ import com.mobsandgeeks.saripaar.Rules;
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Email {
+    public int order();
     public String message()     default Rules.EMPTY_STRING;
     public int messageResId()   default 0;
 }

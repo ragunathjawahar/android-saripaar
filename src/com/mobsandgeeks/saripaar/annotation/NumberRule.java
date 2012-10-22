@@ -27,6 +27,7 @@ import com.mobsandgeeks.saripaar.Rules;
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface NumberRule {
+    public int order();
     public NumberType type();
     public double gt()          default Double.MAX_VALUE;
     public double lt()          default Double.MIN_VALUE;

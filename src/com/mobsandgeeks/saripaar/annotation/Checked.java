@@ -27,6 +27,7 @@ import com.mobsandgeeks.saripaar.Rules;
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Checked {
+    public int order();
     public boolean checked()    default true;
     public String message()     default Rules.EMPTY_STRING;
     public int messageResId()   default 0;

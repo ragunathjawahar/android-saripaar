@@ -27,6 +27,7 @@ import com.mobsandgeeks.saripaar.Rules;
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface TextRule {
+    public int order();
     public int minLength()      default 0;
     public int maxLength()      default Integer.MAX_VALUE;
     public boolean trim()       default true;

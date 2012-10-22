@@ -77,7 +77,7 @@ class AnnotationToRuleConverter {
                     passwordTextView);
         }
 
-        return null;
+        return (params == null || params.length == 0) ? getRule(field, view, annotation) : null;
     }
 
     private static Rule<TextView> getRequiredRule(Field field, View view, Required required) {
