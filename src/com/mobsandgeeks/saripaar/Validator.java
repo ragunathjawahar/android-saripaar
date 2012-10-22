@@ -39,7 +39,7 @@ import android.widget.TextView;
 public class Validator {
     // Debug
     static final String TAG = Validator.class.getSimpleName();
-    static final boolean DEBUG = true;
+    static final boolean DEBUG = false;
 
     private Activity mActivity;
     private boolean mAnnotationsProcessed;
@@ -382,6 +382,10 @@ public class Validator {
                     viewRulePair = getViewAndRule(field, annotation);
                 }
                 if (viewRulePair != null) {
+                    if (DEBUG) {
+                        Log.d(TAG, String.format("Added @%s rule for %s.",
+                                annotation.annotationType().getSimpleName(), field.getName()));
+                    }
                     mViewsAndRules.add(0, viewRulePair);
                 }
             }
@@ -397,7 +401,7 @@ public class Validator {
             return null;
         }
         Rule<?> rule = null;
-        if (params != null) {
+        if (params != null && params.length > 0) {
             rule = AnnotationToRuleConverter.getRule(field, view, annotation, params);
         } else {
             rule = AnnotationToRuleConverter.getRule(field, view, annotation);
