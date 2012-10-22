@@ -24,6 +24,7 @@ import android.widget.Checkable;
 import android.widget.TextView;
 
 import com.mobsandgeeks.saripaar.annotation.Checked;
+import com.mobsandgeeks.saripaar.annotation.NumberRule;
 import com.mobsandgeeks.saripaar.annotation.Regex;
 import com.mobsandgeeks.saripaar.annotation.Required;
 import com.mobsandgeeks.saripaar.annotation.TextRule;
@@ -53,6 +54,8 @@ class AnnotationToRuleConverter {
             return getTextRule(field, view, (TextRule) annotation);
         } else if (Regex.class.isAssignableFrom(annotationClass)) {
             return getRegexRule(field, view, (Regex) annotation);
+        } else if (NumberRule.class.isAssignableFrom(annotationClass)) {
+            return getNumberRule(field, view, (NumberRule) annotation);
         }
 
         return null;
@@ -98,8 +101,7 @@ class AnnotationToRuleConverter {
 
     private static Rule<TextView> getRegexRule(Field field, View view, Regex regexRule) {
         if (!TextView.class.isAssignableFrom(view.getClass())) {
-            Log.w(TAG, String.format(WARN_TEXT, field.getName(),
-                    field.getType().getSimpleName()));
+            Log.w(TAG, String.format(WARN_TEXT, field.getName(), Regex.class.getSimpleName()));
             return null;
         }
 
@@ -111,6 +113,60 @@ class AnnotationToRuleConverter {
         return Rules.regex(message, regexRule.pattern(), regexRule.trim());
     }
 
+    private static Rule<View> getNumberRule(Field field, View view, NumberRule numberRule) {
+        if (!TextView.class.isAssignableFrom(view.getClass())) {
+            Log.w(TAG, String.format(WARN_TEXT, field.getName(), NumberRule.class.getSimpleName()));
+            return null;
+        } else if (numberRule.type() == null) {
+            throw new IllegalArgumentException(String.format("@%s.type() cannot be null.",
+                    NumberRule.class.getSimpleName()));
+        }
+
+        List<Rule<?>> rules = new ArrayList<Rule<?>>();
+        String message = numberRule.message();
+        if (numberRule.messageResId() != 0) {
+            message = view.getContext().getString(numberRule.messageResId());
+        }
+        switch (numberRule.type()) {
+        case INTEGER: case LONG:
+            Rules.regex(null, Rules.REGEX_INTEGER, true); break;
+        case FLOAT: case DOUBLE:
+            Rules.regex(null, Rules.REGEX_DECIMAL, true); break;
+        }
+
+        if (numberRule.lt() != Double.MIN_VALUE) {
+            String ltNumber = String.valueOf(numberRule.lt());
+            switch (numberRule.type()) {
+            case INTEGER:   rules.add(Rules.lt(null, Integer.parseInt(ltNumber)));   break;
+            case LONG:      rules.add(Rules.lt(null, Long.parseLong(ltNumber)));     break;
+            case FLOAT:     rules.add(Rules.lt(null, Float.parseFloat(ltNumber)));   break;
+            case DOUBLE:    rules.add(Rules.lt(null, Double.parseDouble(ltNumber))); break;
+            }
+        }
+        if (numberRule.gt() != Double.MAX_VALUE) {
+            String gtNumber = String.valueOf(numberRule.gt());
+            switch (numberRule.type()) {
+            case INTEGER:   rules.add(Rules.gt(null, Integer.parseInt(gtNumber)));   break;
+            case LONG:      rules.add(Rules.gt(null, Long.parseLong(gtNumber)));     break;
+            case FLOAT:     rules.add(Rules.gt(null, Float.parseFloat(gtNumber)));   break;
+            case DOUBLE:    rules.add(Rules.gt(null, Double.parseDouble(gtNumber))); break;
+            }
+        }
+        if (numberRule.eq() != Double.MAX_VALUE) {
+            String gtNumber = String.valueOf(numberRule.gt());
+            switch (numberRule.type()) {
+            case INTEGER:   rules.add(Rules.eq(null, Integer.parseInt(gtNumber)));   break;
+            case LONG:      rules.add(Rules.eq(null, Long.parseLong(gtNumber)));     break;
+            case FLOAT:     rules.add(Rules.eq(null, Float.parseFloat(gtNumber)));   break;
+            case DOUBLE:    rules.add(Rules.eq(null, Double.parseDouble(gtNumber))); break;
+            }
+        }
+
+        Rule<?>[] ruleArray = new Rule<?>[rules.size()];
+        rules.toArray(ruleArray);
+
+        return Rules.and(message, ruleArray);
+    }
 
     private static Rule<Checkable> getCheckedRule(Field field, View view, Checked checked) {
         if (!Checkable.class.isAssignableFrom(view.getClass())) {

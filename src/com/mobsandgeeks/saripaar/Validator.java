@@ -27,7 +27,7 @@ import android.util.Log;
 import android.view.View;
 
 /**
- *A processor that checks all the {@link Rule}s against their {@link View}s.
+ * A processor that checks all the {@link Rule}s against their {@link View}s.
  *
  * @author Ragunath Jawahar <rj@mobsandgeeks.com>
  * @version 0.1

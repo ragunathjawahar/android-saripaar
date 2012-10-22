@@ -28,8 +28,6 @@ import com.mobsandgeeks.saripaar.Rules;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface NumberRule {
     public NumberType type();
-    public double min()         default Double.MIN_VALUE;
-    public double max()         default Double.MAX_VALUE;
     public double gt()          default Double.MAX_VALUE;
     public double lt()          default Double.MIN_VALUE;
     public double eq()          default Double.MAX_VALUE;
