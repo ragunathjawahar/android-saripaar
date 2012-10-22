@@ -31,6 +31,7 @@ import android.widget.TextView;
 import com.mobsandgeeks.saripaar.annotation.Checked;
 import com.mobsandgeeks.saripaar.annotation.ConfirmPassword;
 import com.mobsandgeeks.saripaar.annotation.Email;
+import com.mobsandgeeks.saripaar.annotation.IpAddress;
 import com.mobsandgeeks.saripaar.annotation.NumberRule;
 import com.mobsandgeeks.saripaar.annotation.Password;
 import com.mobsandgeeks.saripaar.annotation.Regex;
@@ -473,6 +474,7 @@ public class Validator {
         return annotationType.equals(Checked.class) ||
                 annotationType.equals(ConfirmPassword.class) ||
                 annotationType.equals(Email.class) ||
+                annotationType.equals(IpAddress.class) ||
                 annotationType.equals(NumberRule.class) ||
                 annotationType.equals(Password.class) ||
                 annotationType.equals(Regex.class) ||
@@ -520,6 +522,9 @@ public class Validator {
 
             } else if (annotatedClass.equals(Email.class)) {
                 return ((Email) annotation).order();
+
+            } else if (annotatedClass.equals(IpAddress.class)) {
+                return ((IpAddress) annotation).order();
 
             } else if (annotatedClass.equals(NumberRule.class)) {
                 return ((NumberRule) annotation).order();

@@ -26,6 +26,7 @@ import android.widget.TextView;
 import com.mobsandgeeks.saripaar.annotation.Checked;
 import com.mobsandgeeks.saripaar.annotation.ConfirmPassword;
 import com.mobsandgeeks.saripaar.annotation.Email;
+import com.mobsandgeeks.saripaar.annotation.IpAddress;
 import com.mobsandgeeks.saripaar.annotation.NumberRule;
 import com.mobsandgeeks.saripaar.annotation.Password;
 import com.mobsandgeeks.saripaar.annotation.Regex;
@@ -63,6 +64,8 @@ class AnnotationToRuleConverter {
             return getPasswordRule(field, view, (Password) annotation);
         } else if (Email.class.isAssignableFrom(annotationClass)) {
             return getEmailRule(field, view, (Email) annotation);
+        } else if (IpAddress.class.isAssignableFrom(annotationClass)) {
+            return getIpAddressRule(field, view, (IpAddress) annotation);
         }
 
         return null;
@@ -229,6 +232,20 @@ class AnnotationToRuleConverter {
         }
 
         return Rules.regex(message, Rules.REGEX_EMAIL, true);
+    }
+
+    private static Rule<TextView> getIpAddressRule(Field field, View view, IpAddress ipAddress) {
+        if (!TextView.class.isAssignableFrom(view.getClass())) {
+            Log.w(TAG, String.format(WARN_TEXT, field.getName(), IpAddress.class.getSimpleName()));
+            return null;
+        }
+
+        String message = ipAddress.message();
+        if (ipAddress.messageResId() != 0) {
+            message = view.getContext().getString(ipAddress.messageResId());
+        }
+
+        return Rules.regex(message, Rules.REGEX_IP_ADDRESS, true);
     }
 
     private static Rule<Checkable> getCheckedRule(Field field, View view, Checked checked) {
