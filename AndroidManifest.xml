@@ -5,9 +5,6 @@
 
     <uses-sdk android:minSdkVersion="4" android:targetSdkVersion="15" />
 
-    <application android:label="@string/app_name"
-        android:icon="@drawable/ic_launcher">
-
-    </application>
+    <application></application>
 
 </manifest>
