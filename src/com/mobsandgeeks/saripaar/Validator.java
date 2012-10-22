@@ -17,18 +17,25 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import com.mobsandgeeks.saripaar.annotation.ConfirmPassword;
-import com.mobsandgeeks.saripaar.annotation.Password;
 
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+
+import com.mobsandgeeks.saripaar.annotation.Checked;
+import com.mobsandgeeks.saripaar.annotation.ConfirmPassword;
+import com.mobsandgeeks.saripaar.annotation.Email;
+import com.mobsandgeeks.saripaar.annotation.NumberRule;
+import com.mobsandgeeks.saripaar.annotation.Password;
+import com.mobsandgeeks.saripaar.annotation.Regex;
+import com.mobsandgeeks.saripaar.annotation.Required;
+import com.mobsandgeeks.saripaar.annotation.TextRule;
 
 /**
  * A processor that checks all the {@link Rule}s against their {@link View}s.
@@ -325,7 +332,7 @@ public class Validator {
      */
     private ViewRulePair validateAllRules() {
         if (!mAnnotationsProcessed) {
-            createRulesFromAnnotations(getViewFieldsWithAnnotations());
+            createRulesFromAnnotations(getSaripaarAnnotatedFields());
             mAnnotationsProcessed = true;
         }
 
@@ -342,52 +349,48 @@ public class Validator {
         return failedViewRulePair;
     }
 
-    private void createRulesFromAnnotations(List<Field> annotatedFields) {
+    private void createRulesFromAnnotations(List<AnnotationFieldPair> annotationFieldPairs) {
         TextView passwordTextView = null;
         TextView confirmPasswordTextView = null;
-        Collections.reverse(annotatedFields); // Reverse list to preserve order
 
-        for (Field field : annotatedFields) {
-            field.setAccessible(true);
-            Annotation[] annotations = field.getAnnotations();
-            for (Annotation annotation : annotations) {
-                // Password
-                if (annotation.annotationType().equals(Password.class)) {
-                    if (passwordTextView == null) {
-                        passwordTextView = (TextView) getView(field);
-                    } else {
-                        throw new IllegalStateException("You cannot annotate " +
-                                "two fields in the same Activity with @Password.");
-                    }
-                }
-
-                // Confirm password
-                if (annotation.annotationType().equals(ConfirmPassword.class)) {
-                    if (passwordTextView == null) {
-                        throw new IllegalStateException("A @Password annotated field is required " +
-                                "before you can use @ConfirmPassword.");
-                    } else if (confirmPasswordTextView != null) {
-                        throw new IllegalStateException("You cannot annotate " +
-                                "two fields in the same Activity with @ConfirmPassword.");
-                    } else if (confirmPasswordTextView == null) {
-                        confirmPasswordTextView = (TextView) getView(field);
-                    }
-                }
-
-                // Others
-                ViewRulePair viewRulePair = null;
-                if (annotation.annotationType().equals(ConfirmPassword.class)) {
-                    viewRulePair = getViewAndRule(field, annotation, passwordTextView);
+        for (AnnotationFieldPair pair : annotationFieldPairs) {
+            // Password
+            if (pair.annotation.annotationType().equals(Password.class)) {
+                if (passwordTextView == null) {
+                    passwordTextView = (TextView) getView(pair.field);
                 } else {
-                    viewRulePair = getViewAndRule(field, annotation);
+                    throw new IllegalStateException("You cannot annotate " +
+                            "two fields in the same Activity with @Password.");
                 }
-                if (viewRulePair != null) {
-                    if (DEBUG) {
-                        Log.d(TAG, String.format("Added @%s rule for %s.",
-                                annotation.annotationType().getSimpleName(), field.getName()));
-                    }
-                    mViewsAndRules.add(0, viewRulePair);
+            }
+
+            // Confirm password
+            if (pair.annotation.annotationType().equals(ConfirmPassword.class)) {
+                if (passwordTextView == null) {
+                    throw new IllegalStateException("A @Password annotated field is required " +
+                            "before you can use @ConfirmPassword.");
+                } else if (confirmPasswordTextView != null) {
+                    throw new IllegalStateException("You cannot annotate " +
+                            "two fields in the same Activity with @ConfirmPassword.");
+                } else if (confirmPasswordTextView == null) {
+                    confirmPasswordTextView = (TextView) getView(pair.field);
                 }
+            }
+
+            // Others
+            ViewRulePair viewRulePair = null;
+            if (pair.annotation.annotationType().equals(ConfirmPassword.class)) {
+                viewRulePair = getViewAndRule(pair.field, pair.annotation, passwordTextView);
+            } else {
+                viewRulePair = getViewAndRule(pair.field, pair.annotation);
+            }
+            if (viewRulePair != null) {
+                if (DEBUG) {
+                    Log.d(TAG, String.format("Added @%s rule for %s.",
+                            pair.annotation.annotationType().getSimpleName(),
+                            pair.field.getName()));
+                }
+                mViewsAndRules.add(viewRulePair);
             }
         }
     }
@@ -412,6 +415,7 @@ public class Validator {
 
     private View getView(Field field) {
         try {
+            field.setAccessible(true);
             return (View) field.get(mActivity);
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
@@ -419,6 +423,24 @@ public class Validator {
             e.printStackTrace();
         }
         return null;
+    }
+
+    private List<AnnotationFieldPair> getSaripaarAnnotatedFields() {
+        List<AnnotationFieldPair> annotationFieldPairs = new ArrayList<AnnotationFieldPair>();
+        List<Field> fieldsWithAnnotations = getViewFieldsWithAnnotations();
+
+        for (Field field : fieldsWithAnnotations) {
+            Annotation[] annotations = field.getAnnotations();
+            for (Annotation annotation : annotations) {
+                if (isSaripaarAnnotation(annotation)) {
+                    annotationFieldPairs.add(new AnnotationFieldPair(annotation, field));
+                }
+            }
+        }
+
+        Collections.sort(annotationFieldPairs, new AnnotationFieldPairCompartor());
+
+        return annotationFieldPairs;
     }
 
     private List<Field> getViewFieldsWithAnnotations() {
@@ -446,14 +468,78 @@ public class Validator {
         return viewFields;
     }
 
+    private boolean isSaripaarAnnotation(Annotation annotation) {
+        Class<?> annotationType = annotation.annotationType();
+        return annotationType.equals(Checked.class) ||
+                annotationType.equals(ConfirmPassword.class) ||
+                annotationType.equals(Email.class) ||
+                annotationType.equals(NumberRule.class) ||
+                annotationType.equals(Password.class) ||
+                annotationType.equals(Regex.class) ||
+                annotationType.equals(Required.class) ||
+                annotationType.equals(TextRule.class);
+    }
+
     @SuppressWarnings("rawtypes") 
     private class ViewRulePair {
-        private View view;
-        private Rule rule;
+        public View view;
+        public Rule rule;
 
         public ViewRulePair(View view, Rule<?> rule) {
             this.view = view;
             this.rule = rule;
+        }
+    }
+
+    private class AnnotationFieldPair {
+        public Annotation annotation;
+        public Field field;
+
+        public AnnotationFieldPair(Annotation annotation, Field field) {
+            this.annotation = annotation;
+            this.field = field;
+        }
+    }
+
+    private class AnnotationFieldPairCompartor implements Comparator<AnnotationFieldPair> {
+
+        @Override
+        public int compare(AnnotationFieldPair lhs, AnnotationFieldPair rhs) {
+            int lhsOrder = getAnnotationOrder(lhs.annotation);
+            int rhsOrder = getAnnotationOrder(rhs.annotation);
+            return lhsOrder < rhsOrder ? -1 : lhsOrder == rhsOrder ? 0 : 1;
+        }
+
+        private int getAnnotationOrder(Annotation annotation) {
+            Class<?> annotatedClass = annotation.annotationType();
+            if (annotatedClass.equals(Checked.class)) {
+                return ((Checked) annotation).order();
+
+            } else if (annotatedClass.equals(ConfirmPassword.class)) {
+                return ((ConfirmPassword) annotation).order();
+
+            } else if (annotatedClass.equals(Email.class)) {
+                return ((Email) annotation).order();
+
+            } else if (annotatedClass.equals(NumberRule.class)) {
+                return ((NumberRule) annotation).order();
+
+            } else if (annotatedClass.equals(Password.class)) {
+                return ((Password) annotation).order();
+
+            } else if (annotatedClass.equals(Regex.class)) {
+                return ((Regex) annotation).order();
+
+            } else if (annotatedClass.equals(Required.class)) {
+                return ((Required) annotation).order();
+
+            } else if (annotatedClass.equals(TextRule.class)) {
+                return ((TextRule) annotation).order();
+
+            } else {
+                throw new IllegalArgumentException(String.format("%s is not a Saripaar annotation",
+                        annotatedClass.getName()));
+            }
         }
     }
 

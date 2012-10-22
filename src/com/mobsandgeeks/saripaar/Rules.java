@@ -175,7 +175,7 @@ public final class Rules {
 
             @Override
             public boolean isValid(TextView view) {
-                return view.getText().equals(anotherTextView.getText());
+                return view.getText().toString().equals(anotherTextView.getText().toString());
             }
         };
     }
