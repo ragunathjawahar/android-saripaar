@@ -24,6 +24,7 @@ import android.widget.Checkable;
 import android.widget.TextView;
 
 import com.mobsandgeeks.saripaar.annotation.Checked;
+import com.mobsandgeeks.saripaar.annotation.Email;
 import com.mobsandgeeks.saripaar.annotation.NumberRule;
 import com.mobsandgeeks.saripaar.annotation.Password;
 import com.mobsandgeeks.saripaar.annotation.Regex;
@@ -59,6 +60,8 @@ class AnnotationToRuleConverter {
             return getNumberRule(field, view, (NumberRule) annotation);
         } else if (Password.class.isAssignableFrom(annotationClass)) {
             return getPasswordRule(field, view, (Password) annotation);
+        } else if (Email.class.isAssignableFrom(annotationClass)) {
+            return getEmailRule(field, view, (Email) annotation);
         }
 
         return null;
@@ -183,6 +186,20 @@ class AnnotationToRuleConverter {
         }
 
         return Rules.required(message, false);
+    }
+
+    private static Rule<TextView> getEmailRule(Field field, View view, Email email) {
+        if (!TextView.class.isAssignableFrom(view.getClass())) {
+            Log.w(TAG, String.format(WARN_TEXT, field.getName(), Regex.class.getSimpleName()));
+            return null;
+        }
+
+        String message = email.message();
+        if (email.messageResId() != 0) {
+            message = view.getContext().getString(email.messageResId());
+        }
+
+        return Rules.regex(message, Rules.REGEX_EMAIL, true);
     }
 
     private static Rule<Checkable> getCheckedRule(Field field, View view, Checked checked) {
