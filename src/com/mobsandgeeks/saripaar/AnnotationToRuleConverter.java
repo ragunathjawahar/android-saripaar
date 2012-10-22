@@ -24,6 +24,7 @@ import android.widget.Checkable;
 import android.widget.TextView;
 
 import com.mobsandgeeks.saripaar.annotation.Checked;
+import com.mobsandgeeks.saripaar.annotation.ConfirmPassword;
 import com.mobsandgeeks.saripaar.annotation.Email;
 import com.mobsandgeeks.saripaar.annotation.NumberRule;
 import com.mobsandgeeks.saripaar.annotation.Password;
@@ -62,6 +63,18 @@ class AnnotationToRuleConverter {
             return getPasswordRule(field, view, (Password) annotation);
         } else if (Email.class.isAssignableFrom(annotationClass)) {
             return getEmailRule(field, view, (Email) annotation);
+        }
+
+        return null;
+    }
+
+    public static Rule<?> getRule(Field field, View view, Annotation annotation, Object... params) {
+        Class<?> annotationClass = annotation.getClass();
+
+        if (ConfirmPassword.class.isAssignableFrom(annotationClass)) {
+            TextView passwordTextView = (TextView) params[0];
+            return getConfirmPasswordRule(field, view, (ConfirmPassword) annotation,
+                    passwordTextView);
         }
 
         return null;
@@ -186,6 +199,22 @@ class AnnotationToRuleConverter {
         }
 
         return Rules.required(message, false);
+    }
+
+    private static Rule<TextView> getConfirmPasswordRule(Field field, View view,
+            ConfirmPassword confirmPassword, TextView passwordTextView) {
+        if (!TextView.class.isAssignableFrom(view.getClass())) {
+            Log.w(TAG, String.format(WARN_TEXT, field.getName(),
+                    ConfirmPassword.class.getSimpleName()));
+            return null;
+        }
+
+        String message = confirmPassword.message();
+        if (confirmPassword.messageResId() != 0) {
+            message = view.getContext().getString(confirmPassword.messageResId());
+        }
+
+        return Rules.eq(message, passwordTextView);
     }
 
     private static Rule<TextView> getEmailRule(Field field, View view, Email email) {

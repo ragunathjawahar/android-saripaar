@@ -21,10 +21,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.mobsandgeeks.saripaar.annotation.ConfirmPassword;
+import com.mobsandgeeks.saripaar.annotation.Password;
+
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 /**
  * A processor that checks all the {@link Rule}s against their {@link View}s.
@@ -339,13 +343,44 @@ public class Validator {
     }
 
     private void createRulesFromAnnotations(List<Field> annotatedFields) {
+        TextView passwordTextView = null;
+        TextView confirmPasswordTextView = null;
         Collections.reverse(annotatedFields); // Reverse list to preserve order
 
         for (Field field : annotatedFields) {
             field.setAccessible(true);
             Annotation[] annotations = field.getAnnotations();
             for (Annotation annotation : annotations) {
-                ViewRulePair viewRulePair = getViewAndRule(field, annotation);
+                // Password
+                if (annotation.annotationType().equals(Password.class)) {
+                    if (passwordTextView == null) {
+                        passwordTextView = (TextView) getView(field);
+                    } else {
+                        throw new IllegalStateException("You cannot annotate " +
+                                "two fields in the same Activity with @Password.");
+                    }
+                }
+
+                // Confirm password
+                if (annotation.annotationType().equals(ConfirmPassword.class)) {
+                    if (passwordTextView == null) {
+                        throw new IllegalStateException("A @Password annotated field is required " +
+                                "before you can use @ConfirmPassword.");
+                    } else if (confirmPasswordTextView != null) {
+                        throw new IllegalStateException("You cannot annotate " +
+                                "two fields in the same Activity with @ConfirmPassword.");
+                    } else if (confirmPasswordTextView == null) {
+                        confirmPasswordTextView = (TextView) getView(field);
+                    }
+                }
+
+                // Others
+                ViewRulePair viewRulePair = null;
+                if (annotation.annotationType().equals(ConfirmPassword.class)) {
+                    viewRulePair = getViewAndRule(field, annotation, passwordTextView);
+                } else {
+                    viewRulePair = getViewAndRule(field, annotation);
+                }
                 if (viewRulePair != null) {
                     mViewsAndRules.add(0, viewRulePair);
                 }
@@ -353,7 +388,7 @@ public class Validator {
         }
     }
 
-    private ViewRulePair getViewAndRule(Field field, Annotation annotation) {
+    private ViewRulePair getViewAndRule(Field field, Annotation annotation, Object... params) {
         View view = getView(field);
 
         if (view == null) {
@@ -361,7 +396,12 @@ public class Validator {
                     field.getType().getSimpleName(), field.getName()));
             return null;
         }
-        Rule<?> rule = AnnotationToRuleConverter.getRule(field, view, annotation);
+        Rule<?> rule = null;
+        if (params != null) {
+            rule = AnnotationToRuleConverter.getRule(field, view, annotation, params);
+        } else {
+            rule = AnnotationToRuleConverter.getRule(field, view, annotation);
+        }
 
         return rule != null ? new ViewRulePair(view, rule) : null;
     }
