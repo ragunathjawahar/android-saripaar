@@ -34,7 +34,7 @@ private EditText confirmPasswordEditText;
 private CheckBox iAgreeCheckBox;
 ```
 
-The annotations are self-explanatory. The `order` attribute is mandatory and specified the order in which the validations will be performed by the library.
+The annotations are self-explanatory. The `order` attribute is mandatory and specifies the order in which the validations will be performed by the library.
 
 **Step 2 - Instantiate a new [Validator]**
 ```java
@@ -80,6 +80,21 @@ public class RegistrationActivity implements ValidationListener {
     }
 }
 ```
+ - `onSuccess()` - Called when all your views pass all validations.
+ - `onFailure(View, Rule<?>)` - Called when a `Rule` fails, you receive the `View` along with the `Rule` that failed.
+ - `preValidation()` - Called before the validation starts, useful during asynchronous validations.
+ - `onValidationCancelled()` - Called when an asynchronous validation is cancelled, never called during synchronous validations.
+
+**Step 4 - Perform your validation**
+```java
+registerButton.setOnClickListener(new OnClickListener() {
+    public void onClick(View v) {
+        validator.validate();
+    }
+});
+```
+The `Validator.validate()` call runs the validations and returns the result via appropriate callbacks on the `ValidationListener`. You can run validations on a background `AsyncTask` by calling the `Validator.validateAsync()` method. You can call both the methods from any event listener such as the `TextWatcher`, `OnFocusChangedListener`, `OnTouchListener`, etc.,
+
 
   [jar]: https://github.com/ragunathjawahar/android-saripaar/downloads
   [Saripaar Annotations]: https://github.com/ragunathjawahar/android-saripaar/tree/master/src/com/mobsandgeeks/saripaar/annotation
