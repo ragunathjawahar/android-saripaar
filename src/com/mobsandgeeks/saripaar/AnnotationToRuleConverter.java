@@ -220,7 +220,7 @@ class AnnotationToRuleConverter {
         return Rules.eq(message, passwordTextView);
     }
 
-    private static Rule<TextView> getEmailRule(Field field, View view, Email email) {
+    private static Rule<View> getEmailRule(Field field, View view, Email email) {
         if (!TextView.class.isAssignableFrom(view.getClass())) {
             Log.w(TAG, String.format(WARN_TEXT, field.getName(), Regex.class.getSimpleName()));
             return null;
@@ -231,10 +231,11 @@ class AnnotationToRuleConverter {
             message = view.getContext().getString(email.messageResId());
         }
 
-        return Rules.regex(message, Rules.REGEX_EMAIL, true);
+        return Rules.or(message, Rules.eq(null, Rules.EMPTY_STRING),
+                Rules.regex(message, Rules.REGEX_EMAIL, true));
     }
 
-    private static Rule<TextView> getIpAddressRule(Field field, View view, IpAddress ipAddress) {
+    private static Rule<View> getIpAddressRule(Field field, View view, IpAddress ipAddress) {
         if (!TextView.class.isAssignableFrom(view.getClass())) {
             Log.w(TAG, String.format(WARN_TEXT, field.getName(), IpAddress.class.getSimpleName()));
             return null;
@@ -245,7 +246,8 @@ class AnnotationToRuleConverter {
             message = view.getContext().getString(ipAddress.messageResId());
         }
 
-        return Rules.regex(message, Rules.REGEX_IP_ADDRESS, true);
+        return Rules.or(message, Rules.eq(null, Rules.EMPTY_STRING),
+                Rules.regex(message, Rules.REGEX_IP_ADDRESS, true));
     }
 
     private static Rule<Checkable> getCheckedRule(Field field, View view, Checked checked) {
