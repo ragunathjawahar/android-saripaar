@@ -20,17 +20,18 @@ Quick Start
 -----------
 **Step 1 - Annotate your widgets using [Saripaar Annotations]**
 ```java
-@Email(order = 1)
+@Required(order = 1)
+@Email(order = 2)
 private EditText emailEditText;
 
-@Password(order = 2)
-@TextRule(order = 3, minLength = 6, message = "Enter at least 6 characters.")
+@Password(order = 3)
+@TextRule(order = 4, minLength = 6, message = "Enter at least 6 characters.")
 private EditText passwordEditText;
 
-@ConfirmPassword(order = 4)
+@ConfirmPassword(order = 5)
 private EditText confirmPasswordEditText;
 
-@Checked(order = 5, message = "You must agree to the terms.")
+@Checked(order = 6, message = "You must agree to the terms.")
 private CheckBox iAgreeCheckBox;
 ```
 
