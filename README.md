@@ -3,8 +3,8 @@ Android Saripaar
 
 **சரிபார்** - sari-paar (Tamil for "to check", "verify" or "validate")
 
-Android Saripaar is a simple, yet powerful rule-based UI validation libarary for Android™.
-It is the **SIMPLEST** validation library available for Android yet!
+Android Saripaar is a simple, yet powerful rule-based UI validation library for Android.
+It is the **SIMPLEST** validation library available for Android.
 
 Why Android Saripaar?
 ---------------------
@@ -51,7 +51,7 @@ public void onCreate() {
 ```
 You will need a `Validator` for the current `Activity` and also a `ValidationListener` for callbacks on validation events.
 
-**Step 3 - Implement your [ValidationListener]**
+**Step 3 - Implement a [ValidationListener]**
 ```java
 public class RegistrationActivity implements ValidationListener {
 
@@ -86,7 +86,7 @@ public class RegistrationActivity implements ValidationListener {
  - `preValidation()` - Called before the validation starts, useful during asynchronous validations.
  - `onValidationCancelled()` - Called when an asynchronous validation is cancelled, never called during synchronous validations.
 
-**Step 4 - Perform your validation**
+**Step 4 - Perform validation**
 ```java
 registerButton.setOnClickListener(new OnClickListener() {
     public void onClick(View v) {
@@ -96,8 +96,10 @@ registerButton.setOnClickListener(new OnClickListener() {
 ```
 The `Validator.validate()` call runs the validations and returns the result via appropriate callbacks on the `ValidationListener`. You can run validations on a background `AsyncTask` by calling the `Validator.validateAsync()` method. You can call both the methods from any event listener such as the `TextWatcher`, `OnFocusChangedListener`, `OnTouchListener`, etc.,
 
+**Please visit our [Wiki] for a complete guide on Android Saripaar.**
 
   [jar]: https://github.com/ragunathjawahar/android-saripaar/downloads
   [Saripaar Annotations]: https://github.com/ragunathjawahar/android-saripaar/tree/master/src/com/mobsandgeeks/saripaar/annotation
   [Validator]: https://github.com/ragunathjawahar/android-saripaar/blob/master/src/com/mobsandgeeks/saripaar/Validator.java
   [ValidationListener]: https://github.com/ragunathjawahar/android-saripaar/blob/master/src/com/mobsandgeeks/saripaar/Validator.java
+  [Wiki]: https://github.com/ragunathjawahar/android-saripaar/wiki
