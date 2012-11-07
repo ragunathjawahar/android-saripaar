@@ -63,7 +63,7 @@ public class Validator {
      */
     public Validator(Activity activity) {
         if (activity == null) {
-            throw new IllegalArgumentException("\'activity\' cannot be null");
+            throw new IllegalArgumentException("'activity' cannot be null");
         }
 
         mActivity = activity;
@@ -112,7 +112,7 @@ public class Validator {
      */
     public void put(View view, Rule<?> rule) {
         if (rule == null) {
-            throw new IllegalArgumentException("\'rule\' cannot be null");
+            throw new IllegalArgumentException("'rule' cannot be null");
         }
 
         mViewsAndRules.add(new ViewRulePair(view, rule));
@@ -323,6 +323,27 @@ public class Validator {
      */
     public void removeAllProperties() {
         mProperties.clear();
+    }
+
+    /**
+     * Removes all the rules for the matching {@link View}
+     * @param view The {@code View} whose rules must be removed.
+     */
+    public void removeRulesFor(View view) {
+        if (view == null) {
+            throw new IllegalArgumentException("'view' cannot be null");
+        }
+
+        int index = 0;
+        while (index < mViewsAndRules.size()) {
+            ViewRulePair pair = mViewsAndRules.get(index);
+            if (pair.view == view) {
+                mViewsAndRules.remove(index);
+                continue;
+            }
+
+            index++;
+        }
     }
 
     /**
