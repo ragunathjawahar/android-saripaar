@@ -56,9 +56,8 @@ You will need a `Validator` for the current `Activity` and also a `ValidationLis
 public class RegistrationActivity implements ValidationListener {
 
     public void onSuccess() {
-        Toast.makeText(this, "Yay! we got it right!", Toast.LENGTH_SHORT).show();
-
         // Create a new account…
+        Toast.makeText(this, "Yay! we got it right!", Toast.LENGTH_SHORT).show();
     }
 
     public void onFailure(View failedView, Rule<?> failedRule) {
