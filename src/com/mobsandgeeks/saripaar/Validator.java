@@ -467,7 +467,7 @@ public class Validator {
 
     private List<Field> getViewFieldsWithAnnotations() {
         List<Field> fieldsWithAnnotations = new ArrayList<Field>();
-        List<Field> declaredViewFields = getDeclaredViewFields();
+        List<Field> declaredViewFields = getAllViewFields();
         for (Field viewField : declaredViewFields) {
             Annotation[] annotations = viewField.getAnnotations();
             if (annotations == null || annotations.length == 0) {
@@ -478,10 +478,28 @@ public class Validator {
         return fieldsWithAnnotations;
     }
 
-    private List<Field> getDeclaredViewFields() {
+    private List<Field> getAllViewFields() {
         List<Field> viewFields = new ArrayList<Field>();
-        Field[] declaredFields = mActivity.getClass().getDeclaredFields();
 
+        // Declared fields
+        viewFields.addAll(getDeclaredViewFields(mActivity.getClass()));
+
+        // Inherited fields
+        Class<?> superClass = mActivity.getClass().getSuperclass();
+        while (superClass != null && Activity.class.isAssignableFrom(superClass)) {
+            List<Field> declaredViewFields = getDeclaredViewFields(superClass);
+            if (declaredViewFields.size() > 0) {
+                viewFields.addAll(declaredViewFields);
+            }
+            superClass = superClass.getSuperclass();
+        }
+
+        return viewFields;
+    }
+
+    private List<Field> getDeclaredViewFields(Class<?> clazz) {
+        List<Field> viewFields = new ArrayList<Field>();
+        Field[] declaredFields = clazz.getDeclaredFields();
         for (Field f : declaredFields) {
             if (View.class.isAssignableFrom(f.getType())) {
                 viewFields.add(f);
