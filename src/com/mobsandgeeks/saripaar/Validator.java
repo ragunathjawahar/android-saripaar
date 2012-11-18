@@ -467,13 +467,13 @@ public class Validator {
 
     private List<Field> getViewFieldsWithAnnotations() {
         List<Field> fieldsWithAnnotations = new ArrayList<Field>();
-        List<Field> declaredViewFields = getAllViewFields();
-        for (Field viewField : declaredViewFields) {
-            Annotation[] annotations = viewField.getAnnotations();
+        List<Field> viewFields = getAllViewFields();
+        for (Field field : viewFields) {
+            Annotation[] annotations = field.getAnnotations();
             if (annotations == null || annotations.length == 0) {
                 continue;
             }
-            fieldsWithAnnotations.add(viewField);
+            fieldsWithAnnotations.add(field);
         }
         return fieldsWithAnnotations;
     }
