@@ -14,7 +14,7 @@ Why Android Saripaar?
  - Works with **Stock Android Widgets**, no custom view dependencies.
  - Quick to setup, just download the [jar] and include it in your `libs` project folder.
  - Takes most of your validation logic out of your code.
- - Compatible with other annotation frameworks such as **AndroidAnnotations**, **RoboGuice**, etc.,
+ - Compatible with other annotation frameworks such as **[AndroidAnnotations]**, **[RoboGuice]**, etc.,
 
 Quick Start
 -----------
@@ -99,6 +99,8 @@ The `Validator.validate()` call runs the validations and returns the result via 
 
   [jar]: https://github.com/ragunathjawahar/android-saripaar/downloads
   [Saripaar Annotations]: https://github.com/ragunathjawahar/android-saripaar/tree/master/src/com/mobsandgeeks/saripaar/annotation
+  [AndroidAnnotations]: https://github.com/excilys/androidannotations
+  [RoboGuice]: http://code.google.com/p/roboguice/
   [Validator]: https://github.com/ragunathjawahar/android-saripaar/blob/master/src/com/mobsandgeeks/saripaar/Validator.java
   [ValidationListener]: https://github.com/ragunathjawahar/android-saripaar/blob/master/src/com/mobsandgeeks/saripaar/Validator.java
   [wiki]: https://github.com/ragunathjawahar/android-saripaar/wiki
