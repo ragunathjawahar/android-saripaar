@@ -95,6 +95,11 @@ registerButton.setOnClickListener(new OnClickListener() {
 ```
 The `Validator.validate()` call runs the validations and returns the result via appropriate callbacks on the `ValidationListener`. You can run validations on a background `AsyncTask` by calling the `Validator.validateAsync()` method. You can call both the methods from any event listener such as the `OnClickListener`, `TextWatcher`, `OnFocusChangedListener`, `OnTouchListener`, etc.,
 
+Dependencies
+---------------------
+
+ - [Android Support Library]
+
 **Please visit the [wiki] for a complete guide on Android Saripaar.**
 
   [jar]: https://github.com/ragunathjawahar/android-saripaar/downloads
@@ -103,4 +108,5 @@ The `Validator.validate()` call runs the validations and returns the result via 
   [RoboGuice]: http://code.google.com/p/roboguice/
   [Validator]: https://github.com/ragunathjawahar/android-saripaar/blob/master/src/com/mobsandgeeks/saripaar/Validator.java
   [ValidationListener]: https://github.com/ragunathjawahar/android-saripaar/blob/master/src/com/mobsandgeeks/saripaar/Validator.java
+  [Android Support Library]: http://developer.android.com/tools/extras/support-library.html
   [wiki]: https://github.com/ragunathjawahar/android-saripaar/wiki

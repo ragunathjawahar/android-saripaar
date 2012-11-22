@@ -19,3 +19,6 @@ local.properties
 .classpath
 .project
 .settings/
+
+# Libraries
+libs/

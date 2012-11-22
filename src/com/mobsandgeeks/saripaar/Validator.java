@@ -50,6 +50,7 @@ public class Validator {
     static final boolean DEBUG = false;
 
     private Activity mActivity;
+    private android.support.v4.app.Fragment mSupportFragment;
     private boolean mAnnotationsProcessed;
     private List<ViewRulePair> mViewsAndRules;
     private Map<String, Object> mProperties;
@@ -57,19 +58,38 @@ public class Validator {
     private ValidationListener mValidationListener;
 
     /**
-     * Creates a new {@link Validator}.
-     * 
-     * @param activity The {@code Activity} to be validated.
+     * Private constructor. Cannot be instantiated.
      */
-    public Validator(Activity activity) {
-        if (activity == null) {
-            throw new IllegalArgumentException("'activity' cannot be null");
-        }
-
-        mActivity = activity;
+    private Validator() {
         mAnnotationsProcessed = false;
         mViewsAndRules = new ArrayList<Validator.ViewRulePair>();
         mProperties = new HashMap<String, Object>();
+    }
+
+    /**
+     * Creates a new {@link Validator}.
+     *
+     * @param activity The {@code Activity} to be validated.
+     */
+    public Validator(Activity activity) {
+        this();
+        if (activity == null) {
+            throw new IllegalArgumentException("'activity' cannot be null");
+        }
+        mActivity = activity;
+    }
+
+    /**
+     * Creates a new {@link Validator}.
+     *
+     * @param fragment The {@code Fragment} (support library) to be validated.
+     */
+    public Validator(android.support.v4.app.Fragment fragment) {
+        this();
+        if (fragment == null) {
+            throw new IllegalArgumentException("'fragment' cannot be null");
+        }
+        mSupportFragment = fragment;
     }
 
     /**
@@ -482,11 +502,20 @@ public class Validator {
         List<Field> viewFields = new ArrayList<Field>();
 
         // Declared fields
-        viewFields.addAll(getDeclaredViewFields(mActivity.getClass()));
+        Class<?> superClass = null;
+        if (mActivity != null) {
+            viewFields.addAll(getDeclaredViewFields(mActivity.getClass()));
+            superClass = mActivity.getClass().getSuperclass();
+        } else if (mSupportFragment != null) {
+            viewFields.addAll(getDeclaredViewFields(mSupportFragment.getClass()));
+            superClass = mSupportFragment.getClass().getSuperclass();
+        }
 
         // Inherited fields
-        Class<?> superClass = mActivity.getClass().getSuperclass();
-        while (superClass != null && Activity.class.isAssignableFrom(superClass)) {
+        while (superClass != null && 
+                (Activity.class.isAssignableFrom(superClass) || 
+                        android.support.v4.app.Fragment.class.isAssignableFrom(superClass))) {
+
             List<Field> declaredViewFields = getDeclaredViewFields(superClass);
             if (declaredViewFields.size() > 0) {
                 viewFields.addAll(declaredViewFields);
