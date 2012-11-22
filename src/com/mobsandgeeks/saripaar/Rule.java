@@ -30,9 +30,7 @@ public abstract class Rule<T> {
     private String mFailureMessage;
 
     @SuppressWarnings("unused")
-    private Rule() {
-        
-    }
+    private Rule() { /* Cannot instantiate */ }
 
     /**
      * Creates a new validation Rule.
