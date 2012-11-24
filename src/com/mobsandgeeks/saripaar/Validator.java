@@ -439,12 +439,12 @@ public class Validator {
 
     private ViewRulePair getViewAndRule(Field field, Annotation annotation, Object... params) {
         View view = getView(field);
-
         if (view == null) {
             Log.w(TAG, String.format("Your %s - %s is null. Please check your field assignment(s).",
                     field.getType().getSimpleName(), field.getName()));
             return null;
         }
+
         Rule<?> rule = null;
         if (params != null && params.length > 0) {
             rule = AnnotationToRuleConverter.getRule(field, view, annotation, params);
@@ -458,7 +458,14 @@ public class Validator {
     private View getView(Field field) {
         try {
             field.setAccessible(true);
-            return (View) field.get(mActivity);
+            Object instance = null;
+
+            if (mActivity != null) {
+                instance = mActivity;
+            } else if (mSupportFragment != null) {
+                instance = mSupportFragment;
+            }
+            return (View) field.get(instance);
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {
