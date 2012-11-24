@@ -13,12 +13,12 @@
  */
 package com.mobsandgeeks.saripaar.annotation;
 
+import com.mobsandgeeks.saripaar.Rules;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
-
-import com.mobsandgeeks.saripaar.Rules;
 
 /**
  * @author Ragunath Jawahar <rj@mobsandgeeks.com>
@@ -28,7 +28,8 @@ import com.mobsandgeeks.saripaar.Rules;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Regex {
     public int order();
-    public String pattern();
+    public String pattern()     default ".";
+    public int patternResId()   default 0;
     public boolean trim()       default true;
     public String message()     default Rules.EMPTY_STRING;
     public int messageResId()   default 0;

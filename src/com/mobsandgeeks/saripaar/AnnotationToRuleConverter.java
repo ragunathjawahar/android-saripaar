@@ -18,6 +18,7 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.content.Context;
 import android.util.Log;
 import android.view.View;
 import android.widget.Checkable;
@@ -127,12 +128,15 @@ class AnnotationToRuleConverter {
             return null;
         }
 
-        String message = regexRule.message();
-        if (regexRule.messageResId() != 0) {
-            message = view.getContext().getString(regexRule.messageResId());
-        }
+        Context context = view.getContext();
+        int messageResId = regexRule.messageResId();
+        String message = messageResId != 0 ? context.getString(messageResId) : regexRule.message();
 
-        return Rules.regex(message, regexRule.pattern(), regexRule.trim());
+        int patternResId = regexRule.patternResId();
+        String pattern = patternResId != 0 ? view.getContext().getString(patternResId) :
+            regexRule.pattern();
+
+        return Rules.regex(message, pattern, regexRule.trim());
     }
 
     private static Rule<View> getNumberRule(Field field, View view, NumberRule numberRule) {
