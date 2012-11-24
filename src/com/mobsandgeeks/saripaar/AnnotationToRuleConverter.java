@@ -90,10 +90,9 @@ class AnnotationToRuleConverter {
             return null;
         }
 
-        String message = required.message();
-        if (required.messageResId() != 0) {
-            message = view.getContext().getString(required.messageResId());
-        }
+        int messageResId = required.messageResId();
+        String message = messageResId != 0 ? view.getContext().getString(messageResId) :
+            required.message();
 
         return Rules.required(message, required.trim());
     }
@@ -105,10 +104,10 @@ class AnnotationToRuleConverter {
         }
 
         List<Rule<?>> rules = new ArrayList<Rule<?>>();
-        String message = textRule.message();
-        if (textRule.messageResId() != 0) {
-            message = view.getContext().getString(textRule.messageResId());
-        }
+        int messageResId = textRule.messageResId();
+        String message = messageResId != 0 ? view.getContext().getString(messageResId) :
+            textRule.message();
+
         if (textRule.minLength() > 0) {
             rules.add(Rules.minLength(null, textRule.minLength(), textRule.trim()));
         }
@@ -149,10 +148,10 @@ class AnnotationToRuleConverter {
         }
 
         List<Rule<?>> rules = new ArrayList<Rule<?>>();
-        String message = numberRule.message();
-        if (numberRule.messageResId() != 0) {
-            message = view.getContext().getString(numberRule.messageResId());
-        }
+        int messageResId = numberRule.messageResId();
+        String message = messageResId != 0 ? view.getContext().getString(messageResId) :
+            numberRule.message();
+
         switch (numberRule.type()) {
         case INTEGER: case LONG:
             Rules.regex(null, Rules.REGEX_INTEGER, true); break;
@@ -200,10 +199,9 @@ class AnnotationToRuleConverter {
             return null;
         }
 
-        String message = password.message();
-        if (password.messageResId() != 0) {
-            message = view.getContext().getString(password.messageResId());
-        }
+        int messageResId = password.messageResId();
+        String message = messageResId != 0 ? view.getContext().getString(messageResId) :
+            password.message();
 
         return Rules.required(message, false);
     }
@@ -216,10 +214,9 @@ class AnnotationToRuleConverter {
             return null;
         }
 
-        String message = confirmPassword.message();
-        if (confirmPassword.messageResId() != 0) {
-            message = view.getContext().getString(confirmPassword.messageResId());
-        }
+        int messageResId = confirmPassword.messageResId();
+        String message = messageResId != 0 ? view.getContext().getString(messageResId) :
+            confirmPassword.message();
 
         return Rules.eq(message, passwordTextView);
     }
@@ -230,10 +227,9 @@ class AnnotationToRuleConverter {
             return null;
         }
 
-        String message = email.message();
-        if (email.messageResId() != 0) {
-            message = view.getContext().getString(email.messageResId());
-        }
+        int messageResId = email.messageResId();
+        String message = messageResId != 0 ? view.getContext().getString(messageResId) :
+            email.message();
 
         return Rules.or(message, Rules.eq(null, Rules.EMPTY_STRING),
                 Rules.regex(message, Rules.REGEX_EMAIL, true));
@@ -245,10 +241,9 @@ class AnnotationToRuleConverter {
             return null;
         }
 
-        String message = ipAddress.message();
-        if (ipAddress.messageResId() != 0) {
-            message = view.getContext().getString(ipAddress.messageResId());
-        }
+        int messageResId = ipAddress.messageResId();
+        String message = messageResId != 0 ? view.getContext().getString(messageResId) :
+            ipAddress.message();
 
         return Rules.or(message, Rules.eq(null, Rules.EMPTY_STRING),
                 Rules.regex(message, Rules.REGEX_IP_ADDRESS, true));
@@ -261,10 +256,9 @@ class AnnotationToRuleConverter {
             return null;
         }
 
-        String message = checked.message();
-        if (checked.messageResId() != 0) {
-            message = view.getContext().getString(checked.messageResId());
-        }
+        int messageResId = checked.messageResId();
+        String message = messageResId != 0 ? view.getContext().getString(messageResId) :
+            checked.message();
 
         return Rules.checked(message, checked.checked());
     }
