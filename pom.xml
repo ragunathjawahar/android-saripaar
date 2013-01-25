@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.mobsandgeeks.saripaar</groupId>
+    <artifactId>android-saripaar</artifactId>
+    <version>1.0</version>
+    <name>android-saripaar</name>
+    <packaging>apklib</packaging>
+
+    <properties>
+        <java.version>1.6</java.version>
+    </properties>
+
+    <!--<repositories>-->
+        <!--<repository>-->
+            <!--<id>my-repo</id>-->
+            <!--<name>custom_lib</name>-->
+            <!--<url>http://x.oudar.free.fr/maven2</url>-->
+            <!--</repository>-->
+        <!--</repositories>-->
+
+    <dependencies>
+        <dependency>
+            <groupId>com.google.android</groupId>
+            <artifactId>android</artifactId>
+            <scope>provided</scope>
+            <version>4.1.1.4</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.android</groupId>
+            <artifactId>support-v4</artifactId>
+            <version>r7</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <sourceDirectory>src</sourceDirectory>
+
+        <plugins>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.5</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>com.jayway.maven.plugins.android.generation2</groupId>
+                <artifactId>android-maven-plugin</artifactId>
+                <version>3.4.1</version>
+                <configuration>
+                    <sdk>
+                        <platform>16</platform>
+                    </sdk>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>com.jayway.maven.plugins.android.generation2</groupId>
+                <artifactId>android-maven-plugin</artifactId>
+                <version>3.4.1</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <nativeLibrariesDirectory>ignored</nativeLibrariesDirectory>
+                </configuration>
+            </plugin>
+
+        </plugins>
+
+    </build>
+</project>
