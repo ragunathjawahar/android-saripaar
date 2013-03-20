@@ -1,3 +1,5 @@
+[![Flattr this git repo](http://api.flattr.com/button/flattr-badge-large.png)](https://flattr.com/submit/auto?user_id=ragunathjawahar&url=https://github.com/ragunathjawahar/android-saripaar/&title=Android Saripaar&language=&tags=github&category=software) 
+
 Android Saripaar
 ----------------
 
