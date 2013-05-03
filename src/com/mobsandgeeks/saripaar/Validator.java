@@ -382,6 +382,9 @@ public class Validator {
         for (ViewRulePair pair : mViewsAndRules) {
             if (pair == null) continue;
 
+            // Validate views only if they are visible and enabled
+            if (!pair.view.isShown() || !pair.view.isEnabled()) continue;
+
             if (!pair.rule.isValid(pair.view)) {
                 failedViewRulePair = pair;
                 break;
