@@ -22,7 +22,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import android.app.Activity;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.View;
@@ -49,8 +48,7 @@ public class Validator {
     static final String TAG = Validator.class.getSimpleName();
     static final boolean DEBUG = false;
 
-    private Activity mActivity;
-    private android.support.v4.app.Fragment mSupportFragment;
+    private Object mController;
     private boolean mAnnotationsProcessed;
     private List<ViewRulePair> mViewsAndRules;
     private Map<String, Object> mProperties;
@@ -69,27 +67,16 @@ public class Validator {
     /**
      * Creates a new {@link Validator}.
      *
-     * @param activity The {@code Activity} to be validated.
+     * @param controller The instance that holds references to the Views that are
+     * being validated. Usually an {@code Activity} or a {@code Fragment}. Also accepts
+     * controller instances that have annotated {@code View} references.
      */
-    public Validator(Activity activity) {
+    public Validator(Object controller) {
         this();
-        if (activity == null) {
-            throw new IllegalArgumentException("'activity' cannot be null");
+        if (controller == null) {
+            throw new IllegalArgumentException("'controller' cannot be null");
         }
-        mActivity = activity;
-    }
-
-    /**
-     * Creates a new {@link Validator}.
-     *
-     * @param fragment The {@code Fragment} (support library) to be validated.
-     */
-    public Validator(android.support.v4.app.Fragment fragment) {
-        this();
-        if (fragment == null) {
-            throw new IllegalArgumentException("'fragment' cannot be null");
-        }
-        mSupportFragment = fragment;
+        mController = controller;
     }
 
     /**
@@ -383,7 +370,9 @@ public class Validator {
             if (pair == null) continue;
 
             // Validate views only if they are visible and enabled
-            if (!pair.view.isShown() || !pair.view.isEnabled()) continue;
+            if (pair.view != null) {
+                if (!pair.view.isShown() || !pair.view.isEnabled()) continue;
+            }
 
             if (!pair.rule.isValid(pair.view)) {
                 failedViewRulePair = pair;
@@ -461,13 +450,8 @@ public class Validator {
     private View getView(Field field) {
         try {
             field.setAccessible(true);
-            Object instance = null;
+            Object instance = mController;
 
-            if (mActivity != null) {
-                instance = mActivity;
-            } else if (mSupportFragment != null) {
-                instance = mSupportFragment;
-            }
             return (View) field.get(instance);
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
@@ -513,19 +497,13 @@ public class Validator {
 
         // Declared fields
         Class<?> superClass = null;
-        if (mActivity != null) {
-            viewFields.addAll(getDeclaredViewFields(mActivity.getClass()));
-            superClass = mActivity.getClass().getSuperclass();
-        } else if (mSupportFragment != null) {
-            viewFields.addAll(getDeclaredViewFields(mSupportFragment.getClass()));
-            superClass = mSupportFragment.getClass().getSuperclass();
+        if (mController != null) {
+            viewFields.addAll(getDeclaredViewFields(mController.getClass()));
+            superClass = mController.getClass().getSuperclass();
         }
 
         // Inherited fields
-        while (superClass != null && 
-                (Activity.class.isAssignableFrom(superClass) || 
-                        android.support.v4.app.Fragment.class.isAssignableFrom(superClass))) {
-
+        while (superClass != null && !superClass.equals(Object.class)) {
             List<Field> declaredViewFields = getDeclaredViewFields(superClass);
             if (declaredViewFields.size() > 0) {
                 viewFields.addAll(declaredViewFields);
