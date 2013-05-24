@@ -1,14 +1,14 @@
 /*
  * Copyright (C) 2012 Mobs and Geeks
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file 
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file
  * except in compliance with the License. You may obtain a copy of the License at
  *
  *      http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software distributed under the 
- * License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
- * either express or implied. See the License for the specific language governing permissions and 
+ * Unless required by applicable law or agreed to in writing, software distributed under the
+ * License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+ * either express or implied. See the License for the specific language governing permissions and
  * limitations under the License.
  */
 package com.mobsandgeeks.saripaar;
@@ -92,7 +92,7 @@ public class Validator {
         /**
          * Called when all the {@link Rule}s added to this Validator are valid.
          */
-        public void onSuccess();
+        public void onValidationSuccess();
 
         /**
          * Called if any of the {@link Rule}s fail.
@@ -100,7 +100,7 @@ public class Validator {
          * @param failedView The {@link View} that did not pass validation.
          * @param failedRule The failed {@link Rule} associated with the {@link View}.
          */
-        public void onFailure(View failedView, Rule<?> failedRule);
+        public void onValidationFailed(View failedView, Rule<?> failedRule);
 
         /**
          * Called after the validation is cancelled. This callback is called only if you run the
@@ -159,7 +159,7 @@ public class Validator {
      */
     public synchronized void validate() {
         if (mValidationListener == null) {
-            throw new IllegalStateException("Set a " + ValidationListener.class.getSimpleName() + 
+            throw new IllegalStateException("Set a " + ValidationListener.class.getSimpleName() +
                     " before attempting to validate.");
         }
 
@@ -167,9 +167,9 @@ public class Validator {
 
         ViewRulePair failedViewRulePair = validateAllRules();
         if (failedViewRulePair == null) {
-            mValidationListener.onSuccess();
+            mValidationListener.onValidationSuccess();
         } else {
-            mValidationListener.onFailure(failedViewRulePair.view, failedViewRulePair.rule);
+            mValidationListener.onValidationFailed(failedViewRulePair.view, failedViewRulePair.rule);
         }
     }
 
@@ -207,9 +207,9 @@ public class Validator {
             @Override
             protected void onPostExecute(ViewRulePair pair) {
                 if (pair == null) {
-                    mValidationListener.onSuccess();
+                    mValidationListener.onValidationSuccess();
                 } else {
-                    mValidationListener.onFailure(pair.view, pair.rule);
+                    mValidationListener.onValidationFailed(pair.view, pair.rule);
                 }
 
                 mAsyncValidationTask = null;
@@ -355,7 +355,7 @@ public class Validator {
 
     /**
      * Validates all rules added to this Validator.
-     * 
+     *
      * @return {@code null} if all {@code Rule}s are valid, else returns the failed
      *          {@code ViewRulePair}.
      */
@@ -538,7 +538,6 @@ public class Validator {
                 annotationType.equals(TextRule.class);
     }
 
-    @SuppressWarnings("rawtypes") 
     private class ViewRulePair {
         public View view;
         public Rule rule;
