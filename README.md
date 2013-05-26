@@ -98,7 +98,7 @@ The `Validator.validate()` call runs the validations and returns the result via 
 Dependencies
 ---------------------
 
- - [Android Support Library]
+ - None
 
 **Please visit the [wiki] for a complete guide on Android Saripaar.**
 
@@ -125,5 +125,4 @@ License
   [RoboGuice]: http://code.google.com/p/roboguice/
   [Validator]: https://github.com/ragunathjawahar/android-saripaar/blob/master/src/com/mobsandgeeks/saripaar/Validator.java
   [ValidationListener]: https://github.com/ragunathjawahar/android-saripaar/blob/master/src/com/mobsandgeeks/saripaar/Validator.java
-  [Android Support Library]: http://developer.android.com/tools/extras/support-library.html
   [wiki]: https://github.com/ragunathjawahar/android-saripaar/wiki
