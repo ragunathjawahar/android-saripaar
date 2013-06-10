@@ -11,6 +11,7 @@
  * either express or implied. See the License for the specific language governing permissions and 
  * limitations under the License.
  */
+
 package com.mobsandgeeks.saripaar;
 
 import java.util.LinkedHashMap;
@@ -41,7 +42,6 @@ import android.widget.ToggleButton;
  * mentioned classes and interfaces.
  *
  * @author Ragunath Jawahar <rj@mobsandgeeks.com>
- * @version 0.1
  */
 public final class Rules {
     public static final String EMPTY_STRING = "";

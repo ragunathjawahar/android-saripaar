@@ -11,7 +11,10 @@
  * either express or implied. See the License for the specific language governing permissions and 
  * limitations under the License.
  */
+
 package com.mobsandgeeks.saripaar.annotation;
+
+import android.widget.Checkable;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -21,8 +24,9 @@ import java.lang.annotation.Target;
 import com.mobsandgeeks.saripaar.Rules;
 
 /**
+ * Annotation works with {@code Views} that implement the {@link Checkable} interface.
+ *
  * @author Ragunath Jawahar <rj@mobsandgeeks.com>
- * @version 0.1
  */
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)

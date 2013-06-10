@@ -11,6 +11,7 @@
  * either express or implied. See the License for the specific language governing permissions and 
  * limitations under the License.
  */
+
 package com.mobsandgeeks.saripaar.annotation;
 
 import java.lang.annotation.ElementType;
@@ -19,8 +20,11 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
+ * Used along with the {@link Password} annotation. This annotation makes sure that the
+ * contents of the confirm password {@code EditText} matches the contents of the password
+ * {@code EditText}.
+ *
  * @author Ragunath Jawahar <rj@mobsandgeeks.com>
- * @version 0.1
  */
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)

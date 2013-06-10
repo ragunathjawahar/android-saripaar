@@ -11,6 +11,7 @@
  * either express or implied. See the License for the specific language governing permissions and 
  * limitations under the License.
  */
+
 package com.mobsandgeeks.saripaar;
 
 import java.lang.annotation.Annotation;
@@ -35,8 +36,10 @@ import com.mobsandgeeks.saripaar.annotation.Required;
 import com.mobsandgeeks.saripaar.annotation.TextRule;
 
 /**
+ * Class contains {@code static} methods that return appropriate {@link Rule}s for Saripaar
+ * annotations.
+ *
  * @author Ragunath Jawahar <rj@mobsandgeeks.com>
- * @version 0.1
  */
 class AnnotationToRuleConverter {
     // Debug

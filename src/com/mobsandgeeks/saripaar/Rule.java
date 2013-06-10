@@ -11,6 +11,7 @@
  * either express or implied. See the License for the specific language governing permissions and 
  * limitations under the License.
  */
+
 package com.mobsandgeeks.saripaar;
 
 import android.view.View;
@@ -20,7 +21,6 @@ import android.widget.Checkable;
  * Abstract class that allows to define validation rules for {@link View}s.
  *
  * @author Ragunath Jawahar <rj@mobsandgeeks.com>
- * @version 0.1
  *
  * @param <T> Usually the {@link View} this rule is applicable for. Sometimes may be interfaces
  * such as {@link Checkable} which are indeed {@link View} components or widgets.

@@ -11,6 +11,7 @@
  * either express or implied. See the License for the specific language governing permissions and 
  * limitations under the License.
  */
+
 package com.mobsandgeeks.saripaar.annotation;
 
 import com.mobsandgeeks.saripaar.Rules;
@@ -21,8 +22,9 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
+ * Enables to specify a regular expression for the {@code EditText}.
+ *
  * @author Ragunath Jawahar <rj@mobsandgeeks.com>
- * @version 0.1
  */
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)

@@ -11,6 +11,7 @@
  * either express or implied. See the License for the specific language governing permissions and 
  * limitations under the License.
  */
+
 package com.mobsandgeeks.saripaar.annotation;
 
 import java.lang.annotation.ElementType;
@@ -21,8 +22,10 @@ import java.lang.annotation.Target;
 import com.mobsandgeeks.saripaar.Rules;
 
 /**
+ * Specifies constraints such as min length, max length and trim on textual data contained
+ * in {@code View}s.
+ *
  * @author Ragunath Jawahar <rj@mobsandgeeks.com>
- * @version 0.1
  */
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)

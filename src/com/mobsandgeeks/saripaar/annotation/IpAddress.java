@@ -11,6 +11,7 @@
  * either express or implied. See the License for the specific language governing permissions and 
  * limitations under the License.
  */
+
 package com.mobsandgeeks.saripaar.annotation;
 
 import java.lang.annotation.ElementType;
@@ -21,8 +22,9 @@ import java.lang.annotation.Target;
 import com.mobsandgeeks.saripaar.Rules;
 
 /**
+ * Allows only valid IP Addresses on the annotated {@code View}.
+ *
  * @author Ragunath Jawahar <rj@mobsandgeeks.com>
- * @version 0.1
  */
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
