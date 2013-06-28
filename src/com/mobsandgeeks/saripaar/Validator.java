@@ -85,11 +85,6 @@ public class Validator {
     public interface ValidationListener {
 
         /**
-         * Called before the Validator begins validation.
-         */
-        public void preValidation();
-
-        /**
          * Called when all the {@link Rule}s added to this Validator are valid.
          */
         public void onValidationSuccess();
@@ -101,12 +96,6 @@ public class Validator {
          * @param failedRule The failed {@link Rule} associated with the {@link View}.
          */
         public void onValidationFailed(View failedView, Rule<?> failedRule);
-
-        /**
-         * Called after the validation is cancelled. This callback is called only if you run the
-         * Validator asynchronously by calling the {@code validateAsync()} method.
-         */
-        public void onValidationCancelled();
     }
 
     /**
@@ -163,8 +152,6 @@ public class Validator {
                     " before attempting to validate.");
         }
 
-        mValidationListener.preValidation();
-
         ViewRulePair failedViewRulePair = validateAllRules();
         if (failedViewRulePair == null) {
             mValidationListener.onValidationSuccess();
@@ -195,11 +182,6 @@ public class Validator {
         mAsyncValidationTask = new AsyncTask<Void, Void, ViewRulePair>() {
 
             @Override
-            protected void onPreExecute() {
-                mValidationListener.preValidation();
-            }
-
-            @Override
             protected ViewRulePair doInBackground(Void... params) {
                 return validateAllRules();
             }
@@ -218,7 +200,6 @@ public class Validator {
             @Override
             protected void onCancelled() {
                 mAsyncValidationTask = null;
-                mValidationListener.onValidationCancelled();
             }
         };
 
