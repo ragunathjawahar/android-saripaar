@@ -14,9 +14,6 @@
 
 package com.mobsandgeeks.saripaar;
 
-import java.util.LinkedHashMap;
-import java.util.Set;
-
 import android.inputmethodservice.ExtractEditText;
 import android.text.TextUtils;
 import android.view.View;
@@ -30,6 +27,9 @@ import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.ToggleButton;
+
+import java.util.LinkedHashMap;
+import java.util.Set;
 
 /**
  * A built-in class with a collection of common rules. {@link TextView} references notable direct
@@ -549,6 +549,28 @@ public final class Rules {
             @Override
             public boolean isValid(Spinner spinner) {
                 return spinner.getSelectedItemPosition() == expectedPosition;
+            }
+        };
+    }
+
+    /**
+     * Checks if the {@link Spinner}'s selected item's position (obtained by calling
+     * {@code getSelectionItemPosition()}) greater than expected selection index.
+     *
+     * @param failureMessage The failure message for this {@link Rule}.
+     * @param expectedPosition The position to be compared with the position returned by
+     *          calling {@code getSelectedItemPosition()} on the {@link Spinner}.
+     *
+     * @return True if both the {@link String} values are equal.
+     */
+    public static Rule<Spinner> spinnerNotChosen(final String failureMessage,
+                                                 final int expectedPosition) {
+
+        return new Rule<Spinner>(failureMessage) {
+
+            @Override
+            public boolean isValid(Spinner spinner) {
+                return spinner.getSelectedItemPosition() > expectedPosition;
             }
         };
     }
