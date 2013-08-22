@@ -10,10 +10,10 @@ Why Android Saripaar?
 ---------------------
 
  - Declarative style validation powered by **Annotations**.
- - Does both **Synchronous** and **Asynchronous** validations, you don't have to worry about threading.
+ - **Synchronous** and **Asynchronous** validations, you don't have to worry about threading.
  - Works with **Stock Android Widgets**, no custom view dependencies.
  - Quick to setup, just download the [jar] and include it in your `libs` project folder.
- - Takes most of your validation logic out of your code.
+ - Isolates validation logic using rules.
  - Compatible with other annotation frameworks such as **[AndroidAnnotations]**, **[RoboGuice]**, etc.,
 
 Quick Start
@@ -49,14 +49,13 @@ public void onCreate() {
     // More code…
 }
 ```
-You will need a `Validator` for the current `Activity` and also a `ValidationListener` for callbacks on validation events.
+You will need a `Validator` and a `ValidationListener` for receiving callbacks on validation events.
 
 **Step 3 - Implement a [ValidationListener]**
 ```java
 public class RegistrationActivity implements ValidationListener {
 
     public void onSuccess() {
-        // Create a new account…
         Toast.makeText(this, "Yay! we got it right!", Toast.LENGTH_SHORT).show();
     }
 
@@ -71,29 +70,21 @@ public class RegistrationActivity implements ValidationListener {
         }
     }
 
-    public void preValidation() {
-        // Do nothing…
-    }
-
-    public void onValidationCancelled() {
-        // Do nothing
-    }
 }
 ```
  - `onSuccess()` - Called when all your views pass all validations.
  - `onFailure(View, Rule<?>)` - Called when a `Rule` fails, you receive the `View` along with the `Rule` that failed.
- - `preValidation()` - Called before the validation starts, useful during asynchronous validations.
- - `onValidationCancelled()` - Called when an asynchronous validation is cancelled, never called during synchronous validations.
 
-**Step 4 - Perform validation**
+**Step 4 - Validate**
 ```java
 registerButton.setOnClickListener(new OnClickListener() {
+
     public void onClick(View v) {
         validator.validate();
     }
 });
 ```
-The `Validator.validate()` call runs the validations and returns the result via appropriate callbacks on the `ValidationListener`. You can run validations on a background `AsyncTask` by calling the `Validator.validateAsync()` method. You can call both the methods from any event listener such as the `OnClickListener`, `TextWatcher`, `OnFocusChangedListener`, `OnTouchListener`, etc.,
+The `Validator.validate()` call runs the validations and returns the result via appropriate callbacks on the `ValidationListener`. You can run validations on a background `AsyncTask` by calling the `Validator.validateAsync()` method.
 
 Wiki
 ---------------------

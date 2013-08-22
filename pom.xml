@@ -1,46 +1,79 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.mobsandgeeks.saripaar</groupId>
+    <parent>
+        <groupId>org.sonatype.oss</groupId>
+        <artifactId>oss-parent</artifactId>
+        <version>7</version>
+    </parent>
+
+    <groupId>com.mobsandgeeks</groupId>
     <artifactId>android-saripaar</artifactId>
-    <version>1.0</version>
-    <name>android-saripaar</name>
-    <packaging>apklib</packaging>
+    <packaging>jar</packaging>
+    <version>1.0-SNAPSHOT</version>
+
+    <name>Android Saripaar</name>
+    <description>Rule-based UI validation library for Android</description>
+    <url>https://github.com/ragunathjawahar/android-saripaar</url>
+    <inceptionYear>2012</inceptionYear>
+
+    <developers>
+        <developer>
+            <name>Ragunath Jawahar</name>
+            <email>rj@mobsandgeeks.com</email>
+            <id>ragunathjawahar</id>
+            <url>http://mobsandgeeks.com</url>
+            <timezone>+5:30</timezone>
+            <roles>
+                <role>developer</role>
+            </roles>
+        </developer>
+    </developers>
+
+    <licenses>
+        <license>
+            <name>Apache License Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <scm>
+        <url>https://github.com/ragunathjawahar/android-saripaar</url>
+        <connection>scm:git:git@github.com:ragunathjawahar/android-saripaar.git</connection>
+    </scm>
+
+    <organization>
+        <name>Mobs &amp; Geeks</name>
+        <url>http://mobsandgeeks.com</url>
+    </organization>
+
+    <issueManagement>
+        <system>GitHub Issues</system>
+        <url>https://github.com/ragunathjawahar/android-saripaar/issues</url>
+    </issueManagement>
 
     <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.6</java.version>
+        <android.version>4.1.1.4</android.version>
+        <android.platform>16</android.platform>
     </properties>
-
-    <!--<repositories>-->
-        <!--<repository>-->
-            <!--<id>my-repo</id>-->
-            <!--<name>custom_lib</name>-->
-            <!--<url>http://x.oudar.free.fr/maven2</url>-->
-            <!--</repository>-->
-        <!--</repositories>-->
 
     <dependencies>
         <dependency>
             <groupId>com.google.android</groupId>
             <artifactId>android</artifactId>
+            <version>${android.version}</version>
             <scope>provided</scope>
-            <version>4.1.1.4</version>
-        </dependency>
-        <dependency>
-            <groupId>com.google.android</groupId>
-            <artifactId>support-v4</artifactId>
-            <version>r7</version>
         </dependency>
     </dependencies>
 
     <build>
         <sourceDirectory>src</sourceDirectory>
-
         <plugins>
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -55,24 +88,30 @@
                 <groupId>com.jayway.maven.plugins.android.generation2</groupId>
                 <artifactId>android-maven-plugin</artifactId>
                 <version>3.4.1</version>
+                <extensions>true</extensions>
                 <configuration>
+                    <androidManifestFile>${project.basedir}/AndroidManifest.xml</androidManifestFile>
+                    <nativeLibrariesDirectory>ignored</nativeLibrariesDirectory>
                     <sdk>
-                        <platform>16</platform>
+                        <platform>${android.platform}</platform>
                     </sdk>
                 </configuration>
             </plugin>
 
             <plugin>
-                <groupId>com.jayway.maven.plugins.android.generation2</groupId>
-                <artifactId>android-maven-plugin</artifactId>
-                <version>3.4.1</version>
-                <extensions>true</extensions>
-                <configuration>
-                    <nativeLibrariesDirectory>ignored</nativeLibrariesDirectory>
-                </configuration>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>1.4</version>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
-
         </plugins>
-
     </build>
 </project>
