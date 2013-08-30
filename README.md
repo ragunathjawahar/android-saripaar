@@ -55,11 +55,11 @@ You will need a `Validator` and a `ValidationListener` for receiving callbacks o
 ```java
 public class RegistrationActivity implements ValidationListener {
 
-    public void onSuccess() {
+    public void onValidationSuccess() {
         Toast.makeText(this, "Yay! we got it right!", Toast.LENGTH_SHORT).show();
     }
 
-    public void onFailure(View failedView, Rule<?> failedRule) {
+    public void onValidationFailed(View failedView, Rule<?> failedRule) {
         String message = failedRule.getFailureMessage();
 
         if (failedView instanceof EditText) {
