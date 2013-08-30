@@ -440,7 +440,7 @@ public final class Rules {
                 String actualDouble = getText(view, true);
                 if (actualDouble != null) {
                     valid = actualDouble.matches(REGEX_DECIMAL) ?
-                            expectedDouble > Double.parseDouble(actualDouble) : false;
+                            Double.parseDouble(actualDouble) > expectedDouble : false;
                 }
 
                 return valid;
