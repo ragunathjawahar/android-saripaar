@@ -87,7 +87,7 @@ public class Validator {
         /**
          * Called when all the {@link Rule}s added to this Validator are valid.
          */
-        public void onValidationSuccess();
+        public void onValidationSucceeded();
 
         /**
          * Called if any of the {@link Rule}s fail.
@@ -154,7 +154,7 @@ public class Validator {
 
         ViewRulePair failedViewRulePair = validateAllRules();
         if (failedViewRulePair == null) {
-            mValidationListener.onValidationSuccess();
+            mValidationListener.onValidationSucceeded();
         } else {
             mValidationListener.onValidationFailed(failedViewRulePair.view, failedViewRulePair.rule);
         }
@@ -189,7 +189,7 @@ public class Validator {
             @Override
             protected void onPostExecute(ViewRulePair pair) {
                 if (pair == null) {
-                    mValidationListener.onValidationSuccess();
+                    mValidationListener.onValidationSucceeded();
                 } else {
                     mValidationListener.onValidationFailed(pair.view, pair.rule);
                 }

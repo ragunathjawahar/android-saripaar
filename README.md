@@ -55,7 +55,7 @@ You will need a `Validator` and a `ValidationListener` for receiving callbacks o
 ```java
 public class RegistrationActivity implements ValidationListener {
 
-    public void onValidationSuccess() {
+    public void onValidationSucceeded() {
         Toast.makeText(this, "Yay! we got it right!", Toast.LENGTH_SHORT).show();
     }
 
@@ -72,8 +72,8 @@ public class RegistrationActivity implements ValidationListener {
 
 }
 ```
- - `onSuccess()` - Called when all your views pass all validations.
- - `onFailure(View, Rule<?>)` - Called when a `Rule` fails, you receive the `View` along with the `Rule` that failed.
+ - `onValidationSucceeded()` - Called when all your views pass all validations.
+ - `onValidationFailed(View, Rule<?>)` - Called when a `Rule` fails, you receive the `View` along with the `Rule` that failed.
 
 **Step 4 - Validate**
 ```java
