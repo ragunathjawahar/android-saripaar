@@ -64,7 +64,7 @@ public class RegistrationActivity implements ValidationListener {
 
         if (failedView instanceof EditText) {
             failedView.requestFocus();
-            failedView.setError(message);
+            ((EditText) failedView).setError(message);
         } else {
             Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
         }
