@@ -346,6 +346,11 @@ public class Validator {
             mAnnotationsProcessed = true;
         }
 
+        if (mViewsAndRules.size() == 0) {
+            Log.i(TAG, "No rules found. Passing validation by default.");
+            return null;
+        }
+
         ViewRulePair failedViewRulePair = null;
         for (ViewRulePair pair : mViewsAndRules) {
             if (pair == null) continue;
