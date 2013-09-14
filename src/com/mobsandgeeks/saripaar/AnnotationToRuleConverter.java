@@ -167,7 +167,7 @@ class AnnotationToRuleConverter {
             double number = Double.parseDouble(ltNumber);
             switch (numberRule.type()) {
             case INTEGER:   rules.add(Rules.lt(null, ((int) number)));   break;
-            case LONG:      rules.add(Rules.lt(null, Long.parseLong(ltNumber)));     break;
+            case LONG:      rules.add(Rules.lt(null, ((long) number)));  break;
             case FLOAT:     rules.add(Rules.lt(null, Float.parseFloat(ltNumber)));   break;
             case DOUBLE:    rules.add(Rules.lt(null, Double.parseDouble(ltNumber))); break;
             }
@@ -177,7 +177,7 @@ class AnnotationToRuleConverter {
             double number = Double.parseDouble(gtNumber);
             switch (numberRule.type()) {
             case INTEGER:   rules.add(Rules.gt(null, ((int) number)));  break;
-            case LONG:      rules.add(Rules.gt(null, Long.parseLong(gtNumber)));     break;
+            case LONG:      rules.add(Rules.gt(null, ((long) number))); break;
             case FLOAT:     rules.add(Rules.gt(null, Float.parseFloat(gtNumber)));   break;
             case DOUBLE:    rules.add(Rules.gt(null, Double.parseDouble(gtNumber))); break;
             }
@@ -187,7 +187,7 @@ class AnnotationToRuleConverter {
             double number = Double.parseDouble(eqNumber);
             switch (numberRule.type()) {
             case INTEGER:   rules.add(Rules.eq(null, ((int) number)));  break;
-            case LONG:      rules.add(Rules.eq(null, Long.parseLong(eqNumber)));     break;
+            case LONG:      rules.add(Rules.eq(null, ((long) number))); break;
             case FLOAT:     rules.add(Rules.eq(null, Float.parseFloat(eqNumber)));   break;
             case DOUBLE:    rules.add(Rules.eq(null, Double.parseDouble(eqNumber))); break;
             }
