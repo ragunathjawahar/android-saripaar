@@ -248,13 +248,13 @@ public final class Rules {
      * greater than the specified {@code int} value.
      *
      * @param failureMessage The failure message for this {@link Rule}.
-     * @param expectedInt {@code int} value to be compared with the text returned by
+     * @param lesserInt {@code int} value to be compared with the text returned by
      *          {@code getText()}.
      *
      * @return True if the input text is greater to the {@code expectedInt{@code  value.
      */
-    public static Rule<TextView> gt(final String failureMessage, final int expectedInt) {
-        return gt(failureMessage, (long) expectedInt);
+    public static Rule<TextView> gt(final String failureMessage, final int lesserInt) {
+        return gt(failureMessage, (long) lesserInt);
     }
 
     /**
@@ -262,13 +262,13 @@ public final class Rules {
      * than the specified {@code int} value.
      *
      * @param failureMessage The failure message for this {@link Rule}.
-     * @param expectedInt {@code int} value to be compared with the text returned by
+     * @param greaterInt {@code int} value to be compared with the text returned by
      *          {@code getText()}.
      *
      * @return True if the input text is less than the {@code expectedInt{@code  value.
      */
-    public static Rule<TextView> lt(final String failureMessage, final int expectedInt) {
-        return lt(failureMessage, (long) expectedInt);
+    public static Rule<TextView> lt(final String failureMessage, final int greaterInt) {
+        return lt(failureMessage, (long) greaterInt);
     }
 
     /**
@@ -303,12 +303,12 @@ public final class Rules {
      * greater than the specified {@code long} value.
      *
      * @param failureMessage The failure message for this {@link Rule}.
-     * @param expectedLong {@code long} value to be compared with the text returned by
+     * @param lesserLong {@code long} value to be compared with the text returned by
      *          {@code getText()}.
      *
      * @return True if the input text is greater than the {@code expectedLong{@code  value.
      */
-    public static Rule<TextView> gt(final String failureMessage, final long expectedLong) {
+    public static Rule<TextView> gt(final String failureMessage, final long lesserLong) {
         return new Rule<TextView>(failureMessage) {
 
             @Override
@@ -317,7 +317,7 @@ public final class Rules {
                 String actualLong = getText(textView, true);
                 if (actualLong != null) {
                     valid = actualLong.matches(REGEX_INTEGER) ?
-                            Long.parseLong(actualLong) > expectedLong : false;
+                            Long.parseLong(actualLong) > lesserLong : false;
                 }
 
                 return valid;
@@ -330,12 +330,12 @@ public final class Rules {
      * than the specified {@code long} value.
      *
      * @param failureMessage The failure message for this {@link Rule}.
-     * @param expectedLong {@code long} value to be compared with the text returned by
+     * @param greaterLong {@code long} value to be compared with the text returned by
      *          {@code getText()}.
      *
      * @return True if the input text is less than the {@code expectedLong{@code  value.
      */
-    public static Rule<TextView> lt(final String failureMessage, final long expectedLong) {
+    public static Rule<TextView> lt(final String failureMessage, final long greaterLong) {
         return new Rule<TextView>(failureMessage) {
 
             @Override
@@ -344,7 +344,7 @@ public final class Rules {
                 String actualLong = getText(textView, true);
                 if (actualLong != null) {
                     valid = actualLong.matches(REGEX_INTEGER) ?
-                            Long.parseLong(actualLong) < expectedLong : false;
+                            Long.parseLong(actualLong) < greaterLong : false;
                 }
 
                 return valid;
@@ -363,7 +363,20 @@ public final class Rules {
      * @return True if the input text is equal to the {@code expectedFloat{@code  value.
      */
     public static Rule<TextView> eq(final String failureMessage, final float expectedFloat) {
-        return eq(failureMessage, (double) expectedFloat);
+        return new Rule<TextView>(failureMessage) {
+
+            @Override
+            public boolean isValid(TextView view) {
+                boolean valid = false;
+                String actualFloat = getText(view, true);
+                if (actualFloat != null) {
+                    valid = actualFloat.matches(REGEX_DECIMAL) ?
+                            Float.parseFloat(actualFloat) == expectedFloat : false;
+                }
+
+                return valid;
+            }
+        };
     }
 
     /**
@@ -371,13 +384,26 @@ public final class Rules {
      * greater than the specified {@code float} value.
      *
      * @param failureMessage The failure message for this {@link Rule}.
-     * @param expectedFloat {@code float} value to be compared with the text returned by
+     * @param lesserFloat {@code float} value to be compared with the text returned by
      *          {@code getText()}.
      *
      * @return True if the input text is equal to the {@code expectedFloat{@code  value.
      */
-    public static Rule<TextView> gt(final String failureMessage, final float expectedFloat) {
-        return gt(failureMessage, (double) expectedFloat);
+    public static Rule<TextView> gt(final String failureMessage, final float lesserFloat) {
+        return new Rule<TextView>(failureMessage) {
+
+            @Override
+            public boolean isValid(TextView view) {
+                boolean valid = false;
+                String actualFloat = getText(view, true);
+                if (actualFloat != null) {
+                    valid = actualFloat.matches(REGEX_DECIMAL) ?
+                            Float.parseFloat(actualFloat) > lesserFloat : false;
+                }
+
+                return valid;
+            }
+        };
     }
 
     /**
@@ -385,13 +411,26 @@ public final class Rules {
      * less than the specified {@code float} value.
      *
      * @param failureMessage The failure message for this {@link Rule}.
-     * @param expectedFloat {@code float} value to be compared with the text returned by
+     * @param greaterFloat {@code float} value to be compared with the text returned by
      *          {@code getText()}.
      *
      * @return True if the input text is less than the {@code expectedFloat{@code  value.
      */
-    public static Rule<TextView> lt(final String failureMessage, final float expectedFloat) {
-        return lt(failureMessage, (double) expectedFloat);
+    public static Rule<TextView> lt(final String failureMessage, final float greaterFloat) {
+        return new Rule<TextView>(failureMessage) {
+
+            @Override
+            public boolean isValid(TextView view) {
+                boolean valid = false;
+                String actualFloat = getText(view, true);
+                if (actualFloat != null) {
+                    valid = actualFloat.matches(REGEX_DECIMAL) ?
+                            Float.parseFloat(actualFloat) < greaterFloat : false;
+                }
+
+                return valid;
+            }
+        };
     }
 
     /**
@@ -413,7 +452,7 @@ public final class Rules {
                 String actualDouble = getText(view, true);
                 if (actualDouble != null) {
                     valid = actualDouble.matches(REGEX_DECIMAL) ?
-                            expectedDouble == Double.parseDouble(actualDouble) : false;
+                            Double.parseDouble(actualDouble) == expectedDouble : false;
                 }
 
                 return valid;
@@ -426,12 +465,12 @@ public final class Rules {
      * greater than the specified {@code double} value.
      *
      * @param failureMessage The failure message for this {@link Rule}.
-     * @param expectedDouble {@code double} value to be compared with the text returned by
+     * @param lesserDouble {@code double} value to be compared with the text returned by
      *          {@code getText()}.
      *
      * @return True if the input text is greater than the {@code expectedDouble{@code  value.
      */
-    public static Rule<TextView> gt(final String failureMessage, final double expectedDouble) {
+    public static Rule<TextView> gt(final String failureMessage, final double lesserDouble) {
         return new Rule<TextView>(failureMessage) {
 
             @Override
@@ -440,7 +479,7 @@ public final class Rules {
                 String actualDouble = getText(view, true);
                 if (actualDouble != null) {
                     valid = actualDouble.matches(REGEX_DECIMAL) ?
-                            Double.parseDouble(actualDouble) > expectedDouble : false;
+                            Double.parseDouble(actualDouble) > lesserDouble : false;
                 }
 
                 return valid;
@@ -453,12 +492,12 @@ public final class Rules {
      * less than the specified {@code double} value.
      *
      * @param failureMessage The failure message for this {@link Rule}.
-     * @param expectedDouble {@code double} value to be compared with the text returned by
+     * @param greaterDouble {@code double} value to be compared with the text returned by
      *          {@code getText()}.
      *
      * @return True if the input text is less than the {@code expectedDouble{@code  value.
      */
-    public static Rule<TextView> lt(final String failureMessage, final double expectedDouble) {
+    public static Rule<TextView> lt(final String failureMessage, final double greaterDouble) {
         return new Rule<TextView>(failureMessage) {
 
             @Override
@@ -467,7 +506,7 @@ public final class Rules {
                 String actualDouble = getText(view, true);
                 if (actualDouble != null) {
                     valid = actualDouble.matches(REGEX_DECIMAL) ?
-                            expectedDouble < Double.parseDouble(actualDouble) : false;
+                            Double.parseDouble(actualDouble) < greaterDouble : false;
                 }
 
                 return valid;
