@@ -164,8 +164,9 @@ class AnnotationToRuleConverter {
 
         if (numberRule.lt() != Double.MIN_VALUE) {
             String ltNumber = String.valueOf(numberRule.lt());
+            double number = Double.parseDouble(ltNumber);
             switch (numberRule.type()) {
-            case INTEGER:   rules.add(Rules.lt(null, Integer.parseInt(ltNumber)));   break;
+            case INTEGER:   rules.add(Rules.lt(null, ((int) number)));   break;
             case LONG:      rules.add(Rules.lt(null, Long.parseLong(ltNumber)));     break;
             case FLOAT:     rules.add(Rules.lt(null, Float.parseFloat(ltNumber)));   break;
             case DOUBLE:    rules.add(Rules.lt(null, Double.parseDouble(ltNumber))); break;
@@ -173,20 +174,22 @@ class AnnotationToRuleConverter {
         }
         if (numberRule.gt() != Double.MAX_VALUE) {
             String gtNumber = String.valueOf(numberRule.gt());
+            double number = Double.parseDouble(gtNumber);
             switch (numberRule.type()) {
-            case INTEGER:   rules.add(Rules.gt(null, Integer.parseInt(gtNumber)));   break;
+            case INTEGER:   rules.add(Rules.gt(null, ((int) number)));  break;
             case LONG:      rules.add(Rules.gt(null, Long.parseLong(gtNumber)));     break;
             case FLOAT:     rules.add(Rules.gt(null, Float.parseFloat(gtNumber)));   break;
             case DOUBLE:    rules.add(Rules.gt(null, Double.parseDouble(gtNumber))); break;
             }
         }
         if (numberRule.eq() != Double.MAX_VALUE) {
-            String gtNumber = String.valueOf(numberRule.gt());
+            String eqNumber = String.valueOf(numberRule.eq());
+            double number = Double.parseDouble(eqNumber);
             switch (numberRule.type()) {
-            case INTEGER:   rules.add(Rules.eq(null, Integer.parseInt(gtNumber)));   break;
-            case LONG:      rules.add(Rules.eq(null, Long.parseLong(gtNumber)));     break;
-            case FLOAT:     rules.add(Rules.eq(null, Float.parseFloat(gtNumber)));   break;
-            case DOUBLE:    rules.add(Rules.eq(null, Double.parseDouble(gtNumber))); break;
+            case INTEGER:   rules.add(Rules.eq(null, ((int) number)));  break;
+            case LONG:      rules.add(Rules.eq(null, Long.parseLong(eqNumber)));     break;
+            case FLOAT:     rules.add(Rules.eq(null, Float.parseFloat(eqNumber)));   break;
+            case DOUBLE:    rules.add(Rules.eq(null, Double.parseDouble(eqNumber))); break;
             }
         }
 
