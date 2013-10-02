@@ -1,5 +1,6 @@
 Android Saripaar
-----------------
+================
+![Logo](logo.png)
 
 **சரிபார்** - sari-paar (Tamil for "to check", "verify" or "validate")
 
@@ -10,6 +11,7 @@ Why Android Saripaar?
 ---------------------
 
  - Declarative style validation powered by **Annotations**.
+ - **Extensible**
  - **Synchronous** and **Asynchronous** validations, you don't have to worry about threading.
  - Works with **Stock Android Widgets**, no custom view dependencies.
  - Quick to setup, just download the [jar] and include it in your `libs` project folder.
