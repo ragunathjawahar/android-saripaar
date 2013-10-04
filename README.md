@@ -109,6 +109,8 @@ License
     See the License for the specific language governing permissions and
     limitations under the License.
 
+<sub>Saripaar Logo © 2013, Mobs & Geeks.<sub>
+
   [jar]: https://github.com/ragunathjawahar/android-saripaar/downloads
   [Saripaar Annotations]: https://github.com/ragunathjawahar/android-saripaar/tree/master/src/com/mobsandgeeks/saripaar/annotation
   [AndroidAnnotations]: https://github.com/excilys/androidannotations
