@@ -12,7 +12,7 @@
     <groupId>com.mobsandgeeks</groupId>
     <artifactId>android-saripaar</artifactId>
     <packaging>jar</packaging>
-    <version>1.0.0</version>
+    <version>1.0.0-SNAPSHOT</version>
 
     <name>Android Saripaar</name>
     <description>Rule-based UI validation library for Android</description>

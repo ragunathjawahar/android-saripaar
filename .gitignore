@@ -27,3 +27,6 @@ libs/
 # IntelliJ projects
 .idea/
 *.iml
+
+# Maven
+release.properties
