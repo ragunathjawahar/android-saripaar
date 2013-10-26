@@ -12,7 +12,7 @@
     <groupId>com.mobsandgeeks</groupId>
     <artifactId>android-saripaar</artifactId>
     <packaging>jar</packaging>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0.0</version>
 
     <name>Android Saripaar</name>
     <description>Rule-based UI validation library for Android</description>
@@ -41,8 +41,9 @@
     </licenses>
 
     <scm>
-        <url>https://github.com/ragunathjawahar/android-saripaar</url>
         <connection>scm:git:git@github.com:ragunathjawahar/android-saripaar.git</connection>
+        <developerConnection>scm:git:git@github.com:ragunathjawahar/android-saripaar.git</developerConnection>
+        <url>git@github.com:ragunathjawahar/android-saripaar.git</url>
     </scm>
 
     <organization>
@@ -60,6 +61,10 @@
         <java.version>1.6</java.version>
         <android.version>4.1.1.4</android.version>
         <android.platform>16</android.platform>
+        <maven.compiler.plugin>2.5</maven.compiler.plugin>
+        <android.maven.plugin>3.4.1</android.maven.plugin>
+        <maven.gpg.plugin>1.4</maven.gpg.plugin>
+        <maven.source.plugin>2.2.1</maven.source.plugin>
     </properties>
 
     <dependencies>
@@ -77,17 +82,16 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>2.5</version>
+                <version>${maven.compiler.plugin}</version>
                 <configuration>
                     <source>${java.version}</source>
                     <target>${java.version}</target>
                 </configuration>
             </plugin>
-
             <plugin>
                 <groupId>com.jayway.maven.plugins.android.generation2</groupId>
                 <artifactId>android-maven-plugin</artifactId>
-                <version>3.4.1</version>
+                <version>${android.maven.plugin}</version>
                 <extensions>true</extensions>
                 <configuration>
                     <androidManifestFile>${project.basedir}/AndroidManifest.xml</androidManifestFile>
@@ -97,11 +101,10 @@
                     </sdk>
                 </configuration>
             </plugin>
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-gpg-plugin</artifactId>
-                <version>1.4</version>
+                <version>${maven.gpg.plugin}</version>
                 <executions>
                     <execution>
                         <id>sign-artifacts</id>
@@ -112,6 +115,53 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.9.1</version>
+                <executions>
+                    <execution>
+                        <id>javadoc-jar</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                        <configuration>
+                            <includeDependencySources>false</includeDependencySources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
+
+    <profiles>
+        <profile>
+            <id>release-sign-artifacts</id>
+            <activation>
+                <property>
+                    <name>performRelease</name>
+                    <value>true</value>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <version>${maven.gpg.plugin}</version>
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
 </project>

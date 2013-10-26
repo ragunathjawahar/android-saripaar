@@ -188,7 +188,7 @@ public final class Rules {
      * @param expectedString {@link String} value to be compared with the text returned by
      *          {@code getText()}. {@code null} is treated as empty {@link String}.
      *
-     * @return True if the text matches the {@code expectedString{@code  value, false otherwise.
+     * @return True if the text matches the {@code expectedString} value, false otherwise.
      */
     public static Rule<TextView> eq(final String failureMessage, final String expectedString) {
         return eq(failureMessage, expectedString, false, false);
@@ -204,7 +204,7 @@ public final class Rules {
      * @param ignoreCase Specifies whether the text's case differences should be ignored.
      * @param trimInput Specifies whether to trim the text returned by {@code getText()}.
      *
-     * @return True if the text matches the {@code expectedString{@code  value, false otherwise. The
+     * @return True if the text matches the {@code expectedString} value, false otherwise. The
      *          return value is affected by {@code ignoreCase} and {@code trimInput}
      *          parameters.
      */
@@ -237,7 +237,7 @@ public final class Rules {
      * @param expectedInt {@code int} value to be compared with the text returned by
      *          {@code getText()}.
      *
-     * @return True if the input text is equal to the {@code expectedInt{@code  value.
+     * @return True if the input text is equal to the {@code expectedInt} value.
      */
     public static Rule<TextView> eq(final String failureMessage, final int expectedInt) {
         return eq(failureMessage, (long) expectedInt);
@@ -251,7 +251,7 @@ public final class Rules {
      * @param lesserInt {@code int} value to be compared with the text returned by
      *          {@code getText()}.
      *
-     * @return True if the input text is greater to the {@code expectedInt{@code  value.
+     * @return True if the input text is greater to the {@code expectedInt} value.
      */
     public static Rule<TextView> gt(final String failureMessage, final int lesserInt) {
         return gt(failureMessage, (long) lesserInt);
@@ -265,7 +265,7 @@ public final class Rules {
      * @param greaterInt {@code int} value to be compared with the text returned by
      *          {@code getText()}.
      *
-     * @return True if the input text is less than the {@code expectedInt{@code  value.
+     * @return True if the input text is less than the {@code expectedInt} value.
      */
     public static Rule<TextView> lt(final String failureMessage, final int greaterInt) {
         return lt(failureMessage, (long) greaterInt);
@@ -279,7 +279,7 @@ public final class Rules {
      * @param expectedLong {@code long} value to be compared with the text returned by
      *          {@code getText()}.
      *
-     * @return True if the input text is equal to the {@code expectedLong{@code  value.
+     * @return True if the input text is equal to the {@code expectedLong} value.
      */
     public static Rule<TextView> eq(final String failureMessage, final long expectedLong) {
         return new Rule<TextView>(failureMessage) {
@@ -306,7 +306,7 @@ public final class Rules {
      * @param lesserLong {@code long} value to be compared with the text returned by
      *          {@code getText()}.
      *
-     * @return True if the input text is greater than the {@code expectedLong{@code  value.
+     * @return True if the input text is greater than the {@code expectedLong} value.
      */
     public static Rule<TextView> gt(final String failureMessage, final long lesserLong) {
         return new Rule<TextView>(failureMessage) {
@@ -333,7 +333,7 @@ public final class Rules {
      * @param greaterLong {@code long} value to be compared with the text returned by
      *          {@code getText()}.
      *
-     * @return True if the input text is less than the {@code expectedLong{@code  value.
+     * @return True if the input text is less than the {@code expectedLong} value.
      */
     public static Rule<TextView> lt(final String failureMessage, final long greaterLong) {
         return new Rule<TextView>(failureMessage) {
@@ -360,7 +360,7 @@ public final class Rules {
      * @param expectedFloat {@code float} value to be compared with the text returned by
      *          {@code getText()}.
      *
-     * @return True if the input text is equal to the {@code expectedFloat{@code  value.
+     * @return True if the input text is equal to the {@code expectedFloat} value.
      */
     public static Rule<TextView> eq(final String failureMessage, final float expectedFloat) {
         return new Rule<TextView>(failureMessage) {
@@ -387,7 +387,7 @@ public final class Rules {
      * @param lesserFloat {@code float} value to be compared with the text returned by
      *          {@code getText()}.
      *
-     * @return True if the input text is equal to the {@code expectedFloat{@code  value.
+     * @return True if the input text is equal to the {@code expectedFloat} value.
      */
     public static Rule<TextView> gt(final String failureMessage, final float lesserFloat) {
         return new Rule<TextView>(failureMessage) {
@@ -414,7 +414,7 @@ public final class Rules {
      * @param greaterFloat {@code float} value to be compared with the text returned by
      *          {@code getText()}.
      *
-     * @return True if the input text is less than the {@code expectedFloat{@code  value.
+     * @return True if the input text is less than the {@code expectedFloat} value.
      */
     public static Rule<TextView> lt(final String failureMessage, final float greaterFloat) {
         return new Rule<TextView>(failureMessage) {
@@ -441,7 +441,7 @@ public final class Rules {
      * @param expectedDouble {@code double} value to be compared with the text returned by
      *          {@code getText()}.
      *
-     * @return True if the input text is equal to the {@code expectedDouble{@code  value.
+     * @return True if the input text is equal to the {@code expectedDouble} value.
      */
     public static Rule<TextView> eq(final String failureMessage, final double expectedDouble) {
         return new Rule<TextView>(failureMessage) {
@@ -468,7 +468,7 @@ public final class Rules {
      * @param lesserDouble {@code double} value to be compared with the text returned by
      *          {@code getText()}.
      *
-     * @return True if the input text is greater than the {@code expectedDouble{@code  value.
+     * @return True if the input text is greater than the {@code expectedDouble} value.
      */
     public static Rule<TextView> gt(final String failureMessage, final double lesserDouble) {
         return new Rule<TextView>(failureMessage) {
@@ -495,7 +495,7 @@ public final class Rules {
      * @param greaterDouble {@code double} value to be compared with the text returned by
      *          {@code getText()}.
      *
-     * @return True if the input text is less than the {@code expectedDouble{@code  value.
+     * @return True if the input text is less than the {@code expectedDouble} value.
      */
     public static Rule<TextView> lt(final String failureMessage, final double greaterDouble) {
         return new Rule<TextView>(failureMessage) {
