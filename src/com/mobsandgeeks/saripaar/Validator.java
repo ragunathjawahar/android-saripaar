@@ -14,29 +14,15 @@
 
 package com.mobsandgeeks.saripaar;
 
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import com.mobsandgeeks.saripaar.annotation.*;
 
-import com.mobsandgeeks.saripaar.annotation.Checked;
-import com.mobsandgeeks.saripaar.annotation.ConfirmPassword;
-import com.mobsandgeeks.saripaar.annotation.Email;
-import com.mobsandgeeks.saripaar.annotation.IpAddress;
-import com.mobsandgeeks.saripaar.annotation.NumberRule;
-import com.mobsandgeeks.saripaar.annotation.Password;
-import com.mobsandgeeks.saripaar.annotation.Regex;
-import com.mobsandgeeks.saripaar.annotation.Required;
-import com.mobsandgeeks.saripaar.annotation.TextRule;
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Field;
+import java.util.*;
 
 /**
  * A processor that checks all the {@link Rule}s against their {@link View}s.
@@ -398,24 +384,26 @@ public class Validator {
             }
 
             // Others
-            ViewRulePair viewRulePair = null;
+            List<ViewRulePair> viewRulePairs = new ArrayList<ViewRulePair>();
             if (pair.annotation.annotationType().equals(ConfirmPassword.class)) {
-                viewRulePair = getViewAndRule(pair.field, pair.annotation, passwordTextView);
+                viewRulePairs.addAll(getViewAndRule(pair.field, pair.annotation, passwordTextView));
             } else {
-                viewRulePair = getViewAndRule(pair.field, pair.annotation);
+                viewRulePairs.addAll(getViewAndRule(pair.field, pair.annotation));
             }
-            if (viewRulePair != null) {
-                if (DEBUG) {
-                    Log.d(TAG, String.format("Added @%s rule for %s.",
-                            pair.annotation.annotationType().getSimpleName(),
-                            pair.field.getName()));
+            for (ViewRulePair viewRulePair : viewRulePairs) {
+                if (viewRulePair != null) {
+                    if (DEBUG) {
+                        Log.d(TAG, String.format("Added @%s rule for %s.",
+                                pair.annotation.annotationType().getSimpleName(),
+                                pair.field.getName()));
+                    }
+                    mViewsAndRules.add(viewRulePair);
                 }
-                mViewsAndRules.add(viewRulePair);
             }
         }
     }
 
-    private ViewRulePair getViewAndRule(Field field, Annotation annotation, Object... params) {
+    private List<ViewRulePair> getViewAndRule(Field field, Annotation annotation, Object... params) {
         View view = getView(field);
         if (view == null) {
             Log.w(TAG, String.format("Your %s - %s is null. Please check your field assignment(s).",
@@ -423,14 +411,19 @@ public class Validator {
             return null;
         }
 
-        Rule<?> rule = null;
+        List<Rule<?>> rules = new ArrayList<Rule<?>>();
         if (params != null && params.length > 0) {
-            rule = AnnotationToRuleConverter.getRule(field, view, annotation, params);
+            rules.add(AnnotationToRuleConverter.getRule(field, view, annotation, params));
         } else {
-            rule = AnnotationToRuleConverter.getRule(field, view, annotation);
+            rules.add(AnnotationToRuleConverter.getRule(field, view, annotation));
+            rules.addAll(AnnotationToRuleConverter.getRules(field, view, annotation));
         }
-
-        return rule != null ? new ViewRulePair(view, rule) : null;
+        List<ViewRulePair> retList = new ArrayList<ViewRulePair>();
+        for (Rule<?> rule : rules) {
+            if(rule!=null)
+                retList.add(new ViewRulePair(view, rule));
+        }
+        return retList;
     }
 
     private View getView(Field field) {
@@ -521,7 +514,8 @@ public class Validator {
                 annotationType.equals(Password.class) ||
                 annotationType.equals(Regex.class) ||
                 annotationType.equals(Required.class) ||
-                annotationType.equals(TextRule.class);
+                annotationType.equals(TextRule.class) ||
+                annotationType.equals(DateRule.class);
     }
 
     private class ViewRulePair {
@@ -581,6 +575,9 @@ public class Validator {
 
             } else if (annotatedClass.equals(TextRule.class)) {
                 return ((TextRule) annotation).order();
+
+            } else if (annotatedClass.equals(DateRule.class)) {
+                return ((DateRule) annotation).order();
 
             } else {
                 throw new IllegalArgumentException(String.format("%s is not a Saripaar annotation",

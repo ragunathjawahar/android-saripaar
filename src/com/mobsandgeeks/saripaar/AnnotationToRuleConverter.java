@@ -25,8 +25,10 @@ import com.mobsandgeeks.saripaar.annotation.*;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.List;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * Class contains {@code static} methods that return appropriate {@link Rule}s for Saripaar
@@ -74,6 +76,14 @@ class AnnotationToRuleConverter {
         }
 
         return null;
+    }
+
+    public static List<Rule<?>> getRules(Field field, View view, Annotation annotation) {
+        Class<?> annotationClass = annotation.getClass();
+        if (DateRule.class.isAssignableFrom(annotationClass)) {
+            return getDateRules(field, view, (DateRule) annotation);
+        }
+        return Collections.emptyList();
     }
 
     public static Rule<?> getRule(Field field, View view, Annotation annotation, Object... params) {
@@ -324,4 +334,112 @@ class AnnotationToRuleConverter {
         return Rules.checked(message, checked.checked());
     }
 
+    private static List<Rule<?>> getDateRules(Field field, View view, DateRule dateRule) {
+        if (!TextView.class.isAssignableFrom(view.getClass())) {
+            Log.w(TAG, String.format(WARN_TEXT, field.getName(), DateRule.class.getSimpleName()));
+            return Collections.emptyList();
+        } else if (dateRule.pattern() == null) {
+            throw new IllegalArgumentException(String.format("@%s.pattern() cannot be null.",
+                    DateRule.class.getSimpleName()));
+        }
+
+        String pattern = dateRule.pattern();
+        DateFormat dateFormat = new SimpleDateFormat(pattern);
+
+        List<Rule<?>> rules = new ArrayList<Rule<?>>();
+
+        int messageParseResId = dateRule.messageParseResId();
+        String messageParse = messageParseResId != 0 ? view.getContext().getString(messageParseResId) : dateRule.messageParse();
+        rules.add(Rules.formatDate(messageParse, dateFormat));
+
+        if (dateRule.lt().trim().length() > 0) {
+            String ltTxt = dateRule.lt();
+
+            try {
+                int messageLtResId = dateRule.messageLtResId();
+                String messageLt = messageLtResId != 0 ? view.getContext().getString(messageLtResId) : dateRule.messageLt();
+                Date ltDate = evaluateDate(ltTxt, dateFormat);
+                rules.add(Rules.ltDate(messageLt, ltDate, dateFormat));
+            } catch (ParseException e) {
+                throw new IllegalArgumentException(String.format("@%s.lt() cannot be parsed using pattern.",
+                        DateRule.class.getSimpleName()));
+            }
+        }
+
+        if (dateRule.gt().trim().length() > 0) {
+            String gtTxt = dateRule.gt();
+            try {
+                int messageGtResId = dateRule.messageGtResId();
+                String messageGt = messageGtResId != 0 ? view.getContext().getString(messageGtResId) : dateRule.messageGt();
+                Date gtDate = evaluateDate(gtTxt, dateFormat);
+                rules.add(Rules.gtDate(messageGt, gtDate, dateFormat));
+            } catch (ParseException e) {
+                throw new IllegalArgumentException(String.format("@%s.lt() cannot be parsed using pattern.",
+                        DateRule.class.getSimpleName()));
+            }
+        }
+
+        return rules;
+    }
+
+
+    public static void main(String[] args) {
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        try {
+            System.out.println("new Date()            = " + dateFormat.format(new Date()));
+            System.out.println("now-1y+1M-1d+1h-1m+5s = " + dateFormat.format(evaluateDate("now-1y+1M-1d+1h-1m+5s", dateFormat)));
+            System.out.println("now-0y-1M+1d-1h+1m-3s = " + dateFormat.format(evaluateDate("now-0y-1M+1d-1h+1m-3s", dateFormat)));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static Date evaluateDate(String txt, DateFormat dateFormat) throws ParseException {
+        if (txt.startsWith("now")) {
+            List<String> splits = new ArrayList<String>();
+            txt = txt.substring(3);
+            String[] splittedPlus = txt.split("[+]");
+            for (String spitPlus : splittedPlus) {
+                if (spitPlus.length() > 0) {
+                    if (spitPlus.charAt(0) != '-') {
+                        spitPlus = "+" + spitPlus;
+                    }
+                    String[] splittedMinus = spitPlus.split("[-]");
+                    for (String splitMinus : splittedMinus) {
+                        if (splitMinus.length() > 0) {
+                            if (splitMinus.charAt(0) != '+') {
+                                splitMinus = "-" + splitMinus;
+                            }
+                            splits.add(splitMinus);
+                        }
+                    }
+                }
+            }
+            Calendar cal = GregorianCalendar.getInstance();
+            for (String split : splits) {
+                String operation = split.substring(0, 1);
+                String unit = split.substring(split.length() - 1, split.length());
+                String amount = split.substring(1, split.length() - 1);
+                int value = Integer.parseInt(amount) * (operation.equals("+") ? 1 : -1);
+                if (unit.equals("y")) {
+                    cal.add(Calendar.YEAR, value);
+                } else if (unit.equals("M")) {
+                    cal.add(Calendar.MONTH, value);
+                } else if (unit.equals("d")) {
+                    cal.add(Calendar.DAY_OF_YEAR, value);
+                } else if (unit.equals("h")) {
+                    cal.add(Calendar.HOUR_OF_DAY, value);
+                } else if (unit.equals("m")) {
+                    cal.add(Calendar.MINUTE, value);
+                } else if (unit.equals("s")) {
+                    cal.add(Calendar.SECOND, value);
+                } else {
+                    System.err.println("evaluateDate.invalid UNIT: '" + unit + "'");
+                }
+            }
+            return cal.getTime();
+        } else {
+            return dateFormat.parse(txt);
+        }
+    }
 }

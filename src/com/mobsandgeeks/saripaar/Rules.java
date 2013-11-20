@@ -19,6 +19,9 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.*;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Set;
 
@@ -707,4 +710,82 @@ public final class Rules {
         return text != null ? text.toString() : null;
     }
 
+    /**
+     * Checks if the {@link TextView} or its subclass {@link View}'s displayed text value is using
+     * the dateFormat {@code String} pattern.
+     *
+     * @param failureMessage The failure message for this {@link Rule}.
+     * @param dateFormat     {@code String} value to be used for date pattern gor the text returned by
+     *                       {@code getText()}.
+     * @return True if the input text is parseable using the {@code dateFormat} value.
+     */
+    public static Rule<TextView> formatDate(final String failureMessage, final DateFormat dateFormat) {
+        return new Rule<TextView>(failureMessage) {
+
+            @Override
+            public boolean isValid(TextView view) {
+                String actualDateTxt = getText(view, true);
+                try {
+                    Date actualDate = dateFormat.parse(actualDateTxt);
+                    return true;
+                } catch (ParseException e) {
+                    return false;
+                }
+            }
+        };
+    }
+
+    /**
+     * Checks if the {@link TextView} or its subclass {@link View}'s displayed text value is less
+     * than the specified {@code int} value.
+     *
+     * @param failureMessage The failure message for this {@link Rule}.
+     * @param greaterDate     {@code Date} value to be compared with the text returned by
+     *                       {@code getText()}.
+     * @param dateFormat     {@code String} value to be used for date pattern gor the text returned by
+     *                       {@code getText()}.
+     * @return True if the input text is less than the {@code expectedInt} value.
+     */
+    public static Rule<TextView> ltDate(final String failureMessage, final Date greaterDate, final DateFormat dateFormat) {
+        return new Rule<TextView>(failureMessage) {
+
+            @Override
+            public boolean isValid(TextView view) {
+                String actualDateTxt = getText(view, true);
+                try {
+                    Date actualDate = dateFormat.parse(actualDateTxt);
+                    return actualDate.before(greaterDate);
+                } catch (ParseException e) {
+                    return false;
+                }
+            }
+        };
+    }
+
+    /**
+     * Checks if the {@link TextView} or its subclass {@link View}'s displayed text value is less
+     * than the specified {@code int} value.
+     *
+     * @param failureMessage The failure message for this {@link Rule}.
+     * @param greaterDate     {@code Date} value to be compared with the text returned by
+     *                       {@code getText()}.
+     * @param dateFormat     {@code String} value to be used for date pattern gor the text returned by
+     *                       {@code getText()}.
+     * @return True if the input text is less than the {@code expectedInt} value.
+     */
+    public static Rule<TextView> gtDate(final String failureMessage, final Date greaterDate, final DateFormat dateFormat) {
+        return new Rule<TextView>(failureMessage) {
+
+            @Override
+            public boolean isValid(TextView view) {
+                String actualDateTxt = getText(view, true);
+                try {
+                    Date actualDate = dateFormat.parse(actualDateTxt);
+                    return actualDate.after(greaterDate);
+                } catch (ParseException e) {
+                    return false;
+                }
+            }
+        };
+    }
 }
