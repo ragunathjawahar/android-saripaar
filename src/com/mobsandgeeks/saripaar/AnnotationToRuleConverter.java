@@ -43,7 +43,7 @@ import com.mobsandgeeks.saripaar.annotation.TextRule;
  */
 class AnnotationToRuleConverter {
     // Debug
-    static final String TAG = AnnotationToRuleConverter.class.getSimpleName();
+    static final String TAG = "AnnotationToRuleConverter";
  
     // Constants
     static final String WARN_TEXT = "%s - @%s can only be applied to TextView and " +
@@ -52,23 +52,23 @@ class AnnotationToRuleConverter {
             "its implementations and subclasses.";
 
     public static Rule<?> getRule(Field field, View view, Annotation annotation) {
-        Class<?> annotationClass = annotation.getClass();
+        Class<?> annotationType = annotation.annotationType();
 
-        if (Required.class.isAssignableFrom(annotationClass)) {
+        if (Required.class.equals(annotationType)) {
             return getRequiredRule(field, view, (Required) annotation);
-        } else if (Checked.class.isAssignableFrom(annotationClass)) {
+        } else if (Checked.class.equals(annotationType)) {
             return getCheckedRule(field, view, (Checked) annotation);
-        } else if (TextRule.class.isAssignableFrom(annotationClass)) {
+        } else if (TextRule.class.equals(annotationType)) {
             return getTextRule(field, view, (TextRule) annotation);
-        } else if (Regex.class.isAssignableFrom(annotationClass)) {
+        } else if (Regex.class.equals(annotationType)) {
             return getRegexRule(field, view, (Regex) annotation);
-        } else if (NumberRule.class.isAssignableFrom(annotationClass)) {
+        } else if (NumberRule.class.equals(annotationType)) {
             return getNumberRule(field, view, (NumberRule) annotation);
-        } else if (Password.class.isAssignableFrom(annotationClass)) {
+        } else if (Password.class.equals(annotationType)) {
             return getPasswordRule(field, view, (Password) annotation);
-        } else if (Email.class.isAssignableFrom(annotationClass)) {
+        } else if (Email.class.equals(annotationType)) {
             return getEmailRule(field, view, (Email) annotation);
-        } else if (IpAddress.class.isAssignableFrom(annotationClass)) {
+        } else if (IpAddress.class.equals(annotationType)) {
             return getIpAddressRule(field, view, (IpAddress) annotation);
         }
 
@@ -76,9 +76,9 @@ class AnnotationToRuleConverter {
     }
 
     public static Rule<?> getRule(Field field, View view, Annotation annotation, Object... params) {
-        Class<?> annotationClass = annotation.getClass();
+        Class<?> annotationType = annotation.annotationType();
 
-        if (ConfirmPassword.class.isAssignableFrom(annotationClass)) {
+        if (ConfirmPassword.class.equals(annotationType)) {
             TextView passwordTextView = (TextView) params[0];
             return getConfirmPasswordRule(field, view, (ConfirmPassword) annotation,
                     passwordTextView);
@@ -255,7 +255,9 @@ class AnnotationToRuleConverter {
                 Rules.regex(message, Rules.REGEX_IP_ADDRESS, true));
     }
 
-    private static Rule<Checkable> getCheckedRule(Field field, View view, Checked checked) {
+    private static <T extends View & Checkable> Rule<T> getCheckedRule(
+            Field field, View view, Checked checked) {
+
         if (!Checkable.class.isAssignableFrom(view.getClass())) {
             Log.w(TAG, String.format(WARN_CHECKABLE, field.getName(),
                     Checked.class.getSimpleName()));

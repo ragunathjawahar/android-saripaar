@@ -45,7 +45,7 @@ import com.mobsandgeeks.saripaar.annotation.TextRule;
  */
 public class Validator {
     // Debug
-    static final String TAG = Validator.class.getSimpleName();
+    static final String TAG = "Validator";
     static final boolean DEBUG = false;
 
     private Object mController;
