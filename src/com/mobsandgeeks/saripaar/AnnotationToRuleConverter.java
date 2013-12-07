@@ -14,15 +14,11 @@
 
 package com.mobsandgeeks.saripaar;
 
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.List;
-
 import android.content.Context;
 import android.util.Log;
 import android.view.View;
 import android.widget.Checkable;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.mobsandgeeks.saripaar.annotation.Checked;
@@ -33,7 +29,13 @@ import com.mobsandgeeks.saripaar.annotation.NumberRule;
 import com.mobsandgeeks.saripaar.annotation.Password;
 import com.mobsandgeeks.saripaar.annotation.Regex;
 import com.mobsandgeeks.saripaar.annotation.Required;
+import com.mobsandgeeks.saripaar.annotation.SpinnerNotChosen;
 import com.mobsandgeeks.saripaar.annotation.TextRule;
+
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Class contains {@code static} methods that return appropriate {@link Rule}s for Saripaar
@@ -49,6 +51,9 @@ class AnnotationToRuleConverter {
     static final String WARN_TEXT = "%s - @%s can only be applied to TextView and " +
             "its subclasses.";
     static final String WARN_CHECKABLE = "%s - @%s can only be applied to Checkable, " +
+            "its implementations and subclasses.";
+
+    static final String WARN_SPINNER = "%s - @%s can only be applied to Spinner, " +
             "its implementations and subclasses.";
 
     public static Rule<?> getRule(Field field, View view, Annotation annotation) {
@@ -70,9 +75,28 @@ class AnnotationToRuleConverter {
             return getEmailRule(field, view, (Email) annotation);
         } else if (IpAddress.class.equals(annotationType)) {
             return getIpAddressRule(field, view, (IpAddress) annotation);
+        }else if (SpinnerNotChosen.class.isAssignableFrom(annotationClass)){
+            return getSpinnerChosenRule(field, view, (SpinnerNotChosen) annotation);
         }
 
         return null;
+    }
+
+    private static Rule<Spinner> getSpinnerChosenRule(Field field, View view,
+                                                SpinnerNotChosen spinnerNotChosen) {
+        if (!Spinner.class.isAssignableFrom(view.getClass())) {
+            Log.w(TAG, String.format(WARN_SPINNER, field.getName(),
+                    Spinner.class.getSimpleName()));
+            return null;
+        }
+
+        int messageResId = spinnerNotChosen.messageResId();
+        String message = messageResId != 0 ? view.getContext().getString(messageResId) :
+                spinnerNotChosen.message();
+
+        int expectedPosition = spinnerNotChosen.expectedPosition();
+
+        return Rules.spinnerNotChosen(message, expectedPosition);
     }
 
     public static Rule<?> getRule(Field field, View view, Annotation annotation, Object... params) {

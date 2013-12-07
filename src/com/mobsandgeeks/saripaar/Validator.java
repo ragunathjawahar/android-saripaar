@@ -14,15 +14,6 @@
 
 package com.mobsandgeeks.saripaar;
 
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.View;
@@ -36,7 +27,17 @@ import com.mobsandgeeks.saripaar.annotation.NumberRule;
 import com.mobsandgeeks.saripaar.annotation.Password;
 import com.mobsandgeeks.saripaar.annotation.Regex;
 import com.mobsandgeeks.saripaar.annotation.Required;
+import com.mobsandgeeks.saripaar.annotation.SpinnerNotChosen;
 import com.mobsandgeeks.saripaar.annotation.TextRule;
+
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * A processor that checks all the {@link Rule}s against their {@link View}s.
@@ -521,7 +522,8 @@ public class Validator {
                 annotationType.equals(Password.class) ||
                 annotationType.equals(Regex.class) ||
                 annotationType.equals(Required.class) ||
-                annotationType.equals(TextRule.class);
+                annotationType.equals(TextRule.class) ||
+                annotationType.equals(SpinnerNotChosen.class);
     }
 
     private class ViewRulePair {
@@ -581,7 +583,8 @@ public class Validator {
 
             } else if (annotatedClass.equals(TextRule.class)) {
                 return ((TextRule) annotation).order();
-
+            }else if (annotatedClass.equals(SpinnerNotChosen.class)){
+                return ((SpinnerNotChosen) annotation).order();
             } else {
                 throw new IllegalArgumentException(String.format("%s is not a Saripaar annotation",
                         annotatedClass.getName()));
