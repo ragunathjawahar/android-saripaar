@@ -29,7 +29,7 @@ import com.mobsandgeeks.saripaar.annotation.NumberRule;
 import com.mobsandgeeks.saripaar.annotation.Password;
 import com.mobsandgeeks.saripaar.annotation.Regex;
 import com.mobsandgeeks.saripaar.annotation.Required;
-import com.mobsandgeeks.saripaar.annotation.SpinnerNotChosen;
+import com.mobsandgeeks.saripaar.annotation.Select;
 import com.mobsandgeeks.saripaar.annotation.TextRule;
 
 import java.lang.annotation.Annotation;
@@ -59,10 +59,10 @@ class AnnotationToRuleConverter {
     public static Rule<?> getRule(Field field, View view, Annotation annotation) {
         Class<?> annotationType = annotation.annotationType();
 
-        if (Required.class.equals(annotationType)) {
-            return getRequiredRule(field, view, (Required) annotation);
-        } else if (Checked.class.equals(annotationType)) {
+        if (Checked.class.equals(annotationType)) {
             return getCheckedRule(field, view, (Checked) annotation);
+        } else if (Required.class.equals(annotationType)) {
+            return getRequiredRule(field, view, (Required) annotation);
         } else if (TextRule.class.equals(annotationType)) {
             return getTextRule(field, view, (TextRule) annotation);
         } else if (Regex.class.equals(annotationType)) {
@@ -75,28 +75,27 @@ class AnnotationToRuleConverter {
             return getEmailRule(field, view, (Email) annotation);
         } else if (IpAddress.class.equals(annotationType)) {
             return getIpAddressRule(field, view, (IpAddress) annotation);
-        }else if (SpinnerNotChosen.class.isAssignableFrom(annotationClass)){
-            return getSpinnerChosenRule(field, view, (SpinnerNotChosen) annotation);
+        } else if (Select.class.equals(annotation)) {
+            return getSelectRule(field, view, (Select) annotation);
         }
 
         return null;
     }
 
-    private static Rule<Spinner> getSpinnerChosenRule(Field field, View view,
-                                                SpinnerNotChosen spinnerNotChosen) {
+    private static Rule<Spinner> getSelectRule(Field field, View view, Select select) {
         if (!Spinner.class.isAssignableFrom(view.getClass())) {
             Log.w(TAG, String.format(WARN_SPINNER, field.getName(),
                     Spinner.class.getSimpleName()));
             return null;
         }
 
-        int messageResId = spinnerNotChosen.messageResId();
+        int messageResId = select.messageResId();
         String message = messageResId != 0 ? view.getContext().getString(messageResId) :
-                spinnerNotChosen.message();
+                select.message();
 
-        int expectedPosition = spinnerNotChosen.expectedPosition();
+        int unexpectedSelection = select.defaultSelection();
 
-        return Rules.spinnerNotChosen(message, expectedPosition);
+        return Rules.spinnerNotEq(message, unexpectedSelection);
     }
 
     public static Rule<?> getRule(Field field, View view, Annotation annotation, Object... params) {

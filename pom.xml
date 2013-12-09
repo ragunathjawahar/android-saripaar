@@ -60,7 +60,7 @@
         <java.version>1.6</java.version>
         <android.version>4.1.1.4</android.version>
         <android.platform>16</android.platform>
-        <maven.compiler.plugin>2.5</maven.compiler.plugin>
+        <maven.compiler.plugin>3.0</maven.compiler.plugin>
         <android.maven.plugin>3.4.1</android.maven.plugin>
         <maven.gpg.plugin>1.4</maven.gpg.plugin>
         <maven.javadoc.plugin>2.9.1</maven.javadoc.plugin>

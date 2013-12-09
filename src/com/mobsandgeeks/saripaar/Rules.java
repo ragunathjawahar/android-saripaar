@@ -594,23 +594,22 @@ public final class Rules {
     }
 
     /**
-     * Checks if the {@link Spinner}'s selected item's position (obtained by calling
-     * {@code getSelectionItemPosition()}) greater than expected selection index.
+     * Checks if the {@link Spinner}'s item selection (obtained by calling
+     * {@code getSelectionItemPosition()}) is not equal to the specified selection.
      *
      * @param failureMessage The failure message for this {@link Rule}.
-     * @param expectedPosition The position to be compared with the position returned by
-     *          calling {@code getSelectedItemPosition()} on the {@link Spinner}.
+     * @param selection The unexpected selection on the {@link Spinner}.
      *
-     * @return True if both the {@link String} values are equal.
+     * @return {@code true} if the selection is not equal to the given position, 
+     *         {@code false} otherwise. 
      */
-    public static Rule<Spinner> spinnerNotChosen(final String failureMessage,
-                                                 final int expectedPosition) {
+    public static Rule<Spinner> spinnerNotEq(final String failureMessage, final int selection) {
 
         return new Rule<Spinner>(failureMessage) {
 
             @Override
             public boolean isValid(Spinner spinner) {
-                return spinner.getSelectedItemPosition() > expectedPosition;
+                return spinner.getSelectedItemPosition() != selection;
             }
         };
     }
