@@ -132,3 +132,7 @@ License
   [Validator]: https://github.com/ragunathjawahar/android-saripaar/blob/master/src/com/mobsandgeeks/saripaar/Validator.java
   [ValidationListener]: https://github.com/ragunathjawahar/android-saripaar/blob/master/src/com/mobsandgeeks/saripaar/Validator.java
   [wiki]: https://github.com/ragunathjawahar/android-saripaar/wiki
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/ragunathjawahar/android-saripaar/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
