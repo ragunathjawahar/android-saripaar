@@ -93,13 +93,13 @@ Maven
     <dependency>
         <groupId>com.mobsandgeeks</groupId>
         <artifactId>android-saripaar</artifactId>
-        <version>1.0.0</version>
+        <version>1.0.2</version>
     </dependency>
 
 Gradle
 ---------------------
     dependencies {
-        compile 'com.mobsandgeeks:android-saripaar:1.0.0'
+        compile 'com.mobsandgeeks:android-saripaar:1.0.2'
     }
 
 Wiki

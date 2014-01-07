@@ -523,12 +523,12 @@ public final class Rules {
      *
      * @return True if the state is same as {@code checked}.
      */
-    public static <T extends View & Checkable> Rule<T> checked(final String failureMessage,
+    public static Rule<Checkable> checked(final String failureMessage,
             final boolean checked) {
-        return new Rule<T>(failureMessage) {
+        return new Rule<Checkable>(failureMessage) {
 
             @Override
-            public boolean isValid(T view) {
+            public boolean isValid(Checkable view) {
                 return view.isChecked() == checked;
             }
         };

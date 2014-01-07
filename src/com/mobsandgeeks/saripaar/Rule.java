@@ -23,7 +23,7 @@ import android.view.View;
  *
  * @param <T> The {@link View} this rule is applicable for.
  */
-public abstract class Rule<T extends View> {
+public abstract class Rule<T> {
 
     private String mFailureMessage;
 

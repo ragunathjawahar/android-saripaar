@@ -426,9 +426,9 @@ public class Validator {
 
         Rule<?> rule = null;
         if (params != null && params.length > 0) {
-            rule = AnnotationToRuleConverter.getRule(field, view, annotation, params);
+            rule = AnnotationRuleFactory.getRule(field, view, annotation, params);
         } else {
-            rule = AnnotationToRuleConverter.getRule(field, view, annotation);
+            rule = AnnotationRuleFactory.getRule(field, view, annotation);
         }
 
         return rule != null ? new ViewRulePair(view, rule) : null;
@@ -456,6 +456,11 @@ public class Validator {
             Annotation[] annotations = field.getAnnotations();
             for (Annotation annotation : annotations) {
                 if (isSaripaarAnnotation(annotation)) {
+                    if (DEBUG) {
+                        Log.d(TAG, String.format("%s %s is annotated with @%s",
+                                field.getType().getSimpleName(), field.getName(),
+                                annotation.annotationType().getSimpleName()));
+                    }
                     annotationFieldPairs.add(new AnnotationFieldPair(annotation, field));
                 }
             }

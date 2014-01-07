@@ -43,7 +43,7 @@ import java.util.List;
  *
  * @author Ragunath Jawahar <rj@mobsandgeeks.com>
  */
-class AnnotationToRuleConverter {
+class AnnotationRuleFactory {
     // Debug
     static final String TAG = "AnnotationToRuleConverter";
  
@@ -75,7 +75,7 @@ class AnnotationToRuleConverter {
             return getEmailRule(field, view, (Email) annotation);
         } else if (IpAddress.class.equals(annotationType)) {
             return getIpAddressRule(field, view, (IpAddress) annotation);
-        } else if (Select.class.equals(annotation)) {
+        } else if (Select.class.equals(annotationType)) {
             return getSelectRule(field, view, (Select) annotation);
         }
 
@@ -278,7 +278,7 @@ class AnnotationToRuleConverter {
                 Rules.regex(message, Rules.REGEX_IP_ADDRESS, true));
     }
 
-    private static <T extends View & Checkable> Rule<T> getCheckedRule(
+    private static Rule<Checkable> getCheckedRule(
             Field field, View view, Checked checked) {
 
         if (!Checkable.class.isAssignableFrom(view.getClass())) {
