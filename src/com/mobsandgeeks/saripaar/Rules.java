@@ -44,14 +44,71 @@ import java.util.Set;
  * @author Ragunath Jawahar <rj@mobsandgeeks.com>
  */
 public final class Rules {
+    // Constants
     public static final String EMPTY_STRING = "";
+
+    // Regular Expressions
+    private static final String GOOD_IRI_CHAR =
+            "a-zA-Z0-9\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF"; // android.util.Patterns.java
+    private static final String TOP_LEVEL_DOMAIN_STR_FOR_WEB_URL =
+            "(?:"
+            + "(?:aero|arpa|asia|a[cdefgilmnoqrstuwxz])"
+            + "|(?:biz|b[abdefghijmnorstvwyz])"
+            + "|(?:cat|com|coop|c[acdfghiklmnoruvxyz])"
+            + "|d[ejkmoz]"
+            + "|(?:edu|e[cegrstu])"
+            + "|f[ijkmor]"
+            + "|(?:gov|g[abdefghilmnpqrstuwy])"
+            + "|h[kmnrtu]"
+            + "|(?:info|int|i[delmnoqrst])"
+            + "|(?:jobs|j[emop])"
+            + "|k[eghimnprwyz]"
+            + "|l[abcikrstuvy]"
+            + "|(?:mil|mobi|museum|m[acdeghklmnopqrstuvwxyz])"
+            + "|(?:name|net|n[acefgilopruz])"
+            + "|(?:org|om)"
+            + "|(?:pro|p[aefghklmnrstwy])"
+            + "|qa"
+            + "|r[eosuw]"
+            + "|s[abcdeghijklmnortuvyz]"
+            + "|(?:tel|travel|t[cdfghjklmnoprtvwz])"
+            + "|u[agksyz]"
+            + "|v[aceginu]"
+            + "|w[fs]"
+            + "|(?:xn\\-\\-0zwm56d|xn\\-\\-11b5bs3a9aj6g|xn\\-\\-80akhbyknj4f|xn\\-\\-9t4b11yi5a|xn\\-\\-deba0ad|xn\\-\\-g6w251d|xn\\-\\-hgbk6aj7f53bba|xn\\-\\-hlcj6aya9esc7a|xn\\-\\-jxalpdlp|xn\\-\\-kgbechtv|xn\\-\\-zckzah)"
+            + "|y[etu]"
+            + "|z[amw]))"; // android.util.Patterns.java
+
     public static final String REGEX_INTEGER = "\\d+";
+
     public static final String REGEX_DECIMAL = "[-+]?[0-9]*\\.?[0-9]+([eE][-+]?[0-9]+)?";
-    public static final String REGEX_EMAIL = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@" +
-            "[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
-    public static final String REGEX_IP_ADDRESS = "^([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\." +
-            "([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\." +
-            "([01]?\\d\\d?|2[0-4]\\d|25[0-5])$";
+
+    public static final String REGEX_EMAIL =
+            "[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}"
+            + "\\@[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}"
+            + "(\\.[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25})+"; // android.util.Patterns.java
+
+    public static final String REGEX_IP_ADDRESS =
+            "((25[0-5]|2[0-4][0-9]|[0-1][0-9]{2}|[1-9][0-9]|[1-9])\\.(25[0-5]|2[0-4]"
+            + "[0-9]|[0-1][0-9]{2}|[1-9][0-9]|[1-9]|0)\\.(25[0-5]|2[0-4][0-9]|[0-1]"
+            + "[0-9]{2}|[1-9][0-9]|[1-9]|0)\\.(25[0-5]|2[0-4][0-9]|[0-1][0-9]{2}"
+            + "|[1-9][0-9]|[0-9]))"; // android.util.Patterns.java
+
+    public static final String REGEX_WEB_URL =
+            "((?:(http|https|Http|Https|rtsp|Rtsp):\\/\\/(?:(?:[a-zA-Z0-9\\$\\-\\_\\.\\+\\!\\*\\'\\(\\)"
+            + "\\,\\;\\?\\&\\=]|(?:\\%[a-fA-F0-9]{2})){1,64}(?:\\:(?:[a-zA-Z0-9\\$\\-\\_"
+            + "\\.\\+\\!\\*\\'\\(\\)\\,\\;\\?\\&\\=]|(?:\\%[a-fA-F0-9]{2})){1,25})?\\@)?)?"
+            + "((?:(?:[" + GOOD_IRI_CHAR + "][" + GOOD_IRI_CHAR + "\\-]{0,64}\\.)+"   // named host
+            + TOP_LEVEL_DOMAIN_STR_FOR_WEB_URL
+            + "|(?:(?:25[0-5]|2[0-4]" // or ip address
+            + "[0-9]|[0-1][0-9]{2}|[1-9][0-9]|[1-9])\\.(?:25[0-5]|2[0-4][0-9]"
+            + "|[0-1][0-9]{2}|[1-9][0-9]|[1-9]|0)\\.(?:25[0-5]|2[0-4][0-9]|[0-1]"
+            + "[0-9]{2}|[1-9][0-9]|[1-9]|0)\\.(?:25[0-5]|2[0-4][0-9]|[0-1][0-9]{2}"
+            + "|[1-9][0-9]|[0-9])))"
+            + "(?:\\:\\d{1,5})?)" // plus option port number
+            + "(\\/(?:(?:[" + GOOD_IRI_CHAR + "\\;\\/\\?\\:\\@\\&\\=\\#\\~"  // plus option query params
+            + "\\-\\.\\+\\!\\*\\'\\(\\)\\,\\_])|(?:\\%[a-fA-F0-9]{2}))*)?"
+            + "(?:\\b|$)"; // android.util.Patterns.java
 
     /**
      * The classical required {@link Rule}. Checks if the {@link TextView} or its subclass
