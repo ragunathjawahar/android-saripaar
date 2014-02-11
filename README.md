@@ -125,7 +125,7 @@ License
 
 <sub>Saripaar Logo © 2013, Mobs & Geeks.<sub>
 
-  [jar]: https://github.com/ragunathjawahar/android-saripaar/downloads
+  [jar]: http://search.maven.org/#search%7Cga%7C1%7Candroid%20saripaar
   [Saripaar Annotations]: https://github.com/ragunathjawahar/android-saripaar/tree/master/src/com/mobsandgeeks/saripaar/annotation
   [AndroidAnnotations]: https://github.com/excilys/androidannotations
   [RoboGuice]: http://code.google.com/p/roboguice/
