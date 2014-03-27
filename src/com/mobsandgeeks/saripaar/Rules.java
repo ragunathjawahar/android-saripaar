@@ -642,7 +642,7 @@ public final class Rules {
     }
 
     /**
-     * Checks if the {@link Spinner}'s item selection (obtained by calling
+     * Checks if the {@link AdapterView}'s item selection (obtained by calling
      * {@code getSelectionItemPosition()}) is not equal to the specified selection.
      *
      * @param failureMessage The failure message for this {@link Rule}.
@@ -658,6 +658,49 @@ public final class Rules {
             @Override
             public boolean isValid(AdapterView adapterView) {
                 return adapterView.getSelectedItemPosition() != selection;
+            }
+        };
+    }
+
+    /**
+     * Checks if the {@link ListView}'s selected item's position (obtained by calling
+     * {@code getCheckedItemPosition()}) equals the expected selection index.
+     *
+     * @param failureMessage The failure message for this {@link Rule}.
+     * @param expectedPosition The position to be compared with the position returned by
+     *          calling {@code getCheckedItemPosition()} on the {@link ListView}.
+     *
+     * @return {@code true} if the selection is not equal to the given position,
+     *         {@code false} otherwise.
+     */
+    public static Rule<ListView> checkedEq(final String failureMessage, final int expectedPosition) {
+
+        return new Rule<ListView>(failureMessage) {
+
+            @Override
+            public boolean isValid(ListView listView) {
+                return listView.getCheckedItemPosition() == expectedPosition;
+            }
+        };
+    }
+
+    /**
+     * Checks if the {@link ListView}'s item selection (obtained by calling
+     * {@code getCheckedItemPosition()}) is not equal to the specified selection.
+     *
+     * @param failureMessage The failure message for this {@link Rule}.
+     * @param selection The unexpected selection on the {@link Spinner}.
+     *
+     * @return {@code true} if the selection is not equal to the given position,
+     *         {@code false} otherwise.
+     */
+    public static Rule<ListView> checkedNotEq(final String failureMessage, final int selection) {
+
+        return new Rule<ListView>(failureMessage) {
+
+            @Override
+            public boolean isValid(ListView listView) {
+                return listView.getCheckedItemPosition() != selection;
             }
         };
     }

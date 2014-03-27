@@ -19,19 +19,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Checkable;
-
+import android.widget.ListView;
 import android.widget.TextView;
-
-import com.mobsandgeeks.saripaar.annotation.Checked;
-import com.mobsandgeeks.saripaar.annotation.ConfirmPassword;
-import com.mobsandgeeks.saripaar.annotation.Email;
-import com.mobsandgeeks.saripaar.annotation.IpAddress;
-import com.mobsandgeeks.saripaar.annotation.NumberRule;
-import com.mobsandgeeks.saripaar.annotation.Password;
-import com.mobsandgeeks.saripaar.annotation.Regex;
-import com.mobsandgeeks.saripaar.annotation.Required;
-import com.mobsandgeeks.saripaar.annotation.Select;
-import com.mobsandgeeks.saripaar.annotation.TextRule;
+import com.mobsandgeeks.saripaar.annotation.*;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
@@ -83,20 +73,24 @@ class AnnotationRuleFactory {
         return null;
     }
 
-    private static Rule<AdapterView> getSelectRule(Field field, View view, Select select) {
-        if (!AdapterView.class.isAssignableFrom(view.getClass())) {
-            Log.w(TAG, String.format(WARN_ADAPTERVIEW, field.getName(),
-                    AdapterView.class.getSimpleName()));
-            return null;
-        }
-
+    private static Rule<?> getSelectRule(Field field, View view, Select select) {
         int messageResId = select.messageResId();
         String message = messageResId != 0 ? view.getContext().getString(messageResId) :
                 select.message();
 
         int unexpectedSelection = select.defaultSelection();
 
-        return Rules.selectNotEq(message, unexpectedSelection);
+        if(ListView.class.isAssignableFrom(view.getClass())){
+            // listviews (will not use selected item but checked item)
+            return Rules.checkedNotEq(message, unexpectedSelection);
+        } else if (AdapterView.class.isAssignableFrom(view.getClass())) {
+            // all other adapterviews
+            return Rules.selectNotEq(message, unexpectedSelection);
+        } else {
+            Log.w(TAG, String.format(WARN_ADAPTERVIEW, field.getName(),
+                    AdapterView.class.getSimpleName()));
+            return null;
+        }
     }
 
     public static Rule<?> getRule(Field field, View view, Annotation annotation, Object... params) {
