@@ -17,16 +17,7 @@ package com.mobsandgeeks.saripaar;
 import android.inputmethodservice.ExtractEditText;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.AutoCompleteTextView;
-import android.widget.CheckBox;
-import android.widget.Checkable;
-import android.widget.CheckedTextView;
-import android.widget.EditText;
-import android.widget.MultiAutoCompleteTextView;
-import android.widget.RadioButton;
-import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.ToggleButton;
+import android.widget.*;
 
 import java.util.LinkedHashMap;
 import java.util.Set;
@@ -280,7 +271,7 @@ public final class Rules {
                             actualString.equalsIgnoreCase(cleanString) :
                                 actualString.equals(cleanString);
                 }
-
+                          Spinner x;
                 return valid;
             }
         };
@@ -592,7 +583,7 @@ public final class Rules {
     }
 
     /**
-     * Checks if the {@link Spinner}'s selected item's {@link String} value (obtained by calling
+     * Checks if the {@link Adapter}'s selected item's {@link String} value (obtained by calling
      * {@code toString()} on the selected item) equals the expected {@link String} value.
      *
      * @param failureMessage The failure message for this {@link Rule}.
@@ -604,15 +595,15 @@ public final class Rules {
      *
      * @return True if both the {@link String} values are equal.
      */
-    public static Rule<Spinner> spinnerEq(final String failureMessage,
+    public static Rule<AdapterView> selectEq(final String failureMessage,
             final String expectedString, final boolean ignoreCase, final boolean trimInput) {
 
-        return new Rule<Spinner>(failureMessage) {
+        return new Rule<AdapterView>(failureMessage) {
 
             @Override
-            public boolean isValid(Spinner spinner) {
+            public boolean isValid(AdapterView adapterView) {
                 boolean equals = false;
-                Object selectedItem = spinner.getSelectedItem();
+                Object selectedItem = adapterView.getSelectedItem();
                 if (expectedString == null && selectedItem == null) {
                     equals = true;
                 } else if (expectedString != null && selectedItem != null) {
@@ -630,22 +621,22 @@ public final class Rules {
     }
 
     /**
-     * Checks if the {@link Spinner}'s selected item's position (obtained by calling
+     * Checks if the {@link AdapterView}'s selected item's position (obtained by calling
      * {@code getSelectionItemPosition()}) equals the expected selection index.
      *
      * @param failureMessage The failure message for this {@link Rule}.
      * @param expectedPosition The position to be compared with the position returned by
-     *          calling {@code getSelectedItemPosition()} on the {@link Spinner}.
+     *          calling {@code getSelectedItemPosition()} on the {@link AdapterView}.
      *
      * @return True if both the {@link String} values are equal.
      */
-    public static Rule<Spinner> spinnerEq(final String failureMessage, final int expectedPosition) {
+    public static Rule<AdapterView> selectEq(final String failureMessage, final int expectedPosition) {
 
-        return new Rule<Spinner>(failureMessage) {
+        return new Rule<AdapterView>(failureMessage) {
 
             @Override
-            public boolean isValid(Spinner spinner) {
-                return spinner.getSelectedItemPosition() == expectedPosition;
+            public boolean isValid(AdapterView adapterView) {
+                return adapterView.getSelectedItemPosition() == expectedPosition;
             }
         };
     }
@@ -660,13 +651,13 @@ public final class Rules {
      * @return {@code true} if the selection is not equal to the given position, 
      *         {@code false} otherwise. 
      */
-    public static Rule<Spinner> spinnerNotEq(final String failureMessage, final int selection) {
+    public static Rule<AdapterView> selectNotEq(final String failureMessage, final int selection) {
 
-        return new Rule<Spinner>(failureMessage) {
+        return new Rule<AdapterView>(failureMessage) {
 
             @Override
-            public boolean isValid(Spinner spinner) {
-                return spinner.getSelectedItemPosition() != selection;
+            public boolean isValid(AdapterView adapterView) {
+                return adapterView.getSelectedItemPosition() != selection;
             }
         };
     }

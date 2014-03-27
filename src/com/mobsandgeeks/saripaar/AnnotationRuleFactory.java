@@ -17,8 +17,9 @@ package com.mobsandgeeks.saripaar;
 import android.content.Context;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Checkable;
-import android.widget.Spinner;
+
 import android.widget.TextView;
 
 import com.mobsandgeeks.saripaar.annotation.Checked;
@@ -53,7 +54,7 @@ class AnnotationRuleFactory {
     static final String WARN_CHECKABLE = "%s - @%s can only be applied to Checkable, " +
             "its implementations and subclasses.";
 
-    static final String WARN_SPINNER = "%s - @%s can only be applied to Spinner, " +
+    static final String WARN_ADAPTERVIEW = "%s - @%s can only be applied to AdapterViews, " +
             "its implementations and subclasses.";
 
     public static Rule<?> getRule(Field field, View view, Annotation annotation) {
@@ -82,10 +83,10 @@ class AnnotationRuleFactory {
         return null;
     }
 
-    private static Rule<Spinner> getSelectRule(Field field, View view, Select select) {
-        if (!Spinner.class.isAssignableFrom(view.getClass())) {
-            Log.w(TAG, String.format(WARN_SPINNER, field.getName(),
-                    Spinner.class.getSimpleName()));
+    private static Rule<AdapterView> getSelectRule(Field field, View view, Select select) {
+        if (!AdapterView.class.isAssignableFrom(view.getClass())) {
+            Log.w(TAG, String.format(WARN_ADAPTERVIEW, field.getName(),
+                    AdapterView.class.getSimpleName()));
             return null;
         }
 
@@ -95,7 +96,7 @@ class AnnotationRuleFactory {
 
         int unexpectedSelection = select.defaultSelection();
 
-        return Rules.spinnerNotEq(message, unexpectedSelection);
+        return Rules.selectNotEq(message, unexpectedSelection);
     }
 
     public static Rule<?> getRule(Field field, View view, Annotation annotation, Object... params) {
