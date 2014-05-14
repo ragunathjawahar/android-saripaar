@@ -97,6 +97,15 @@ public class Validator {
          * @param failedRule The failed {@link Rule} associated with the {@link View}.
          */
         public void onValidationFailed(View failedView, Rule<?> failedRule);
+        
+        /**
+         * Called when single item was validated successfully. This method may be helpful when 
+         * some error status was set up when validation failed and you need to remove it after
+         * error was fixed.
+         * 
+         * @param view The {@link View} that was successfully validated.
+         */
+        public void onViewValidationSucceeded(View succeededView);
     }
 
     /**
@@ -364,6 +373,8 @@ public class Validator {
             if (!pair.rule.isValid(pair.view)) {
                 failedViewRulePair = pair;
                 break;
+            } else {
+            	mValidationListener.onViewValidationSucceeded(pair.view);
             }
         }
 
