@@ -15,22 +15,17 @@
 package com.mobsandgeeks.saripaar;
 
 import android.view.View;
-import android.widget.Checkable;
 
 /**
  * Abstract class that allows to define validation rules for {@link View}s.
  *
  * @author Ragunath Jawahar <rj@mobsandgeeks.com>
  *
- * @param <T> Usually the {@link View} this rule is applicable for. Sometimes may be interfaces
- * such as {@link Checkable} which are indeed {@link View} components or widgets.
+ * @param <T> The {@link View} this rule is applicable for.
  */
 public abstract class Rule<T> {
 
     private String mFailureMessage;
-
-    @SuppressWarnings("unused")
-    private Rule() { /* Cannot instantiate */ }
 
     /**
      * Creates a new validation Rule.

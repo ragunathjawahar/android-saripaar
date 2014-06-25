@@ -93,13 +93,13 @@ Maven
     <dependency>
         <groupId>com.mobsandgeeks</groupId>
         <artifactId>android-saripaar</artifactId>
-        <version>1.0.0</version>
+        <version>1.0.2</version>
     </dependency>
 
 Gradle
 ---------------------
     dependencies {
-        compile 'com.mobsandgeeks:android-saripaar:1.0.0'
+        compile 'com.mobsandgeeks:android-saripaar:1.0.2'
     }
 
 Wiki
@@ -125,10 +125,14 @@ License
 
 <sub>Saripaar Logo © 2013, Mobs & Geeks.<sub>
 
-  [jar]: https://github.com/ragunathjawahar/android-saripaar/downloads
+  [jar]: http://search.maven.org/#search%7Cga%7C1%7Candroid%20saripaar
   [Saripaar Annotations]: https://github.com/ragunathjawahar/android-saripaar/tree/master/src/com/mobsandgeeks/saripaar/annotation
   [AndroidAnnotations]: https://github.com/excilys/androidannotations
   [RoboGuice]: http://code.google.com/p/roboguice/
   [Validator]: https://github.com/ragunathjawahar/android-saripaar/blob/master/src/com/mobsandgeeks/saripaar/Validator.java
   [ValidationListener]: https://github.com/ragunathjawahar/android-saripaar/blob/master/src/com/mobsandgeeks/saripaar/Validator.java
   [wiki]: https://github.com/ragunathjawahar/android-saripaar/wiki
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/ragunathjawahar/android-saripaar/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
