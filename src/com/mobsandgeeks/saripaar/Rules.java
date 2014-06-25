@@ -25,9 +25,6 @@ import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Set;
 
-import java.util.LinkedHashMap;
-import java.util.Set;
-
 /**
  * A built-in class with a collection of common rules. {@link TextView} references notable direct
  * and indirect subclasses that includes but not limited to {@link EditText},
