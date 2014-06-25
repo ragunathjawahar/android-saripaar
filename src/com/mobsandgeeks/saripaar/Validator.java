@@ -18,26 +18,11 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
-
-import com.mobsandgeeks.saripaar.annotation.Checked;
-import com.mobsandgeeks.saripaar.annotation.ConfirmPassword;
-import com.mobsandgeeks.saripaar.annotation.Email;
-import com.mobsandgeeks.saripaar.annotation.IpAddress;
-import com.mobsandgeeks.saripaar.annotation.NumberRule;
-import com.mobsandgeeks.saripaar.annotation.Password;
-import com.mobsandgeeks.saripaar.annotation.Regex;
-import com.mobsandgeeks.saripaar.annotation.Required;
-import com.mobsandgeeks.saripaar.annotation.Select;
-import com.mobsandgeeks.saripaar.annotation.TextRule;
+import com.mobsandgeeks.saripaar.annotation.*;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * A processor that checks all the {@link Rule}s against their {@link View}s.
@@ -591,6 +576,9 @@ public class Validator {
 
             } else if (annotatedClass.equals(TextRule.class)) {
                 return ((TextRule) annotation).order();
+
+            } else if (annotatedClass.equals(DateRule.class)) {
+                return ((DateRule) annotation).order();
 
             } else {
                 throw new IllegalArgumentException(String.format("%s is not a Saripaar annotation",
