@@ -15,7 +15,6 @@
 package com.mobsandgeeks.saripaar;
 
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.support.v4.app.Fragment;
@@ -69,14 +68,6 @@ public class Validator {
         mProperties = new HashMap<String, Object>();
     }
 
-    public <T extends Activity> Validator(T activity) {
-        this();
-        if (activity == null) {
-            throw new IllegalArgumentException("'controller' cannot be null");
-        }
-        mController = activity;
-    }
-
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public <T extends android.app.Fragment> Validator(T fragment) {
         this();
@@ -110,7 +101,7 @@ public class Validator {
          * @param failedView The {@link View} that did not pass validation.
          * @param failedRule The failed {@link Rule} associated with the {@link View}.
          */
-        public void onValidationFailed(TextView failedView, Rule<?> failedRule);
+        public void onValidationFailed(View failedView, Rule<?> failedRule);
     }
 
     /**
@@ -118,9 +109,10 @@ public class Validator {
      *
      * @param view The {@link View} to be validated.
      * @param rule The {@link Rule} associated with the view.
+     *
      * @throws IllegalArgumentException If {@code rule} is {@code null}.
      */
-    public void put(TextView view, Rule<?> rule) {
+    public void put(View view, Rule<?> rule) {
         if (rule == null) {
             throw new IllegalArgumentException("'rule' cannot be null");
         }
@@ -131,11 +123,12 @@ public class Validator {
     /**
      * Convenience method for adding multiple {@link Rule}s for a single {@link View}.
      *
-     * @param view  The {@link View} to be validated.
+     * @param view The {@link View} to be validated.
      * @param rules {@link List} of {@link Rule}s associated with the view.
+     *
      * @throws IllegalArgumentException If {@code rules} is {@code null}.
      */
-    public void put(TextView view, List<Rule<?>> rules) {
+    public void put(View view, List<Rule<?>> rules) {
         if (rules == null) {
             throw new IllegalArgumentException("\'rules\' cannot be null");
         }
@@ -267,8 +260,9 @@ public class Validator {
     /**
      * Updates a property value if it exists, else creates a new one.
      *
-     * @param name  The property name.
+     * @param name The property name.
      * @param value Value of the property.
+     *
      * @throws IllegalArgumentException If {@code name} is {@code null}.
      */
     public void setProperty(String name, Object value) {
@@ -283,8 +277,10 @@ public class Validator {
      * Retrieves the value of the given property.
      *
      * @param name The property name.
-     * @return Value of the property or {@code null} if the property does not exist.
+     *
      * @throws IllegalArgumentException If {@code name} is {@code null}.
+     *
+     * @return Value of the property or {@code null} if the property does not exist.
      */
     public Object getProperty(String name) {
         if (name == null) {
@@ -298,6 +294,7 @@ public class Validator {
      * Removes the property from this Validator.
      *
      * @param name The property name.
+     *
      * @return The value of the removed property or {@code null} if the property was not found.
      */
     public Object removeProperty(String name) {
@@ -308,6 +305,7 @@ public class Validator {
      * Checks if the specified property exists in this Validator.
      *
      * @param name The property name.
+     *
      * @return True if the property exists.
      */
     public boolean containsProperty(String name) {
@@ -323,7 +321,6 @@ public class Validator {
 
     /**
      * Removes all the rules for the matching {@link View}
-     *
      * @param view The {@code View} whose rules must be removed.
      */
     public void removeRulesFor(View view) {
@@ -347,7 +344,7 @@ public class Validator {
      * Validates all rules added to this Validator.
      *
      * @return {@code null} if all {@code Rule}s are valid, else returns the failed
-     * {@code ViewRulePair}.
+     *          {@code ViewRulePair}.
      */
     private ViewRulePair validateAllRules() {
         if (!mAnnotationsProcessed) {
@@ -401,7 +398,7 @@ public class Validator {
                 } else if (confirmPasswordTextView != null) {
                     throw new IllegalStateException("You cannot annotate " +
                             "two fields in the same Activity with @ConfirmPassword.");
-                } else if (confirmPasswordTextView == null) {
+                } else {
                     confirmPasswordTextView = (TextView) getView(pair.field);
                 }
             }
@@ -425,7 +422,7 @@ public class Validator {
     }
 
     private ViewRulePair getViewAndRule(Field field, Annotation annotation, Object... params) {
-        TextView view = getView(field);
+        View view = getView(field);
         if (view == null) {
             Log.w(TAG, String.format("Your %s - %s is null. Please check your field assignment(s).",
                     field.getType().getSimpleName(), field.getName()));
@@ -442,12 +439,12 @@ public class Validator {
         return rule != null ? new ViewRulePair(view, rule) : null;
     }
 
-    private TextView getView(Field field) {
+    private View getView(Field field) {
         try {
             field.setAccessible(true);
             Object instance = mController;
 
-            return (TextView) field.get(instance);
+            return (View) field.get(instance);
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {
@@ -474,7 +471,7 @@ public class Validator {
             }
         }
 
-        Collections.sort(annotationFieldPairs, new AnnotationFieldPairCompartor());
+        Collections.sort(annotationFieldPairs, new AnnotationFieldPairComparator());
 
         return annotationFieldPairs;
     }
@@ -540,10 +537,10 @@ public class Validator {
     }
 
     private class ViewRulePair {
-        public TextView view;
+        public View view;
         public Rule rule;
 
-        public ViewRulePair(TextView view, Rule<?> rule) {
+        public ViewRulePair(View view, Rule<?> rule) {
             this.view = view;
             this.rule = rule;
         }
@@ -559,7 +556,7 @@ public class Validator {
         }
     }
 
-    private class AnnotationFieldPairCompartor implements Comparator<AnnotationFieldPair> {
+    private class AnnotationFieldPairComparator implements Comparator<AnnotationFieldPair> {
 
         @Override
         public int compare(AnnotationFieldPair lhs, AnnotationFieldPair rhs) {
