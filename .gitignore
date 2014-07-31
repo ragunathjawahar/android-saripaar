@@ -30,3 +30,6 @@ libs/
 
 # Maven
 release.properties
+
+#Gradle Build
+build/
