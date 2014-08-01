@@ -14,12 +14,12 @@
 
 package com.mobsandgeeks.saripaar.annotation;
 
+import com.mobsandgeeks.saripaar.Rules;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
-
-import com.mobsandgeeks.saripaar.Rules;
 
 /**
  * Allows only valid IP Addresses on the annotated {@code View}.
@@ -29,7 +29,9 @@ import com.mobsandgeeks.saripaar.Rules;
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface IpAddress {
-    public int order();
-    public String message()     default Rules.EMPTY_STRING;
-    public int messageResId()   default 0;
+    public int order() default 0;
+
+    public String message() default Rules.EMPTY_STRING;
+
+    public int messageResId() default 0;
 }

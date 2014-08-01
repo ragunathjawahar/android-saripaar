@@ -14,12 +14,12 @@
 
 package com.mobsandgeeks.saripaar.annotation;
 
+import com.mobsandgeeks.saripaar.Rules;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
-
-import com.mobsandgeeks.saripaar.Rules;
 
 /**
  * Specifies constraints such as min length, max length and trim on textual data contained
@@ -30,10 +30,15 @@ import com.mobsandgeeks.saripaar.Rules;
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface TextRule {
-    public int order();
-    public int minLength()      default 0;
-    public int maxLength()      default Integer.MAX_VALUE;
-    public boolean trim()       default true;
-    public String message()     default Rules.EMPTY_STRING;
-    public int messageResId()   default 0;
+    public int order() default 0;
+
+    public int minLength() default 0;
+
+    public int maxLength() default Integer.MAX_VALUE;
+
+    public boolean trim() default true;
+
+    public String message() default Rules.EMPTY_STRING;
+
+    public int messageResId() default 0;
 }

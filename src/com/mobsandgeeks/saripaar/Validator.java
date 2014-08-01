@@ -17,6 +17,7 @@ package com.mobsandgeeks.saripaar;
 import android.annotation.TargetApi;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.View;
@@ -56,7 +57,7 @@ public class Validator {
     private boolean mAnnotationsProcessed;
     private List<ViewRulePair> mViewsAndRules;
     private Map<String, Object> mProperties;
-    private AsyncTask<Void, Void, ViewRulePair> mAsyncValidationTask;
+    private AsyncTask<Void, Void, List<ViewRulePair>> mAsyncValidationTask;
     private ValidationListener mValidationListener;
 
     /**
@@ -64,7 +65,7 @@ public class Validator {
      */
     private Validator() {
         mAnnotationsProcessed = false;
-        mViewsAndRules = new ArrayList<Validator.ViewRulePair>();
+        mViewsAndRules = new ArrayList<ViewRulePair>();
         mProperties = new HashMap<String, Object>();
     }
 
@@ -85,6 +86,10 @@ public class Validator {
         mController = fragment;
     }
 
+    public void mapServerErrors(Bundle possibleField) {
+
+    }
+
     /**
      * Interface definition for a callback to be invoked when {@code validate()} is called.
      */
@@ -97,11 +102,8 @@ public class Validator {
 
         /**
          * Called if any of the {@link Rule}s fail.
-         *
-         * @param failedView The {@link View} that did not pass validation.
-         * @param failedRule The failed {@link Rule} associated with the {@link View}.
          */
-        public void onValidationFailed(View failedView, Rule<?> failedRule);
+        public void onValidationFailed(List<ViewRulePair> failedResults);
     }
 
     /**
@@ -109,7 +111,6 @@ public class Validator {
      *
      * @param view The {@link View} to be validated.
      * @param rule The {@link Rule} associated with the view.
-     *
      * @throws IllegalArgumentException If {@code rule} is {@code null}.
      */
     public void put(View view, Rule<?> rule) {
@@ -123,9 +124,8 @@ public class Validator {
     /**
      * Convenience method for adding multiple {@link Rule}s for a single {@link View}.
      *
-     * @param view The {@link View} to be validated.
+     * @param view  The {@link View} to be validated.
      * @param rules {@link List} of {@link Rule}s associated with the view.
-     *
      * @throws IllegalArgumentException If {@code rules} is {@code null}.
      */
     public void put(View view, List<Rule<?>> rules) {
@@ -158,11 +158,11 @@ public class Validator {
                     " before attempting to validate.");
         }
 
-        ViewRulePair failedViewRulePair = validateAllRules();
-        if (failedViewRulePair == null) {
-            mValidationListener.onValidationSucceeded();
+        List<ViewRulePair> failedViewRulePair = validateAllRules();
+        if (failedViewRulePair != null && failedViewRulePair.size() > 0) {
+            mValidationListener.onValidationFailed(failedViewRulePair);
         } else {
-            mValidationListener.onValidationFailed(failedViewRulePair.view, failedViewRulePair.rule);
+            mValidationListener.onValidationSucceeded();
         }
     }
 
@@ -185,19 +185,19 @@ public class Validator {
         }
 
         // Start a new one ;)
-        mAsyncValidationTask = new AsyncTask<Void, Void, ViewRulePair>() {
+        mAsyncValidationTask = new AsyncTask<Void, Void, List<ViewRulePair>>() {
 
             @Override
-            protected ViewRulePair doInBackground(Void... params) {
+            protected List<ViewRulePair> doInBackground(Void... params) {
                 return validateAllRules();
             }
 
             @Override
-            protected void onPostExecute(ViewRulePair pair) {
+            protected void onPostExecute(List<ViewRulePair> pair) {
                 if (pair == null) {
                     mValidationListener.onValidationSucceeded();
                 } else {
-                    mValidationListener.onValidationFailed(pair.view, pair.rule);
+                    mValidationListener.onValidationFailed(pair);
                 }
 
                 mAsyncValidationTask = null;
@@ -260,9 +260,8 @@ public class Validator {
     /**
      * Updates a property value if it exists, else creates a new one.
      *
-     * @param name The property name.
+     * @param name  The property name.
      * @param value Value of the property.
-     *
      * @throws IllegalArgumentException If {@code name} is {@code null}.
      */
     public void setProperty(String name, Object value) {
@@ -277,10 +276,8 @@ public class Validator {
      * Retrieves the value of the given property.
      *
      * @param name The property name.
-     *
-     * @throws IllegalArgumentException If {@code name} is {@code null}.
-     *
      * @return Value of the property or {@code null} if the property does not exist.
+     * @throws IllegalArgumentException If {@code name} is {@code null}.
      */
     public Object getProperty(String name) {
         if (name == null) {
@@ -294,7 +291,6 @@ public class Validator {
      * Removes the property from this Validator.
      *
      * @param name The property name.
-     *
      * @return The value of the removed property or {@code null} if the property was not found.
      */
     public Object removeProperty(String name) {
@@ -305,7 +301,6 @@ public class Validator {
      * Checks if the specified property exists in this Validator.
      *
      * @param name The property name.
-     *
      * @return True if the property exists.
      */
     public boolean containsProperty(String name) {
@@ -321,6 +316,7 @@ public class Validator {
 
     /**
      * Removes all the rules for the matching {@link View}
+     *
      * @param view The {@code View} whose rules must be removed.
      */
     public void removeRulesFor(View view) {
@@ -331,7 +327,7 @@ public class Validator {
         int index = 0;
         while (index < mViewsAndRules.size()) {
             ViewRulePair pair = mViewsAndRules.get(index);
-            if (pair.view == view) {
+            if (pair.getView() == view) {
                 mViewsAndRules.remove(index);
                 continue;
             }
@@ -344,9 +340,9 @@ public class Validator {
      * Validates all rules added to this Validator.
      *
      * @return {@code null} if all {@code Rule}s are valid, else returns the failed
-     *          {@code ViewRulePair}.
+     * {@code ViewRulePair}.
      */
-    private ViewRulePair validateAllRules() {
+    private List<ViewRulePair> validateAllRules() {
         if (!mAnnotationsProcessed) {
             createRulesFromAnnotations(getSaripaarAnnotatedFields());
             mAnnotationsProcessed = true;
@@ -356,23 +352,21 @@ public class Validator {
             Log.i(TAG, "No rules found. Passing validation by default.");
             return null;
         }
-
-        ViewRulePair failedViewRulePair = null;
+        List<ViewRulePair> list = new ArrayList<ViewRulePair>();
         for (ViewRulePair pair : mViewsAndRules) {
             if (pair == null) continue;
 
             // Validate views only if they are visible and enabled
-            if (pair.view != null) {
-                if (!pair.view.isShown() || !pair.view.isEnabled()) continue;
+            if (pair.getView() != null) {
+                if (!pair.getView().isShown() || !pair.getView().isEnabled()) continue;
             }
 
-            if (!pair.rule.isValid(pair.view)) {
-                failedViewRulePair = pair;
-                break;
+            if (!pair.getRule().isValid(pair.getView())) {
+                list.add(pair);
             }
         }
 
-        return failedViewRulePair;
+        return list;
     }
 
     private void createRulesFromAnnotations(List<AnnotationFieldPair> annotationFieldPairs) {
@@ -534,16 +528,6 @@ public class Validator {
                 annotationType.equals(Required.class) ||
                 annotationType.equals(Select.class) ||
                 annotationType.equals(TextRule.class);
-    }
-
-    private class ViewRulePair {
-        public View view;
-        public Rule rule;
-
-        public ViewRulePair(View view, Rule<?> rule) {
-            this.view = view;
-            this.rule = rule;
-        }
     }
 
     private class AnnotationFieldPair {

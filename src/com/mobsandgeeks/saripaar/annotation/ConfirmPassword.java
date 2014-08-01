@@ -29,7 +29,9 @@ import java.lang.annotation.Target;
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ConfirmPassword {
-    public int order();
-    public String message()     default "Passwords don't match";
-    public int messageResId()   default 0;
+    public int order() default 0;
+
+    public String message() default "Passwords don't match";
+
+    public int messageResId() default 0;
 }

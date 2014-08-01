@@ -22,20 +22,15 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Enables to specify a regular expression for the {@code EditText}.
+ * Specifies constraints such as min length, max length and trim on textual data contained
+ * in {@code View}s.
  *
  * @author Ragunath Jawahar <rj@mobsandgeeks.com>
  */
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Regex {
-    public int order() default 0;
-
-    public String pattern() default ".";
-
-    public int patternResId() default 0;
-
-    public Class patternFetcher() default Void.class;
+public @interface MatchServerErrors {
+    public String[] errorKeys();
 
     public boolean trim() default true;
 
