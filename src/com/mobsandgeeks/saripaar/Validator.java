@@ -27,6 +27,7 @@ import com.mobsandgeeks.saripaar.annotation.Checked;
 import com.mobsandgeeks.saripaar.annotation.ConfirmPassword;
 import com.mobsandgeeks.saripaar.annotation.Email;
 import com.mobsandgeeks.saripaar.annotation.IpAddress;
+import com.mobsandgeeks.saripaar.annotation.MatchServerErrors;
 import com.mobsandgeeks.saripaar.annotation.NumberRule;
 import com.mobsandgeeks.saripaar.annotation.Password;
 import com.mobsandgeeks.saripaar.annotation.Regex;
@@ -37,6 +38,7 @@ import com.mobsandgeeks.saripaar.annotation.TextRule;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -55,8 +57,9 @@ public class Validator {
 
     private Object mController;
     private boolean mAnnotationsProcessed;
-    private List<ViewRulePair> mViewsAndRules;
-    private Map<String, Object> mProperties;
+    private List<ViewRulePair> validationForm = new ArrayList<ViewRulePair>();
+    private List<ViewErrorKeyPair> serverValidationForm = new ArrayList<ViewErrorKeyPair>();
+    private Map<String, Object> mProperties = new HashMap<String, Object>();
     private AsyncTask<Void, Void, List<ViewRulePair>> mAsyncValidationTask;
     private ValidationListener mValidationListener;
 
@@ -65,8 +68,6 @@ public class Validator {
      */
     private Validator() {
         mAnnotationsProcessed = false;
-        mViewsAndRules = new ArrayList<ViewRulePair>();
-        mProperties = new HashMap<String, Object>();
     }
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
@@ -86,8 +87,20 @@ public class Validator {
         mController = fragment;
     }
 
+    //Bundle[{email=has already been taken}]
+    //Bundle[{email=has already been taken, password=is too short (minimum is 6 characters)}]
     public void mapServerErrors(Bundle possibleField) {
-
+        List<ViewErrorPair> list = new ArrayList<ViewErrorPair>();
+        for (String key : possibleField.keySet()) {
+            for (ViewErrorKeyPair viewErrorKeyPair : serverValidationForm) {
+                if (viewErrorKeyPair.errorKeys.contains(key)) {
+                    list.add(new ViewErrorPair(viewErrorKeyPair.view, possibleField.getString(key)));
+                }
+            }
+        }
+        if (mValidationListener != null) {
+            mValidationListener.onServerMappingFinish(list);
+        }
     }
 
     /**
@@ -104,6 +117,11 @@ public class Validator {
          * Called if any of the {@link Rule}s fail.
          */
         public void onValidationFailed(List<ViewRulePair> failedResults);
+
+        /**
+         * Called after server return error and json mapped to fields
+         */
+        public void onServerMappingFinish(List<ViewErrorPair> mappingResults);
     }
 
     /**
@@ -118,7 +136,7 @@ public class Validator {
             throw new IllegalArgumentException("'rule' cannot be null");
         }
 
-        mViewsAndRules.add(new ViewRulePair(view, rule));
+        validationForm.add(new ViewRulePair(view, rule));
     }
 
     /**
@@ -325,10 +343,10 @@ public class Validator {
         }
 
         int index = 0;
-        while (index < mViewsAndRules.size()) {
-            ViewRulePair pair = mViewsAndRules.get(index);
+        while (index < validationForm.size()) {
+            ViewRulePair pair = validationForm.get(index);
             if (pair.getView() == view) {
-                mViewsAndRules.remove(index);
+                validationForm.remove(index);
                 continue;
             }
 
@@ -348,12 +366,12 @@ public class Validator {
             mAnnotationsProcessed = true;
         }
 
-        if (mViewsAndRules.size() == 0) {
+        if (validationForm.size() == 0) {
             Log.i(TAG, "No rules found. Passing validation by default.");
             return null;
         }
         List<ViewRulePair> list = new ArrayList<ViewRulePair>();
-        for (ViewRulePair pair : mViewsAndRules) {
+        for (ViewRulePair pair : validationForm) {
             if (pair == null) continue;
 
             // Validate views only if they are visible and enabled
@@ -399,10 +417,13 @@ public class Validator {
 
             // Others
             ViewRulePair viewRulePair = null;
+            ViewErrorKeyPair viewErrorKeyPair = null;
             if (pair.annotation.annotationType().equals(ConfirmPassword.class)) {
                 viewRulePair = getViewAndRule(pair.field, pair.annotation, passwordTextView);
-            } else {
+            } else if (!pair.annotation.annotationType().equals(MatchServerErrors.class)) {
                 viewRulePair = getViewAndRule(pair.field, pair.annotation);
+            } else {
+                viewErrorKeyPair = getViewErrorKeyPair(pair.field, pair.annotation);
             }
             if (viewRulePair != null) {
                 if (DEBUG) {
@@ -410,9 +431,31 @@ public class Validator {
                             pair.annotation.annotationType().getSimpleName(),
                             pair.field.getName()));
                 }
-                mViewsAndRules.add(viewRulePair);
+                validationForm.add(viewRulePair);
+            }
+            if (viewErrorKeyPair != null) {
+                serverValidationForm.add(viewErrorKeyPair);
             }
         }
+    }
+
+    private ViewErrorKeyPair getViewErrorKeyPair(Field field, Annotation annotation) {
+        View view = getView(field);
+        if (view == null) {
+            Log.w(TAG, String.format("Your %s - %s is null. Please check your field assignment(s).",
+                    field.getType().getSimpleName(), field.getName()));
+            return null;
+        }
+        Class<?> annotationType = annotation.annotationType();
+        if (annotationType.equals(MatchServerErrors.class)) {
+            if (!TextView.class.isAssignableFrom(view.getClass())) {
+                //Log.w(TAG, String.format(WARN_TEXT, field.getName(), Regex.class.getSimpleName()));
+                return null;
+            }
+            List<String> errorKeys = Arrays.asList(((MatchServerErrors) annotation).errorKeys());
+            return new ViewErrorKeyPair(view, errorKeys);
+        }
+        return null;
     }
 
     private ViewRulePair getViewAndRule(Field field, Annotation annotation, Object... params) {
@@ -464,9 +507,7 @@ public class Validator {
                 }
             }
         }
-
         Collections.sort(annotationFieldPairs, new AnnotationFieldPairComparator());
-
         return annotationFieldPairs;
     }
 
@@ -527,7 +568,18 @@ public class Validator {
                 annotationType.equals(Regex.class) ||
                 annotationType.equals(Required.class) ||
                 annotationType.equals(Select.class) ||
-                annotationType.equals(TextRule.class);
+                annotationType.equals(TextRule.class) ||
+                annotationType.equals(MatchServerErrors.class);
+    }
+
+    private class ViewErrorKeyPair {
+        public View view;
+        public List<String> errorKeys;
+
+        private ViewErrorKeyPair(View view, List<String> errorKeys) {
+            this.view = view;
+            this.errorKeys = errorKeys;
+        }
     }
 
     private class AnnotationFieldPair {
@@ -582,10 +634,8 @@ public class Validator {
                 return ((TextRule) annotation).order();
 
             } else {
-                throw new IllegalArgumentException(String.format("%s is not a Saripaar annotation",
-                        annotatedClass.getName()));
+                return Integer.MIN_VALUE;
             }
         }
     }
-
 }

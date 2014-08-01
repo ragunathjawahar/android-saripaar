@@ -159,7 +159,7 @@ class AnnotationRuleFactory {
         String message = messageResId != 0 ? context.getString(messageResId) : regexRule.message();
         String pattern = null;
         try {
-            pattern = ((PatternFetcher) regexRule.patternFetcher().newInstance()).getPattern();
+            pattern = ((PatternProvider) regexRule.patternFetcher().newInstance()).getPattern();
         } catch (InstantiationException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {
