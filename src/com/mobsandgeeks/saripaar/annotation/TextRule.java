@@ -32,6 +32,8 @@ import java.lang.annotation.Target;
 public @interface TextRule {
     public int order() default 0;
 
+    public Class minMaxProvider() default Void.class;
+
     public int minLength() default 0;
 
     public int maxLength() default Integer.MAX_VALUE;

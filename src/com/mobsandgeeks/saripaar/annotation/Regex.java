@@ -35,7 +35,7 @@ public @interface Regex {
 
     public int patternResId() default 0;
 
-    public Class patternFetcher() default Void.class;
+    public Class patternProvider() default Void.class;
 
     public boolean trim() default true;
 

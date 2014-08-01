@@ -134,12 +134,24 @@ class AnnotationRuleFactory {
         int messageResId = textRule.messageResId();
         String message = messageResId != 0 ? view.getContext().getString(messageResId) :
                 textRule.message();
+        int minLength = textRule.maxLength();
+        int maxLength = textRule.minLength();
 
-        if (textRule.minLength() > 0) {
-            rules.add(Rules.minLength(null, textRule.minLength(), textRule.trim()));
+        try {
+            MinMaxProvider minMaxProvider = (MinMaxProvider) textRule.minMaxProvider().newInstance();
+            minLength = minMaxProvider.getMin();
+            maxLength = minMaxProvider.getMax();
+            message = minMaxProvider.errorMessage();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
         }
-        if (textRule.maxLength() != Integer.MAX_VALUE) {
-            rules.add(Rules.maxLength(null, textRule.maxLength(), textRule.trim()));
+        if (minLength > 0) {
+            rules.add(Rules.minLength(null, minLength, textRule.trim()));
+        }
+        if (maxLength != Integer.MAX_VALUE) {
+            rules.add(Rules.maxLength(null, maxLength, textRule.trim()));
         }
 
         Rule<?>[] ruleArray = new Rule<?>[rules.size()];
@@ -158,19 +170,18 @@ class AnnotationRuleFactory {
         int messageResId = regexRule.messageResId();
         String message = messageResId != 0 ? context.getString(messageResId) : regexRule.message();
         String pattern = null;
+        int patternResId = regexRule.patternResId();
+        pattern = patternResId != 0 ? view.getContext().getString(patternResId) :
+                regexRule.pattern();
         try {
-            pattern = ((PatternProvider) regexRule.patternFetcher().newInstance()).getPattern();
+            PatternProvider patternProvider = (PatternProvider) regexRule.patternProvider().newInstance();
+            pattern = patternProvider.getPattern();
+            message = patternProvider.errorMessage();
         } catch (InstantiationException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
-        if (TextUtils.isEmpty(pattern)) {
-            int patternResId = regexRule.patternResId();
-            pattern = patternResId != 0 ? view.getContext().getString(patternResId) :
-                    regexRule.pattern();
-        }
-
         return Rules.regex(message, pattern, regexRule.trim());
     }
 
