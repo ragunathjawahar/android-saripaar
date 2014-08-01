@@ -77,6 +77,8 @@ public class Validator {
             throw new IllegalArgumentException("'controller' cannot be null");
         }
         mController = fragment;
+        createRulesFromAnnotations(getSaripaarAnnotatedFields());
+        mAnnotationsProcessed = true;
     }
 
     public <T extends Fragment> Validator(T fragment) {
@@ -85,6 +87,8 @@ public class Validator {
             throw new IllegalArgumentException("'controller' cannot be null");
         }
         mController = fragment;
+        createRulesFromAnnotations(getSaripaarAnnotatedFields());
+        mAnnotationsProcessed = true;
     }
 
     //Bundle[{email=has already been taken}]
@@ -361,12 +365,7 @@ public class Validator {
      * {@code ViewRulePair}.
      */
     private List<ViewRulePair> validateAllRules() {
-        if (!mAnnotationsProcessed) {
-            createRulesFromAnnotations(getSaripaarAnnotatedFields());
-            mAnnotationsProcessed = true;
-        }
-
-        if (validationForm.size() == 0) {
+        if (!mAnnotationsProcessed || validationForm.size() == 0) {
             Log.i(TAG, "No rules found. Passing validation by default.");
             return null;
         }
@@ -420,10 +419,10 @@ public class Validator {
             ViewErrorKeyPair viewErrorKeyPair = null;
             if (pair.annotation.annotationType().equals(ConfirmPassword.class)) {
                 viewRulePair = getViewAndRule(pair.field, pair.annotation, passwordTextView);
-            } else if (!pair.annotation.annotationType().equals(MatchServerErrors.class)) {
-                viewRulePair = getViewAndRule(pair.field, pair.annotation);
-            } else {
+            } else if (pair.annotation.annotationType().equals(MatchServerErrors.class)) {
                 viewErrorKeyPair = getViewErrorKeyPair(pair.field, pair.annotation);
+            } else {
+                viewRulePair = getViewAndRule(pair.field, pair.annotation);
             }
             if (viewRulePair != null) {
                 if (DEBUG) {
