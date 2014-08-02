@@ -27,6 +27,7 @@ import com.mobsandgeeks.saripaar.annotation.ConfirmPassword;
 import com.mobsandgeeks.saripaar.annotation.Email;
 import com.mobsandgeeks.saripaar.annotation.IpAddress;
 import com.mobsandgeeks.saripaar.annotation.NumberRule;
+import com.mobsandgeeks.saripaar.annotation.Optional;
 import com.mobsandgeeks.saripaar.annotation.Password;
 import com.mobsandgeeks.saripaar.annotation.Regex;
 import com.mobsandgeeks.saripaar.annotation.Required;
@@ -64,6 +65,8 @@ class AnnotationRuleFactory {
             return getCheckedRule(field, view, (Checked) annotation);
         } else if (Required.class.equals(annotationType)) {
             return getRequiredRule(field, view, (Required) annotation);
+        } else if (Optional.class.equals(annotationType)) {
+            return getOptionalRule(field, view, (Optional) annotation);
         } else if (TextRule.class.equals(annotationType)) {
             return getTextRule(field, view, (TextRule) annotation);
         } else if (Regex.class.equals(annotationType)) {
@@ -124,6 +127,14 @@ class AnnotationRuleFactory {
         return Rules.required(message, required.trim());
     }
 
+    private static Rule<?> getOptionalRule(Field field, View view, Optional annotation) {
+        if (!TextView.class.isAssignableFrom(view.getClass())) {
+            Log.w(TAG, String.format(WARN_TEXT, field.getName(), Optional.class.getSimpleName()));
+            return null;
+        }
+        return Rules.optional();
+    }
+
     private static Rule<View> getTextRule(Field field, View view, TextRule textRule) {
         if (!TextView.class.isAssignableFrom(view.getClass())) {
             Log.w(TAG, String.format(WARN_TEXT, field.getName(), TextRule.class.getSimpleName()));
@@ -134,8 +145,8 @@ class AnnotationRuleFactory {
         int messageResId = textRule.messageResId();
         String message = messageResId != 0 ? view.getContext().getString(messageResId) :
                 textRule.message();
-        int minLength = textRule.maxLength();
-        int maxLength = textRule.minLength();
+        int minLength = textRule.minLength();
+        int maxLength = textRule.maxLength();
 
         try {
             MinMaxProvider minMaxProvider = (MinMaxProvider) textRule.minMaxProvider().newInstance();

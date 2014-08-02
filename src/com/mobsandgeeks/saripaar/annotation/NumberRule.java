@@ -22,7 +22,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Number rule annotation. Allows a specific primitive type contained in {@link NumberType}.
+ * Number rule annotations. Allows a specific primitive type contained in {@link NumberType}.
  * Additional options such as greater than (>), less than (<) and equals (==) are available.
  *
  * @author Ragunath Jawahar <rj@mobsandgeeks.com>

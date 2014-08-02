@@ -2,16 +2,19 @@ package com.mobsandgeeks.saripaar;
 
 import android.view.View;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by maxchursin on 7/31/14.
  */
 public class ViewRulePair {
     private View view;
-    private Rule rule;
+    private List<Rule> rules = new ArrayList<Rule>();
 
-    public ViewRulePair(View view, Rule<?> rule) {
+    public ViewRulePair(View view, List<Rule> rules) {
         this.setView(view);
-        this.setRule(rule);
+        this.setRules(rules);
     }
 
     public View getView() {
@@ -22,11 +25,11 @@ public class ViewRulePair {
         this.view = view;
     }
 
-    public Rule getRule() {
-        return rule;
+    public List<Rule> getRules() {
+        return rules;
     }
 
-    public void setRule(Rule rule) {
-        this.rule = rule;
+    public void setRules(List<Rule> rules) {
+        this.rules = rules;
     }
 }
