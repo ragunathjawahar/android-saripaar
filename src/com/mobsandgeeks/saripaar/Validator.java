@@ -381,7 +381,9 @@ public class Validator {
             }
             for (Rule rule : pair.getRules()) {
                 if (!rule.isValid(view)) {
-                    list.add(new ViewErrorPair(view, rule.getFailureMessage()));
+                    if (rule.getFailureMessage() != null) {
+                        list.add(new ViewErrorPair(view, rule.getFailureMessage()));
+                    }
                     break;
                 }
             }
