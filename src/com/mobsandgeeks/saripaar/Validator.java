@@ -406,7 +406,7 @@ public class Validator {
             // Validate views only if they are visible and enabled
             View view = pair.getView();
             if (view != null) {
-                if (!view.isShown() || !view.isEnabled()) continue;
+                if (view.getVisibility()!=View.VISIBLE || !view.isEnabled()) continue;
             }
             for (Rule rule : pair.getRules()) {
                 if (!rule.isValid(view)) {
