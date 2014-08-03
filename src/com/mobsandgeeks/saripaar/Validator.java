@@ -15,6 +15,7 @@
 package com.mobsandgeeks.saripaar;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -57,7 +58,7 @@ public class Validator {
     static final boolean DEBUG = false;
 
     private Object mController;
-    private boolean mAnnotationsProcessed;
+    private volatile boolean mAnnotationsProcessed;
     private List<ViewRulePair> validationForm = new ArrayList<ViewRulePair>();
     private List<ViewErrorKeyPair> serverValidationForm = new ArrayList<ViewErrorKeyPair>();
     private Map<String, Object> mProperties = new HashMap<String, Object>();
@@ -72,24 +73,53 @@ public class Validator {
     }
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    public <T extends android.app.Fragment> Validator(T fragment) {
+    public <F extends android.app.Fragment> Validator(F fragment) {
         this();
         if (fragment == null) {
             throw new IllegalArgumentException("'controller' cannot be null");
         }
         mController = fragment;
-        createRulesFromAnnotations(getSaripaarAnnotatedFields());
-        mAnnotationsProcessed = true;
+        initForm();
+
     }
 
-    public <T extends Fragment> Validator(T fragment) {
+    public <F extends Fragment> Validator(F fragment) {
         this();
         if (fragment == null) {
             throw new IllegalArgumentException("'controller' cannot be null");
         }
         mController = fragment;
-        createRulesFromAnnotations(getSaripaarAnnotatedFields());
-        mAnnotationsProcessed = true;
+        initForm();
+    }
+
+    public <A extends Activity> Validator(A activity) {
+        this();
+        if (activity == null) {
+            throw new IllegalArgumentException("'controller' cannot be null");
+        }
+        mController = activity;
+        initForm();
+    }
+
+    private void initForm() {
+        new AsyncTask<Void, Void, Void>() {
+
+            @Override
+            protected void onPreExecute() {
+                mAnnotationsProcessed = false;
+            }
+
+            @Override
+            protected Void doInBackground(Void... params) {
+                createRulesFromAnnotations(getSaripaarAnnotatedFields());
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                mAnnotationsProcessed = true;
+            }
+        }.execute();
     }
 
     //Bundle[{email=has already been taken}]
@@ -180,9 +210,8 @@ public class Validator {
             throw new IllegalStateException("Set a " + ValidationListener.class.getSimpleName() +
                     " before attempting to validate.");
         }
-
         List<ViewErrorPair> failedViewRulePair = validateAllRules();
-        if (failedViewRulePair != null && failedViewRulePair.size() > 0) {
+        if (failedViewRulePair != null && failedViewRulePair.size() > 0 || !mAnnotationsProcessed) {
             mValidationListener.onValidationFailed(failedViewRulePair);
         } else {
             mValidationListener.onValidationSucceeded();
