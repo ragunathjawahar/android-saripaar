@@ -461,7 +461,7 @@ public class Validator {
                 //Log.w(TAG, String.format(WARN_TEXT, field.getName(), Regex.class.getSimpleName()));
                 return null;
             }
-            List<String> errorKeys = Arrays.asList(((MatchServerErrors) annotation).errorKeys());
+            List<String> errorKeys = Arrays.asList(((MatchServerErrors) annotation).value());
             return new ViewErrorKeyPair(view, errorKeys);
         }
         return null;
