@@ -129,10 +129,12 @@ public class Validator {
     //Bundle[{email=has already been taken, password=is too short (minimum is 6 characters)}]
     public void mapServerErrors(Bundle possibleField) {
         List<ViewErrorPair> list = new ArrayList<ViewErrorPair>();
-        for (String key : possibleField.keySet()) {
-            for (ViewErrorKeyPair viewErrorKeyPair : serverValidationForm) {
-                if (viewErrorKeyPair.errorKeys.contains(key)) {
-                    list.add(new ViewErrorPair(viewErrorKeyPair.view, possibleField.getString(key)));
+        if (possibleField!=null) {
+            for (String key : possibleField.keySet()) {
+                for (ViewErrorKeyPair viewErrorKeyPair : serverValidationForm) {
+                    if (viewErrorKeyPair.errorKeys.contains(key)) {
+                        list.add(new ViewErrorPair(viewErrorKeyPair.view, possibleField.getString(key)));
+                    }
                 }
             }
         }
