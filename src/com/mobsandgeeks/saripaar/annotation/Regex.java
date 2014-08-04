@@ -26,7 +26,7 @@ import java.lang.annotation.Target;
  *
  * @author Ragunath Jawahar <rj@mobsandgeeks.com>
  */
-@Target({ElementType.FIELD, ElementType.LOCAL_VARIABLE})
+@Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Regex {
     public int order() default 0;

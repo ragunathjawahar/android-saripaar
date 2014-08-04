@@ -251,10 +251,10 @@ public class Validator {
 
             @Override
             protected void onPostExecute(List<ViewErrorPair> pair) {
-                if (pair == null) {
-                    mValidationListener.onValidationSucceeded();
-                } else {
+                if (pair != null && pair.size() > 0 || !mAnnotationsProcessed) {
                     mValidationListener.onValidationFailed(pair);
+                } else {
+                    mValidationListener.onValidationSucceeded();
                 }
 
                 mAsyncValidationTask = null;
@@ -426,10 +426,6 @@ public class Validator {
         return list;
     }
 
-    public static boolean validateInline(String contactInfo) {
-        return true;
-    }
-
     private void createRulesFromAnnotations(List<FieldAnnotationsPair> fieldAnnotationsPairs) {
         TextView passwordTextView = null;
         int passwordViewCount = 0;
@@ -504,24 +500,6 @@ public class Validator {
         }
         return null;
     }
-
-//    private ViewRulePair getViewAndRule(Field field, Annotation annotation, Object... params) {
-//        View view = getView(field);
-//        if (view == null) {
-//            Log.w(TAG, String.format("Your %s - %s is null. Please check your field assignment(s).",
-//                    field.getType().getSimpleName(), field.getName()));
-//            return null;
-//        }
-//
-//        Rule<?> rule = null;
-//        if (params != null && params.length > 0) {
-//            rule = AnnotationRuleFactory.getRule(field, view, annotation, params);
-//        } else {
-//            rule = AnnotationRuleFactory.getRule(field, view, annotation);
-//        }
-//
-//        return rule != null ? new ViewRulePair(view, rule) : null;
-//    }
 
     private View getView(Field field) {
         try {
