@@ -118,6 +118,9 @@ public class Validator {
             @Override
             protected void onPostExecute(Void aVoid) {
                 mAnnotationsProcessed = true;
+                if (mValidationListener != null) {
+                    mValidationListener.onFormPrepared();
+                }
             }
         }.execute();
     }
@@ -142,6 +145,8 @@ public class Validator {
      * Interface definition for a callback to be invoked when {@code validate()} is called.
      */
     public interface ValidationListener {
+
+        public void onFormPrepared();
 
         /**
          * Called when all the {@link Rule}s added to this Validator are valid.
@@ -406,7 +411,7 @@ public class Validator {
             // Validate views only if they are visible and enabled
             View view = pair.getView();
             if (view != null) {
-                if (view.getVisibility()!=View.VISIBLE || !view.isEnabled()) continue;
+                if (view.getVisibility() != View.VISIBLE || !view.isEnabled()) continue;
             }
             for (Rule rule : pair.getRules()) {
                 if (!rule.isValid(view)) {
@@ -419,6 +424,10 @@ public class Validator {
         }
 
         return list;
+    }
+
+    public static boolean validateInline(String contactInfo) {
+        return true;
     }
 
     private void createRulesFromAnnotations(List<FieldAnnotationsPair> fieldAnnotationsPairs) {
