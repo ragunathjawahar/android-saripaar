@@ -21,36 +21,32 @@ public class ValidatorTest extends ActivityUnitTestCase<BaseTestActivity> {
 
     public void testRequiredAnnotationPositive() {
         startActivity(intent, null, null);
-        getActivity().validator.setValidationListener(new SuccessValidationListener());
-        waitAnnotationProcess();
-        getActivity().textViewRequired.setText("Text required");
-        getActivity().validator.validate();
+        final BaseTestActivity activity = getActivity();
+        activity.textViewRequired.setText("Text required");
+        activity.validator.setValidationListener(new SuccessValidationListener() {
+            @Override
+            public void onFormPrepared() {
+                activity.validator.validate();
+            }
+        });
     }
 
     public void testRequiredAnnotationNegative() {
         startActivity(intent, null, null);
-        getActivity().validator.setValidationListener(new FailureValidationListener());
-        waitAnnotationProcess();
-        getActivity().textViewRequired.setText(null);
-        getActivity().validator.validate();
-    }
-
-    private void waitAnnotationProcess() {
-        try {
-            //Giving time for annotations to process
-            Thread.sleep(100);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        final BaseTestActivity activity = getActivity();
+        activity.textViewRequired.setText(null);
+        activity.validator.setValidationListener(new FailureValidationListener() {
+            @Override
+            public void onFormPrepared() {
+                activity.validator.validate();
+            }
+        });
     }
 
     /**
-    * Created by maxchursin on 8/3/14.
-    */
-    static class SuccessValidationListener implements Validator.ValidationListener {
-        @Override
-        public void onFormPrepared() {
-        }
+     * Created by maxchursin on 8/3/14.
+     */
+    static abstract class SuccessValidationListener implements Validator.ValidationListener {
 
         @Override
         public void onValidationSucceeded() {
@@ -69,12 +65,9 @@ public class ValidatorTest extends ActivityUnitTestCase<BaseTestActivity> {
     }
 
     /**
-    * Created by maxchursin on 8/3/14.
-    */
-    static class FailureValidationListener implements Validator.ValidationListener {
-        @Override
-        public void onFormPrepared() {
-        }
+     * Created by maxchursin on 8/3/14.
+     */
+    static abstract class FailureValidationListener implements Validator.ValidationListener {
 
         @Override
         public void onValidationSucceeded() {
