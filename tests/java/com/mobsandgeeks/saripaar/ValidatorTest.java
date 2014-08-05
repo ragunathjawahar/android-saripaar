@@ -49,6 +49,10 @@ public class ValidatorTest extends ActivityUnitTestCase<BaseTestActivity> {
     */
     static class SuccessValidationListener implements Validator.ValidationListener {
         @Override
+        public void onFormPrepared() {
+        }
+
+        @Override
         public void onValidationSucceeded() {
             assertTrue(true);
         }
@@ -68,6 +72,10 @@ public class ValidatorTest extends ActivityUnitTestCase<BaseTestActivity> {
     * Created by maxchursin on 8/3/14.
     */
     static class FailureValidationListener implements Validator.ValidationListener {
+        @Override
+        public void onFormPrepared() {
+        }
+
         @Override
         public void onValidationSucceeded() {
             assertTrue(false);
