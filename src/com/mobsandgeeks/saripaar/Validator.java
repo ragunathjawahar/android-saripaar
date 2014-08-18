@@ -21,6 +21,7 @@ import android.widget.TextView;
 
 import com.mobsandgeeks.saripaar.annotation.Checked;
 import com.mobsandgeeks.saripaar.annotation.ConfirmPassword;
+import com.mobsandgeeks.saripaar.annotation.ConfirmEmail;
 import com.mobsandgeeks.saripaar.annotation.Email;
 import com.mobsandgeeks.saripaar.annotation.IpAddress;
 import com.mobsandgeeks.saripaar.annotation.NumberRule;
@@ -372,7 +373,9 @@ public class Validator {
 
     private void createRulesFromAnnotations(List<AnnotationFieldPair> annotationFieldPairs) {
         TextView passwordTextView = null;
+        TextView emailTextView = null;
         TextView confirmPasswordTextView = null;
+        TextView confirmEmailTextView = null;
 
         for (AnnotationFieldPair pair : annotationFieldPairs) {
             // Password
@@ -382,6 +385,12 @@ public class Validator {
                 } else {
                     throw new IllegalStateException("You cannot annotate " +
                             "two fields in the same Activity with @Password.");
+                }
+            }
+
+            if (pair.annotation.annotationType().equals(Email.class)) {
+                if (emailTextView == null) {
+                    emailTextView = (TextView) getView(pair.field);
                 }
             }
 
@@ -398,11 +407,26 @@ public class Validator {
                 }
             }
 
+            // Confirm email
+            if (pair.annotation.annotationType().equals(ConfirmEmail.class)) {
+                if (emailTextView == null) {
+                    throw new IllegalStateException("A @Email annotated field is required " +
+                            "before you can use @ConfirmEmail.");
+                } else if (confirmEmailTextView != null) {
+                    throw new IllegalStateException("You cannot annotate " +
+                            "two fields in the same Activity with @ConfirmEmail.");
+                } else if (confirmEmailTextView == null) {
+                    confirmEmailTextView = (TextView) getView(pair.field);
+                }
+            }
+
             // Others
             ViewRulePair viewRulePair = null;
             if (pair.annotation.annotationType().equals(ConfirmPassword.class)) {
                 viewRulePair = getViewAndRule(pair.field, pair.annotation, passwordTextView);
-            } else {
+            } else if(pair.annotation.annotationType().equals(ConfirmEmail.class)) {
+                viewRulePair = getViewAndRule(pair.field, pair.annotation, emailTextView);
+            }else {
                 viewRulePair = getViewAndRule(pair.field, pair.annotation);
             }
             if (viewRulePair != null) {
@@ -522,6 +546,7 @@ public class Validator {
         return annotationType.equals(Checked.class) ||
                 annotationType.equals(ConfirmPassword.class) ||
                 annotationType.equals(Email.class) ||
+                annotationType.equals(ConfirmEmail.class) ||
                 annotationType.equals(IpAddress.class) ||
                 annotationType.equals(NumberRule.class) ||
                 annotationType.equals(Password.class) ||
@@ -570,6 +595,9 @@ public class Validator {
 
             } else if (annotatedClass.equals(Email.class)) {
                 return ((Email) annotation).order();
+
+            } else if (annotatedClass.equals(ConfirmEmail.class)) {
+                return ((ConfirmEmail) annotation).order();
 
             } else if (annotatedClass.equals(IpAddress.class)) {
                 return ((IpAddress) annotation).order();

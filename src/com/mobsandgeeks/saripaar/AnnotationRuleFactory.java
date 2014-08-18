@@ -23,6 +23,7 @@ import android.widget.TextView;
 
 import com.mobsandgeeks.saripaar.annotation.Checked;
 import com.mobsandgeeks.saripaar.annotation.ConfirmPassword;
+import com.mobsandgeeks.saripaar.annotation.ConfirmEmail;
 import com.mobsandgeeks.saripaar.annotation.Email;
 import com.mobsandgeeks.saripaar.annotation.IpAddress;
 import com.mobsandgeeks.saripaar.annotation.NumberRule;
@@ -46,7 +47,7 @@ import java.util.List;
 class AnnotationRuleFactory {
     // Debug
     static final String TAG = "AnnotationToRuleConverter";
- 
+
     // Constants
     static final String WARN_TEXT = "%s - @%s can only be applied to TextView and " +
             "its subclasses.";
@@ -105,6 +106,12 @@ class AnnotationRuleFactory {
             TextView passwordTextView = (TextView) params[0];
             return getConfirmPasswordRule(field, view, (ConfirmPassword) annotation,
                     passwordTextView);
+        }
+
+        if (ConfirmEmail.class.equals(annotationType)) {
+            TextView emailTextView = (TextView) params[0];
+            return getConfirmEmailRule(field, view, (ConfirmEmail) annotation,
+                    emailTextView);
         }
 
         return (params == null || params.length == 0) ? getRule(field, view, annotation) : null;
@@ -262,6 +269,21 @@ class AnnotationRuleFactory {
 
         return Rules.or(message, Rules.eq(null, Rules.EMPTY_STRING),
                 Rules.regex(message, Rules.REGEX_EMAIL, true));
+    }
+
+    private static Rule<TextView> getConfirmEmailRule(Field field, View view,
+            ConfirmEmail confirmEmail, TextView emailTextView) {
+        if (!TextView.class.isAssignableFrom(view.getClass())) {
+            Log.w(TAG, String.format(WARN_TEXT, field.getName(),
+                    ConfirmEmail.class.getSimpleName()));
+            return null;
+        }
+
+        int messageResId = confirmEmail.messageResId();
+        String message = messageResId != 0 ? view.getContext().getString(messageResId) :
+                         confirmEmail.message();
+
+        return Rules.eq(message, emailTextView);
     }
 
     private static Rule<View> getIpAddressRule(Field field, View view, IpAddress ipAddress) {
