@@ -15,7 +15,6 @@
 package com.mobsandgeeks.saripaar;
 
 import android.content.Context;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Checkable;
@@ -157,6 +156,8 @@ class AnnotationRuleFactory {
             e.printStackTrace();
         } catch (IllegalAccessException e) {
             e.printStackTrace();
+        } catch (ClassCastException e) {
+            e.printStackTrace();
         }
         if (minLength > 0) {
             rules.add(Rules.minLength(null, minLength, textRule.trim()));
@@ -191,6 +192,8 @@ class AnnotationRuleFactory {
         } catch (InstantiationException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }catch (ClassCastException e) {
             e.printStackTrace();
         }
         return Rules.regex(message, pattern, regexRule.trim());
