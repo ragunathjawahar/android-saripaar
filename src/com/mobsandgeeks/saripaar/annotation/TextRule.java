@@ -23,7 +23,7 @@ import com.mobsandgeeks.saripaar.Rules;
 
 /**
  * Specifies constraints such as min length, max length and trim on textual data contained
- * in {@code View}s.
+ * in {@code View}s. If {@code required} is false, an empty field will be allowed.
  *
  * @author Ragunath Jawahar <rj@mobsandgeeks.com>
  */
@@ -36,4 +36,5 @@ public @interface TextRule {
     public boolean trim()       default true;
     public String message()     default Rules.EMPTY_STRING;
     public int messageResId()   default 0;
+    public boolean required()   default true;
 }
