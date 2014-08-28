@@ -169,20 +169,36 @@ public final class Rules {
      *          {@code getText()}. The returned text is affected by the {@code trimInput}
      *          parameter.
      * @param trimInput Specifies whether to trim the text returned by {@code getText()}.
+     * @param required Determine if an empty content will be allowed (when {@code false})
      *
      * @return True if the text has the minimum number of characters specified, false otherwise.
      */
     public static Rule<TextView> minLength(final String failureMessage, final int minLength,
-            final boolean trimInput) {
+            final boolean trimInput, final boolean required) {
 
         return new Rule<TextView>(failureMessage) {
 
             @Override
             public boolean isValid(TextView view) {
                 String text = getText(view, trimInput);
-                return text != null ? text.length() >= minLength : false;
+
+                if (text != null && text.length() > 0) {
+                    return text.length() >= minLength;
+                }
+
+                // Empty text, return false if the field is required
+                return !required;
             }
         };
+    }
+
+    /**
+     * Specifies the  {@link TextView} should have a min length and is required.
+     * @see #minLength(String, int, boolean, boolean)
+     */
+    public static Rule<TextView> minLength(final String failureMessage, final int minLength,
+                                           final boolean trimInput) {
+        return minLength(failureMessage, minLength, trimInput, true);
     }
 
     /**

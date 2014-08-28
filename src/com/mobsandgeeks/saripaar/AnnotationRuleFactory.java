@@ -14,6 +14,11 @@
 
 package com.mobsandgeeks.saripaar;
 
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
+
 import android.content.Context;
 import android.util.Log;
 import android.view.View;
@@ -21,6 +26,7 @@ import android.widget.Checkable;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.mobsandgeeks.saripaar.Rule;
 import com.mobsandgeeks.saripaar.annotation.Checked;
 import com.mobsandgeeks.saripaar.annotation.ConfirmPassword;
 import com.mobsandgeeks.saripaar.annotation.Email;
@@ -31,11 +37,6 @@ import com.mobsandgeeks.saripaar.annotation.Regex;
 import com.mobsandgeeks.saripaar.annotation.Required;
 import com.mobsandgeeks.saripaar.annotation.Select;
 import com.mobsandgeeks.saripaar.annotation.TextRule;
-
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Class contains {@code static} methods that return appropriate {@link Rule}s for Saripaar
@@ -135,7 +136,7 @@ class AnnotationRuleFactory {
             textRule.message();
 
         if (textRule.minLength() > 0) {
-            rules.add(Rules.minLength(null, textRule.minLength(), textRule.trim()));
+            rules.add(Rules.minLength(null, textRule.minLength(), textRule.trim(), textRule.required()));
         }
         if (textRule.maxLength() != Integer.MAX_VALUE) {
             rules.add(Rules.maxLength(null, textRule.maxLength(), textRule.trim()));

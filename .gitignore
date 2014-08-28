@@ -9,6 +9,8 @@
 *.class
 
 # generated files
+.gradle
+build/
 bin/
 gen/
 target/
