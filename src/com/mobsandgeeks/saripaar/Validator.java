@@ -18,7 +18,6 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Build;
-import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.View;
@@ -127,13 +126,13 @@ public class Validator {
 
     //Bundle[{email=has already been taken}]
     //Bundle[{email=has already been taken, password=is too short (minimum is 6 characters)}]
-    public void mapServerErrors(Bundle possibleField) {
+    public void mapServerErrors(Map<String, String> possibleField) {
         List<ViewErrorPair> list = new ArrayList<ViewErrorPair>();
-        if (possibleField!=null) {
+        if (possibleField != null) {
             for (String key : possibleField.keySet()) {
                 for (ViewErrorKeyPair viewErrorKeyPair : serverValidationForm) {
                     if (viewErrorKeyPair.errorKeys.contains(key)) {
-                        list.add(new ViewErrorPair(viewErrorKeyPair.view, possibleField.getString(key)));
+                        list.add(new ViewErrorPair(viewErrorKeyPair.view, possibleField.get(key)));
                     }
                 }
             }
