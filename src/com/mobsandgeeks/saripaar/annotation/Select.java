@@ -23,14 +23,17 @@ import java.lang.annotation.Target;
 
 /**
  * Used on a {@link Spinner} to check if the selected item is not the default.
- * 
+ *
  * @author Muhammad Hewedy
  */
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Select {
-    public int order();
-    public int defaultSelection()   default 0;
-    public String message()         default "Select an item.";
-    public int messageResId()       default 0;
+    public int order() default 0;
+
+    public int defaultSelection() default 0;
+
+    public String message() default "Select an item.";
+
+    public int messageResId() default 0;
 }

@@ -26,6 +26,7 @@ import com.mobsandgeeks.saripaar.annotation.ConfirmPassword;
 import com.mobsandgeeks.saripaar.annotation.Email;
 import com.mobsandgeeks.saripaar.annotation.IpAddress;
 import com.mobsandgeeks.saripaar.annotation.NumberRule;
+import com.mobsandgeeks.saripaar.annotation.Optional;
 import com.mobsandgeeks.saripaar.annotation.Password;
 import com.mobsandgeeks.saripaar.annotation.Regex;
 import com.mobsandgeeks.saripaar.annotation.Required;
@@ -46,7 +47,7 @@ import java.util.List;
 class AnnotationRuleFactory {
     // Debug
     static final String TAG = "AnnotationToRuleConverter";
- 
+
     // Constants
     static final String WARN_TEXT = "%s - @%s can only be applied to TextView and " +
             "its subclasses.";
@@ -63,6 +64,8 @@ class AnnotationRuleFactory {
             return getCheckedRule(field, view, (Checked) annotation);
         } else if (Required.class.equals(annotationType)) {
             return getRequiredRule(field, view, (Required) annotation);
+        } else if (Optional.class.equals(annotationType)) {
+            return getOptionalRule(field, view, (Optional) annotation);
         } else if (TextRule.class.equals(annotationType)) {
             return getTextRule(field, view, (TextRule) annotation);
         } else if (Regex.class.equals(annotationType)) {
@@ -118,9 +121,17 @@ class AnnotationRuleFactory {
 
         int messageResId = required.messageResId();
         String message = messageResId != 0 ? view.getContext().getString(messageResId) :
-            required.message();
+                required.message();
 
         return Rules.required(message, required.trim());
+    }
+
+    private static Rule<?> getOptionalRule(Field field, View view, Optional annotation) {
+        if (!TextView.class.isAssignableFrom(view.getClass())) {
+            Log.w(TAG, String.format(WARN_TEXT, field.getName(), Optional.class.getSimpleName()));
+            return null;
+        }
+        return Rules.optional();
     }
 
     private static Rule<View> getTextRule(Field field, View view, TextRule textRule) {
@@ -132,13 +143,27 @@ class AnnotationRuleFactory {
         List<Rule<?>> rules = new ArrayList<Rule<?>>();
         int messageResId = textRule.messageResId();
         String message = messageResId != 0 ? view.getContext().getString(messageResId) :
-            textRule.message();
+                textRule.message();
+        int minLength = textRule.minLength();
+        int maxLength = textRule.maxLength();
 
-        if (textRule.minLength() > 0) {
-            rules.add(Rules.minLength(null, textRule.minLength(), textRule.trim()));
+        try {
+            MinMaxProvider minMaxProvider = (MinMaxProvider) textRule.minMaxProvider().newInstance();
+            minLength = minMaxProvider.getMin();
+            maxLength = minMaxProvider.getMax();
+            message = minMaxProvider.errorMessage();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (ClassCastException e) {
+            e.printStackTrace();
         }
-        if (textRule.maxLength() != Integer.MAX_VALUE) {
-            rules.add(Rules.maxLength(null, textRule.maxLength(), textRule.trim()));
+        if (minLength > 0) {
+            rules.add(Rules.minLength(null, minLength, textRule.trim()));
+        }
+        if (maxLength != Integer.MAX_VALUE) {
+            rules.add(Rules.maxLength(null, maxLength, textRule.trim()));
         }
 
         Rule<?>[] ruleArray = new Rule<?>[rules.size()];
@@ -156,11 +181,21 @@ class AnnotationRuleFactory {
         Context context = view.getContext();
         int messageResId = regexRule.messageResId();
         String message = messageResId != 0 ? context.getString(messageResId) : regexRule.message();
-
+        String pattern = null;
         int patternResId = regexRule.patternResId();
-        String pattern = patternResId != 0 ? view.getContext().getString(patternResId) :
-            regexRule.pattern();
-
+        pattern = patternResId != 0 ? view.getContext().getString(patternResId) :
+                regexRule.pattern();
+        try {
+            PatternProvider patternProvider = (PatternProvider) regexRule.patternProvider().newInstance();
+            pattern = patternProvider.getPattern();
+            message = patternProvider.errorMessage();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }catch (ClassCastException e) {
+            e.printStackTrace();
+        }
         return Rules.regex(message, pattern, regexRule.trim());
     }
 
@@ -176,43 +211,71 @@ class AnnotationRuleFactory {
         List<Rule<?>> rules = new ArrayList<Rule<?>>();
         int messageResId = numberRule.messageResId();
         String message = messageResId != 0 ? view.getContext().getString(messageResId) :
-            numberRule.message();
+                numberRule.message();
 
         switch (numberRule.type()) {
-        case INTEGER: case LONG:
-            Rules.regex(null, Rules.REGEX_INTEGER, true); break;
-        case FLOAT: case DOUBLE:
-            Rules.regex(null, Rules.REGEX_DECIMAL, true); break;
+            case INTEGER:
+            case LONG:
+                Rules.regex(null, Rules.REGEX_INTEGER, true);
+                break;
+            case FLOAT:
+            case DOUBLE:
+                Rules.regex(null, Rules.REGEX_DECIMAL, true);
+                break;
         }
 
         if (numberRule.lt() != Double.MIN_VALUE) {
             String ltNumber = String.valueOf(numberRule.lt());
             double number = Double.parseDouble(ltNumber);
             switch (numberRule.type()) {
-            case INTEGER:   rules.add(Rules.lt(null, ((int) number)));   break;
-            case LONG:      rules.add(Rules.lt(null, ((long) number)));  break;
-            case FLOAT:     rules.add(Rules.lt(null, Float.parseFloat(ltNumber)));   break;
-            case DOUBLE:    rules.add(Rules.lt(null, Double.parseDouble(ltNumber))); break;
+                case INTEGER:
+                    rules.add(Rules.lt(null, ((int) number)));
+                    break;
+                case LONG:
+                    rules.add(Rules.lt(null, ((long) number)));
+                    break;
+                case FLOAT:
+                    rules.add(Rules.lt(null, Float.parseFloat(ltNumber)));
+                    break;
+                case DOUBLE:
+                    rules.add(Rules.lt(null, Double.parseDouble(ltNumber)));
+                    break;
             }
         }
         if (numberRule.gt() != Double.MAX_VALUE) {
             String gtNumber = String.valueOf(numberRule.gt());
             double number = Double.parseDouble(gtNumber);
             switch (numberRule.type()) {
-            case INTEGER:   rules.add(Rules.gt(null, ((int) number)));  break;
-            case LONG:      rules.add(Rules.gt(null, ((long) number))); break;
-            case FLOAT:     rules.add(Rules.gt(null, Float.parseFloat(gtNumber)));   break;
-            case DOUBLE:    rules.add(Rules.gt(null, Double.parseDouble(gtNumber))); break;
+                case INTEGER:
+                    rules.add(Rules.gt(null, ((int) number)));
+                    break;
+                case LONG:
+                    rules.add(Rules.gt(null, ((long) number)));
+                    break;
+                case FLOAT:
+                    rules.add(Rules.gt(null, Float.parseFloat(gtNumber)));
+                    break;
+                case DOUBLE:
+                    rules.add(Rules.gt(null, Double.parseDouble(gtNumber)));
+                    break;
             }
         }
         if (numberRule.eq() != Double.MAX_VALUE) {
             String eqNumber = String.valueOf(numberRule.eq());
             double number = Double.parseDouble(eqNumber);
             switch (numberRule.type()) {
-            case INTEGER:   rules.add(Rules.eq(null, ((int) number)));  break;
-            case LONG:      rules.add(Rules.eq(null, ((long) number))); break;
-            case FLOAT:     rules.add(Rules.eq(null, Float.parseFloat(eqNumber)));   break;
-            case DOUBLE:    rules.add(Rules.eq(null, Double.parseDouble(eqNumber))); break;
+                case INTEGER:
+                    rules.add(Rules.eq(null, ((int) number)));
+                    break;
+                case LONG:
+                    rules.add(Rules.eq(null, ((long) number)));
+                    break;
+                case FLOAT:
+                    rules.add(Rules.eq(null, Float.parseFloat(eqNumber)));
+                    break;
+                case DOUBLE:
+                    rules.add(Rules.eq(null, Double.parseDouble(eqNumber)));
+                    break;
             }
         }
 
@@ -230,13 +293,13 @@ class AnnotationRuleFactory {
 
         int messageResId = password.messageResId();
         String message = messageResId != 0 ? view.getContext().getString(messageResId) :
-            password.message();
+                password.message();
 
         return Rules.required(message, false);
     }
 
     private static Rule<TextView> getConfirmPasswordRule(Field field, View view,
-            ConfirmPassword confirmPassword, TextView passwordTextView) {
+                                                         ConfirmPassword confirmPassword, TextView passwordTextView) {
         if (!TextView.class.isAssignableFrom(view.getClass())) {
             Log.w(TAG, String.format(WARN_TEXT, field.getName(),
                     ConfirmPassword.class.getSimpleName()));
@@ -245,7 +308,7 @@ class AnnotationRuleFactory {
 
         int messageResId = confirmPassword.messageResId();
         String message = messageResId != 0 ? view.getContext().getString(messageResId) :
-            confirmPassword.message();
+                confirmPassword.message();
 
         return Rules.eq(message, passwordTextView);
     }
@@ -258,7 +321,7 @@ class AnnotationRuleFactory {
 
         int messageResId = email.messageResId();
         String message = messageResId != 0 ? view.getContext().getString(messageResId) :
-            email.message();
+                email.message();
 
         return Rules.or(message, Rules.eq(null, Rules.EMPTY_STRING),
                 Rules.regex(message, Rules.REGEX_EMAIL, true));
@@ -272,7 +335,7 @@ class AnnotationRuleFactory {
 
         int messageResId = ipAddress.messageResId();
         String message = messageResId != 0 ? view.getContext().getString(messageResId) :
-            ipAddress.message();
+                ipAddress.message();
 
         return Rules.or(message, Rules.eq(null, Rules.EMPTY_STRING),
                 Rules.regex(message, Rules.REGEX_IP_ADDRESS, true));
@@ -289,7 +352,7 @@ class AnnotationRuleFactory {
 
         int messageResId = checked.messageResId();
         String message = messageResId != 0 ? view.getContext().getString(messageResId) :
-            checked.message();
+                checked.message();
 
         return Rules.checked(message, checked.checked());
     }

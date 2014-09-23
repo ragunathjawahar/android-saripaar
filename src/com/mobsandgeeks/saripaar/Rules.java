@@ -130,6 +130,16 @@ public final class Rules {
         };
     }
 
+    public static Rule<TextView> optional() {
+        return new Rule<TextView>(null) {
+
+            @Override
+            public boolean isValid(TextView textView) {
+                return !TextUtils.isEmpty(getText(textView, false));
+            }
+        };
+    }
+
     /**
      * Checks if the {@link TextView} or its subclass {@link View}'s displayed text matches the
      * given regular expression.

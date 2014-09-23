@@ -14,29 +14,35 @@
 
 package com.mobsandgeeks.saripaar.annotation;
 
+import com.mobsandgeeks.saripaar.Rules;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import com.mobsandgeeks.saripaar.Rules;
-
 /**
- * Number rule annotation. Allows a specific primitive type contained in {@link NumberType}.
- * Additional options such as greater than (>), less than (<) and equals (==) are available. 
+ * Number rule annotations. Allows a specific primitive type contained in {@link NumberType}.
+ * Additional options such as greater than (>), less than (<) and equals (==) are available.
  *
  * @author Ragunath Jawahar <rj@mobsandgeeks.com>
  */
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface NumberRule {
-    public int order();
+    public int order() default 0;
+
     public NumberType type();
-    public double gt()          default Double.MAX_VALUE;
-    public double lt()          default Double.MIN_VALUE;
-    public double eq()          default Double.MAX_VALUE;
-    public String message()     default Rules.EMPTY_STRING;
-    public int messageResId()   default 0;
+
+    public double gt() default Double.MAX_VALUE;
+
+    public double lt() default Double.MIN_VALUE;
+
+    public double eq() default Double.MAX_VALUE;
+
+    public String message() default Rules.EMPTY_STRING;
+
+    public int messageResId() default 0;
 
     public enum NumberType {
         INTEGER, LONG, FLOAT, DOUBLE

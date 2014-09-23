@@ -12,6 +12,7 @@
 bin/
 gen/
 target/
+.DS_Store
 
 # Local configuration file (sdk path, etc)
 local.properties
@@ -30,3 +31,6 @@ libs/
 
 # Maven
 release.properties
+
+#Gradle Build
+build/

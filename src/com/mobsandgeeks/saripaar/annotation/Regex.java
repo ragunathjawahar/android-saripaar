@@ -26,13 +26,20 @@ import java.lang.annotation.Target;
  *
  * @author Ragunath Jawahar <rj@mobsandgeeks.com>
  */
-@Target(ElementType.FIELD)
+@Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Regex {
-    public int order();
-    public String pattern()     default ".";
-    public int patternResId()   default 0;
-    public boolean trim()       default true;
-    public String message()     default Rules.EMPTY_STRING;
-    public int messageResId()   default 0;
+    public int order() default 0;
+
+    public String pattern() default ".";
+
+    public int patternResId() default 0;
+
+    public Class patternProvider() default Void.class;
+
+    public boolean trim() default true;
+
+    public String message() default Rules.EMPTY_STRING;
+
+    public int messageResId() default 0;
 }

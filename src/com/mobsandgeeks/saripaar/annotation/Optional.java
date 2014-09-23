@@ -20,18 +20,12 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Used along with the {@link Password} annotations. This annotations makes sure that the
- * contents of the confirm password {@code EditText} matches the contents of the password
- * {@code EditText}.
+ * When used, the field cannot be empty.
  *
  * @author Ragunath Jawahar <rj@mobsandgeeks.com>
  */
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface ConfirmPassword {
-    public int order() default 0;
-
-    public String message() default "Passwords don't match";
-
-    public int messageResId() default 0;
+public @interface Optional {
+    public int order() default Integer.MAX_VALUE;
 }
