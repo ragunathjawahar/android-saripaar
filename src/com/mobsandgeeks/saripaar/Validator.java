@@ -420,6 +420,13 @@ public class Validator {
                         list.add(new ViewErrorPair(view, rule.getFailureMessage()));
                     }
                     break;
+                } else {
+                    try {
+                        TextView textView = (TextView) view;
+                        textView.setError(null, null);
+                    } catch (ClassCastException ignore) {
+                        //ignore
+                    }
                 }
             }
         }
