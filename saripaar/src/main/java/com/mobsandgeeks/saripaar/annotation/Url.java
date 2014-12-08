@@ -31,7 +31,6 @@ public @interface Url {
     public String[] schemes()       default { "http", "https", "ftp" };
     public boolean allowFragments() default true;
 
-    public int order()              default -1;
     public int messageResId()       default -1;
     public String message()         default "";
 }

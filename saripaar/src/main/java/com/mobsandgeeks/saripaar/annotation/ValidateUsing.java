@@ -24,8 +24,8 @@ import java.lang.annotation.Target;
 /**
  * @author Ragunath Jawahar <rj@mobsandgeeks.com>
  */
-@Target(ElementType.ANNOTATION_TYPE)
 @Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.ANNOTATION_TYPE)
 public @interface ValidateUsing {
     Class<? extends Rule> value();
 }

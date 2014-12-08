@@ -28,7 +28,6 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
 public @interface AssertFalse {
-    public int order()          default -1;
     public int messageResId()   default -1;
     public String message()     default "Should be false";
 }

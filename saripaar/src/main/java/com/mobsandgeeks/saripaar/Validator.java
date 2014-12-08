@@ -33,14 +33,12 @@ import com.mobsandgeeks.saripaar.annotation.DecimalMin;
 import com.mobsandgeeks.saripaar.annotation.Digits;
 import com.mobsandgeeks.saripaar.annotation.Url;
 import com.mobsandgeeks.saripaar.annotation.Email;
-import com.mobsandgeeks.saripaar.annotation.Future;
 import com.mobsandgeeks.saripaar.annotation.Isbn;
 import com.mobsandgeeks.saripaar.annotation.IpAddress;
 import com.mobsandgeeks.saripaar.annotation.Max;
 import com.mobsandgeeks.saripaar.annotation.Min;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 import com.mobsandgeeks.saripaar.annotation.Password;
-import com.mobsandgeeks.saripaar.annotation.Past;
 import com.mobsandgeeks.saripaar.annotation.Pattern;
 import com.mobsandgeeks.saripaar.annotation.Select;
 import com.mobsandgeeks.saripaar.annotation.Size;
@@ -52,12 +50,11 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.TreeMap;
 
 /**
  * @author Ragunath Jawahar <rj@mobsandgeeks.com>
@@ -70,8 +67,22 @@ public class Validator {
         void onFailure(List<ValidationError> errors);
     }
 
+    /**
+     * Validation modes.
+     */
     public enum Mode {
-        BURST, IMMEDIATE
+
+        /**
+         * BURST mode will validate all rules before calling the
+         * {@link com.mobsandgeeks.saripaar.Validator.ValidationListener#onFailure(java.util.List)}
+         * callback.
+         */
+        BURST,
+
+        /**
+         * IMMEDIATE mode will stop the validation as soon as it encounters the first failing rule.
+         */
+        IMMEDIATE
     }
 
     // Entries are registered inside a static block (Placed at the end of source)
@@ -224,6 +235,11 @@ public class Validator {
             }
         }
 
+        // Sort
+        SaripaarFieldsComparator comparator = new SaripaarFieldsComparator();
+        Collections.sort(annotatedFields, comparator);
+        mOrderedRules = comparator.areOrderedFields();
+
         return annotatedFields;
     }
 
@@ -354,31 +370,22 @@ public class Validator {
 
     private Map<View, ArrayList<RuleAdapterPair>> createRules(final List<Field> annotatedFields) {
         final Map<View, ArrayList<RuleAdapterPair>> viewRulesMap =
-            new HashMap<View, ArrayList<RuleAdapterPair>>();
+            new LinkedHashMap<View, ArrayList<RuleAdapterPair>>();
 
-        mOrderedRules = true;
-        RuleAdapterPairComparator ruleAdapterPairComparator = new RuleAdapterPairComparator();
         for (Field field : annotatedFields) {
-            ArrayList<RuleAdapterPair> ruleAdapterPairs = new ArrayList<RuleAdapterPair>();
-
-            Annotation[] fieldAnnotations = field.getAnnotations();
+            final ArrayList<RuleAdapterPair> ruleAdapterPairs = new ArrayList<RuleAdapterPair>();
+            final Annotation[] fieldAnnotations = field.getAnnotations();
             for (Annotation fieldAnnotation : fieldAnnotations) {
                 if (isSaripaarAnnotation(fieldAnnotation)) {
                     RuleAdapterPair ruleAdapterPair = getRuleAdapterPair(fieldAnnotation, field);
                     ruleAdapterPairs.add(ruleAdapterPair);
-                    if (mOrderedRules) {
-                        int order = ruleAdapterPair.rule.getOrder();
-                        mOrderedRules = order != -1;
-                    }
                 }
             }
 
-            // Sort the rule-adapter pairs
-            Collections.sort(ruleAdapterPairs, ruleAdapterPairComparator);
             viewRulesMap.put(getView(field), ruleAdapterPairs);
         }
 
-        return mOrderedRules ? sortViewRulesMap(viewRulesMap) : viewRulesMap;
+        return viewRulesMap;
     }
 
     private boolean isSaripaarAnnotation(final Annotation annotation) {
@@ -407,22 +414,8 @@ public class Validator {
 
         final Class<? extends Rule> ruleType = getRuleType(saripaarAnnotation);
         final Rule rule = Reflector.instantiateRule(ruleType, saripaarAnnotation);
-        int order = Reflector.getAttributeValue(saripaarAnnotation, "order", Integer.class);
-        rule.setOrder(order);
 
         return new RuleAdapterPair(rule, dataAdapter);
-    }
-
-    private TreeMap<View, ArrayList<RuleAdapterPair>> sortViewRulesMap(
-        final Map<View, ArrayList<RuleAdapterPair>> viewRulesMap) {
-
-        final Comparator<View> comparator = new ViewRuleAdapterPairComparator(viewRulesMap);
-        final TreeMap<View, ArrayList<RuleAdapterPair>> sortedViewRulesMap =
-            new TreeMap<View, ArrayList<RuleAdapterPair>>(comparator);
-
-        sortedViewRulesMap.putAll(viewRulesMap);
-
-        return sortedViewRulesMap;
     }
 
     private ViewDataAdapter getDataAdapter(final Class<? extends Annotation> annotationType,

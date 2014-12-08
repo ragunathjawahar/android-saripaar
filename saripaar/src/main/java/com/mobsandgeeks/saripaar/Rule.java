@@ -24,21 +24,12 @@ import java.lang.annotation.Annotation;
 public abstract class Rule<RULE_ANNOTATION extends Annotation, DATA_TYPE> {
 
     protected final RULE_ANNOTATION mRuleAnnotation;
-    protected int mOrder;
 
     protected Rule(final RULE_ANNOTATION ruleAnnotation) {
         if (ruleAnnotation == null) {
             throw new IllegalArgumentException("'ruleAnnotation' cannot be null.");
         }
         mRuleAnnotation = ruleAnnotation;
-    }
-
-    public int getOrder() {
-        return mOrder;
-    }
-
-    public void setOrder(int order) {
-        this.mOrder = order;
     }
 
     public String getMessage(final Context context) {

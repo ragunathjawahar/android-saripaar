@@ -11,6 +11,7 @@ import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.Email;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
+import com.mobsandgeeks.saripaar.annotation.Order;
 import com.mobsandgeeks.saripaar.annotation.Size;
 
 import java.util.List;
@@ -25,17 +26,21 @@ public class OrderedValidateTillActivity extends Activity
                 View.OnFocusChangeListener {
 
     // Fields
-    @NotEmpty(order = 1)
+    @NotEmpty
+    @Order(1)
     private EditText mNameEditText;
 
-    @NotEmpty(order = 2)
+    @NotEmpty
+    @Order(2)
     private EditText mAddressEditText;
 
-    @Email(order = 3)
+    @Email
+    @Order(3)
     private EditText mEmailEditText;
 
-    @NotEmpty(order = 4)
-    @Size(order = 5, min = 10, max = 10)
+    @NotEmpty
+    @Size(min = 10, max = 10)
+    @Order(4)
     private EditText mPhoneEditText;
 
     private TextView mResultTextView;

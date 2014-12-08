@@ -31,7 +31,6 @@ public @interface Pattern {
     public String regex();
     public boolean caseSensitive()  default true;
 
-    public int order()              default -1;
     public int messageResId()       default -1;
     public String message()         default "";
 }

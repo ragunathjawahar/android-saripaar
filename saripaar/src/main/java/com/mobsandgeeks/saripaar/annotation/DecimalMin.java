@@ -30,7 +30,6 @@ import java.lang.annotation.Target;
 public @interface DecimalMin {
     public double value();
 
-    public int order()          default -1;
     public int messageResId()   default -1;
     public String message()     default "";
 }

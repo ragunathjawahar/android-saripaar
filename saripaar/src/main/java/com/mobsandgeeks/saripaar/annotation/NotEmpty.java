@@ -30,7 +30,6 @@ import java.lang.annotation.Target;
 public @interface NotEmpty {
     public boolean trim() default false;
 
-    public int order()          default -1;
     public int messageResId()   default -1;
     public String message()     default "This field is required.";
 }
