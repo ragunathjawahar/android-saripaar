@@ -14,13 +14,13 @@
 
 package com.mobsandgeeks.saripaar.rule;
 
-import com.mobsandgeeks.saripaar.Rule;
+import com.mobsandgeeks.saripaar.AnnotationRule;
 import com.mobsandgeeks.saripaar.annotation.AssertTrue;
 
 /**
  * @author Ragunath Jawahar <rj@mobsandgeeks.com>
  */
-public class AssertTrueRule extends Rule<AssertTrue, Boolean> {
+public class AssertTrueRule extends AnnotationRule<AssertTrue, Boolean> {
 
     protected AssertTrueRule(AssertTrue assertTrue) {
         super(assertTrue);

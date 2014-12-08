@@ -14,7 +14,7 @@
 
 package com.mobsandgeeks.saripaar.rule;
 
-import com.mobsandgeeks.saripaar.Rule;
+import com.mobsandgeeks.saripaar.AnnotationRule;
 import com.mobsandgeeks.saripaar.annotation.DecimalMin;
 
 import commons.validator.routines.DoubleValidator;
@@ -22,7 +22,7 @@ import commons.validator.routines.DoubleValidator;
 /**
  * @author Ragunath Jawahar <rj@mobsandgeeks.com>
  */
-public class DecimalMinRule extends Rule<DecimalMin, Double> {
+public class DecimalMinRule extends AnnotationRule<DecimalMin, Double> {
 
     protected DecimalMinRule(DecimalMin decimalMin) {
         super(decimalMin);

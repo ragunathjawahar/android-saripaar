@@ -14,7 +14,7 @@
 
 package com.mobsandgeeks.saripaar.rule;
 
-import com.mobsandgeeks.saripaar.Rule;
+import com.mobsandgeeks.saripaar.AnnotationRule;
 import com.mobsandgeeks.saripaar.annotation.Past;
 
 import java.util.Date;
@@ -22,7 +22,7 @@ import java.util.Date;
 /**
  * @author Ragunath Jawahar <rj@mobsandgeeks.com>
  */
-public class PastRule extends Rule<Past, Date> {
+public class PastRule extends AnnotationRule<Past, Date> {
 
     protected PastRule(Past past) {
         super(past);

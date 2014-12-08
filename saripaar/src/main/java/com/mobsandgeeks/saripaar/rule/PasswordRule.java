@@ -14,13 +14,13 @@
 
 package com.mobsandgeeks.saripaar.rule;
 
-import com.mobsandgeeks.saripaar.Rule;
+import com.mobsandgeeks.saripaar.AnnotationRule;
 import com.mobsandgeeks.saripaar.annotation.Password;
 
 /**
  * @author Ragunath Jawahar <rj@mobsandgeeks.com>
  */
-public class PasswordRule extends Rule<Password, String> {
+public class PasswordRule extends AnnotationRule<Password, String> {
 
     protected PasswordRule(Password password) {
         super(password);

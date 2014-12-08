@@ -24,7 +24,7 @@ Quick Start
 -----------
 **Step 1 - Annotate your widgets using [Saripaar Annotations]**
 ```java
-@Required
+@NotEmpty
 @Email
 private EditText emailEditText;
 

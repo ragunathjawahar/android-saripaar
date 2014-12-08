@@ -14,7 +14,7 @@
 
 package com.mobsandgeeks.saripaar.rule;
 
-import com.mobsandgeeks.saripaar.Rule;
+import com.mobsandgeeks.saripaar.AnnotationRule;
 import com.mobsandgeeks.saripaar.annotation.Url;
 
 import commons.validator.routines.UrlValidator;
@@ -22,7 +22,7 @@ import commons.validator.routines.UrlValidator;
 /**
  * @author Ragunath Jawahar <rj@mobsandgeeks.com>
  */
-public class UrlRule extends Rule<Url, String> {
+public class UrlRule extends AnnotationRule<Url, String> {
 
     protected UrlRule(Url url) {
         super(url);

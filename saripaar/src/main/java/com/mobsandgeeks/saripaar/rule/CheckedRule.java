@@ -14,13 +14,13 @@
 
 package com.mobsandgeeks.saripaar.rule;
 
-import com.mobsandgeeks.saripaar.Rule;
+import com.mobsandgeeks.saripaar.AnnotationRule;
 import com.mobsandgeeks.saripaar.annotation.Checked;
 
 /**
  * @author Ragunath Jawahar <rj@mobsandgeeks.com>
  */
-public class CheckedRule extends Rule<Checked, Boolean> {
+public class CheckedRule extends AnnotationRule<Checked, Boolean> {
 
     protected CheckedRule(Checked checked) {
         super(checked);

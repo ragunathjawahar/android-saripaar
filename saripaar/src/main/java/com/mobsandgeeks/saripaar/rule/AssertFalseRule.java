@@ -14,13 +14,13 @@
 
 package com.mobsandgeeks.saripaar.rule;
 
-import com.mobsandgeeks.saripaar.Rule;
+import com.mobsandgeeks.saripaar.AnnotationRule;
 import com.mobsandgeeks.saripaar.annotation.AssertFalse;
 
 /**
  * @author Ragunath Jawahar <rj@mobsandgeeks.com>
  */
-public class AssertFalseRule extends Rule<AssertFalse, Boolean> {
+public class AssertFalseRule extends AnnotationRule<AssertFalse, Boolean> {
 
     protected AssertFalseRule(AssertFalse assertFalse) {
         super(assertFalse);

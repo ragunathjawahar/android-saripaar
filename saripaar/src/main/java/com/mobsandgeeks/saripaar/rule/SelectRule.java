@@ -14,13 +14,13 @@
 
 package com.mobsandgeeks.saripaar.rule;
 
-import com.mobsandgeeks.saripaar.Rule;
+import com.mobsandgeeks.saripaar.AnnotationRule;
 import com.mobsandgeeks.saripaar.annotation.Select;
 
 /**
  * @author Ragunath Jawahar <rj@mobsandgeeks.com>
  */
-public class SelectRule extends Rule<Select, Integer> {
+public class SelectRule extends AnnotationRule<Select, Integer> {
 
     protected SelectRule(Select select) {
         super(select);

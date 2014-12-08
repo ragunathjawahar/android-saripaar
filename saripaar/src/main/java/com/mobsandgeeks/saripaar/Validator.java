@@ -291,7 +291,7 @@ public class Validator {
             // Validate all the rules for the given view.
             for (int i = 0; i < rulesForThisView; i++) {
                 final RuleAdapterPair ruleAdapterPair = ruleAdapterPairs.get(i);
-                final Rule rule = ruleAdapterPair.rule;
+                final AnnotationRule rule = (AnnotationRule) ruleAdapterPair.rule;
                 final ViewDataAdapter dataAdapter = ruleAdapterPair.dataAdapter;
 
                 // Validate only views that are visible and enabled
@@ -412,8 +412,8 @@ public class Validator {
             throw new UnsupportedOperationException(message);
         }
 
-        final Class<? extends Rule> ruleType = getRuleType(saripaarAnnotation);
-        final Rule rule = Reflector.instantiateRule(ruleType, saripaarAnnotation);
+        final Class<? extends AnnotationRule> ruleType = getRuleType(saripaarAnnotation);
+        final AnnotationRule rule = Reflector.instantiateRule(ruleType, saripaarAnnotation);
 
         return new RuleAdapterPair(rule, dataAdapter);
     }
@@ -437,7 +437,7 @@ public class Validator {
         return dataAdapter;
     }
 
-    private Class<? extends Rule> getRuleType(final Annotation ruleAnnotation) {
+    private Class<? extends AnnotationRule> getRuleType(final Annotation ruleAnnotation) {
         ValidateUsing validateUsing = null;
 
         Annotation[] annotationsOfRuleAnnotation =
@@ -471,7 +471,7 @@ public class Validator {
         return view;
     }
 
-    private ValidationError validateViewWithRule(final View view, final Rule rule,
+    private ValidationError validateViewWithRule(final View view, final AnnotationRule rule,
             final ViewDataAdapter dataAdapter) {
         Object data;
 

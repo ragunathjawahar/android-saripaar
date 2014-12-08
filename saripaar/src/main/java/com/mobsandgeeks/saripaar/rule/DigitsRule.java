@@ -14,13 +14,13 @@
 
 package com.mobsandgeeks.saripaar.rule;
 
-import com.mobsandgeeks.saripaar.Rule;
+import com.mobsandgeeks.saripaar.AnnotationRule;
 import com.mobsandgeeks.saripaar.annotation.Digits;
 
 /**
  * @author Ragunath Jawahar <rj@mobsandgeeks.com>
  */
-public class DigitsRule extends Rule<Digits, String> {
+public class DigitsRule extends AnnotationRule<Digits, String> {
 
     protected DigitsRule(Digits digits) {
         super(digits);

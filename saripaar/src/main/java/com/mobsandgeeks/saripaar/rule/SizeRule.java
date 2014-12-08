@@ -14,13 +14,13 @@
 
 package com.mobsandgeeks.saripaar.rule;
 
-import com.mobsandgeeks.saripaar.Rule;
+import com.mobsandgeeks.saripaar.AnnotationRule;
 import com.mobsandgeeks.saripaar.annotation.Size;
 
 /**
  * @author Ragunath Jawahar <rj@mobsandgeeks.com>
  */
-public class SizeRule extends Rule<Size, String> {
+public class SizeRule extends AnnotationRule<Size, String> {
 
     protected SizeRule(Size size) {
         super(size);

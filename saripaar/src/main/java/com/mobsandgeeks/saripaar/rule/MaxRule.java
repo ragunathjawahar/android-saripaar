@@ -14,7 +14,7 @@
 
 package com.mobsandgeeks.saripaar.rule;
 
-import com.mobsandgeeks.saripaar.Rule;
+import com.mobsandgeeks.saripaar.AnnotationRule;
 import com.mobsandgeeks.saripaar.annotation.Max;
 
 import commons.validator.routines.IntegerValidator;
@@ -22,7 +22,7 @@ import commons.validator.routines.IntegerValidator;
 /**
  * @author Ragunath Jawahar <rj@mobsandgeeks.com>
  */
-public class MaxRule extends Rule<Max, Integer> {
+public class MaxRule extends AnnotationRule<Max, Integer> {
 
     protected MaxRule(Max max) {
         super(max);

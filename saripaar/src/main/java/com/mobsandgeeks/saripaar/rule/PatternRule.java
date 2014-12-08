@@ -14,7 +14,7 @@
 
 package com.mobsandgeeks.saripaar.rule;
 
-import com.mobsandgeeks.saripaar.Rule;
+import com.mobsandgeeks.saripaar.AnnotationRule;
 import com.mobsandgeeks.saripaar.annotation.Pattern;
 
 import commons.validator.routines.RegexValidator;
@@ -22,7 +22,7 @@ import commons.validator.routines.RegexValidator;
 /**
  * @author Ragunath Jawahar <rj@mobsandgeeks.com>
  */
-public class PatternRule extends Rule<Pattern, String> {
+public class PatternRule extends AnnotationRule<Pattern, String> {
 
     protected PatternRule(Pattern pattern) {
         super(pattern);
