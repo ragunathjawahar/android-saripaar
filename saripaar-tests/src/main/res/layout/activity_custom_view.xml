@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:paddingBottom="@dimen/activity_vertical_margin" >
+
+    <TextView
+        android:text="@string/saripaar_v2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/saripaarTextView"/>
+
+    <!--
+        The EditText is separated from FloatLabeledEditText, therefore you can access the EditText
+        directly using the findViewById(int) call. This is just a demonstration on how to use
+        custom views with Saripaar v2.
+    -->
+    <com.wrapp.floatlabelededittext.FloatLabeledEditText
+        android:id="@+id/emailFloatLabelEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/saripaarTextView">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Email"
+            android:inputType="textEmailAddress"
+            android:id="@+id/emailEditText"/>
+    </com.wrapp.floatlabelededittext.FloatLabeledEditText>
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Saripaar!"
+        android:id="@+id/saripaarButton"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <RadioButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Register Adapter for Float Label"
+        android:id="@+id/registerAdapterRadioButton"
+        android:layout_below="@+id/emailFloatLabelEditText"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:checked="false"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:id="@+id/resultTextView"
+        android:layout_below="@+id/registerAdapterRadioButton"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:gravity="center"
+        android:layout_alignRight="@+id/emailFloatLabelEditText"
+        android:layout_alignEnd="@+id/emailFloatLabelEditText"
+        android:layout_above="@+id/saripaarButton"/>
+
+</RelativeLayout>

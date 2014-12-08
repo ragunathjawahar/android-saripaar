@@ -4,40 +4,43 @@ Android Saripaar
 
 **சரிபார்** - sari-paar (Tamil for "to check", "verify" or "validate")
 
-Android Saripaar is a simple, yet powerful rule-based UI validation library for Android.
-It is the **SIMPLEST** validation library available for Android.
+Android Saripaar is a simple, yet powerful rule-based UI form validation library for Android.
+It is the **SIMPLEST** and **FEATURE-RICH** validation library available for Android.
 
 Why Android Saripaar?
 ---------------------
 
- - Declarative style validation powered by **Annotations**.
- - **Extensible**
+ - Built on top of [Apache Commons Validator], a validation framework with proven track record on the web, desktop and mobile platforms.
+ - Declarative style validation using **Annotations**.
+ - **Extensible**, now allows Custom Annotations.
  - **Synchronous** and **Asynchronous** validations, you don't have to worry about threading.
+ - Supports both BURST and IMMEDIATE modes.
  - Works with **Stock Android Widgets**, no custom view dependencies.
  - Quick to setup, just download the [jar] and include it in your `libs` project folder.
  - Isolates validation logic using rules.
- - Compatible with other annotation frameworks such as **[AndroidAnnotations]**, **[RoboGuice]**, etc.,
+ - Compatible with other annotation frameworks such as [ButterKnife], [AndroidAnnotations], [RoboGuice], etc.,
 
 Quick Start
 -----------
 **Step 1 - Annotate your widgets using [Saripaar Annotations]**
 ```java
-@Required(order = 1)
-@Email(order = 2)
+@Required
+@Email
 private EditText emailEditText;
 
-@Password(order = 3)
-@TextRule(order = 4, minLength = 6, message = "Enter at least 6 characters.")
+@Password
+@TextRule(minLength = 6, message = "Enter at least 6 characters.")
 private EditText passwordEditText;
 
-@ConfirmPassword(order = 5)
+@ConfirmPassword
 private EditText confirmPasswordEditText;
 
-@Checked(order = 6, message = "You must agree to the terms.")
+@Checked(message = "You must agree to the terms.")
 private CheckBox iAgreeCheckBox;
 ```
 
-The annotations are self-explanatory. The `order` attribute is mandatory and specifies the order in which the validations will be performed by the library.
+The annotations are self-explanatory. The `@Order` annotation is required ONLY when performing ordered validations using
+`Validator.validateTill(View)` and `Validator.validateBefore(View)` or in `IMMEDIATE` mode.
 
 **Step 2 - Instantiate a new [Validator]**
 ```java
@@ -61,21 +64,16 @@ public class RegistrationActivity implements ValidationListener {
         Toast.makeText(this, "Yay! we got it right!", Toast.LENGTH_SHORT).show();
     }
 
-    public void onValidationFailed(View failedView, Rule<?> failedRule) {
-        String message = failedRule.getFailureMessage();
-
-        if (failedView instanceof EditText) {
-            failedView.requestFocus();
-            ((EditText) failedView).setError(message);
-        } else {
-            Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    public void onValidationFailed(List<ValidationError> errors) {
+        for (ValidationError error : errors) {
+            // Do anything you want :)
         }
     }
 
 }
 ```
  - `onValidationSucceeded()` - Called when all your views pass all validations.
- - `onValidationFailed(View, Rule<?>)` - Called when a `Rule` fails, you receive the `View` along with the `Rule` that failed.
+ - `onValidationFailed(List<ValidationError> errors)` - Called when there are validation error(s).
 
 **Step 4 - Validate**
 ```java
@@ -86,21 +84,15 @@ registerButton.setOnClickListener(new OnClickListener() {
     }
 });
 ```
-The `Validator.validate()` call runs the validations and returns the result via appropriate callbacks on the `ValidationListener`. You can run validations on a background `AsyncTask` by calling the `Validator.validateAsync()` method.
+The `Validator.validate()` call runs the validations and returns the result via appropriate callbacks on the `ValidationListener`. You can run validations on a background `AsyncTask` by calling the `Validator.validate(true)` method.
 
 Maven
 ---------------------
-    <dependency>
-        <groupId>com.mobsandgeeks</groupId>
-        <artifactId>android-saripaar</artifactId>
-        <version>1.0.2</version>
-    </dependency>
+Coming soon...
 
 Gradle
 ---------------------
-    dependencies {
-        compile 'com.mobsandgeeks:android-saripaar:1.0.2'
-    }
+Coming soon...
 
 Wiki
 ---------------------
@@ -109,7 +101,7 @@ Please visit the [wiki] for a complete guide on Android Saripaar.
 License
 ---------------------
 
-    Copyright 2012 Mobs and Geeks
+    Copyright 2012 - 2014 Mobs and Geeks
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -123,16 +115,14 @@ License
     See the License for the specific language governing permissions and
     limitations under the License.
 
-<sub>Saripaar Logo © 2013, Mobs & Geeks.<sub>
+<sub>Saripaar Logo © 2013 - 2014, Mobs & Geeks.<sub>
 
   [jar]: http://search.maven.org/#search%7Cga%7C1%7Candroid%20saripaar
-  [Saripaar Annotations]: https://github.com/ragunathjawahar/android-saripaar/tree/master/src/com/mobsandgeeks/saripaar/annotation
+  [Apache Commons Validator]: http://commons.apache.org/proper/commons-validator/
+  [ButterKnife]: https://github.com/JakeWharton/butterknife
   [AndroidAnnotations]: https://github.com/excilys/androidannotations
   [RoboGuice]: http://code.google.com/p/roboguice/
+  [Saripaar Annotations]: https://github.com/ragunathjawahar/android-saripaar/tree/v2/saripaar/src/main/java/com/mobsandgeeks/saripaar/annotation
   [Validator]: https://github.com/ragunathjawahar/android-saripaar/blob/master/src/com/mobsandgeeks/saripaar/Validator.java
   [ValidationListener]: https://github.com/ragunathjawahar/android-saripaar/blob/master/src/com/mobsandgeeks/saripaar/Validator.java
   [wiki]: https://github.com/ragunathjawahar/android-saripaar/wiki
-
-
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/ragunathjawahar/android-saripaar/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
-
