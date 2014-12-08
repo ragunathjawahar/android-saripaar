@@ -1,5 +1,5 @@
-Android Saripaar
-================
+Android Saripaar v2 PREVIEW
+===========================
 ![Logo](logo.png)
 
 **சரிபார்** - sari-paar (Tamil for "to check", "verify" or "validate")
@@ -29,7 +29,7 @@ Quick Start
 private EditText emailEditText;
 
 @Password
-@TextRule(minLength = 6, message = "Enter at least 6 characters.")
+@Size(min = 6, message = "Enter at least 6 characters.")
 private EditText passwordEditText;
 
 @ConfirmPassword
