@@ -31,6 +31,7 @@ import com.mobsandgeeks.saripaar.annotation.CreditCard;
 import com.mobsandgeeks.saripaar.annotation.DecimalMax;
 import com.mobsandgeeks.saripaar.annotation.DecimalMin;
 import com.mobsandgeeks.saripaar.annotation.Digits;
+import com.mobsandgeeks.saripaar.annotation.Order;
 import com.mobsandgeeks.saripaar.annotation.Url;
 import com.mobsandgeeks.saripaar.annotation.Email;
 import com.mobsandgeeks.saripaar.annotation.Isbn;
@@ -177,7 +178,6 @@ public class Validator {
         if (quickRules == null || quickRules.length == 0) {
             throw new IllegalArgumentException("'quickRules' cannot be null or empty.");
         }
-
         createRulesSafelyAndLazily();
 
         // If there were no rules, create an empty list
@@ -364,17 +364,20 @@ public class Validator {
 
     private boolean isSaripaarAnnotatedField(final Field field,
             final Set<Class<? extends Annotation>> registeredAnnotations) {
-
+        boolean hasOrderAnnotation = field.getAnnotation(Order.class) != null;
         boolean hasSaripaarAnnotation = false;
-        Annotation[] annotations = field.getAnnotations();
-        for (Annotation annotation : annotations) {
-            hasSaripaarAnnotation = registeredAnnotations.contains(annotation.annotationType());
-            if (hasSaripaarAnnotation) {
-                break;
+
+        if (!hasOrderAnnotation) {
+            Annotation[] annotations = field.getAnnotations();
+            for (Annotation annotation : annotations) {
+                hasSaripaarAnnotation = registeredAnnotations.contains(annotation.annotationType());
+                if (hasSaripaarAnnotation) {
+                    break;
+                }
             }
         }
 
-        return hasSaripaarAnnotation;
+        return hasOrderAnnotation || hasSaripaarAnnotation;
     }
 
     private List<Field> getViewFields(final Class<?> clazz) {

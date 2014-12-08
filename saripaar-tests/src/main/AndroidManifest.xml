@@ -35,6 +35,9 @@
         <activity
             android:name=".UnorderedQuickRuleActivity"
             android:label="@string/title_activity_quick_rule" />
+        <activity
+            android:name=".OrderedQuickRuleActivity"
+            android:label="@string/title_activity_quick_rule" />
     </application>
 
 </manifest>

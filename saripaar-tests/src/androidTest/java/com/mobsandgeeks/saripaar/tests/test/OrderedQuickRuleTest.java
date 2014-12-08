@@ -3,8 +3,8 @@ package com.mobsandgeeks.saripaar.tests.test;
 import android.test.ActivityInstrumentationTestCase2;
 import android.widget.TextView;
 
+import com.mobsandgeeks.saripaar.tests.OrderedQuickRuleActivity;
 import com.mobsandgeeks.saripaar.tests.R;
-import com.mobsandgeeks.saripaar.tests.UnorderedQuickRuleActivity;
 
 import static com.google.android.apps.common.testing.ui.espresso.Espresso.onView;
 import static com.google.android.apps.common.testing.ui.espresso.action.ViewActions.click;
@@ -14,13 +14,13 @@ import static com.google.android.apps.common.testing.ui.espresso.matcher.ViewMat
 /**
  * @author Ragunath Jawahar <rj@mobsandgeeks.com>
  */
-public class UnorderedQuickRuleTest
-        extends ActivityInstrumentationTestCase2<UnorderedQuickRuleActivity> {
+public class OrderedQuickRuleTest
+        extends ActivityInstrumentationTestCase2<OrderedQuickRuleActivity> {
 
     private TextView mResultTextView;
 
-    public UnorderedQuickRuleTest() {
-        super(UnorderedQuickRuleActivity.class);
+    public OrderedQuickRuleTest() {
+        super(OrderedQuickRuleActivity.class);
     }
 
     @Override
@@ -29,37 +29,33 @@ public class UnorderedQuickRuleTest
         mResultTextView = (TextView) getActivity().findViewById(R.id.resultTextView);
     }
 
-    public void testInvalidZipCodeNoQuickRule_failure() {
+    public void testInvalidZipCodeInvalidEmailNoQuickRule_failure() {
         clickView(R.id.saripaarButton);
-        checkForText(Constants.FIELD_ZIP_CODE);
+        String result = String.format("%s %s", Constants.FIELD_ZIP_CODE, Constants.FIELD_EMAIL);
+        checkForText(result);
     }
 
-    public void testValidZipCodeNoQuickRule_success() {
-        type(R.id.zipCodeEditText, Constants.ZIP_CODE);
+    public void testAllInvalidWithQuickRule_failure() {
+        clickView(R.id.useQuickRuleRadioButton);
         clickView(R.id.saripaarButton);
-        checkForText(Constants.STATE_SUCCESS);
+        String result = String.format("%s %s %s",
+            Constants.FIELD_ZIP_CODE, Constants.FIELD_AIRTEL_NUMBER, Constants.FIELD_EMAIL);
+        checkForText(result);
     }
 
-    public void testValidZipCodeAirtelNumberQuickRule_failure() {
+    public void testAllValidButQuickRule_failure() {
         type(R.id.zipCodeEditText, Constants.ZIP_CODE);
+        type(R.id.emailEditText, Constants.EMAIL);
         clickView(R.id.useQuickRuleRadioButton);
         clickView(R.id.saripaarButton);
         checkForText(Constants.FIELD_AIRTEL_NUMBER);
     }
 
-    public void testInvalidZipCodeInvalidAirtelNumberQuickRule_failure() {
-        clickView(R.id.useQuickRuleRadioButton);
-        clickView(R.id.saripaarButton);
-
-        String result = String.format("%s %s",
-            Constants.FIELD_ZIP_CODE, Constants.FIELD_AIRTEL_NUMBER);
-        checkForText(result);
-    }
-
-    public void testZipCodeAirtelNumberQuickRuleValid_success() {
-        clickView(R.id.useQuickRuleRadioButton);
+    public void testAllValidWithQuickRule_success() {
         type(R.id.zipCodeEditText, Constants.ZIP_CODE);
         type(R.id.airtelNumberEditText, Constants.AIRTEL_NUMBER);
+        type(R.id.emailEditText, Constants.EMAIL);
+        clickView(R.id.useQuickRuleRadioButton);
         clickView(R.id.saripaarButton);
         checkForText(Constants.STATE_SUCCESS);
     }

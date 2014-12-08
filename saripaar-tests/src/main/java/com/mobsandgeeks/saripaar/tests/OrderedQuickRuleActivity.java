@@ -13,20 +13,29 @@ import android.widget.TextView;
 import com.mobsandgeeks.saripaar.QuickRule;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
+import com.mobsandgeeks.saripaar.annotation.Email;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
+import com.mobsandgeeks.saripaar.annotation.Order;
 
 import java.util.List;
 
 /**
  * @author Ragunath Jawahar <rj@mobsandgeeks.com>
  */
-public class UnorderedQuickRuleActivity extends Activity
+public class OrderedQuickRuleActivity extends Activity
         implements Validator.ValidationListener, CompoundButton.OnCheckedChangeListener,
                 View.OnClickListener {
 
     @NotEmpty
+    @Order(1)
     private EditText mZipCodeEditText;
+
+    @Order(2)
     private EditText mAirtelNumberEditText;
+
+    @Email
+    @Order(3)
+    private EditText mEmailEditText;
 
     private TextView mResultTextView;
     private RadioButton mUseQuickRuleRadioButton;
@@ -38,11 +47,12 @@ public class UnorderedQuickRuleActivity extends Activity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_unordered_quick_rule);
+        setContentView(R.layout.activity_ordered_quick_rule);
 
         // UI References
         mZipCodeEditText = (EditText) findViewById(R.id.zipCodeEditText);
         mAirtelNumberEditText = (EditText) findViewById(R.id.airtelNumberEditText);
+        mEmailEditText = (EditText) findViewById(R.id.emailEditText);
         mResultTextView = (TextView) findViewById(R.id.resultTextView);
         mUseQuickRuleRadioButton = (RadioButton) findViewById(R.id.useQuickRuleRadioButton);
         mSaripaarButton = (Button) findViewById(R.id.saripaarButton);
