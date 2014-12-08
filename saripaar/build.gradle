@@ -5,7 +5,6 @@ android {
     buildToolsVersion "21.0.1"
 
     defaultConfig {
-        applicationId "com.mobsandgeeks.saripaar"
         minSdkVersion 8
         targetSdkVersion 21
         versionCode 1
@@ -13,7 +12,7 @@ android {
     }
     buildTypes {
         release {
-            runProguard false
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
