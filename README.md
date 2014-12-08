@@ -4,19 +4,21 @@ Android Saripaar
 
 **சரிபார்** - sari-paar (Tamil for "to check", "verify" or "validate")
 
-Android Saripaar is a simple, yet powerful rule-based UI validation library for Android.
-It is the **SIMPLEST** validation library available for Android.
+Android Saripaar is a simple, yet powerful rule-based UI form validation library for Android.
+It is the **SIMPLEST** and **FEATURE-RICH** validation library available for Android.
 
 Why Android Saripaar?
 ---------------------
 
- - Declarative style validation powered by **Annotations**.
- - **Extensible**
+ - Built on top of [Apache Commons Validator], a validation framework with proven track record on the web, desktop and mobile platforms.
+ - Declarative style validation using **Annotations**.
+ - **Extensible**, now allows Custom Annotations.
  - **Synchronous** and **Asynchronous** validations, you don't have to worry about threading.
+ - Supports both BURST and IMMEDIATE modes.
  - Works with **Stock Android Widgets**, no custom view dependencies.
  - Quick to setup, just download the [jar] and include it in your `libs` project folder.
  - Isolates validation logic using rules.
- - Compatible with other annotation frameworks such as **[AndroidAnnotations]**, **[RoboGuice]**, etc.,
+ - Compatible with other annotation frameworks such as [ButterKnife], [AndroidAnnotations], [RoboGuice], etc.,
 
 Quick Start
 -----------
@@ -24,20 +26,16 @@ Quick Start
 ```java
 @Required
 @Email
-@Order(1)
 private EditText emailEditText;
 
 @Password
 @TextRule(minLength = 6, message = "Enter at least 6 characters.")
-@Order(2)
 private EditText passwordEditText;
 
 @ConfirmPassword
-@Order(3)
 private EditText confirmPasswordEditText;
 
 @Checked(message = "You must agree to the terms.")
-@Order(4)
 private CheckBox iAgreeCheckBox;
 ```
 
@@ -86,21 +84,15 @@ registerButton.setOnClickListener(new OnClickListener() {
     }
 });
 ```
-The `Validator.validate()` call runs the validations and returns the result via appropriate callbacks on the `ValidationListener`. You can run validations on a background `AsyncTask` by calling the `Validator.validateAsync()` method.
+The `Validator.validate()` call runs the validations and returns the result via appropriate callbacks on the `ValidationListener`. You can run validations on a background `AsyncTask` by calling the `Validator.validate(true)` method.
 
 Maven
 ---------------------
-    <dependency>
-        <groupId>com.mobsandgeeks</groupId>
-        <artifactId>android-saripaar</artifactId>
-        <version>1.0.2</version>
-    </dependency>
+Coming soon...
 
 Gradle
 ---------------------
-    dependencies {
-        compile 'com.mobsandgeeks:android-saripaar:1.0.2'
-    }
+Coming soon...
 
 Wiki
 ---------------------
@@ -126,9 +118,11 @@ License
 <sub>Saripaar Logo © 2013 - 2014, Mobs & Geeks.<sub>
 
   [jar]: http://search.maven.org/#search%7Cga%7C1%7Candroid%20saripaar
-  [Saripaar Annotations]: https://github.com/ragunathjawahar/android-saripaar/tree/v2/saripaar/src/main/java/com/mobsandgeeks/saripaar/annotation
+  [Apache Commons Validator]: http://commons.apache.org/proper/commons-validator/
+  [ButterKnife]: https://github.com/JakeWharton/butterknife
   [AndroidAnnotations]: https://github.com/excilys/androidannotations
   [RoboGuice]: http://code.google.com/p/roboguice/
+  [Saripaar Annotations]: https://github.com/ragunathjawahar/android-saripaar/tree/v2/saripaar/src/main/java/com/mobsandgeeks/saripaar/annotation
   [Validator]: https://github.com/ragunathjawahar/android-saripaar/blob/master/src/com/mobsandgeeks/saripaar/Validator.java
   [ValidationListener]: https://github.com/ragunathjawahar/android-saripaar/blob/master/src/com/mobsandgeeks/saripaar/Validator.java
   [wiki]: https://github.com/ragunathjawahar/android-saripaar/wiki
