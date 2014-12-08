@@ -27,7 +27,8 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
 /**
- * Contains reflection methods that are helpful for introspection and retrieval.
+ * Contains reflection methods that are helpful for introspection and retrieval of frequently used
+ * methods and attributes.
  *
  * @author Ragunath Jawahar <rj@mobsandgeeks.com>
  * @since 2.0
@@ -65,6 +66,7 @@ class Reflector {
      *
      * @return The attribute value.
      */
+    @SuppressWarnings("unchecked")
     public static <T> T getAttributeValue(final Annotation instance, final String attributeName,
             final Class<T> attributeDataType) {
         T attributeValue = null;
@@ -78,7 +80,7 @@ class Reflector {
             try {
                 Object result = attributeMethod.invoke(instance);
                 attributeValue = attributeDataType.isPrimitive()
-                    ? attributeValue
+                    ? (T) result
                     : attributeDataType.cast(result);
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
@@ -200,6 +202,15 @@ class Reflector {
         return getRuleDataType(validateUsing);
     }
 
+    /**
+     * Method finds the data type of the {@link com.mobsandgeeks.saripaar.Rule} that is
+     * tied up to the given rule annotation.
+     *
+     * @param validateUsing  The {@link com.mobsandgeeks.saripaar.annotation.ValidateUsing} instance.
+     *
+     * @return The expected data type for the
+     *      {@link com.mobsandgeeks.saripaar.adapter.ViewDataAdapter}s.
+     */
     public static Class<?> getRuleDataType(final ValidateUsing validateUsing) {
         Class<? extends Rule> rule = validateUsing.value();
         Method[] declaredMethods = rule.getDeclaredMethods();
@@ -224,6 +235,10 @@ class Reflector {
         return returnType;
     }
 
+    /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     *  Private Methods
+     * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     */
     private static ValidateUsing getValidateUsingAnnotation(
             final Class<? extends Annotation> annotationType) {
         ValidateUsing validateUsing = null;
