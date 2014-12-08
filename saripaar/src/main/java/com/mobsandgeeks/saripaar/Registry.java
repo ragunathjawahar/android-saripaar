@@ -47,8 +47,10 @@ import java.util.Set;
  * @since 2.0
  */
 final class Registry {
+    // Constants
+    public static final String TAG = "Registry";
 
-    // Stock Adapters that come with Saripaar
+    // Stock adapters that come with Saripaar
     private static final Map<Class<? extends View>,
         HashMap<Class<?>, ViewDataAdapter>> STOCK_ADAPTERS =
             new HashMap<Class<? extends View>, HashMap<Class<?>, ViewDataAdapter>>();
@@ -65,6 +67,16 @@ final class Registry {
             HashMap<Class<? extends View>, ViewDataAdapter>>();
     }
 
+    /**
+     * This is a convenience method for Annotations that operate on {@link android.widget.TextView}
+     * and it's subclasses such as {@link android.widget.EditText}. Use this to register your custom
+     * annotation if your {@link com.mobsandgeeks.saripaar.Rule} performs validations on
+     * {@link java.lang.String}s, {@link java.lang.Integer}s, {@link java.lang.Float}s and
+     * {@link java.lang.Double} values.
+     *
+     * @param ruleAnnotations  Varargs of rule {@link java.lang.annotation.Annotation}s that operate
+     *      on {@link android.widget.TextView}s.
+     */
     @SuppressWarnings("unchecked")
     public void register(final Class<? extends Annotation>... ruleAnnotations) {
         for (Class<? extends Annotation> ruleAnnotation : ruleAnnotations) {
@@ -191,7 +203,7 @@ final class Registry {
         if (viewAdapterPairs.containsKey(view)) {
             String message = String.format("A '%s' for '%s' has already been registered.",
                 ruleAnnotation.getName(), view.getName());
-            Log.w("Registry", message);
+            Log.w(TAG, message);
         } else {
             viewAdapterPairs.put(view, viewDataAdapter);
         }
