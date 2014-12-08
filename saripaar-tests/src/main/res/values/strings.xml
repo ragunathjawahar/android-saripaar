@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Saripaar Tests</string>
+    <string name="saripaar_v2">Android Saripaar v2</string>
+
+    <string name="title_activity_address">Address</string>
+    <string name="burst">BURST</string>
+    <string name="immediate">IMMEDIATE</string>
+
+    <string name="title_activity_custom_view">Custom View</string>
+
+    <string name="title_activity_custom_annotation">Custom Annotation</string>
+
+</resources>

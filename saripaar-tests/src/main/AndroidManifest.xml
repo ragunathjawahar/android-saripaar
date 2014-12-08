@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.mobsandgeeks.saripaar.tests" >
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name=".OrderedValidateActivity"
+            android:label="@string/title_activity_address" >
+        </activity>
+        <activity
+            android:name=".UnorderedValidateActivity"
+            android:label="@string/title_activity_address" />
+        <activity
+            android:name=".OrderedValidateTillActivity"
+            android:label="@string/title_activity_address" />
+        <activity
+            android:name=".UnorderedValidateTillActivity"
+            android:label="@string/title_activity_address" />
+        <activity
+            android:name=".OrderedValidateBeforeActivity"
+            android:label="@string/title_activity_address" />
+        <activity
+            android:name=".UnorderedValidateBeforeActivity"
+            android:label="@string/title_activity_address" />
+        <activity
+            android:name=".CustomViewDataAdapterActivity"
+            android:label="@string/title_activity_custom_view" />
+        <activity
+            android:name=".CustomAnnotationActivity"
+            android:label="@string/title_activity_custom_annotation" />
+    </application>
+
+</manifest>
