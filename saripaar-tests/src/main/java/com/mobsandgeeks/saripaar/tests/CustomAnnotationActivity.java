@@ -68,7 +68,13 @@ public class CustomAnnotationActivity extends Activity
 
     @Override
     public void onValidationFailed(List<ValidationError> errors) {
-        mResultTextView.setText("FAILURE");
+        StringBuilder stringBuilder = new StringBuilder();
+        for (ValidationError error : errors) {
+            EditText editText = (EditText) error.getView();
+            stringBuilder.append(editText.getHint().toString().toUpperCase().replaceAll(" ", "_"))
+                .append(" ");
+        }
+        mResultTextView.setText(stringBuilder.toString());
     }
 
     @Override

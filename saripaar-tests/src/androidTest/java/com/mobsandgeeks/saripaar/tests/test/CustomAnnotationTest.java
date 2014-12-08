@@ -45,7 +45,7 @@ public class CustomAnnotationTest
         clickView(R.id.registerAnnotationRadioButton);
         type(R.id.zipCodeEditText, "600018");
         clickView(R.id.saripaarButton);
-        checkForText(Constants.STATE_FAILURE);
+        checkForText(Constants.FIELD_ZIP_CODE);
     }
 
     /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
