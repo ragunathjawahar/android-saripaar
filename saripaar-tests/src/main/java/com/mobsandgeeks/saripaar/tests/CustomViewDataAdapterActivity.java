@@ -56,12 +56,12 @@ public class CustomViewDataAdapterActivity extends Activity
     }
 
     @Override
-    public void onSuccess() {
+    public void onValidationSucceeded() {
         mResultTextView.setText("SUCCESS");
     }
 
     @Override
-    public void onFailure(List<ValidationError> errors) {
+    public void onValidationFailed(List<ValidationError> errors) {
         // We have just one field anyway
         mResultTextView.setText("EMAIL");
     }

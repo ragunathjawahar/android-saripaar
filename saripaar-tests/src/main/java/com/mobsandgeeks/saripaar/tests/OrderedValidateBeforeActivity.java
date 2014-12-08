@@ -74,12 +74,12 @@ public class OrderedValidateBeforeActivity extends Activity
     }
 
     @Override
-    public void onSuccess() {
+    public void onValidationSucceeded() {
         mResultTextView.setText("SUCCESS");
     }
 
     @Override
-    public void onFailure(List<ValidationError> errors) {
+    public void onValidationFailed(List<ValidationError> errors) {
         StringBuilder stringBuilder = new StringBuilder();
         for (ValidationError error : errors) {
             TextView view = (TextView) error.getView();

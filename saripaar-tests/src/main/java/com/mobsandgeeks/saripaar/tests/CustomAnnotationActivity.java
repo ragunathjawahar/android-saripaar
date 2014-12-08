@@ -62,12 +62,12 @@ public class CustomAnnotationActivity extends Activity
     }
 
     @Override
-    public void onSuccess() {
+    public void onValidationSucceeded() {
         mResultTextView.setText("SUCCESS");
     }
 
     @Override
-    public void onFailure(List<ValidationError> errors) {
+    public void onValidationFailed(List<ValidationError> errors) {
         mResultTextView.setText("FAILURE");
     }
 

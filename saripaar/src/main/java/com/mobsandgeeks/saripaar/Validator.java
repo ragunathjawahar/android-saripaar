@@ -63,8 +63,8 @@ import java.util.Set;
 public class Validator {
 
     public interface ValidationListener {
-        void onSuccess();
-        void onFailure(List<ValidationError> errors);
+        void onValidationSucceeded();
+        void onValidationFailed(List<ValidationError> errors);
     }
 
     /**
@@ -74,7 +74,7 @@ public class Validator {
 
         /**
          * BURST mode will validate all rules before calling the
-         * {@link com.mobsandgeeks.saripaar.Validator.ValidationListener#onFailure(java.util.List)}
+         * {@link com.mobsandgeeks.saripaar.Validator.ValidationListener#onValidationFailed(java.util.List)}
          * callback.
          */
         BURST,
@@ -201,9 +201,9 @@ public class Validator {
             mViewRulesMap, mValidationMode);
         final List<ValidationError> validationErrors = validationReport.errors;
         if (validationErrors.size() == 0 && !validationReport.hasMoreErrors) {
-            mValidationListener.onSuccess();
+            mValidationListener.onValidationSucceeded();
         } else {
-            mValidationListener.onFailure(validationErrors);
+            mValidationListener.onValidationFailed(validationErrors);
         }
     }
 
