@@ -145,7 +145,7 @@ public class Validator {
         this.mValidationListener = validationListener;
     }
 
-    public void validate() {
+    public synchronized void validate() {
         createRulesSafelyAndLazily();
 
         View lastView = getLastView();
@@ -159,15 +159,36 @@ public class Validator {
         }
     }
 
-    public void validateBefore(final View view) {
+    public synchronized void validateBefore(final View view) {
         createRulesSafelyAndLazily();
         View previousView = getViewBefore(view);
         validateTill(previousView, true, "when using 'validateBefore(View)'.");
     }
 
-    public void validateTill(final View view) {
+    public synchronized void validateTill(final View view) {
         createRulesSafelyAndLazily();
         validateTill(view, true, "when using 'validateTill(View)'.");
+    }
+
+    public void put(final View view, final QuickRule... quickRules) {
+        if (view == null) {
+            throw new IllegalArgumentException("'view' cannot be null.");
+        }
+        if (quickRules == null || quickRules.length == 0) {
+            throw new IllegalArgumentException("'quickRules' cannot be null or empty.");
+        }
+
+        createRulesSafelyAndLazily();
+
+        // If there were no rules, create an empty list
+        ArrayList<RuleAdapterPair> ruleAdapterPairs = mViewRulesMap.get(view);
+        ruleAdapterPairs = ruleAdapterPairs == null
+            ? new ArrayList<RuleAdapterPair>() : ruleAdapterPairs;
+
+        for (QuickRule quickRule : quickRules) {
+            ruleAdapterPairs.add(new RuleAdapterPair(quickRule, null));
+        }
+        mViewRulesMap.put(view, ruleAdapterPairs);
     }
 
     private void createRulesSafelyAndLazily() {
@@ -291,7 +312,7 @@ public class Validator {
             // Validate all the rules for the given view.
             for (int i = 0; i < rulesForThisView; i++) {
                 final RuleAdapterPair ruleAdapterPair = ruleAdapterPairs.get(i);
-                final AnnotationRule rule = (AnnotationRule) ruleAdapterPair.rule;
+                final Rule rule = ruleAdapterPair.rule;
                 final ViewDataAdapter dataAdapter = ruleAdapterPair.dataAdapter;
 
                 // Validate only views that are visible and enabled
@@ -471,18 +492,26 @@ public class Validator {
         return view;
     }
 
-    private ValidationError validateViewWithRule(final View view, final AnnotationRule rule,
+    private ValidationError validateViewWithRule(final View view, final Rule rule,
             final ViewDataAdapter dataAdapter) {
-        Object data;
 
-        try {
-            data = dataAdapter.getData(view);
-        } catch (ConversionException e) {
-            e.printStackTrace();
-            throw new IllegalStateException(e.getMessage());
+        boolean valid = false;
+        if (rule instanceof AnnotationRule) {
+            Object data;
+
+            try {
+                data = dataAdapter.getData(view);
+            } catch (ConversionException e) {
+                e.printStackTrace();
+                throw new IllegalStateException(e.getMessage());
+            }
+
+            valid = ((AnnotationRule) rule).isValid(data);
+        } else if (rule instanceof QuickRule) {
+            valid = ((QuickRule) rule).isValid(view);
         }
 
-        return !rule.isValid(data) ? new ValidationError(view, rule) : null;
+        return !valid ? new ValidationError(view, rule) : null;
     }
 
     static class RuleAdapterPair {
