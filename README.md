@@ -22,22 +22,27 @@ Quick Start
 -----------
 **Step 1 - Annotate your widgets using [Saripaar Annotations]**
 ```java
-@Required(order = 1)
-@Email(order = 2)
+@Required
+@Email
+@Order(1)
 private EditText emailEditText;
 
-@Password(order = 3)
-@TextRule(order = 4, minLength = 6, message = "Enter at least 6 characters.")
+@Password
+@TextRule(minLength = 6, message = "Enter at least 6 characters.")
+@Order(2)
 private EditText passwordEditText;
 
-@ConfirmPassword(order = 5)
+@ConfirmPassword
+@Order(3)
 private EditText confirmPasswordEditText;
 
-@Checked(order = 6, message = "You must agree to the terms.")
+@Checked(message = "You must agree to the terms.")
+@Order(4)
 private CheckBox iAgreeCheckBox;
 ```
 
-The annotations are self-explanatory. The `order` attribute is mandatory and specifies the order in which the validations will be performed by the library.
+The annotations are self-explanatory. The `@Order` annotation is required ONLY when performing ordered validations using
+`Validator.validateTill(View)` and `Validator.validateBefore(View)` or in `IMMEDIATE` mode.
 
 **Step 2 - Instantiate a new [Validator]**
 ```java
@@ -61,21 +66,16 @@ public class RegistrationActivity implements ValidationListener {
         Toast.makeText(this, "Yay! we got it right!", Toast.LENGTH_SHORT).show();
     }
 
-    public void onValidationFailed(View failedView, Rule<?> failedRule) {
-        String message = failedRule.getFailureMessage();
-
-        if (failedView instanceof EditText) {
-            failedView.requestFocus();
-            ((EditText) failedView).setError(message);
-        } else {
-            Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    public void onValidationFailed(List<ValidationError> errors) {
+        for (ValidationError error : errors) {
+            // Do anything you want :)
         }
     }
 
 }
 ```
  - `onValidationSucceeded()` - Called when all your views pass all validations.
- - `onValidationFailed(View, Rule<?>)` - Called when a `Rule` fails, you receive the `View` along with the `Rule` that failed.
+ - `onValidationFailed(List<ValidationError> errors)` - Called when there are validation error(s).
 
 **Step 4 - Validate**
 ```java
@@ -109,7 +109,7 @@ Please visit the [wiki] for a complete guide on Android Saripaar.
 License
 ---------------------
 
-    Copyright 2012 Mobs and Geeks
+    Copyright 2012 - 2014 Mobs and Geeks
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -123,16 +123,12 @@ License
     See the License for the specific language governing permissions and
     limitations under the License.
 
-<sub>Saripaar Logo © 2013, Mobs & Geeks.<sub>
+<sub>Saripaar Logo © 2013 - 2014, Mobs & Geeks.<sub>
 
   [jar]: http://search.maven.org/#search%7Cga%7C1%7Candroid%20saripaar
-  [Saripaar Annotations]: https://github.com/ragunathjawahar/android-saripaar/tree/master/src/com/mobsandgeeks/saripaar/annotation
+  [Saripaar Annotations]: https://github.com/ragunathjawahar/android-saripaar/tree/v2/saripaar/src/main/java/com/mobsandgeeks/saripaar/annotation
   [AndroidAnnotations]: https://github.com/excilys/androidannotations
   [RoboGuice]: http://code.google.com/p/roboguice/
   [Validator]: https://github.com/ragunathjawahar/android-saripaar/blob/master/src/com/mobsandgeeks/saripaar/Validator.java
   [ValidationListener]: https://github.com/ragunathjawahar/android-saripaar/blob/master/src/com/mobsandgeeks/saripaar/Validator.java
   [wiki]: https://github.com/ragunathjawahar/android-saripaar/wiki
-
-
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/ragunathjawahar/android-saripaar/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
-
