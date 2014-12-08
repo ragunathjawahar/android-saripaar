@@ -25,6 +25,7 @@ import com.mobsandgeeks.saripaar.adapter.CheckBoxBooleanAdapter;
 import com.mobsandgeeks.saripaar.adapter.RadioButtonBooleanAdapter;
 import com.mobsandgeeks.saripaar.adapter.SpinnerIndexAdapter;
 import com.mobsandgeeks.saripaar.adapter.TextViewDoubleAdapter;
+import com.mobsandgeeks.saripaar.adapter.TextViewFloatAdapter;
 import com.mobsandgeeks.saripaar.adapter.TextViewIntegerAdapter;
 import com.mobsandgeeks.saripaar.adapter.TextViewStringAdapter;
 import com.mobsandgeeks.saripaar.adapter.ViewDataAdapter;
@@ -286,6 +287,7 @@ final class Registry {
         adapters = new HashMap<Class<?>, ViewDataAdapter>();
         adapters.put(String.class, new TextViewStringAdapter());
         adapters.put(Integer.class, new TextViewIntegerAdapter());
+        adapters.put(Float.class, new TextViewFloatAdapter());
         adapters.put(Double.class, new TextViewDoubleAdapter());
         STOCK_ADAPTERS.put(TextView.class, adapters);
     }
