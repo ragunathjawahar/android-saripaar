@@ -102,9 +102,7 @@ public class Validator {
     private ValidationListener mValidationListener;
 
     public Validator(final Object controller) {
-        if (controller == null) {
-            throw new IllegalArgumentException("'controller' cannot be null.");
-        }
+        assertNotNull(controller, "controller");
         mController = controller;
         mValidationMode = Mode.BURST;
     }
@@ -136,9 +134,7 @@ public class Validator {
     }
 
     public void setValidationMode(final Mode validationMode) {
-        if (validationMode == null) {
-            throw new IllegalArgumentException("'validationMode' cannot be null.");
-        }
+        assertNotNull(validationMode, "validationMode");
         this.mValidationMode = validationMode;
     }
 
@@ -172,13 +168,22 @@ public class Validator {
     }
 
     public void put(final View view, final QuickRule... quickRules) {
-        if (view == null) {
-            throw new IllegalArgumentException("'view' cannot be null.");
+        assertNotNull(view, "view");
+        assertNotNull(quickRules, "quickRules");
+        if (quickRules.length == 0) {
+            throw new IllegalArgumentException("'quickRules' cannot be empty.");
         }
-        if (quickRules == null || quickRules.length == 0) {
-            throw new IllegalArgumentException("'quickRules' cannot be null or empty.");
-        }
+
+        // Create rules
         createRulesSafelyAndLazily();
+
+        // If all fields are ordered, then this field should be ordered too
+        if (mOrderedRules && !mViewRulesMap.containsKey(view)) {
+            String message = String.format("All fields are ordered, so this `%s` should be " +
+                "ordered too, declare the view as a field and add the `@Ordered` annotation.",
+                    view.getClass().getName());
+            throw new IllegalStateException(message);
+        }
 
         // If there were no rules, create an empty list
         ArrayList<RuleAdapterPair> ruleAdapterPairs = mViewRulesMap.get(view);
@@ -259,7 +264,9 @@ public class Validator {
         // Sort
         SaripaarFieldsComparator comparator = new SaripaarFieldsComparator();
         Collections.sort(annotatedFields, comparator);
-        mOrderedRules = comparator.areOrderedFields();
+        mOrderedRules = annotatedFields.size() == 1
+            ? annotatedFields.get(0).getAnnotation(Order.class) != null
+            : comparator.areOrderedFields();
 
         return annotatedFields;
     }
