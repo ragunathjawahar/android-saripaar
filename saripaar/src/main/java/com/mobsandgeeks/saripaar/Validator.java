@@ -98,7 +98,7 @@ public class Validator {
     private Object mController;
     private Mode mValidationMode;
     private Map<View, ArrayList<RuleAdapterPair>> mViewRulesMap;
-    private boolean mOrderedRules;
+    private boolean mOrderedFields;
     private ValidationListener mValidationListener;
 
     public Validator(final Object controller) {
@@ -178,7 +178,7 @@ public class Validator {
         createRulesSafelyAndLazily();
 
         // If all fields are ordered, then this field should be ordered too
-        if (mOrderedRules && !mViewRulesMap.containsKey(view)) {
+        if (mOrderedFields && !mViewRulesMap.containsKey(view)) {
             String message = String.format("All fields are ordered, so this `%s` should be " +
                 "ordered too, declare the view as a field and add the `@Order` annotation.",
                     view.getClass().getName());
@@ -216,7 +216,7 @@ public class Validator {
             final String reasonSuffix) {
         // Do we need ordered rules?
         if (requiresOrderedRules) {
-            assertOrderedRules(mOrderedRules, reasonSuffix);
+            assertOrderedFields(mOrderedFields, reasonSuffix);
         }
 
         // Have we registered a validation listener?
@@ -240,7 +240,7 @@ public class Validator {
         }
     }
 
-    private void assertOrderedRules(boolean orderedRules, String reasonSuffix) {
+    private void assertOrderedFields(boolean orderedRules, String reasonSuffix) {
         if (!orderedRules) {
             String message = String.format(
                 "Rules are unordered, every rule annotation and custom rule should have " +
@@ -264,7 +264,7 @@ public class Validator {
         // Sort
         SaripaarFieldsComparator comparator = new SaripaarFieldsComparator();
         Collections.sort(annotatedFields, comparator);
-        mOrderedRules = annotatedFields.size() == 1
+        mOrderedFields = annotatedFields.size() == 1
             ? annotatedFields.get(0).getAnnotation(Order.class) != null
             : comparator.areOrderedFields();
 
