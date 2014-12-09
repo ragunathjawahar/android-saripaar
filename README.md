@@ -24,7 +24,7 @@ Quick Start
 -----------
 **Step 1 - Annotate your widgets using [Saripaar Annotations]**
 ```java
-@Required
+@NotEmpty
 @Email
 private EditText emailEditText;
 
@@ -86,13 +86,19 @@ registerButton.setOnClickListener(new OnClickListener() {
 ```
 The `Validator.validate()` call runs the validations and returns the result via appropriate callbacks on the `ValidationListener`. You can run validations on a background `AsyncTask` by calling the `Validator.validate(true)` method.
 
-Maven
+Maven (v2 Coming soon...)
 ---------------------
-Coming soon...
+    <dependency>
+        <groupId>com.mobsandgeeks</groupId>
+        <artifactId>android-saripaar</artifactId>
+        <version>1.0.3</version>
+    </dependency>
 
-Gradle
+Gradle (v2 Coming soon...)
 ---------------------
-Coming soon...
+    dependencies {
+        compile 'com.mobsandgeeks:android-saripaar:1.0.3'
+    }
 
 Wiki
 ---------------------

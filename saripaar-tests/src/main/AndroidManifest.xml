@@ -32,6 +32,15 @@
         <activity
             android:name=".CustomAnnotationActivity"
             android:label="@string/title_activity_custom_annotation" />
+        <activity
+            android:name=".QuickRuleUnorderedActivity"
+            android:label="@string/title_activity_quick_rule" />
+        <activity
+            android:name=".QuickRuleOrderedActivity"
+            android:label="@string/title_activity_quick_rule" />
+        <activity
+            android:name=".QuickRuleUnorderedInOrderedActivity"
+            android:label="@string/title_activity_quick_rule" />
     </application>
 
 </manifest>

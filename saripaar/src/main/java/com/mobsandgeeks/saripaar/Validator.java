@@ -31,6 +31,7 @@ import com.mobsandgeeks.saripaar.annotation.CreditCard;
 import com.mobsandgeeks.saripaar.annotation.DecimalMax;
 import com.mobsandgeeks.saripaar.annotation.DecimalMin;
 import com.mobsandgeeks.saripaar.annotation.Digits;
+import com.mobsandgeeks.saripaar.annotation.Order;
 import com.mobsandgeeks.saripaar.annotation.Url;
 import com.mobsandgeeks.saripaar.annotation.Email;
 import com.mobsandgeeks.saripaar.annotation.Isbn;
@@ -101,9 +102,7 @@ public class Validator {
     private ValidationListener mValidationListener;
 
     public Validator(final Object controller) {
-        if (controller == null) {
-            throw new IllegalArgumentException("'controller' cannot be null.");
-        }
+        assertNotNull(controller, "controller");
         mController = controller;
         mValidationMode = Mode.BURST;
     }
@@ -135,9 +134,7 @@ public class Validator {
     }
 
     public void setValidationMode(final Mode validationMode) {
-        if (validationMode == null) {
-            throw new IllegalArgumentException("'validationMode' cannot be null.");
-        }
+        assertNotNull(validationMode, "validationMode");
         this.mValidationMode = validationMode;
     }
 
@@ -145,7 +142,7 @@ public class Validator {
         this.mValidationListener = validationListener;
     }
 
-    public void validate() {
+    public synchronized void validate() {
         createRulesSafelyAndLazily();
 
         View lastView = getLastView();
@@ -159,15 +156,44 @@ public class Validator {
         }
     }
 
-    public void validateBefore(final View view) {
+    public synchronized void validateBefore(final View view) {
         createRulesSafelyAndLazily();
         View previousView = getViewBefore(view);
         validateTill(previousView, true, "when using 'validateBefore(View)'.");
     }
 
-    public void validateTill(final View view) {
+    public synchronized void validateTill(final View view) {
         createRulesSafelyAndLazily();
         validateTill(view, true, "when using 'validateTill(View)'.");
+    }
+
+    public void put(final View view, final QuickRule... quickRules) {
+        assertNotNull(view, "view");
+        assertNotNull(quickRules, "quickRules");
+        if (quickRules.length == 0) {
+            throw new IllegalArgumentException("'quickRules' cannot be empty.");
+        }
+
+        // Create rules
+        createRulesSafelyAndLazily();
+
+        // If all fields are ordered, then this field should be ordered too
+        if (mOrderedRules && !mViewRulesMap.containsKey(view)) {
+            String message = String.format("All fields are ordered, so this `%s` should be " +
+                "ordered too, declare the view as a field and add the `@Ordered` annotation.",
+                    view.getClass().getName());
+            throw new IllegalStateException(message);
+        }
+
+        // If there were no rules, create an empty list
+        ArrayList<RuleAdapterPair> ruleAdapterPairs = mViewRulesMap.get(view);
+        ruleAdapterPairs = ruleAdapterPairs == null
+            ? new ArrayList<RuleAdapterPair>() : ruleAdapterPairs;
+
+        for (QuickRule quickRule : quickRules) {
+            ruleAdapterPairs.add(new RuleAdapterPair(quickRule, null));
+        }
+        mViewRulesMap.put(view, ruleAdapterPairs);
     }
 
     private void createRulesSafelyAndLazily() {
@@ -238,7 +264,9 @@ public class Validator {
         // Sort
         SaripaarFieldsComparator comparator = new SaripaarFieldsComparator();
         Collections.sort(annotatedFields, comparator);
-        mOrderedRules = comparator.areOrderedFields();
+        mOrderedRules = annotatedFields.size() == 1
+            ? annotatedFields.get(0).getAnnotation(Order.class) != null
+            : comparator.areOrderedFields();
 
         return annotatedFields;
     }
@@ -343,17 +371,20 @@ public class Validator {
 
     private boolean isSaripaarAnnotatedField(final Field field,
             final Set<Class<? extends Annotation>> registeredAnnotations) {
-
+        boolean hasOrderAnnotation = field.getAnnotation(Order.class) != null;
         boolean hasSaripaarAnnotation = false;
-        Annotation[] annotations = field.getAnnotations();
-        for (Annotation annotation : annotations) {
-            hasSaripaarAnnotation = registeredAnnotations.contains(annotation.annotationType());
-            if (hasSaripaarAnnotation) {
-                break;
+
+        if (!hasOrderAnnotation) {
+            Annotation[] annotations = field.getAnnotations();
+            for (Annotation annotation : annotations) {
+                hasSaripaarAnnotation = registeredAnnotations.contains(annotation.annotationType());
+                if (hasSaripaarAnnotation) {
+                    break;
+                }
             }
         }
 
-        return hasSaripaarAnnotation;
+        return hasOrderAnnotation || hasSaripaarAnnotation;
     }
 
     private List<Field> getViewFields(final Class<?> clazz) {
@@ -412,8 +443,8 @@ public class Validator {
             throw new UnsupportedOperationException(message);
         }
 
-        final Class<? extends Rule> ruleType = getRuleType(saripaarAnnotation);
-        final Rule rule = Reflector.instantiateRule(ruleType, saripaarAnnotation);
+        final Class<? extends AnnotationRule> ruleType = getRuleType(saripaarAnnotation);
+        final AnnotationRule rule = Reflector.instantiateRule(ruleType, saripaarAnnotation);
 
         return new RuleAdapterPair(rule, dataAdapter);
     }
@@ -437,7 +468,7 @@ public class Validator {
         return dataAdapter;
     }
 
-    private Class<? extends Rule> getRuleType(final Annotation ruleAnnotation) {
+    private Class<? extends AnnotationRule> getRuleType(final Annotation ruleAnnotation) {
         ValidateUsing validateUsing = null;
 
         Annotation[] annotationsOfRuleAnnotation =
@@ -473,16 +504,24 @@ public class Validator {
 
     private ValidationError validateViewWithRule(final View view, final Rule rule,
             final ViewDataAdapter dataAdapter) {
-        Object data;
 
-        try {
-            data = dataAdapter.getData(view);
-        } catch (ConversionException e) {
-            e.printStackTrace();
-            throw new IllegalStateException(e.getMessage());
+        boolean valid = false;
+        if (rule instanceof AnnotationRule) {
+            Object data;
+
+            try {
+                data = dataAdapter.getData(view);
+            } catch (ConversionException e) {
+                e.printStackTrace();
+                throw new IllegalStateException(e.getMessage());
+            }
+
+            valid = ((AnnotationRule) rule).isValid(data);
+        } else if (rule instanceof QuickRule) {
+            valid = ((QuickRule) rule).isValid(view);
         }
 
-        return !rule.isValid(data) ? new ValidationError(view, rule) : null;
+        return !valid ? new ValidationError(view, rule) : null;
     }
 
     static class RuleAdapterPair {

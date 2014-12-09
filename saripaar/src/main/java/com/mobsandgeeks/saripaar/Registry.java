@@ -70,7 +70,7 @@ final class Registry {
     /**
      * This is a convenience method for Annotations that operate on {@link android.widget.TextView}
      * and it's subclasses such as {@link android.widget.EditText}. Use this to register your custom
-     * annotation if your {@link com.mobsandgeeks.saripaar.Rule} performs validations on
+     * annotation if your {@link AnnotationRule} performs validations on
      * {@link java.lang.String}s, {@link java.lang.Integer}s, {@link java.lang.Float}s and
      * {@link java.lang.Double} values.
      *
@@ -103,19 +103,19 @@ final class Registry {
 
     /**
      * Registers {@link com.mobsandgeeks.saripaar.adapter.ViewDataAdapter}s for the associated
-     * {@link com.mobsandgeeks.saripaar.Rule}s and their {@link android.view.View}s.
+     * {@link AnnotationRule}s and their {@link android.view.View}s.
      *
-     * @param view  The {@link android.view.View} type on which the {@link Rule} can be used.
-     * @param ruleDataType  Data type expected by the {@link com.mobsandgeeks.saripaar.Rule}.
+     * @param view  The {@link android.view.View} type on which the {@link AnnotationRule} can be used.
+     * @param ruleDataType  Data type expected by the {@link AnnotationRule}.
      * @param viewDataAdapter  The {@link com.mobsandgeeks.saripaar.adapter.ViewDataAdapter}
-     *      that can get the data for the {@link com.mobsandgeeks.saripaar.Rule} from the
+     *      that can get the data for the {@link AnnotationRule} from the
      *      {@link android.view.View}.
      * @param ruleAnnotations  Varargs of rule {@link java.lang.annotation.Annotation}s that
      *      can be used with the {@link android.view.View} and the
      *      {@link com.mobsandgeeks.saripaar.adapter.ViewDataAdapter}.
      *
      * @param <VIEW>  Type parameter that is a subclass of {@link android.view.View} class.
-     * @param <DATA_TYPE>  Data type expected by the {@link com.mobsandgeeks.saripaar.Rule} and
+     * @param <DATA_TYPE>  Data type expected by the {@link AnnotationRule} and
      *      is returned by the {@link com.mobsandgeeks.saripaar.adapter.ViewDataAdapter}.
      */
     public <VIEW extends View, DATA_TYPE> void register(

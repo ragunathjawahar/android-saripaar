@@ -14,13 +14,13 @@
 
 package com.mobsandgeeks.saripaar.rule;
 
-import com.mobsandgeeks.saripaar.Rule;
+import com.mobsandgeeks.saripaar.AnnotationRule;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 
 /**
  * @author Ragunath Jawahar <rj@mobsandgeeks.com>
  */
-public class NotEmptyRule extends Rule<NotEmpty, String> {
+public class NotEmptyRule extends AnnotationRule<NotEmpty, String> {
 
     protected NotEmptyRule(NotEmpty notEmpty) {
         super(notEmpty);

@@ -1,8 +1,8 @@
 package com.mobsandgeeks.saripaar.tests.validation;
 
-import com.mobsandgeeks.saripaar.Rule;
+import com.mobsandgeeks.saripaar.AnnotationRule;
 
-public class HometownZipCodeRule extends Rule<HometownZipCode, String> {
+public class HometownZipCodeRule extends AnnotationRule<HometownZipCode, String> {
 
     protected HometownZipCodeRule(HometownZipCode hometownZipCode) {
         super(hometownZipCode);

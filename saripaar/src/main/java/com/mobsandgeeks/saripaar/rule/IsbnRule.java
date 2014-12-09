@@ -14,7 +14,7 @@
 
 package com.mobsandgeeks.saripaar.rule;
 
-import com.mobsandgeeks.saripaar.Rule;
+import com.mobsandgeeks.saripaar.AnnotationRule;
 import com.mobsandgeeks.saripaar.annotation.Isbn;
 
 import commons.validator.routines.ISBNValidator;
@@ -22,7 +22,7 @@ import commons.validator.routines.ISBNValidator;
 /**
  * @author Ragunath Jawahar <rj@mobsandgeeks.com>
  */
-public class IsbnRule extends Rule<Isbn, String> {
+public class IsbnRule extends AnnotationRule<Isbn, String> {
 
     protected IsbnRule(Isbn isbn) {
         super(isbn);

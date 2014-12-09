@@ -14,7 +14,7 @@
 
 package com.mobsandgeeks.saripaar.rule;
 
-import com.mobsandgeeks.saripaar.Rule;
+import com.mobsandgeeks.saripaar.AnnotationRule;
 import com.mobsandgeeks.saripaar.annotation.IpAddress;
 
 import commons.validator.routines.InetAddressValidator;
@@ -22,7 +22,7 @@ import commons.validator.routines.InetAddressValidator;
 /**
  * @author Ragunath Jawahar <rj@mobsandgeeks.com>
  */
-public class IpAddressRule extends Rule<IpAddress, String> {
+public class IpAddressRule extends AnnotationRule<IpAddress, String> {
 
     protected IpAddressRule(IpAddress ipAddress) {
         super(ipAddress);

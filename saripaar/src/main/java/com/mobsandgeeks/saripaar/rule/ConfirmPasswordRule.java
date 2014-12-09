@@ -14,13 +14,13 @@
 
 package com.mobsandgeeks.saripaar.rule;
 
-import com.mobsandgeeks.saripaar.Rule;
+import com.mobsandgeeks.saripaar.AnnotationRule;
 import com.mobsandgeeks.saripaar.annotation.ConfirmPassword;
 
 /**
  * @author Ragunath Jawahar <rj@mobsandgeeks.com>
  */
-public class ConfirmPasswordRule extends Rule<ConfirmPassword, String> {
+public class ConfirmPasswordRule extends AnnotationRule<ConfirmPassword, String> {
 
     protected ConfirmPasswordRule(ConfirmPassword confirmPassword) {
         super(confirmPassword);

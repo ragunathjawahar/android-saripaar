@@ -14,7 +14,7 @@
 
 package com.mobsandgeeks.saripaar.rule;
 
-import com.mobsandgeeks.saripaar.Rule;
+import com.mobsandgeeks.saripaar.AnnotationRule;
 import com.mobsandgeeks.saripaar.annotation.CreditCard;
 
 import java.util.Arrays;
@@ -27,7 +27,7 @@ import commons.validator.routines.CreditCardValidator;
 /**
  * @author Ragunath Jawahar <rj@mobsandgeeks.com>
  */
-public class CreditCardRule extends Rule<CreditCard, String> {
+public class CreditCardRule extends AnnotationRule<CreditCard, String> {
     private static final Map<CreditCard.Type, Long> CARD_TYPE_REGISTRY =
             new HashMap<CreditCard.Type, Long>(){{
                 put(CreditCard.Type.AMEX, CreditCardValidator.AMEX);

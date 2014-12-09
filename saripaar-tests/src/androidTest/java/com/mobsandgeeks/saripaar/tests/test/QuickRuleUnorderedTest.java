@@ -3,49 +3,65 @@ package com.mobsandgeeks.saripaar.tests.test;
 import android.test.ActivityInstrumentationTestCase2;
 import android.widget.TextView;
 
-import com.mobsandgeeks.saripaar.tests.CustomAnnotationActivity;
 import com.mobsandgeeks.saripaar.tests.R;
+import com.mobsandgeeks.saripaar.tests.QuickRuleUnorderedActivity;
 
 import static com.google.android.apps.common.testing.ui.espresso.Espresso.onView;
 import static com.google.android.apps.common.testing.ui.espresso.action.ViewActions.click;
 import static com.google.android.apps.common.testing.ui.espresso.action.ViewActions.typeText;
 import static com.google.android.apps.common.testing.ui.espresso.matcher.ViewMatchers.withId;
 
-public class CustomAnnotationTest
-        extends ActivityInstrumentationTestCase2<CustomAnnotationActivity> {
+/**
+ * @author Ragunath Jawahar <rj@mobsandgeeks.com>
+ */
+public class QuickRuleUnorderedTest
+        extends ActivityInstrumentationTestCase2<QuickRuleUnorderedActivity> {
 
     private TextView mResultTextView;
 
-    public CustomAnnotationTest() {
-        super(CustomAnnotationActivity.class);
+    public QuickRuleUnorderedTest() {
+        super(QuickRuleUnorderedActivity.class);
     }
 
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-
         mResultTextView = (TextView) getActivity().findViewById(R.id.resultTextView);
     }
 
-    // Using 'testX' prefix, because of static variables in Validator > Registry.
-    public void test0UnregisteredAnnotationWithNoOtherRules_crash() {
-        type(R.id.zipCodeEditText, Constants.ZIP_CODE);
+    public void testInvalidZipCodeNoQuickRule_failure() {
         clickView(R.id.saripaarButton);
-        checkForText(Constants.STATE_CRASH);
+        checkForText(Constants.FIELD_ZIP_CODE);
     }
 
-    public void test1ValidZipCode_success() {
-        clickView(R.id.registerAnnotationRadioButton);
+    public void testValidZipCodeNoQuickRule_success() {
         type(R.id.zipCodeEditText, Constants.ZIP_CODE);
         clickView(R.id.saripaarButton);
         checkForText(Constants.STATE_SUCCESS);
     }
 
-    public void test2InvalidZipCode_failure() {
-        clickView(R.id.registerAnnotationRadioButton);
-        type(R.id.zipCodeEditText, "600018");
+    public void testValidZipCodeAirtelNumberQuickRule_failure() {
+        type(R.id.zipCodeEditText, Constants.ZIP_CODE);
+        clickView(R.id.useQuickRuleRadioButton);
         clickView(R.id.saripaarButton);
-        checkForText(Constants.FIELD_ZIP_CODE);
+        checkForText(Constants.FIELD_AIRTEL_NUMBER);
+    }
+
+    public void testInvalidZipCodeInvalidAirtelNumberQuickRule_failure() {
+        clickView(R.id.useQuickRuleRadioButton);
+        clickView(R.id.saripaarButton);
+
+        String result = String.format("%s %s",
+            Constants.FIELD_ZIP_CODE, Constants.FIELD_AIRTEL_NUMBER);
+        checkForText(result);
+    }
+
+    public void testZipCodeAirtelNumberQuickRuleValid_success() {
+        clickView(R.id.useQuickRuleRadioButton);
+        type(R.id.zipCodeEditText, Constants.ZIP_CODE);
+        type(R.id.airtelNumberEditText, Constants.AIRTEL_NUMBER);
+        clickView(R.id.saripaarButton);
+        checkForText(Constants.STATE_SUCCESS);
     }
 
     /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

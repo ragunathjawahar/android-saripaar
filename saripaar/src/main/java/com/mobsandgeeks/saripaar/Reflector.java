@@ -151,24 +151,24 @@ class Reflector {
     }
 
     /**
-     * Instantiates a {@link com.mobsandgeeks.saripaar.Rule} object for the given type.
+     * Instantiates a {@link AnnotationRule} object for the given type.
      *
-     * @param ruleType  The {@link com.mobsandgeeks.saripaar.Rule} class to be instantiated.
+     * @param ruleType  The {@link AnnotationRule} class to be instantiated.
      * @param ruleAnnotation  The rule {@link java.lang.annotation.Annotation} associated with
-     *      the {@link com.mobsandgeeks.saripaar.Rule}.
+     *      the {@link AnnotationRule}.
      *
-     * @return The instantiated {@link com.mobsandgeeks.saripaar.Rule} object.
+     * @return The instantiated {@link AnnotationRule} object.
      *
-     * @throws SaripaarViolationException if {@link com.mobsandgeeks.saripaar.Rule} does not
+     * @throws SaripaarViolationException if {@link AnnotationRule} does not
      *      have a single-argument constructor that accepts a rule
      *      {@link java.lang.annotation.Annotation} instance.
      */
-    public static Rule instantiateRule(final Class<? extends Rule> ruleType,
+    public static AnnotationRule instantiateRule(final Class<? extends AnnotationRule> ruleType,
             final Annotation ruleAnnotation) throws SaripaarViolationException {
-        Rule rule = null;
+        AnnotationRule rule = null;
 
         try {
-            Constructor<? extends Rule> constructor = ruleType.getDeclaredConstructor(
+            Constructor<? extends AnnotationRule> constructor = ruleType.getDeclaredConstructor(
                 ruleAnnotation.annotationType());
             constructor.setAccessible(true);
             rule = constructor.newInstance(ruleAnnotation);
@@ -189,7 +189,7 @@ class Reflector {
     }
 
     /**
-     * Method finds the data type of the {@link com.mobsandgeeks.saripaar.Rule} that is
+     * Method finds the data type of the {@link AnnotationRule} that is
      * tied up to the given rule annotation.
      *
      * @param ruleAnnotation  Rule {@link java.lang.annotation.Annotation}.
@@ -203,7 +203,7 @@ class Reflector {
     }
 
     /**
-     * Method finds the data type of the {@link com.mobsandgeeks.saripaar.Rule} that is
+     * Method finds the data type of the {@link AnnotationRule} that is
      * tied up to the given rule annotation.
      *
      * @param validateUsing  The {@link com.mobsandgeeks.saripaar.annotation.ValidateUsing} instance.
@@ -212,7 +212,7 @@ class Reflector {
      *      {@link com.mobsandgeeks.saripaar.adapter.ViewDataAdapter}s.
      */
     public static Class<?> getRuleDataType(final ValidateUsing validateUsing) {
-        Class<? extends Rule> rule = validateUsing.value();
+        Class<? extends AnnotationRule> rule = validateUsing.value();
         Method[] declaredMethods = rule.getDeclaredMethods();
         Class<?> returnType = null;
 

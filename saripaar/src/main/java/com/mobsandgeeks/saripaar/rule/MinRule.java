@@ -14,7 +14,7 @@
 
 package com.mobsandgeeks.saripaar.rule;
 
-import com.mobsandgeeks.saripaar.Rule;
+import com.mobsandgeeks.saripaar.AnnotationRule;
 import com.mobsandgeeks.saripaar.annotation.Min;
 
 import commons.validator.routines.IntegerValidator;
@@ -22,7 +22,7 @@ import commons.validator.routines.IntegerValidator;
 /**
  * @author Ragunath Jawahar <rj@mobsandgeeks.com>
  */
-public class MinRule extends Rule<Min, Integer> {
+public class MinRule extends AnnotationRule<Min, Integer> {
 
     protected MinRule(Min min) {
         super(min);

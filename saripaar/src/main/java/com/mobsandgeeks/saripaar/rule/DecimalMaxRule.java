@@ -14,7 +14,7 @@
 
 package com.mobsandgeeks.saripaar.rule;
 
-import com.mobsandgeeks.saripaar.Rule;
+import com.mobsandgeeks.saripaar.AnnotationRule;
 import com.mobsandgeeks.saripaar.annotation.DecimalMax;
 
 import commons.validator.routines.DoubleValidator;
@@ -22,7 +22,7 @@ import commons.validator.routines.DoubleValidator;
 /**
  * @author Ragunath Jawahar <rj@mobsandgeeks.com>
  */
-public class DecimalMaxRule extends Rule<DecimalMax, Double> {
+public class DecimalMaxRule extends AnnotationRule<DecimalMax, Double> {
 
     protected DecimalMaxRule(DecimalMax decimalMax) {
         super(decimalMax);

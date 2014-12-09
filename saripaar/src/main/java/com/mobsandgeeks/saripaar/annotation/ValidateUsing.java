@@ -14,7 +14,7 @@
 
 package com.mobsandgeeks.saripaar.annotation;
 
-import com.mobsandgeeks.saripaar.Rule;
+import com.mobsandgeeks.saripaar.AnnotationRule;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -27,5 +27,5 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.ANNOTATION_TYPE)
 public @interface ValidateUsing {
-    Class<? extends Rule> value();
+    Class<? extends AnnotationRule> value();
 }

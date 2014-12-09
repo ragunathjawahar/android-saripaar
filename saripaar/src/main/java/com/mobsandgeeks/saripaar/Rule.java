@@ -16,31 +16,9 @@ package com.mobsandgeeks.saripaar;
 
 import android.content.Context;
 
-import java.lang.annotation.Annotation;
-
 /**
  * @author Ragunath Jawahar <rj@mobsandgeeks.com>
  */
-public abstract class Rule<RULE_ANNOTATION extends Annotation, DATA_TYPE> {
-
-    protected final RULE_ANNOTATION mRuleAnnotation;
-
-    protected Rule(final RULE_ANNOTATION ruleAnnotation) {
-        if (ruleAnnotation == null) {
-            throw new IllegalArgumentException("'ruleAnnotation' cannot be null.");
-        }
-        mRuleAnnotation = ruleAnnotation;
-    }
-
-    public String getMessage(final Context context) {
-        final int messageResId = Reflector.getAttributeValue(mRuleAnnotation, "messageResId",
-            Integer.class);
-
-        return messageResId != -1
-            ? context.getString(messageResId)
-            : Reflector.getAttributeValue(mRuleAnnotation, "message", String.class);
-    }
-
-    public abstract boolean isValid(DATA_TYPE data);
-
+interface Rule {
+    String getMessage(final Context context);
 }

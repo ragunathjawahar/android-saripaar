@@ -14,7 +14,7 @@
 
 package com.mobsandgeeks.saripaar.rule;
 
-import com.mobsandgeeks.saripaar.Rule;
+import com.mobsandgeeks.saripaar.AnnotationRule;
 import com.mobsandgeeks.saripaar.annotation.Future;
 
 import java.util.Date;
@@ -22,7 +22,7 @@ import java.util.Date;
 /**
  * @author Ragunath Jawahar <rj@mobsandgeeks.com>
  */
-public class FutureRule extends Rule<Future, Date> {
+public class FutureRule extends AnnotationRule<Future, Date> {
 
     protected FutureRule(Future future) {
         super(future);
