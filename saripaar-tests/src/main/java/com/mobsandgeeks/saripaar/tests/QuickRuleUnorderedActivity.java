@@ -20,7 +20,7 @@ import java.util.List;
 /**
  * @author Ragunath Jawahar <rj@mobsandgeeks.com>
  */
-public class UnorderedQuickRuleActivity extends Activity
+public class QuickRuleUnorderedActivity extends Activity
         implements Validator.ValidationListener, CompoundButton.OnCheckedChangeListener,
                 View.OnClickListener {
 

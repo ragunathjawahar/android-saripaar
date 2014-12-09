@@ -22,7 +22,7 @@ import java.util.List;
 /**
  * @author Ragunath Jawahar <rj@mobsandgeeks.com>
  */
-public class OrderedQuickRuleActivity extends Activity
+public class QuickRuleOrderedActivity extends Activity
         implements Validator.ValidationListener, CompoundButton.OnCheckedChangeListener,
                 View.OnClickListener {
 

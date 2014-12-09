@@ -3,7 +3,7 @@ package com.mobsandgeeks.saripaar.tests.test;
 import android.test.ActivityInstrumentationTestCase2;
 import android.widget.TextView;
 
-import com.mobsandgeeks.saripaar.tests.OrderedQuickRuleActivity;
+import com.mobsandgeeks.saripaar.tests.QuickRuleOrderedActivity;
 import com.mobsandgeeks.saripaar.tests.R;
 
 import static com.google.android.apps.common.testing.ui.espresso.Espresso.onView;
@@ -15,12 +15,12 @@ import static com.google.android.apps.common.testing.ui.espresso.matcher.ViewMat
  * @author Ragunath Jawahar <rj@mobsandgeeks.com>
  */
 public class OrderedQuickRuleTest
-        extends ActivityInstrumentationTestCase2<OrderedQuickRuleActivity> {
+        extends ActivityInstrumentationTestCase2<QuickRuleOrderedActivity> {
 
     private TextView mResultTextView;
 
     public OrderedQuickRuleTest() {
-        super(OrderedQuickRuleActivity.class);
+        super(QuickRuleOrderedActivity.class);
     }
 
     @Override

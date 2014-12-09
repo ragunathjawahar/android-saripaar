@@ -4,7 +4,7 @@ import android.test.ActivityInstrumentationTestCase2;
 import android.widget.TextView;
 
 import com.mobsandgeeks.saripaar.tests.R;
-import com.mobsandgeeks.saripaar.tests.UnorderedQuickRuleActivity;
+import com.mobsandgeeks.saripaar.tests.QuickRuleUnorderedActivity;
 
 import static com.google.android.apps.common.testing.ui.espresso.Espresso.onView;
 import static com.google.android.apps.common.testing.ui.espresso.action.ViewActions.click;
@@ -15,12 +15,12 @@ import static com.google.android.apps.common.testing.ui.espresso.matcher.ViewMat
  * @author Ragunath Jawahar <rj@mobsandgeeks.com>
  */
 public class UnorderedQuickRuleTest
-        extends ActivityInstrumentationTestCase2<UnorderedQuickRuleActivity> {
+        extends ActivityInstrumentationTestCase2<QuickRuleUnorderedActivity> {
 
     private TextView mResultTextView;
 
     public UnorderedQuickRuleTest() {
-        super(UnorderedQuickRuleActivity.class);
+        super(QuickRuleUnorderedActivity.class);
     }
 
     @Override
