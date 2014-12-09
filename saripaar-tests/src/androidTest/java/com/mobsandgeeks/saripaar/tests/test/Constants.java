@@ -22,6 +22,7 @@ public interface Constants {
     String FIELD_PHONE = "PHONE";
     String FIELD_ZIP_CODE = "ZIP_CODE";
     String FIELD_AIRTEL_NUMBER = "AIRTEL_NUMBER";
+    String FIELD_MAX = "MAX";
 
     // Values
     String NAME = "Android";

@@ -19,7 +19,7 @@
         custom views with Saripaar v2.
     -->
     <com.wrapp.floatlabelededittext.FloatLabeledEditText
-        android:id="@+id/booleanFloatLabelEditText"
+        android:id="@+id/emailFloatLabelEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/saripaarTextView">
@@ -27,10 +27,44 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Boolean"
+            android:hint="Email"
             android:inputType="textEmailAddress"
-            android:id="@+id/booleanEditText"/>
+            android:id="@+id/emailEditText"/>
     </com.wrapp.floatlabelededittext.FloatLabeledEditText>
+
+    <RadioButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Register Adapter for Email"
+        android:id="@+id/registerEmailAdapterRadioButton"
+        android:layout_below="@+id/emailFloatLabelEditText"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:checked="false"/>
+
+    <com.wrapp.floatlabelededittext.FloatLabeledEditText
+        android:id="@+id/maxFloatLabelEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/registerEmailAdapterRadioButton">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Max"
+            android:inputType="textEmailAddress"
+            android:id="@+id/maxEditText"/>
+    </com.wrapp.floatlabelededittext.FloatLabeledEditText>
+
+    <RadioButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Register Adapter for Max"
+        android:id="@+id/registerMaxAdapterRadioButton"
+        android:layout_below="@+id/maxFloatLabelEditText"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:checked="false"/>
 
     <Button
         android:layout_width="fill_parent"
@@ -41,27 +75,17 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
-    <RadioButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Register Adapter for Float Label"
-        android:id="@+id/registerAdapterRadioButton"
-        android:layout_below="@+id/booleanFloatLabelEditText"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:checked="false"/>
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:id="@+id/resultTextView"
-        android:layout_below="@+id/registerAdapterRadioButton"
+        android:layout_below="@+id/registerMaxAdapterRadioButton"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:gravity="center"
-        android:layout_alignRight="@+id/booleanFloatLabelEditText"
-        android:layout_alignEnd="@+id/booleanFloatLabelEditText"
+        android:layout_alignRight="@+id/emailFloatLabelEditText"
+        android:layout_alignEnd="@+id/emailFloatLabelEditText"
         android:layout_above="@+id/saripaarButton"/>
 
 </RelativeLayout>

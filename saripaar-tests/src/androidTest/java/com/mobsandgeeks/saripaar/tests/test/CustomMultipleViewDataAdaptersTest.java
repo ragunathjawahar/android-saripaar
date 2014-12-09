@@ -17,7 +17,7 @@ package com.mobsandgeeks.saripaar.tests.test;
 import android.test.ActivityInstrumentationTestCase2;
 import android.widget.TextView;
 
-import com.mobsandgeeks.saripaar.tests.CustomViewDataAdapterActivity;
+import com.mobsandgeeks.saripaar.tests.CustomMultipleViewDataAdaptersActivity;
 import com.mobsandgeeks.saripaar.tests.R;
 
 import static com.google.android.apps.common.testing.ui.espresso.Espresso.onView;
@@ -25,13 +25,13 @@ import static com.google.android.apps.common.testing.ui.espresso.action.ViewActi
 import static com.google.android.apps.common.testing.ui.espresso.action.ViewActions.typeText;
 import static com.google.android.apps.common.testing.ui.espresso.matcher.ViewMatchers.withId;
 
-public class CustomViewDataAdapterTest
-        extends ActivityInstrumentationTestCase2<CustomViewDataAdapterActivity> {
+public class CustomMultipleViewDataAdaptersTest
+        extends ActivityInstrumentationTestCase2<CustomMultipleViewDataAdaptersActivity> {
 
     private TextView mResultTextView;
 
-    public CustomViewDataAdapterTest() {
-        super(CustomViewDataAdapterActivity.class);
+    public CustomMultipleViewDataAdaptersTest() {
+        super(CustomMultipleViewDataAdaptersActivity.class);
     }
 
     @Override
@@ -40,15 +40,33 @@ public class CustomViewDataAdapterTest
         mResultTextView = (TextView) getActivity().findViewById(R.id.resultTextView);
     }
 
-    public void testNoDataAdapter_crash() {
-        type(R.id.booleanEditText, "true");
+    public void test0InvalidEmailNoEmailAdapterInvalidMaxNoMaxAdapter_crash() {
         clickView(R.id.saripaarButton);
         checkForText(Constants.STATE_CRASH);
     }
 
-    public void testRegisterAdapter_success() {
-        type(R.id.booleanEditText, "true");
-        clickView(R.id.registerAdapterRadioButton);
+    public void test1InvalidEmailWithEmailAdapterInvalidMaxNoMaxAdapter_crash() {
+        clickView(R.id.registerEmailAdapterRadioButton);
+        clickView(R.id.saripaarButton);
+        checkForText(Constants.STATE_CRASH);
+    }
+
+    public void test2InvalidEmailWithEmailAdapterInvalidMaxWithMaxAdapter_failure() {
+        clickView(R.id.registerEmailAdapterRadioButton);
+        clickView(R.id.registerMaxAdapterRadioButton);
+        clickView(R.id.saripaarButton);
+
+        String result = String.format("%s %s", Constants.FIELD_EMAIL, Constants.FIELD_MAX);
+        checkForText(result);
+    }
+
+    public void test3ValidFieldsWithAdapters_success() {
+        type(R.id.emailEditText, Constants.EMAIL);
+        clickView(R.id.registerEmailAdapterRadioButton);
+
+        type(R.id.maxEditText, "1947");
+        clickView(R.id.registerMaxAdapterRadioButton);
+
         clickView(R.id.saripaarButton);
         checkForText(Constants.STATE_SUCCESS);
     }

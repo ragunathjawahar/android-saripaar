@@ -30,6 +30,9 @@
             android:name=".CustomViewDataAdapterActivity"
             android:label="@string/title_activity_custom_view" />
         <activity
+            android:name=".CustomMultipleViewDataAdaptersActivity"
+            android:label="@string/title_activity_custom_view" />
+        <activity
             android:name=".CustomAnnotationActivity"
             android:label="@string/title_activity_custom_annotation" />
         <activity

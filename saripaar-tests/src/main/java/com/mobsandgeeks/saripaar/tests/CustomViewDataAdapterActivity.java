@@ -25,7 +25,7 @@ import android.widget.TextView;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.adapter.ViewDataAdapter;
-import com.mobsandgeeks.saripaar.annotation.Email;
+import com.mobsandgeeks.saripaar.annotation.AssertTrue;
 import com.mobsandgeeks.saripaar.exception.ConversionException;
 import com.wrapp.floatlabelededittext.FloatLabeledEditText;
 
@@ -38,8 +38,8 @@ public class CustomViewDataAdapterActivity extends Activity
         implements Validator.ValidationListener, View.OnClickListener,
                 CompoundButton.OnCheckedChangeListener {
 
-    @Email
-    private FloatLabeledEditText mEmailFloatLabeledEditText;
+    @AssertTrue
+    private FloatLabeledEditText mBooleanFloatLabeledEditText;
 
     private RadioButton mRegisterAdapterRadioButton;
     private TextView mResultTextView;
@@ -54,8 +54,8 @@ public class CustomViewDataAdapterActivity extends Activity
         setContentView(R.layout.activity_custom_view_data_adapter);
 
         // UI References
-        mEmailFloatLabeledEditText =
-            (FloatLabeledEditText) findViewById(R.id.emailFloatLabelEditText);
+        mBooleanFloatLabeledEditText =
+            (FloatLabeledEditText) findViewById(R.id.booleanFloatLabelEditText);
         mRegisterAdapterRadioButton = (RadioButton) findViewById(R.id.registerAdapterRadioButton);
         mResultTextView = (TextView) findViewById(R.id.resultTextView);
         mSaripaarButton = (Button) findViewById(R.id.saripaarButton);
@@ -93,11 +93,12 @@ public class CustomViewDataAdapterActivity extends Activity
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         if (isChecked) {
             Validator.registerAdapter(FloatLabeledEditText.class,
-                new ViewDataAdapter<FloatLabeledEditText, String>() {
+                new ViewDataAdapter<FloatLabeledEditText, Boolean>() {
 
                     @Override
-                    public String getData(FloatLabeledEditText flet) throws ConversionException {
-                        return flet.getEditText().getText().toString();
+                    public Boolean getData(FloatLabeledEditText flet) throws ConversionException {
+                        String booleanText = flet.getEditText().getText().toString().trim();
+                        return Boolean.parseBoolean(booleanText);
                     }
                 }
             );
