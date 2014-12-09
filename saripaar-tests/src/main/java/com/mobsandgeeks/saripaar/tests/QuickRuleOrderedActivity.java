@@ -47,7 +47,7 @@ public class QuickRuleOrderedActivity extends Activity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_ordered_quick_rule);
+        setContentView(R.layout.activity_quick_rule_ordered);
 
         // UI References
         mZipCodeEditText = (EditText) findViewById(R.id.zipCodeEditText);
