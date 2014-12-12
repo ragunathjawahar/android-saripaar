@@ -19,6 +19,12 @@ import android.content.Context;
 import java.lang.annotation.Annotation;
 
 /**
+ * These are implementations that are tied to rule annotations. All stock rule annotations have an
+ * {@link com.mobsandgeeks.saripaar.AnnotationRule} implementation paired to them, using the
+ * {@link com.mobsandgeeks.saripaar.annotation.ValidateUsing} annotation. Like stock annotations,
+ * custom annotations must have a corresponding {@link com.mobsandgeeks.saripaar.AnnotationRule}
+ * as well.
+ *
  * @author Ragunath Jawahar {@literal <rj@mobsandgeeks.com>}
  * @since 2.0
  */
@@ -27,6 +33,12 @@ public abstract class AnnotationRule<RULE_ANNOTATION extends Annotation, DATA_TY
 
     protected final RULE_ANNOTATION mRuleAnnotation;
 
+    /**
+     * Constructor.
+     *
+     * @param ruleAnnotation  The rule {@link java.lang.annotation.Annotation} to which this
+     *      rule is paired.
+     */
     protected AnnotationRule(final RULE_ANNOTATION ruleAnnotation) {
         if (ruleAnnotation == null) {
             throw new IllegalArgumentException("'ruleAnnotation' cannot be null.");
@@ -34,6 +46,14 @@ public abstract class AnnotationRule<RULE_ANNOTATION extends Annotation, DATA_TY
         mRuleAnnotation = ruleAnnotation;
     }
 
+    /**
+     * Returns a failure message associated with the rule.
+     *
+     * @param context  Any {@link android.content.Context} instance, usually an
+     *      {@link android.app.Activity}.
+     *
+     * @return A failure message.
+     */
     @Override
     public String getMessage(final Context context) {
         final int messageResId = Reflector.getAttributeValue(mRuleAnnotation, "messageResId",
@@ -44,6 +64,13 @@ public abstract class AnnotationRule<RULE_ANNOTATION extends Annotation, DATA_TY
             : Reflector.getAttributeValue(mRuleAnnotation, "message", String.class);
     }
 
+    /**
+     * Checks if the data received from the adapter adheres to this rule.
+     *
+     * @param data  Data from a {@link com.mobsandgeeks.saripaar.adapter.ViewDataAdapter}.
+     *
+     * @return true if valid, false otherwise.
+     */
     public abstract boolean isValid(DATA_TYPE data);
 
 }
