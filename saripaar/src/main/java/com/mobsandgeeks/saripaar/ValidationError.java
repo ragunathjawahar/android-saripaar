@@ -17,25 +17,47 @@ package com.mobsandgeeks.saripaar;
 import android.view.View;
 
 /**
+ * Contains a failed {@link android.view.View} and the corresponding
+ * {@link com.mobsandgeeks.saripaar.Rule}.
+ *
  * @author Ragunath Jawahar {@literal <rj@mobsandgeeks.com>}
  */
 public class ValidationError {
     private final View view;
     private final Rule failedRule;
 
-    public ValidationError(View view, Rule failedRule) {
+    /**
+     * Constructor.
+     *
+     * @param view  A failed {@link View}.
+     * @param failedRule  A failed {@link com.mobsandgeeks.saripaar.Rule}.
+     */
+    ValidationError(final View view, final Rule failedRule) {
         this.view = view;
         this.failedRule = failedRule;
     }
 
+    /**
+     * Gets the failed {@link android.view.View}.
+     *
+     * @return The failed view.
+     */
     public View getView() {
         return view;
     }
 
+    /**
+     * Gets the failed {@link com.mobsandgeeks.saripaar.Rule}.
+     *
+     * @return The failed rule.
+     */
     public Rule getFailedRule() {
         return failedRule;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String toString() {
         return "ValidationError{" +
