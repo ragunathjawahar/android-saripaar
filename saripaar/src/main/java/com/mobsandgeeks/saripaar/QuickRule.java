@@ -17,9 +17,22 @@ package com.mobsandgeeks.saripaar;
 import android.view.View;
 
 /**
+ * Unlike {@link com.mobsandgeeks.saripaar.AnnotationRule}s, {@link com.mobsandgeeks.saripaar.QuickRule}s
+ * can exist without Annotations. These rules can be directly applied to {@link android.view.View}s.
+ * They are manually added to the {@link com.mobsandgeeks.saripaar.Validator} using the
+ * {@link com.mobsandgeeks.saripaar.Validator#put(android.view.View, QuickRule[])} method.
+ *
  * @author Ragunath Jawahar {@literal <rj@mobsandgeeks.com>}
  * @since 2.0
  */
 public abstract class QuickRule<T extends View> implements Rule {
+
+    /**
+     * Checks if the rule is valid.
+     *
+     * @param view  The {@link android.view.View} on which the rule has to be applied.
+     *
+     * @return true if valid, false otherwise.
+     */
     public abstract boolean isValid(T view);
 }
