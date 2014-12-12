@@ -22,11 +22,11 @@ import java.util.Comparator;
 /**
  * @author Ragunath Jawahar {@literal <rj@mobsandgeeks.com>}
  */
-public class SaripaarFieldsComparator implements Comparator<Field> {
+class SaripaarFieldsComparator implements Comparator<Field> {
     private boolean mOrderedFields = true;
 
     @Override
-    public int compare(Field lhsField, Field rhsField) {
+    public int compare(final Field lhsField, final Field rhsField) {
         final Order lhsOrderAnnotation = lhsField.getAnnotation(Order.class);
         final Order rhsOrderAnnotation = rhsField.getAnnotation(Order.class);
 
