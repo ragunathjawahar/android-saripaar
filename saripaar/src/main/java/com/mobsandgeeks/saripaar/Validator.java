@@ -58,7 +58,7 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * @author Ragunath Jawahar <rj@mobsandgeeks.com>
+ * @author Ragunath Jawahar {@literal <rj@mobsandgeeks.com>}
  */
 @SuppressWarnings("unchecked")
 public class Validator {

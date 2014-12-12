@@ -17,7 +17,7 @@ package com.mobsandgeeks.saripaar.adapter;
 import android.widget.Spinner;
 
 /**
- * @author Ragunath Jawahar <rj@mobsandgeeks.com>
+ * @author Ragunath Jawahar {@literal <rj@mobsandgeeks.com>}
  */
 public class SpinnerIndexAdapter implements ViewDataAdapter<Spinner, Integer> {
 

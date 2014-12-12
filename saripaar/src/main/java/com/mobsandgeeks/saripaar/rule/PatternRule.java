@@ -20,7 +20,7 @@ import com.mobsandgeeks.saripaar.annotation.Pattern;
 import commons.validator.routines.RegexValidator;
 
 /**
- * @author Ragunath Jawahar <rj@mobsandgeeks.com>
+ * @author Ragunath Jawahar {@literal <rj@mobsandgeeks.com>}
  */
 public class PatternRule extends AnnotationRule<Pattern, String> {
 

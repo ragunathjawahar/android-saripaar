@@ -32,7 +32,7 @@ import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 import java.util.List;
 
 /**
- * @author Ragunath Jawahar <rj@mobsandgeeks.com>
+ * @author Ragunath Jawahar {@literal <rj@mobsandgeeks.com>}
  */
 public class QuickRuleUnorderedActivity extends Activity
         implements Validator.ValidationListener, CompoundButton.OnCheckedChangeListener,

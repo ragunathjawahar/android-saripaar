@@ -43,7 +43,7 @@ import java.util.Set;
  * {@link com.mobsandgeeks.saripaar.adapter.ViewDataAdapter}s that are registered to rule
  * {@link java.lang.annotation.Annotation}s.
  *
- * @author Ragunath Jawahar <rj@mobsandgeeks.com>
+ * @author Ragunath Jawahar {@literal <rj@mobsandgeeks.com>}
  * @since 2.0
  */
 final class Registry {

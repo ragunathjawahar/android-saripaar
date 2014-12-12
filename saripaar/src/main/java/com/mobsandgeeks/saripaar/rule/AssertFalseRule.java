@@ -18,7 +18,7 @@ import com.mobsandgeeks.saripaar.AnnotationRule;
 import com.mobsandgeeks.saripaar.annotation.AssertFalse;
 
 /**
- * @author Ragunath Jawahar <rj@mobsandgeeks.com>
+ * @author Ragunath Jawahar {@literal <rj@mobsandgeeks.com>}
  */
 public class AssertFalseRule extends AnnotationRule<AssertFalse, Boolean> {
 

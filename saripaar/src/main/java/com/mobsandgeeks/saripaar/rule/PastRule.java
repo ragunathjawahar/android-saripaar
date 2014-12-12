@@ -20,7 +20,7 @@ import com.mobsandgeeks.saripaar.annotation.Past;
 import java.util.Date;
 
 /**
- * @author Ragunath Jawahar <rj@mobsandgeeks.com>
+ * @author Ragunath Jawahar {@literal <rj@mobsandgeeks.com>}
  */
 public class PastRule extends AnnotationRule<Past, Date> {
 

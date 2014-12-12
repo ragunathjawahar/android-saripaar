@@ -19,7 +19,7 @@ import android.widget.TextView;
 import com.mobsandgeeks.saripaar.exception.ConversionException;
 
 /**
- * @author Ragunath Jawahar <rj@mobsandgeeks.com>
+ * @author Ragunath Jawahar {@literal <rj@mobsandgeeks.com>}
  */
 public class TextViewFloatAdapter implements ViewDataAdapter<TextView, Float> {
     private static final String REGEX_DECIMAL = "[-+]?[0-9]*\\.?[0-9]+([eE][-+]?[0-9]+)?";

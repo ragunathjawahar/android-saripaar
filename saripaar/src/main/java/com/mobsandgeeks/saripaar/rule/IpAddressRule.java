@@ -20,7 +20,7 @@ import com.mobsandgeeks.saripaar.annotation.IpAddress;
 import commons.validator.routines.InetAddressValidator;
 
 /**
- * @author Ragunath Jawahar <rj@mobsandgeeks.com>
+ * @author Ragunath Jawahar {@literal <rj@mobsandgeeks.com>}
  */
 public class IpAddressRule extends AnnotationRule<IpAddress, String> {
 

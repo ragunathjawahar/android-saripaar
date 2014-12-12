@@ -20,7 +20,7 @@ import com.mobsandgeeks.saripaar.annotation.Url;
 import commons.validator.routines.UrlValidator;
 
 /**
- * @author Ragunath Jawahar <rj@mobsandgeeks.com>
+ * @author Ragunath Jawahar {@literal <rj@mobsandgeeks.com>}
  */
 public class UrlRule extends AnnotationRule<Url, String> {
 

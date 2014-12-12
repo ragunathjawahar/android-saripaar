@@ -26,7 +26,7 @@ import static com.google.android.apps.common.testing.ui.espresso.action.ViewActi
 import static com.google.android.apps.common.testing.ui.espresso.matcher.ViewMatchers.withId;
 
 /**
- * @author Ragunath Jawahar <rj@mobsandgeeks.com>
+ * @author Ragunath Jawahar {@literal <rj@mobsandgeeks.com>}
  */
 public class QuickRuleOrderedTest
         extends ActivityInstrumentationTestCase2<QuickRuleOrderedActivity> {

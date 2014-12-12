@@ -17,7 +17,7 @@ package com.mobsandgeeks.saripaar.adapter;
 import android.widget.CheckBox;
 
 /**
- * @author Ragunath Jawahar <rj@mobsandgeeks.com>
+ * @author Ragunath Jawahar {@literal <rj@mobsandgeeks.com>}
  */
 public class CheckBoxBooleanAdapter implements ViewDataAdapter<CheckBox, Boolean> {
 

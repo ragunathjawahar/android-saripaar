@@ -30,7 +30,7 @@ import com.mobsandgeeks.saripaar.tests.validation.HometownZipCode;
 import java.util.List;
 
 /**
- * @author Ragunath Jawahar <rj@mobsandgeeks.com>
+ * @author Ragunath Jawahar {@literal <rj@mobsandgeeks.com>}
  */
 public class CustomAnnotationActivity extends Activity
         implements Validator.ValidationListener, View.OnClickListener {

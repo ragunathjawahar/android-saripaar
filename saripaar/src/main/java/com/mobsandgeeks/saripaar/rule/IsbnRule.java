@@ -20,7 +20,7 @@ import com.mobsandgeeks.saripaar.annotation.Isbn;
 import commons.validator.routines.ISBNValidator;
 
 /**
- * @author Ragunath Jawahar <rj@mobsandgeeks.com>
+ * @author Ragunath Jawahar {@literal <rj@mobsandgeeks.com>}
  */
 public class IsbnRule extends AnnotationRule<Isbn, String> {
 

@@ -19,7 +19,7 @@ import android.widget.TextView;
 import com.mobsandgeeks.saripaar.exception.ConversionException;
 
 /**
- * @author Ragunath Jawahar <rj@mobsandgeeks.com>
+ * @author Ragunath Jawahar {@literal <rj@mobsandgeeks.com>}
  */
 public class TextViewIntegerAdapter implements ViewDataAdapter<TextView, Integer> {
     private static final String REGEX_INTEGER = "\\d+";

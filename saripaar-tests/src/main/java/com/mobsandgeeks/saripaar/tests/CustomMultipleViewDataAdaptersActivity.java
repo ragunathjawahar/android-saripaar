@@ -35,7 +35,7 @@ import com.wrapp.floatlabelededittext.FloatLabeledEditText;
 import java.util.List;
 
 /**
- * @author Ragunath Jawahar <rj@mobsandgeeks.com>
+ * @author Ragunath Jawahar {@literal <rj@mobsandgeeks.com>}
  */
 public class CustomMultipleViewDataAdaptersActivity extends Activity
         implements Validator.ValidationListener, View.OnClickListener,

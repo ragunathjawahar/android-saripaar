@@ -20,7 +20,7 @@ import com.mobsandgeeks.saripaar.annotation.DecimalMax;
 import commons.validator.routines.DoubleValidator;
 
 /**
- * @author Ragunath Jawahar <rj@mobsandgeeks.com>
+ * @author Ragunath Jawahar {@literal <rj@mobsandgeeks.com>}
  */
 public class DecimalMaxRule extends AnnotationRule<DecimalMax, Double> {
 

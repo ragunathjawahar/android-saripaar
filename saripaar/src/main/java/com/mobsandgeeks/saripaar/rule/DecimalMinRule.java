@@ -20,7 +20,7 @@ import com.mobsandgeeks.saripaar.annotation.DecimalMin;
 import commons.validator.routines.DoubleValidator;
 
 /**
- * @author Ragunath Jawahar <rj@mobsandgeeks.com>
+ * @author Ragunath Jawahar {@literal <rj@mobsandgeeks.com>}
  */
 public class DecimalMinRule extends AnnotationRule<DecimalMin, Double> {
 

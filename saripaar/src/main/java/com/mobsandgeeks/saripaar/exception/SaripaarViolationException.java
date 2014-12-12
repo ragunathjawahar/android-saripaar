@@ -18,7 +18,7 @@ package com.mobsandgeeks.saripaar.exception;
  * Thrown when the developer does not adhere to framework requirements when extending Saripaar's
  * functionality.
  *
- * @author Ragunath Jawahar <rj@mobsandgeeks.com>
+ * @author Ragunath Jawahar {@literal <rj@mobsandgeeks.com>}
  * @since 2.0
  */
 public class SaripaarViolationException extends RuntimeException {

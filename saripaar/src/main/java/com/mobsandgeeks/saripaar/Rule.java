@@ -17,7 +17,7 @@ package com.mobsandgeeks.saripaar;
 import android.content.Context;
 
 /**
- * @author Ragunath Jawahar <rj@mobsandgeeks.com>
+ * @author Ragunath Jawahar {@literal <rj@mobsandgeeks.com>}
  */
 interface Rule {
     String getMessage(final Context context);

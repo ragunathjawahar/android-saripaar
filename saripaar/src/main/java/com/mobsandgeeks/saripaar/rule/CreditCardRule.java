@@ -25,7 +25,7 @@ import java.util.Map;
 import commons.validator.routines.CreditCardValidator;
 
 /**
- * @author Ragunath Jawahar <rj@mobsandgeeks.com>
+ * @author Ragunath Jawahar {@literal <rj@mobsandgeeks.com>}
  */
 public class CreditCardRule extends AnnotationRule<CreditCard, String> {
     private static final Map<CreditCard.Type, Long> CARD_TYPE_REGISTRY =

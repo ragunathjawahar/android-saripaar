@@ -30,7 +30,7 @@ import java.lang.reflect.Modifier;
  * Contains reflection methods that are helpful for introspection and retrieval of frequently used
  * methods and attributes.
  *
- * @author Ragunath Jawahar <rj@mobsandgeeks.com>
+ * @author Ragunath Jawahar {@literal <rj@mobsandgeeks.com>}
  * @since 2.0
  */
 class Reflector {

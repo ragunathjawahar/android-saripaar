@@ -20,7 +20,7 @@ import com.mobsandgeeks.saripaar.annotation.Max;
 import commons.validator.routines.IntegerValidator;
 
 /**
- * @author Ragunath Jawahar <rj@mobsandgeeks.com>
+ * @author Ragunath Jawahar {@literal <rj@mobsandgeeks.com>}
  */
 public class MaxRule extends AnnotationRule<Max, Integer> {
 

@@ -20,7 +20,7 @@ import com.mobsandgeeks.saripaar.annotation.Future;
 import java.util.Date;
 
 /**
- * @author Ragunath Jawahar <rj@mobsandgeeks.com>
+ * @author Ragunath Jawahar {@literal <rj@mobsandgeeks.com>}
  */
 public class FutureRule extends AnnotationRule<Future, Date> {
 

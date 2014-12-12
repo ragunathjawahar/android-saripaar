@@ -19,7 +19,7 @@ import android.content.Context;
 import java.lang.annotation.Annotation;
 
 /**
- * @author Ragunath Jawahar <rj@mobsandgeeks.com>
+ * @author Ragunath Jawahar {@literal <rj@mobsandgeeks.com>}
  * @since 2.0
  */
 public abstract class AnnotationRule<RULE_ANNOTATION extends Annotation, DATA_TYPE>

@@ -19,7 +19,7 @@ import android.view.View;
 import com.mobsandgeeks.saripaar.exception.ConversionException;
 
 /**
- * @author Ragunath Jawahar <rj@mobsandgeeks.com>
+ * @author Ragunath Jawahar {@literal <rj@mobsandgeeks.com>}
  */
 public interface ViewDataAdapter<VIEW extends View, DATA> {
     DATA getData(VIEW view) throws ConversionException;

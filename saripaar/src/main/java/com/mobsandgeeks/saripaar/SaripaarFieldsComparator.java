@@ -20,7 +20,7 @@ import java.lang.reflect.Field;
 import java.util.Comparator;
 
 /**
- * @author Ragunath Jawahar <rj@mobsandgeeks.com>
+ * @author Ragunath Jawahar {@literal <rj@mobsandgeeks.com>}
  */
 public class SaripaarFieldsComparator implements Comparator<Field> {
     private boolean mOrderedFields = true;

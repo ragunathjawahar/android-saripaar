@@ -20,7 +20,7 @@ import com.mobsandgeeks.saripaar.annotation.Email;
 import commons.validator.routines.EmailValidator;
 
 /**
- * @author Ragunath Jawahar <rj@mobsandgeeks.com>
+ * @author Ragunath Jawahar {@literal <rj@mobsandgeeks.com>}
  */
 public class EmailRule extends AnnotationRule<Email, String> {
 
