@@ -20,11 +20,17 @@ import java.lang.reflect.Field;
 import java.util.Comparator;
 
 /**
+ * Sorts the {@link android.view.View} {@link java.lang.reflect.Field} objects based on the
+ * {@link com.mobsandgeeks.saripaar.annotation.Order} annotation.
+ *
  * @author Ragunath Jawahar {@literal <rj@mobsandgeeks.com>}
  */
 class SaripaarFieldsComparator implements Comparator<Field> {
     private boolean mOrderedFields = true;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int compare(final Field lhsField, final Field rhsField) {
         final Order lhsOrderAnnotation = lhsField.getAnnotation(Order.class);
@@ -46,6 +52,13 @@ class SaripaarFieldsComparator implements Comparator<Field> {
         return comparison;
     }
 
+    /**
+     * Tells if the fields are ordered. Useful only after the
+     * {@link com.mobsandgeeks.saripaar.SaripaarFieldsComparator} is used to sort collection. Will
+     * return true, if this method is called on an unused instance.
+     *
+     * @return true if all the fields are ordered, false otherwise.
+     */
     public boolean areOrderedFields() {
         return mOrderedFields;
     }
