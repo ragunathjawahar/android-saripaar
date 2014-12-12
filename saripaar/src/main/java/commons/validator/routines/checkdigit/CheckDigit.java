@@ -37,14 +37,12 @@ package commons.validator.routines.checkdigit;
  * </p>
  * <p>
  * {@link CheckDigit} is used by the new generic
- * <a href="..\CodeValidator.html">CodeValidator</a> implementation.
+ * {@link commons.validator.routines.CodeValidator} implementation.
  * </p>
- * <p>
  * <h3>Implementations</h3>
  * See the
  * <a href="package-summary.html">Package Summary</a> for a full
  * list of implementations provided within Commons Validator.
- * </p>
  *
  * @see commons.validator.routines.CodeValidator
  * @since Validator 1.4

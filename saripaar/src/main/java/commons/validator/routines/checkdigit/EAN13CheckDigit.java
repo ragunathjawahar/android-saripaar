@@ -25,7 +25,6 @@ package commons.validator.routines.checkdigit;
  * an <i>odd</i> position (from right to left) being weighted 1 and <i>even</i>
  * position digits being weighted 3.
  * </p>
- * <p>
  * For further information see:
  * <ul>
  * <li>EAN-13 - see
@@ -38,7 +37,6 @@ package commons.validator.routines.checkdigit;
  * <a href="http://en.wikipedia.org/wiki/ISBN">Wikipedia - International
  * Standard Book Number (ISBN)</a>.</li>
  * </ul>
- * </p>
  *
  * @since Validator 1.4
  */

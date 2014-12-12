@@ -39,7 +39,6 @@ import commons.validator.routines.checkdigit.CheckDigitException;
  * ISBN number (rather than this 10 digit ISBN number). ISBN-13 codes are
  * <a href="http://en.wikipedia.org/wiki/European_Article_Number">EAN</a>
  * codes, for more information see:</p>
- * <p>
  * <ul>
  * <li><a href="http://en.wikipedia.org/wiki/ISBN">Wikipedia - International
  * Standard Book Number (ISBN)</a>.</li>
@@ -49,7 +48,6 @@ import commons.validator.routines.checkdigit.CheckDigitException;
  * <li><a href="http://www.isbn.org/standards/home/isbn/transition.asp">ISBN-13
  * Transition details</a>.</li>
  * </ul>
- * </p>
  *
  * @since Validator 1.4
  */

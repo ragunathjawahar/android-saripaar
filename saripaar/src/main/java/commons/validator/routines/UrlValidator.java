@@ -27,12 +27,12 @@ import java.util.regex.Pattern;
 /**
  * <p><b>URL Validation</b> routines.</p>
  * Behavior of validation is modified by passing in options:
- * <li>ALLOW_2_SLASHES - [FALSE] Allows double '/' characters in the path
- * component.</li>
- * <li>NO_FRAGMENT- [FALSE] By default fragments are allowed, if this option is
- * included then fragments are flagged as illegal.</li>
- * <li>ALLOW_ALL_SCHEMES - [FALSE] By default only http, https, and ftp are
- * considered valid schemes. Enabling this option will let any scheme pass validation.</li>
+ * <p>ALLOW_2_SLASHES - [FALSE] Allows double '/' characters in the path
+ * component.</p>
+ * <p>NO_FRAGMENT- [FALSE] By default fragments are allowed, if this option is
+ * included then fragments are flagged as illegal.</p>
+ * <p>ALLOW_ALL_SCHEMES - [FALSE] By default only http, https, and ftp are
+ * considered valid schemes. Enabling this option will let any scheme pass validation.</p>
  * <p>Originally based in on php script by Debbie Dyer, validation.php v1.2b, Date: 03/07/02,
  * http://javascript.internet.com. However, this validation now bears little resemblance
  * to the php original.</p>

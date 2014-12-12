@@ -28,7 +28,7 @@ import java.util.ArrayList;
  * <p>
  * By default, all supported card types are allowed. You can specify which
  * cards should pass validation by configuring the validation options. For
- * example,<br/>
+ * example,<br>
  * <code>CreditCardValidator ccv = new CreditCardValidator(CreditCardValidator.AMEX + CreditCardValidator.VISA);</code>
  * configures the validator to only pass American Express and Visa cards.
  * If a card type is not directly supported by this class, you can implement
@@ -48,7 +48,7 @@ public class CreditCardValidator {
      * Option specifying that no cards are allowed. This is useful if
      * you want only custom card types to validate so you turn off the
      * default cards with this option.
-     * <br/>
+     * <br>
      * <pre>
      * CreditCardValidator v = new CreditCardValidator(CreditCardValidator.NONE);
      * v.addAllowedCardType(customType);

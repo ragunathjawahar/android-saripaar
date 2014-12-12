@@ -34,7 +34,6 @@ package commons.validator.routines.checkdigit;
  * ISBN number (rather than this 10 digit ISBN number) which uses the EAN-13 / UPC
  * (see {@link EAN13CheckDigit}) standard.
  * </p>
- * <p>
  * For further information see:
  * <ul>
  * <li><a href="http://en.wikipedia.org/wiki/ISBN">Wikipedia - International
@@ -42,7 +41,6 @@ package commons.validator.routines.checkdigit;
  * <li><a href="http://www.isbn.org/standards/home/isbn/transition.asp">ISBN-13
  * Transition details</a>.</li>
  * </ul>
- * </p>
  *
  * @since Validator 1.4
  */

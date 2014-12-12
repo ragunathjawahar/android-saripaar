@@ -144,7 +144,7 @@ public abstract class ModulusCheckDigit implements CheckDigit, Serializable {
      * <p>
      * <b>Note:</b> this implementation only handlers numeric values
      * For non-numeric characters, override this method to provide
-     * character-->integer conversion.</p>
+     * character--&gt;integer conversion.</p>
      *
      * @param character The character to convert
      * @param leftPos   The position of the character in the code, counting from left to right (for identifiying the position in the string)
@@ -167,7 +167,7 @@ public abstract class ModulusCheckDigit implements CheckDigit, Serializable {
      * <p>
      * <b>Note:</b> this implementation only handles single-digit numeric values
      * For non-numeric characters, override this method to provide
-     * integer-->character conversion.</p>
+     * integer--&gt;character conversion.</p>
      *
      * @param charValue The integer value of the character
      * @return The converted character

@@ -46,7 +46,7 @@ import commons.validator.routines.checkdigit.CheckDigit;
  *
  * @since Validator 1.4
  */
-final class CodeValidator {
+public final class CodeValidator {
     private final RegexValidator regexValidator;
     private final int minLength;
     private final int maxLength;
