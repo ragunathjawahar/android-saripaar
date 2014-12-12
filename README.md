@@ -1,5 +1,5 @@
-Android Saripaar v2 PREVIEW
-===========================
+Android Saripaar v2
+===================
 ![Logo](logo.png)
 
 **சரிபார்** - sari-paar (Tamil for "to check", "verify" or "validate")
@@ -86,18 +86,31 @@ registerButton.setOnClickListener(new OnClickListener() {
 ```
 The `Validator.validate()` call runs the validations and returns the result via appropriate callbacks on the `ValidationListener`. You can run validations on a background `AsyncTask` by calling the `Validator.validate(true)` method.
 
-Maven (v2 Coming soon...)
+Maven
 ---------------------
     <dependency>
         <groupId>com.mobsandgeeks</groupId>
         <artifactId>android-saripaar</artifactId>
-        <version>1.0.3</version>
+        <version>2.0-SNAPSHOT</version>
     </dependency>
 
-Gradle (v2 Coming soon...)
+Gradle
 ---------------------
     dependencies {
-        compile 'com.mobsandgeeks:android-saripaar:1.0.3'
+        compile 'com.mobsandgeeks:android-saripaar:2.0-SNAPSHOT'
+    }
+
+Snapshots
+---------------------
+In your `{project_base}/build.gradle` file, include the following.
+
+    allprojects {
+        repositories {
+            mavenCentral()
+            maven {
+                url "https://oss.sonatype.org/content/repositories/snapshots/"
+            }
+        }
     }
 
 Wiki
