@@ -47,12 +47,7 @@ public abstract class AnnotationRule<RULE_ANNOTATION extends Annotation, DATA_TY
     }
 
     /**
-     * Returns a failure message associated with the rule.
-     *
-     * @param context  Any {@link android.content.Context} instance, usually an
-     *      {@link android.app.Activity}.
-     *
-     * @return A failure message.
+     * {@inheritDoc}
      */
     @Override
     public String getMessage(final Context context) {

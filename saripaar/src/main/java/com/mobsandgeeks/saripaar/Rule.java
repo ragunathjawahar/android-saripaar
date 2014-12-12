@@ -17,8 +17,20 @@ package com.mobsandgeeks.saripaar;
 import android.content.Context;
 
 /**
+ * This is a base interface for {@link com.mobsandgeeks.saripaar.AnnotationRule} and
+ * {@link com.mobsandgeeks.saripaar.QuickRule}. Used internally as a parent for grouping.
+ *
  * @author Ragunath Jawahar {@literal <rj@mobsandgeeks.com>}
  */
 interface Rule {
+
+    /**
+     * Returns a failure message associated with the rule.
+     *
+     * @param context  Any {@link android.content.Context} instance, usually an
+     *      {@link android.app.Activity}.
+     *
+     * @return A failure message.
+     */
     String getMessage(final Context context);
 }
