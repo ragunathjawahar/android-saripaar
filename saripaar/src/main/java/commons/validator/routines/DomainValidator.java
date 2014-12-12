@@ -22,12 +22,10 @@ import java.util.List;
 
 /**
  * <p><b>Domain name</b> validation routines.</p>
- * <p/>
  * <p>
  * This validator provides methods for validating Internet domain names
  * and top-level domains.
  * </p>
- * <p/>
  * <p>Domain names are evaluated according
  * to the standards <a href="http://www.ietf.org/rfc/rfc1034.txt">RFC1034</a>,
  * section 3, and <a href="http://www.ietf.org/rfc/rfc1123.txt">RFC1123</a>,
@@ -36,12 +34,10 @@ import java.util.List;
  * validation will fail even though the equivalent plaintext version of the
  * same name would have passed.
  * </p>
- * <p/>
  * <p>
  * Validation is also provided for top-level domains (TLDs) as defined and
  * maintained by the Internet Assigned Numbers Authority (IANA):
  * </p>
- * <p/>
  * <ul>
  * <li>{@link #isValidInfrastructureTld} - validates infrastructure TLDs
  * (<code>.arpa</code>, etc.)</li>
@@ -50,7 +46,6 @@ import java.util.List;
  * <li>{@link #isValidCountryCodeTld} - validates country code TLDs
  * (<code>.us, .uk, .cn</code>, etc.)</li>
  * </ul>
- * <p/>
  * <p>
  * (<b>NOTE</b>: This class does not provide IP address lookup for domain names or
  * methods to ensure that a given domain name matches a specific IP; see

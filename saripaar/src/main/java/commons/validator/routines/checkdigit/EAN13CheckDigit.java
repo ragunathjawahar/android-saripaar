@@ -20,11 +20,12 @@ package commons.validator.routines.checkdigit;
 /**
  * Modulus 10 <b>EAN-13</b> / <b>UPC</b> / <b>ISBN-13</b> Check Digit
  * calculation/validation.
- * <p/>
+ * <p>
  * Check digit calculation is based on <i>modulus 10</i> with digits in
  * an <i>odd</i> position (from right to left) being weighted 1 and <i>even</i>
  * position digits being weighted 3.
- * <p/>
+ * </p>
+ * <p>
  * For further information see:
  * <ul>
  * <li>EAN-13 - see
@@ -37,6 +38,7 @@ package commons.validator.routines.checkdigit;
  * <a href="http://en.wikipedia.org/wiki/ISBN">Wikipedia - International
  * Standard Book Number (ISBN)</a>.</li>
  * </ul>
+ * </p>
  *
  * @since Validator 1.4
  */
@@ -62,8 +64,8 @@ public final class EAN13CheckDigit extends ModulusCheckDigit {
 
     /**
      * <p>Calculates the <i>weighted</i> value of a character in the
-     * code at a specified position.</p>
-     * <p/>
+     * code at a specified position.
+     * </p>
      * <p>For EAN-13 (from right to left) <b>odd</b> digits are weighted
      * with a factor of <b>one</b> and <b>even</b> digits with a factor
      * of <b>three</b>.</p>

@@ -38,11 +38,11 @@ import commons.validator.routines.checkdigit.CheckDigit;
  * <li><code>boolean isValid(code)</code></li>
  * <li><code>String validate(code)</code></li>
  * </ul>
- * <p/>
+ * <p>
  * Codes often include <i>format</i> characters - such as hyphens - to make them
  * more easily human readable. These can be removed prior to length and check digit
  * validation by specifying them as a <i>non-capturing</i> group in the regular
- * expression (i.e. use the <code>(?: )</code> notation).
+ * expression (i.e. use the <code>(?: )</code> notation).</p>
  *
  * @since Validator 1.4
  */
@@ -140,9 +140,9 @@ final class CodeValidator {
 
     /**
      * Return the check digit validation routine.
-     * <p/>
+     * <p>
      * <b>N.B.</b> Optional, if not set no Check Digit
-     * validation will be performed on the code.
+     * validation will be performed on the code.</p>
      *
      * @return The check digit validation routine
      */
@@ -152,9 +152,9 @@ final class CodeValidator {
 
     /**
      * Return the minimum length of the code.
-     * <p/>
+     * <p>
      * <b>N.B.</b> Optional, if less than zero the
-     * minimum length will not be checked.
+     * minimum length will not be checked.</p>
      *
      * @return The minimum length of the code or
      * <code>-1</code> if the code has no minimum length
@@ -165,9 +165,9 @@ final class CodeValidator {
 
     /**
      * Return the maximum length of the code.
-     * <p/>
+     * <p>
      * <b>N.B.</b> Optional, if less than zero the
-     * maximum length will not be checked.
+     * maximum length will not be checked.</p>
      *
      * @return The maximum length of the code or
      * <code>-1</code> if the code has no maximum length
@@ -178,9 +178,9 @@ final class CodeValidator {
 
     /**
      * Return the <i>regular expression</i> validator.
-     * <p/>
+     * <p>
      * <b>N.B.</b> Optional, if not set no regular
-     * expression validation will be performed on the code.
+     * expression validation will be performed on the code.</p>
      *
      * @return The regular expression validator
      */

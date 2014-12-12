@@ -33,7 +33,6 @@ import java.util.regex.Pattern;
  * included then fragments are flagged as illegal.</li>
  * <li>ALLOW_ALL_SCHEMES - [FALSE] By default only http, https, and ftp are
  * considered valid schemes. Enabling this option will let any scheme pass validation.</li>
- * <p/>
  * <p>Originally based in on php script by Debbie Dyer, validation.php v1.2b, Date: 03/07/02,
  * http://javascript.internet.com. However, this validation now bears little resemblance
  * to the php original.</p>

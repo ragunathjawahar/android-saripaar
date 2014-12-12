@@ -19,19 +19,22 @@ package commons.validator.routines.checkdigit;
 
 /**
  * Modulus 11 <b>ISBN-10</b> Check Digit calculation/validation.
- * <p/>
+ * <p>
  * ISBN-10 Numbers are a numeric code except for the last (check) digit
  * which can have a value of "X".
- * <p/>
+ * </p>
+ * <p>
  * Check digit calculation is based on <i>modulus 11</i> with digits being weighted
  * based by their position, from right to left with the first digit being weighted
  * 1, the second 2 and so on. If the check digit is calculated as "10" it is converted
  * to "X".
- * <p/>
+ * </p>
+ * <p>
  * <b>N.B.</b> From 1st January 2007 the book industry will start to use a new 13 digit
  * ISBN number (rather than this 10 digit ISBN number) which uses the EAN-13 / UPC
  * (see {@link EAN13CheckDigit}) standard.
- * <p/>
+ * </p>
+ * <p>
  * For further information see:
  * <ul>
  * <li><a href="http://en.wikipedia.org/wiki/ISBN">Wikipedia - International
@@ -39,6 +42,7 @@ package commons.validator.routines.checkdigit;
  * <li><a href="http://www.isbn.org/standards/home/isbn/transition.asp">ISBN-13
  * Transition details</a>.</li>
  * </ul>
+ * </p>
  *
  * @since Validator 1.4
  */
@@ -60,7 +64,6 @@ public final class ISBN10CheckDigit extends ModulusCheckDigit {
     /**
      * Calculates the <i>weighted</i> value of a charcter in the
      * code at a specified position.
-     * <p/>
      * <p>For ISBN-10 (from right to left) digits are weighted
      * by their position.</p>
      *
@@ -76,7 +79,6 @@ public final class ISBN10CheckDigit extends ModulusCheckDigit {
     /**
      * <p>Convert a character at a specified position to an
      * integer value.</p>
-     * <p/>
      * <p>Character 'X' check digit converted to 10.</p>
      *
      * @param character The character to convert.
@@ -96,7 +98,6 @@ public final class ISBN10CheckDigit extends ModulusCheckDigit {
 
     /**
      * <p>Convert an integer value to a character at a specified position.</p>
-     * <p/>
      * <p>Value '10' for position 1 (check digit) converted to 'X'.</p>
      *
      * @param charValue The integer value of the character.

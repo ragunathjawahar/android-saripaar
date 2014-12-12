@@ -21,15 +21,16 @@ import java.io.Serializable;
 
 /**
  * Abstract <b>Modulus</b> Check digit calculation/validation.
- * <p/>
+ * <p>
  * Provides a <i>base</i> class for building <i>modulus</i> Check
  * Digit routines.
- * <p/>
+ * </p>
+ * <p>
  * This implementation only handles <i>single-digit numeric</i> codes, such as
  * <b>EAN-13</b>. For <i>alphanumeric</i> codes such as <b>EAN-128</b> you
  * will need to implement/override the <code>toInt()</code> and
  * <code>toChar()</code> methods.
- * <p/>
+ * </p>
  *
  * @since Validator 1.4
  */
@@ -121,12 +122,12 @@ public abstract class ModulusCheckDigit implements CheckDigit, Serializable {
     /**
      * Calculates the <i>weighted</i> value of a character in the
      * code at a specified position.
-     * <p/>
+     * <p>
      * Some modulus routines weight the value of a character
      * depending on its position in the code (e.g. ISBN-10), while
      * others use different weighting factors for odd/even positions
      * (e.g. EAN or Luhn). Implement the appropriate mechanism
-     * required by overriding this method.
+     * required by overriding this method.</p>
      *
      * @param charValue The numeric value of the character
      * @param leftPos   The position of the character in the code, counting from left to right
@@ -140,10 +141,10 @@ public abstract class ModulusCheckDigit implements CheckDigit, Serializable {
 
     /**
      * Convert a character at a specified position to an integer value.
-     * <p/>
+     * <p>
      * <b>Note:</b> this implementation only handlers numeric values
      * For non-numeric characters, override this method to provide
-     * character-->integer conversion.
+     * character-->integer conversion.</p>
      *
      * @param character The character to convert
      * @param leftPos   The position of the character in the code, counting from left to right (for identifiying the position in the string)
@@ -163,10 +164,10 @@ public abstract class ModulusCheckDigit implements CheckDigit, Serializable {
 
     /**
      * Convert an integer value to a check digit.
-     * <p/>
+     * <p>
      * <b>Note:</b> this implementation only handles single-digit numeric values
      * For non-numeric characters, override this method to provide
-     * integer-->character conversion.
+     * integer-->character conversion.</p>
      *
      * @param charValue The integer value of the character
      * @return The converted character

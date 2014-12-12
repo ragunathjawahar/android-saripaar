@@ -22,7 +22,7 @@ import java.util.regex.Matcher;
 
 /**
  * <b>Regular Expression</b> validation (using JDK 1.4+ regex support).
- * <p/>
+ * <p>
  * Construct the validator either for a single regular expression or a set (array) of
  * regular expressions. By default validation is <i>case sensitive</i> but constructors
  * are provided to allow <i>case in-sensitive</i> validation. For example to create
@@ -32,7 +32,8 @@ import java.util.regex.Matcher;
  * String[] regexs = new String[] {...};
  * RegexValidator validator = new RegexValidator(regexs, false);
  * </pre>
- * <p/>
+ * </p>
+ * <p>
  * <ul>
  * <li>Validate <code>true</code> or <code>false</code>:</li>
  * <ul>
@@ -47,9 +48,11 @@ import java.util.regex.Matcher;
  * <li><code>String[] result = validator.match(value);</code></li>
  * </ul>
  * </ul>
- * <p/>
+ * </p>
+ * <p>
  * Cached instances pre-compile and re-use {@link Pattern}(s) - which according
  * to the {@link Pattern} API are safe to use in a multi-threaded environment.
+ * </p>
  *
  * @since Validator 1.4
  */

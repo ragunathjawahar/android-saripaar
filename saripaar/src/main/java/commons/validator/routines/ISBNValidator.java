@@ -39,7 +39,7 @@ import commons.validator.routines.checkdigit.CheckDigitException;
  * ISBN number (rather than this 10 digit ISBN number). ISBN-13 codes are
  * <a href="http://en.wikipedia.org/wiki/European_Article_Number">EAN</a>
  * codes, for more information see:</p>
- * <p/>
+ * <p>
  * <ul>
  * <li><a href="http://en.wikipedia.org/wiki/ISBN">Wikipedia - International
  * Standard Book Number (ISBN)</a>.</li>
@@ -49,6 +49,7 @@ import commons.validator.routines.checkdigit.CheckDigitException;
  * <li><a href="http://www.isbn.org/standards/home/isbn/transition.asp">ISBN-13
  * Transition details</a>.</li>
  * </ul>
+ * </p>
  *
  * @since Validator 1.4
  */
@@ -177,12 +178,14 @@ public class ISBNValidator {
 
     /**
      * Check the code is either a valid ISBN-10 or ISBN-13 code.
-     * <p/>
+     * <p>
      * If valid, this method returns the ISBN code with
      * formatting characters removed (i.e. space or hyphen).
-     * <p/>
+     * </p>
+     * <p>
      * Converts an ISBN-10 codes to ISBN-13 if
      * <code>convertToISBN13</code> is <code>true</code>.
+     * </p>
      *
      * @param code The code to validate.
      * @return A valid ISBN code if valid, otherwise <code>null</code>.
@@ -200,9 +203,9 @@ public class ISBNValidator {
 
     /**
      * Check the code is a valid ISBN-10 code.
-     * <p/>
+     * <p>
      * If valid, this method returns the ISBN-10 code with
-     * formatting characters removed (i.e. space or hyphen).
+     * formatting characters removed (i.e. space or hyphen).</p>
      *
      * @param code The code to validate.
      * @return A valid ISBN-10 code if valid,
@@ -215,9 +218,9 @@ public class ISBNValidator {
 
     /**
      * Check the code is a valid ISBN-13 code.
-     * <p/>
+     * <p>
      * If valid, this method returns the ISBN-13 code with
-     * formatting characters removed (i.e. space or hyphen).
+     * formatting characters removed (i.e. space or hyphen).</p>
      *
      * @param code The code to validate.
      * @return A valid ISBN-13 code if valid,
@@ -230,9 +233,9 @@ public class ISBNValidator {
 
     /**
      * Convert an ISBN-10 code to an ISBN-13 code.
-     * <p/>
+     * <p>
      * This method requires a valid ISBN-10 with NO formatting
-     * characters.
+     * characters.</p>
      *
      * @param isbn10 The ISBN-10 code to convert
      * @return A converted ISBN-13 code or <code>null</code>

@@ -19,9 +19,7 @@ package commons.validator.routines;
 
 /**
  * <p><b>InetAddress</b> validation and conversion routines (<code>java.net.InetAddress</code>).</p>
- * <p/>
  * <p>This class provides methods to validate a candidate IP address.
- * <p/>
  * <p>
  * This class is a Singleton; you can retrieve the instance via the {@link #getInstance()} method.
  * </p>
