@@ -507,17 +507,17 @@ public class Validator {
 
         boolean valid = false;
         if (rule instanceof AnnotationRule) {
-            Object data = null;
+            Object data;
 
             try {
                 data = dataAdapter.getData(view);
-                valid = ((AnnotationRule) rule).isValid(data);
+                valid = rule.isValid(data);
             } catch (ConversionException e) {
                 valid = false;
                 e.printStackTrace();
             }
         } else if (rule instanceof QuickRule) {
-            valid = ((QuickRule) rule).isValid(view);
+            valid = rule.isValid(view);
         }
 
         return !valid ? new ValidationError(view, rule) : null;

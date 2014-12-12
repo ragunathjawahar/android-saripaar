@@ -20,9 +20,22 @@ import android.content.Context;
  * This is a base interface for {@link com.mobsandgeeks.saripaar.AnnotationRule} and
  * {@link com.mobsandgeeks.saripaar.QuickRule}. Used internally as a parent for grouping.
  *
+ * @param <VALIDATABLE>  A data type for an {@link com.mobsandgeeks.saripaar.AnnotationRule} and
+ *      a {@link android.view.View} for a {@link com.mobsandgeeks.saripaar.QuickRule}.
+ *
  * @author Ragunath Jawahar {@literal <rj@mobsandgeeks.com>}
  */
-interface Rule {
+interface Rule<VALIDATABLE> {
+
+    /**
+     * Checks if the rule is valid.
+     *
+     * @param validatable  Element on which the validation is applied, could be a data type or a
+     *      {@link android.view.View}.
+     *
+     * @return true if valid, false otherwise.
+     */
+    boolean isValid(VALIDATABLE validatable);
 
     /**
      * Returns a failure message associated with the rule.

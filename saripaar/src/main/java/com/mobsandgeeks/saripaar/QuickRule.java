@@ -22,10 +22,12 @@ import android.view.View;
  * They are manually added to the {@link com.mobsandgeeks.saripaar.Validator} using the
  * {@link com.mobsandgeeks.saripaar.Validator#put(android.view.View, QuickRule[])} method.
  *
+ * @param <VIEW>  The {@link android.view.View} on which this rule can be applied.
+ *
  * @author Ragunath Jawahar {@literal <rj@mobsandgeeks.com>}
  * @since 2.0
  */
-public abstract class QuickRule<T extends View> implements Rule {
+public abstract class QuickRule<VIEW extends View> implements Rule<VIEW> {
 
     /**
      * Checks if the rule is valid.
@@ -34,5 +36,5 @@ public abstract class QuickRule<T extends View> implements Rule {
      *
      * @return true if valid, false otherwise.
      */
-    public abstract boolean isValid(T view);
+    public abstract boolean isValid(VIEW view);
 }

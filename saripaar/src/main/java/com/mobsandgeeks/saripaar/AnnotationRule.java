@@ -25,11 +25,14 @@ import java.lang.annotation.Annotation;
  * custom annotations must have a corresponding {@link com.mobsandgeeks.saripaar.AnnotationRule}
  * as well.
  *
+ * @param <RULE_ANNOTATION>  The associated rule {@link java.lang.annotation.Annotation}.
+ * @param <DATA_TYPE>  The expected data type for this rule.
+ *
  * @author Ragunath Jawahar {@literal <rj@mobsandgeeks.com>}
  * @since 2.0
  */
 public abstract class AnnotationRule<RULE_ANNOTATION extends Annotation, DATA_TYPE>
-        implements Rule {
+        implements Rule<DATA_TYPE> {
 
     protected final RULE_ANNOTATION mRuleAnnotation;
 
@@ -58,14 +61,5 @@ public abstract class AnnotationRule<RULE_ANNOTATION extends Annotation, DATA_TY
             ? context.getString(messageResId)
             : Reflector.getAttributeValue(mRuleAnnotation, "message", String.class);
     }
-
-    /**
-     * Checks if the data received from the adapter adheres to this rule.
-     *
-     * @param data  Data from a {@link com.mobsandgeeks.saripaar.adapter.ViewDataAdapter}.
-     *
-     * @return true if valid, false otherwise.
-     */
-    public abstract boolean isValid(DATA_TYPE data);
 
 }
