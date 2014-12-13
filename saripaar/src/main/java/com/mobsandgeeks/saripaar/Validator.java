@@ -434,12 +434,14 @@ public class Validator {
 
         // If no matching adapter is found, throw.
         if (dataAdapter == null) {
+            String viewType = viewFieldType.getName();
             String message = String.format(
-                "To use '%s' on '%s', register a '%s' that returns a '%s'.",
+                "To use '%s' on '%s', register a '%s' that returns a '%s' from the '%s'.",
                 annotationType.getName(),
-                viewFieldType.getName(),
+                viewType,
                 ViewDataAdapter.class.getName(),
-                ruleDataType.getName());
+                ruleDataType.getName(),
+                viewType);
             throw new UnsupportedOperationException(message);
         }
 
