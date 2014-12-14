@@ -20,11 +20,6 @@ import android.widget.TextView;
 import com.mobsandgeeks.saripaar.tests.OrderedValidateActivity;
 import com.mobsandgeeks.saripaar.tests.R;
 
-import static com.google.android.apps.common.testing.ui.espresso.Espresso.onView;
-import static com.google.android.apps.common.testing.ui.espresso.action.ViewActions.click;
-import static com.google.android.apps.common.testing.ui.espresso.action.ViewActions.typeText;
-import static com.google.android.apps.common.testing.ui.espresso.matcher.ViewMatchers.withId;
-
 public class OrderedValidateTest
         extends ActivityInstrumentationTestCase2<OrderedValidateActivity> {
 
@@ -76,27 +71,27 @@ public class OrderedValidateTest
 
     public void testBurstValidNamePhone() {
         String resultText = String.format("%s %s", Constants.FIELD_ADDRESS, Constants.FIELD_EMAIL);
-        type(R.id.nameEditText, Constants.NAME);
-        type(R.id.phoneEditText, Constants.PHONE);
-        clickView(R.id.saripaarButton);
-        checkForText(resultText);
+        TestHelper.type(R.id.nameEditText, Constants.NAME);
+        TestHelper.type(R.id.phoneEditText, Constants.PHONE);
+        TestHelper.clickView(R.id.saripaarButton);
+        TestHelper.checkForText(resultText, mResultTextView);
     }
 
     public void testBurstInvalidAll() {
-        clickView(R.id.saripaarButton);
+        TestHelper.clickView(R.id.saripaarButton);
         String text = String.format("%s %s %s %s %s",
             Constants.FIELD_NAME, Constants.FIELD_ADDRESS, Constants.FIELD_EMAIL,
             Constants.FIELD_PHONE, Constants.FIELD_PHONE);
-        checkForText(text);
+        TestHelper.checkForText(text, mResultTextView);
     }
 
     public void testBurstValidAll() {
-        type(R.id.nameEditText, Constants.NAME);
-        type(R.id.addressEditText, Constants.ADDRESS);
-        type(R.id.emailEditText, Constants.EMAIL);
-        type(R.id.phoneEditText, Constants.PHONE);
-        clickView(R.id.saripaarButton);
-        checkForText(Constants.STATE_SUCCESS);
+        TestHelper.type(R.id.nameEditText, Constants.NAME);
+        TestHelper.type(R.id.addressEditText, Constants.ADDRESS);
+        TestHelper.type(R.id.emailEditText, Constants.EMAIL);
+        TestHelper.type(R.id.phoneEditText, Constants.PHONE);
+        TestHelper.clickView(R.id.saripaarButton);
+        TestHelper.checkForText(Constants.STATE_SUCCESS, mResultTextView);
     }
 
     /* ============================================================================
@@ -104,52 +99,52 @@ public class OrderedValidateTest
      * ============================================================================
      */
     public void testImmediateInvalidAll() {
-        clickView(R.id.immediateRadioButton);
-        clickView(R.id.saripaarButton);
-        checkForText(Constants.FIELD_NAME);
+        TestHelper.clickView(R.id.immediateRadioButton);
+        TestHelper.clickView(R.id.saripaarButton);
+        TestHelper.checkForText(Constants.FIELD_NAME, mResultTextView);
     }
 
     public void testImmediateValidName() {
-        clickView(R.id.immediateRadioButton);
-        type(R.id.nameEditText, Constants.NAME);
-        clickView(R.id.saripaarButton);
-        checkForText(Constants.FIELD_ADDRESS);
+        TestHelper.clickView(R.id.immediateRadioButton);
+        TestHelper.type(R.id.nameEditText, Constants.NAME);
+        TestHelper.clickView(R.id.saripaarButton);
+        TestHelper.checkForText(Constants.FIELD_ADDRESS, mResultTextView);
     }
 
     public void testImmediateValidNameAddress() {
-        clickView(R.id.immediateRadioButton);
-        type(R.id.nameEditText, Constants.NAME);
-        type(R.id.addressEditText, Constants.ADDRESS);
-        clickView(R.id.saripaarButton);
-        checkForText(Constants.FIELD_EMAIL);
+        TestHelper.clickView(R.id.immediateRadioButton);
+        TestHelper.type(R.id.nameEditText, Constants.NAME);
+        TestHelper.type(R.id.addressEditText, Constants.ADDRESS);
+        TestHelper.clickView(R.id.saripaarButton);
+        TestHelper.checkForText(Constants.FIELD_EMAIL, mResultTextView);
     }
 
     public void testImmediateValidNameAddressEmail() {
-        clickView(R.id.immediateRadioButton);
-        type(R.id.nameEditText, Constants.NAME);
-        type(R.id.addressEditText, Constants.ADDRESS);
-        type(R.id.emailEditText, Constants.EMAIL);
-        clickView(R.id.saripaarButton);
+        TestHelper.clickView(R.id.immediateRadioButton);
+        TestHelper.type(R.id.nameEditText, Constants.NAME);
+        TestHelper.type(R.id.addressEditText, Constants.ADDRESS);
+        TestHelper.type(R.id.emailEditText, Constants.EMAIL);
+        TestHelper.clickView(R.id.saripaarButton);
         String text = String.format("%s %s", Constants.FIELD_PHONE, Constants.FIELD_PHONE);
-        checkForText(text);
+        TestHelper.checkForText(text, mResultTextView);
     }
 
     public void testImmediateValidAll() {
-        clickView(R.id.immediateRadioButton);
-        type(R.id.nameEditText, Constants.NAME);
-        type(R.id.addressEditText, Constants.ADDRESS);
-        type(R.id.emailEditText, Constants.EMAIL);
-        type(R.id.phoneEditText, Constants.PHONE);
-        clickView(R.id.saripaarButton);
-        checkForText(Constants.STATE_SUCCESS);
+        TestHelper.clickView(R.id.immediateRadioButton);
+        TestHelper.type(R.id.nameEditText, Constants.NAME);
+        TestHelper.type(R.id.addressEditText, Constants.ADDRESS);
+        TestHelper.type(R.id.emailEditText, Constants.EMAIL);
+        TestHelper.type(R.id.phoneEditText, Constants.PHONE);
+        TestHelper.clickView(R.id.saripaarButton);
+        TestHelper.checkForText(Constants.STATE_SUCCESS, mResultTextView);
     }
 
     public void testImmediateValidAddressEmail() {
-        clickView(R.id.immediateRadioButton);
-        type(R.id.addressEditText, Constants.ADDRESS);
-        type(R.id.emailEditText, Constants.EMAIL);
-        clickView(R.id.saripaarButton);
-        checkForText(Constants.FIELD_NAME);
+        TestHelper.clickView(R.id.immediateRadioButton);
+        TestHelper.type(R.id.addressEditText, Constants.ADDRESS);
+        TestHelper.type(R.id.emailEditText, Constants.EMAIL);
+        TestHelper.clickView(R.id.saripaarButton);
+        TestHelper.checkForText(Constants.FIELD_NAME, mResultTextView);
     }
 
     /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -157,21 +152,9 @@ public class OrderedValidateTest
      * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      */
     private void testField(int viewId, String textToType, String text) {
-        type(viewId, textToType);
-        clickView(R.id.saripaarButton);
-        checkForText(text);
+        TestHelper.type(viewId, textToType);
+        TestHelper.clickView(R.id.saripaarButton);
+        TestHelper.checkForText(text, mResultTextView);
     }
 
-    private void clickView(int viewId) {
-        onView(withId(viewId)).perform(click());
-    }
-
-    private void type(int viewId, String text) {
-        onView(withId(viewId)).perform(typeText(text));
-    }
-
-    private void checkForText(String expectedText) {
-        String actualText = mResultTextView.getText().toString().trim();
-        assertEquals(expectedText, actualText);
-    }
 }

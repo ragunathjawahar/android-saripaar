@@ -20,11 +20,6 @@ import android.widget.TextView;
 import com.mobsandgeeks.saripaar.tests.CustomViewDataAdapterActivity;
 import com.mobsandgeeks.saripaar.tests.R;
 
-import static com.google.android.apps.common.testing.ui.espresso.Espresso.onView;
-import static com.google.android.apps.common.testing.ui.espresso.action.ViewActions.click;
-import static com.google.android.apps.common.testing.ui.espresso.action.ViewActions.typeText;
-import static com.google.android.apps.common.testing.ui.espresso.matcher.ViewMatchers.withId;
-
 public class CustomViewDataAdapterTest
         extends ActivityInstrumentationTestCase2<CustomViewDataAdapterActivity> {
 
@@ -41,32 +36,16 @@ public class CustomViewDataAdapterTest
     }
 
     public void testNoDataAdapter_crash() {
-        type(R.id.booleanEditText, "true");
-        clickView(R.id.saripaarButton);
-        checkForText(Constants.STATE_CRASH);
+        TestHelper.type(R.id.booleanEditText, "true");
+        TestHelper.clickView(R.id.saripaarButton);
+        TestHelper.checkForText(Constants.STATE_CRASH, mResultTextView);
     }
 
     public void testRegisterAdapter_success() {
-        type(R.id.booleanEditText, "true");
-        clickView(R.id.registerAdapterRadioButton);
-        clickView(R.id.saripaarButton);
-        checkForText(Constants.STATE_SUCCESS);
+        TestHelper.type(R.id.booleanEditText, "true");
+        TestHelper.clickView(R.id.registerAdapterRadioButton);
+        TestHelper.clickView(R.id.saripaarButton);
+        TestHelper.checkForText(Constants.STATE_SUCCESS, mResultTextView);
     }
 
-    /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-     *  Private Methods
-     * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-     */
-    private void type(int viewId, String text) {
-        onView(withId(viewId)).perform(typeText(text));
-    }
-
-    private void clickView(int viewId) {
-        onView(withId(viewId)).perform(click());
-    }
-
-    private void checkForText(String expectedText) {
-        String actualText = mResultTextView.getText().toString().trim();
-        assertEquals(expectedText, actualText);
-    }
 }

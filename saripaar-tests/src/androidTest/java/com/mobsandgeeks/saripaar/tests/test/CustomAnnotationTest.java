@@ -20,11 +20,6 @@ import android.widget.TextView;
 import com.mobsandgeeks.saripaar.tests.CustomAnnotationActivity;
 import com.mobsandgeeks.saripaar.tests.R;
 
-import static com.google.android.apps.common.testing.ui.espresso.Espresso.onView;
-import static com.google.android.apps.common.testing.ui.espresso.action.ViewActions.click;
-import static com.google.android.apps.common.testing.ui.espresso.action.ViewActions.typeText;
-import static com.google.android.apps.common.testing.ui.espresso.matcher.ViewMatchers.withId;
-
 public class CustomAnnotationTest
         extends ActivityInstrumentationTestCase2<CustomAnnotationActivity> {
 
@@ -43,39 +38,22 @@ public class CustomAnnotationTest
 
     // Using 'testX' prefix, because of static variables in Validator > Registry.
     public void test0UnregisteredAnnotationWithNoOtherRules_crash() {
-        type(R.id.zipCodeEditText, Constants.ZIP_CODE);
-        clickView(R.id.saripaarButton);
-        checkForText(Constants.STATE_CRASH);
+        TestHelper.type(R.id.zipCodeEditText, Constants.ZIP_CODE);
+        TestHelper.clickView(R.id.saripaarButton);
+        TestHelper.checkForText(Constants.STATE_CRASH, mResultTextView);
     }
 
     public void test1ValidZipCode_success() {
-        clickView(R.id.registerAnnotationRadioButton);
-        type(R.id.zipCodeEditText, Constants.ZIP_CODE);
-        clickView(R.id.saripaarButton);
-        checkForText(Constants.STATE_SUCCESS);
+        TestHelper.clickView(R.id.registerAnnotationRadioButton);
+        TestHelper.type(R.id.zipCodeEditText, Constants.ZIP_CODE);
+        TestHelper.clickView(R.id.saripaarButton);
+        TestHelper.checkForText(Constants.STATE_SUCCESS, mResultTextView);
     }
 
     public void test2InvalidZipCode_failure() {
-        clickView(R.id.registerAnnotationRadioButton);
-        type(R.id.zipCodeEditText, "600018");
-        clickView(R.id.saripaarButton);
-        checkForText(Constants.FIELD_ZIP_CODE);
-    }
-
-    /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-     *  Private Methods
-     * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-     */
-    private void type(int viewId, String text) {
-        onView(withId(viewId)).perform(typeText(text));
-    }
-
-    private void clickView(int viewId) {
-        onView(withId(viewId)).perform(click());
-    }
-
-    private void checkForText(String expectedText) {
-        String actualText = mResultTextView.getText().toString().trim();
-        assertEquals(expectedText, actualText);
+        TestHelper.clickView(R.id.registerAnnotationRadioButton);
+        TestHelper.type(R.id.zipCodeEditText, "600018");
+        TestHelper.clickView(R.id.saripaarButton);
+        TestHelper.checkForText(Constants.FIELD_ZIP_CODE, mResultTextView);
     }
 }

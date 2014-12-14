@@ -24,11 +24,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.google.android.apps.common.testing.ui.espresso.Espresso.onView;
-import static com.google.android.apps.common.testing.ui.espresso.action.ViewActions.click;
-import static com.google.android.apps.common.testing.ui.espresso.action.ViewActions.typeText;
-import static com.google.android.apps.common.testing.ui.espresso.matcher.ViewMatchers.withId;
-
 public class UnorderedValidateTest
         extends ActivityInstrumentationTestCase2<UnorderedValidateActivity> {
 
@@ -68,16 +63,16 @@ public class UnorderedValidateTest
     }
 
     public void testBurstValidAll() {
-        type(R.id.nameEditText, Constants.NAME);
-        type(R.id.addressEditText, Constants.ADDRESS);
-        type(R.id.emailEditText, Constants.EMAIL);
-        type(R.id.phoneEditText, Constants.PHONE);
-        clickView(R.id.saripaarButton);
+        TestHelper.type(R.id.nameEditText, Constants.NAME);
+        TestHelper.type(R.id.addressEditText, Constants.ADDRESS);
+        TestHelper.type(R.id.emailEditText, Constants.EMAIL);
+        TestHelper.type(R.id.phoneEditText, Constants.PHONE);
+        TestHelper.clickView(R.id.saripaarButton);
         checkForText(Arrays.asList(Constants.STATE_SUCCESS));
     }
 
     public void testBurstInvalidAll() {
-        clickView(R.id.saripaarButton);
+        TestHelper.clickView(R.id.saripaarButton);
         checkForText(Arrays.asList(Constants.FIELD_NAME, Constants.FIELD_ADDRESS,
                 Constants.FIELD_EMAIL, Constants.FIELD_PHONE));
     }
@@ -87,25 +82,25 @@ public class UnorderedValidateTest
      * ============================================================================
      */
     public void testImmediateValidAllCrash() {
-        clickView(R.id.immediateRadioButton);
-        type(R.id.nameEditText, Constants.NAME);
-        type(R.id.addressEditText, Constants.ADDRESS);
-        type(R.id.emailEditText, Constants.EMAIL);
-        type(R.id.phoneEditText, Constants.PHONE);
-        clickView(R.id.saripaarButton);
+        TestHelper.clickView(R.id.immediateRadioButton);
+        TestHelper.type(R.id.nameEditText, Constants.NAME);
+        TestHelper.type(R.id.addressEditText, Constants.ADDRESS);
+        TestHelper.type(R.id.emailEditText, Constants.EMAIL);
+        TestHelper.type(R.id.phoneEditText, Constants.PHONE);
+        TestHelper.clickView(R.id.saripaarButton);
         checkForText(Arrays.asList(Constants.STATE_CRASH));
     }
 
     public void testImmediateInvalidAllCrash() {
-        clickView(R.id.immediateRadioButton);
-        clickView(R.id.saripaarButton);
+        TestHelper.clickView(R.id.immediateRadioButton);
+        TestHelper.clickView(R.id.saripaarButton);
         checkForText(Arrays.asList(Constants.STATE_CRASH));
     }
 
     public void testImmediateValidOneCrash() {
-        clickView(R.id.immediateRadioButton);
-        type(R.id.nameEditText, Constants.NAME);
-        clickView(R.id.saripaarButton);
+        TestHelper.clickView(R.id.immediateRadioButton);
+        TestHelper.type(R.id.nameEditText, Constants.NAME);
+        TestHelper.clickView(R.id.saripaarButton);
         checkForText(Arrays.asList(Constants.STATE_CRASH));
     }
 
@@ -122,17 +117,9 @@ public class UnorderedValidateTest
             String message = String.format("Words does not contain '%s'.", fieldToIgnore);
             throw new IllegalArgumentException(message);
         }
-        type(viewId, textToType);
-        clickView(R.id.saripaarButton);
+        TestHelper.type(viewId, textToType);
+        TestHelper.clickView(R.id.saripaarButton);
         checkForText(words);
-    }
-
-    private void clickView(int viewId) {
-        onView(withId(viewId)).perform(click());
-    }
-
-    private void type(int viewId, String text) {
-        onView(withId(viewId)).perform(typeText(text));
     }
 
     private void checkForText(List<String> words) {

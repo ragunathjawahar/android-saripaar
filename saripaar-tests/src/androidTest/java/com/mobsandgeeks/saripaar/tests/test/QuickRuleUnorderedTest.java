@@ -20,11 +20,6 @@ import android.widget.TextView;
 import com.mobsandgeeks.saripaar.tests.R;
 import com.mobsandgeeks.saripaar.tests.QuickRuleUnorderedActivity;
 
-import static com.google.android.apps.common.testing.ui.espresso.Espresso.onView;
-import static com.google.android.apps.common.testing.ui.espresso.action.ViewActions.click;
-import static com.google.android.apps.common.testing.ui.espresso.action.ViewActions.typeText;
-import static com.google.android.apps.common.testing.ui.espresso.matcher.ViewMatchers.withId;
-
 /**
  * @author Ragunath Jawahar {@literal <rj@mobsandgeeks.com>}
  */
@@ -44,54 +39,38 @@ public class QuickRuleUnorderedTest
     }
 
     public void testInvalidZipCodeNoQuickRule_failure() {
-        clickView(R.id.saripaarButton);
-        checkForText(Constants.FIELD_ZIP_CODE);
+        TestHelper.clickView(R.id.saripaarButton);
+        TestHelper.checkForText(Constants.FIELD_ZIP_CODE, mResultTextView);
     }
 
     public void testValidZipCodeNoQuickRule_success() {
-        type(R.id.zipCodeEditText, Constants.ZIP_CODE);
-        clickView(R.id.saripaarButton);
-        checkForText(Constants.STATE_SUCCESS);
+        TestHelper.type(R.id.zipCodeEditText, Constants.ZIP_CODE);
+        TestHelper.clickView(R.id.saripaarButton);
+        TestHelper.checkForText(Constants.STATE_SUCCESS, mResultTextView);
     }
 
     public void testValidZipCodeAirtelNumberQuickRule_failure() {
-        type(R.id.zipCodeEditText, Constants.ZIP_CODE);
-        clickView(R.id.useQuickRuleRadioButton);
-        clickView(R.id.saripaarButton);
-        checkForText(Constants.FIELD_AIRTEL_NUMBER);
+        TestHelper.type(R.id.zipCodeEditText, Constants.ZIP_CODE);
+        TestHelper.clickView(R.id.useQuickRuleRadioButton);
+        TestHelper.clickView(R.id.saripaarButton);
+        TestHelper.checkForText(Constants.FIELD_AIRTEL_NUMBER, mResultTextView);
     }
 
     public void testInvalidZipCodeInvalidAirtelNumberQuickRule_failure() {
-        clickView(R.id.useQuickRuleRadioButton);
-        clickView(R.id.saripaarButton);
+        TestHelper.clickView(R.id.useQuickRuleRadioButton);
+        TestHelper.clickView(R.id.saripaarButton);
 
         String result = String.format("%s %s",
             Constants.FIELD_ZIP_CODE, Constants.FIELD_AIRTEL_NUMBER);
-        checkForText(result);
+        TestHelper.checkForText(result, mResultTextView);
     }
 
     public void testZipCodeAirtelNumberQuickRuleValid_success() {
-        clickView(R.id.useQuickRuleRadioButton);
-        type(R.id.zipCodeEditText, Constants.ZIP_CODE);
-        type(R.id.airtelNumberEditText, Constants.AIRTEL_NUMBER);
-        clickView(R.id.saripaarButton);
-        checkForText(Constants.STATE_SUCCESS);
+        TestHelper.clickView(R.id.useQuickRuleRadioButton);
+        TestHelper.type(R.id.zipCodeEditText, Constants.ZIP_CODE);
+        TestHelper.type(R.id.airtelNumberEditText, Constants.AIRTEL_NUMBER);
+        TestHelper.clickView(R.id.saripaarButton);
+        TestHelper.checkForText(Constants.STATE_SUCCESS, mResultTextView);
     }
 
-    /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-     *  Private Methods
-     * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-     */
-    private void type(int viewId, String text) {
-        onView(withId(viewId)).perform(typeText(text));
-    }
-
-    private void clickView(int viewId) {
-        onView(withId(viewId)).perform(click());
-    }
-
-    private void checkForText(String expectedText) {
-        String actualText = mResultTextView.getText().toString().trim();
-        assertEquals(expectedText, actualText);
-    }
 }

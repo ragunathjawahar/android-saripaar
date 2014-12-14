@@ -20,10 +20,6 @@ import android.widget.TextView;
 import com.mobsandgeeks.saripaar.tests.QuickRuleUnorderedInOrderedActivity;
 import com.mobsandgeeks.saripaar.tests.R;
 
-import static com.google.android.apps.common.testing.ui.espresso.Espresso.onView;
-import static com.google.android.apps.common.testing.ui.espresso.action.ViewActions.click;
-import static com.google.android.apps.common.testing.ui.espresso.matcher.ViewMatchers.withId;
-
 /**
  * @author Ragunath Jawahar {@literal <rj@mobsandgeeks.com>}
  */
@@ -43,27 +39,15 @@ public class QuickRuleUnorderedInOrderedTest
     }
 
     public void testInvalidZipCodeInvalidAirtelNumberNoEvenNumberQuickRule_failure() {
-        clickView(R.id.saripaarButton);
+        TestHelper.clickView(R.id.saripaarButton);
         String result = String.format("%s %s",
             Constants.FIELD_ZIP_CODE, Constants.FIELD_AIRTEL_NUMBER);
-        checkForText(result);
+        TestHelper.checkForText(result, mResultTextView);
     }
 
     public void testInvalidZipCodeInvalidAirtelNumberWithEvenNumberQuickRule_crash() {
-        clickView(R.id.useQuickRuleRadioButton);
-        checkForText(Constants.STATE_CRASH);
+        TestHelper.clickView(R.id.useQuickRuleRadioButton);
+        TestHelper.checkForText(Constants.STATE_CRASH, mResultTextView);
     }
 
-    /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-     *  Private Methods
-     * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-     */
-    private void clickView(int viewId) {
-        onView(withId(viewId)).perform(click());
-    }
-
-    private void checkForText(String expectedText) {
-        String actualText = mResultTextView.getText().toString().trim();
-        assertEquals(expectedText, actualText);
-    }
 }

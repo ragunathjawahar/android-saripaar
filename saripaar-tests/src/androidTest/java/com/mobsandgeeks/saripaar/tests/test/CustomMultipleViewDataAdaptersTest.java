@@ -20,11 +20,6 @@ import android.widget.TextView;
 import com.mobsandgeeks.saripaar.tests.CustomMultipleViewDataAdaptersActivity;
 import com.mobsandgeeks.saripaar.tests.R;
 
-import static com.google.android.apps.common.testing.ui.espresso.Espresso.onView;
-import static com.google.android.apps.common.testing.ui.espresso.action.ViewActions.click;
-import static com.google.android.apps.common.testing.ui.espresso.action.ViewActions.typeText;
-import static com.google.android.apps.common.testing.ui.espresso.matcher.ViewMatchers.withId;
-
 public class CustomMultipleViewDataAdaptersTest
         extends ActivityInstrumentationTestCase2<CustomMultipleViewDataAdaptersActivity> {
 
@@ -41,50 +36,34 @@ public class CustomMultipleViewDataAdaptersTest
     }
 
     public void test0InvalidEmailNoEmailAdapterInvalidMaxNoMaxAdapter_crash() {
-        clickView(R.id.saripaarButton);
-        checkForText(Constants.STATE_CRASH);
+        TestHelper.clickView(R.id.saripaarButton);
+        TestHelper.checkForText(Constants.STATE_CRASH, mResultTextView);
     }
 
     public void test1InvalidEmailWithEmailAdapterInvalidMaxNoMaxAdapter_crash() {
-        clickView(R.id.registerEmailAdapterRadioButton);
-        clickView(R.id.saripaarButton);
-        checkForText(Constants.STATE_CRASH);
+        TestHelper.clickView(R.id.registerEmailAdapterRadioButton);
+        TestHelper.clickView(R.id.saripaarButton);
+        TestHelper.checkForText(Constants.STATE_CRASH, mResultTextView);
     }
 
     public void test2InvalidEmailWithEmailAdapterInvalidMaxWithMaxAdapter_failure() {
-        clickView(R.id.registerEmailAdapterRadioButton);
-        clickView(R.id.registerMaxAdapterRadioButton);
-        clickView(R.id.saripaarButton);
+        TestHelper.clickView(R.id.registerEmailAdapterRadioButton);
+        TestHelper.clickView(R.id.registerMaxAdapterRadioButton);
+        TestHelper.clickView(R.id.saripaarButton);
 
         String result = String.format("%s %s", Constants.FIELD_EMAIL, Constants.FIELD_MAX);
-        checkForText(result);
+        TestHelper.checkForText(result, mResultTextView);
     }
 
     public void test3ValidFieldsWithAdapters_success() {
-        type(R.id.emailEditText, Constants.EMAIL);
-        clickView(R.id.registerEmailAdapterRadioButton);
+        TestHelper.type(R.id.emailEditText, Constants.EMAIL);
+        TestHelper.clickView(R.id.registerEmailAdapterRadioButton);
 
-        type(R.id.maxEditText, "1947");
-        clickView(R.id.registerMaxAdapterRadioButton);
+        TestHelper.type(R.id.maxEditText, "1947");
+        TestHelper.clickView(R.id.registerMaxAdapterRadioButton);
 
-        clickView(R.id.saripaarButton);
-        checkForText(Constants.STATE_SUCCESS);
+        TestHelper.clickView(R.id.saripaarButton);
+        TestHelper.checkForText(Constants.STATE_SUCCESS, mResultTextView);
     }
 
-    /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-     *  Private Methods
-     * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-     */
-    private void type(int viewId, String text) {
-        onView(withId(viewId)).perform(typeText(text));
-    }
-
-    private void clickView(int viewId) {
-        onView(withId(viewId)).perform(click());
-    }
-
-    private void checkForText(String expectedText) {
-        String actualText = mResultTextView.getText().toString().trim();
-        assertEquals(expectedText, actualText);
-    }
 }
