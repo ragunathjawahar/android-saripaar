@@ -33,7 +33,7 @@ import java.lang.reflect.Modifier;
  * @author Ragunath Jawahar {@literal <rj@mobsandgeeks.com>}
  * @since 2.0
  */
-class Reflector {
+final class Reflector {
 
     /**
      * Retrieves the attribute method of the given {@link java.lang.annotation.Annotation}.
