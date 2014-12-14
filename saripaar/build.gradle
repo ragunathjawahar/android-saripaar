@@ -1,3 +1,5 @@
+import com.android.builder.core.BuilderConstants
+
 apply plugin: 'com.android.library'
 
 android {
@@ -14,7 +16,7 @@ android {
     }
     libraryVariants.all { variant ->
         def name = variant.buildType.name
-        if (name.equals(com.android.builder.core.BuilderConstants.DEBUG)) {
+        if (name.equals(BuilderConstants.DEBUG)) {
             return; // Skip debug builds.
         }
         def task = project.tasks.create "jar${name.capitalize()}", Jar
@@ -28,4 +30,4 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
 }
 
-apply from: 'https://raw.github.com/chrisbanes/gradle-mvn-push/master/gradle-mvn-push.gradle'
+apply from: '../gradle-mvn-push.gradle'
