@@ -42,34 +42,34 @@ public class OrderedValidateTest
      *  BURST Mode
      * ============================================================================
      */
-    public void testBurstValidName() {
+    public void testBurstValidName_failure() {
         String resultText = String.format("%s %s %s %s",
             Constants.FIELD_ADDRESS, Constants.FIELD_EMAIL,
             Constants.FIELD_PHONE, Constants.FIELD_PHONE);
         testField(R.id.nameEditText, Constants.NAME, resultText);
     }
 
-    public void testBurstValidAddress() {
+    public void testBurstValidAddress_failure() {
         String resultText = String.format("%s %s %s %s",
             Constants.FIELD_NAME, Constants.FIELD_EMAIL,
             Constants.FIELD_PHONE, Constants.FIELD_PHONE);
         testField(R.id.addressEditText, Constants.ADDRESS, resultText);
     }
 
-    public void testBurstValidEmail() {
+    public void testBurstValidEmail_failure() {
         String resultText = String.format("%s %s %s %s",
             Constants.FIELD_NAME, Constants.FIELD_ADDRESS,
             Constants.FIELD_PHONE, Constants.FIELD_PHONE);
         testField(R.id.emailEditText, Constants.EMAIL, resultText);
     }
 
-    public void testBurstValidPhone() {
+    public void testBurstValidPhone_failure() {
         String resultText = String.format("%s %s %s",
             Constants.FIELD_NAME, Constants.FIELD_ADDRESS, Constants.FIELD_EMAIL);
         testField(R.id.phoneEditText, Constants.PHONE, resultText);
     }
 
-    public void testBurstValidNamePhone() {
+    public void testBurstValidNamePhone_failure() {
         String resultText = String.format("%s %s", Constants.FIELD_ADDRESS, Constants.FIELD_EMAIL);
         TestHelper.type(R.id.nameEditText, Constants.NAME);
         TestHelper.type(R.id.phoneEditText, Constants.PHONE);
@@ -77,7 +77,7 @@ public class OrderedValidateTest
         TestHelper.checkForText(resultText, mResultTextView);
     }
 
-    public void testBurstInvalidAll() {
+    public void testBurstInvalidAll_failure() {
         TestHelper.clickView(R.id.saripaarButton);
         String text = String.format("%s %s %s %s %s",
             Constants.FIELD_NAME, Constants.FIELD_ADDRESS, Constants.FIELD_EMAIL,
@@ -85,7 +85,7 @@ public class OrderedValidateTest
         TestHelper.checkForText(text, mResultTextView);
     }
 
-    public void testBurstValidAll() {
+    public void testBurstValidAll_success() {
         TestHelper.type(R.id.nameEditText, Constants.NAME);
         TestHelper.type(R.id.addressEditText, Constants.ADDRESS);
         TestHelper.type(R.id.emailEditText, Constants.EMAIL);
@@ -98,20 +98,20 @@ public class OrderedValidateTest
      *  IMMEDIATE Mode
      * ============================================================================
      */
-    public void testImmediateInvalidAll() {
+    public void testImmediateInvalidAll_failure() {
         TestHelper.clickView(R.id.immediateRadioButton);
         TestHelper.clickView(R.id.saripaarButton);
         TestHelper.checkForText(Constants.FIELD_NAME, mResultTextView);
     }
 
-    public void testImmediateValidName() {
+    public void testImmediateValidName_failure() {
         TestHelper.clickView(R.id.immediateRadioButton);
         TestHelper.type(R.id.nameEditText, Constants.NAME);
         TestHelper.clickView(R.id.saripaarButton);
         TestHelper.checkForText(Constants.FIELD_ADDRESS, mResultTextView);
     }
 
-    public void testImmediateValidNameAddress() {
+    public void testImmediateValidNameAddress_failure() {
         TestHelper.clickView(R.id.immediateRadioButton);
         TestHelper.type(R.id.nameEditText, Constants.NAME);
         TestHelper.type(R.id.addressEditText, Constants.ADDRESS);
@@ -119,7 +119,7 @@ public class OrderedValidateTest
         TestHelper.checkForText(Constants.FIELD_EMAIL, mResultTextView);
     }
 
-    public void testImmediateValidNameAddressEmail() {
+    public void testImmediateValidNameAddressEmail_failure() {
         TestHelper.clickView(R.id.immediateRadioButton);
         TestHelper.type(R.id.nameEditText, Constants.NAME);
         TestHelper.type(R.id.addressEditText, Constants.ADDRESS);
@@ -129,7 +129,7 @@ public class OrderedValidateTest
         TestHelper.checkForText(text, mResultTextView);
     }
 
-    public void testImmediateValidAll() {
+    public void testImmediateValidAll_success() {
         TestHelper.clickView(R.id.immediateRadioButton);
         TestHelper.type(R.id.nameEditText, Constants.NAME);
         TestHelper.type(R.id.addressEditText, Constants.ADDRESS);
@@ -139,7 +139,7 @@ public class OrderedValidateTest
         TestHelper.checkForText(Constants.STATE_SUCCESS, mResultTextView);
     }
 
-    public void testImmediateValidAddressEmail() {
+    public void testImmediateValidAddressEmail_failure() {
         TestHelper.clickView(R.id.immediateRadioButton);
         TestHelper.type(R.id.addressEditText, Constants.ADDRESS);
         TestHelper.type(R.id.emailEditText, Constants.EMAIL);
@@ -156,5 +156,4 @@ public class OrderedValidateTest
         TestHelper.clickView(R.id.saripaarButton);
         TestHelper.checkForText(text, mResultTextView);
     }
-
 }

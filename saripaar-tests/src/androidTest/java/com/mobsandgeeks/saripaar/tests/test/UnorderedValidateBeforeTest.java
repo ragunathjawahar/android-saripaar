@@ -41,7 +41,7 @@ public class UnorderedValidateBeforeTest
      *  BURST Mode
      * ============================================================================
      */
-    public void testBurstValidateBeforeFirstField() {
+    public void testBurstValidateBeforeFirstField_crash() {
         TestHelper.type(R.id.nameEditText, Constants.NAME);
         TestHelper.checkForText(Constants.STATE_CRASH, mResultTextView);
     }
@@ -50,7 +50,7 @@ public class UnorderedValidateBeforeTest
      *  IMMEDIATE Mode
      * ============================================================================
      */
-    public void testImmediateValidateTill() {
+    public void testImmediateValidateTill_crash() {
         TestHelper.clickView(R.id.immediateRadioButton);
         TestHelper.type(R.id.nameEditText, Constants.NAME);
         TestHelper.checkForText(Constants.STATE_CRASH, mResultTextView);

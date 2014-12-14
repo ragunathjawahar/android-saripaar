@@ -2,6 +2,9 @@ package com.mobsandgeeks.saripaar.tests.test;
 
 import android.widget.TextView;
 
+import com.google.android.apps.common.testing.ui.espresso.Espresso;
+import com.mobsandgeeks.saripaar.tests.R;
+
 import static com.google.android.apps.common.testing.ui.espresso.Espresso.onView;
 import static com.google.android.apps.common.testing.ui.espresso.action.ViewActions.click;
 import static com.google.android.apps.common.testing.ui.espresso.action.ViewActions.typeText;
@@ -15,6 +18,9 @@ public class TestHelper {
     }
 
     public static void clickView(final int viewId) {
+        if (viewId == R.id.saripaarButton) {
+            Espresso.closeSoftKeyboard();
+        }
         onView(withId(viewId)).perform(click());
     }
 
