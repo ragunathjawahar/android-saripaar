@@ -18,14 +18,14 @@ import android.content.Context;
 
 /**
  * This is a base interface for {@link com.mobsandgeeks.saripaar.AnnotationRule} and
- * {@link com.mobsandgeeks.saripaar.QuickRule}. Used internally as a parent for grouping.
+ * {@link com.mobsandgeeks.saripaar.QuickRule}.
  *
  * @param <VALIDATABLE>  A data type for an {@link com.mobsandgeeks.saripaar.AnnotationRule} and
  *      a {@link android.view.View} for a {@link com.mobsandgeeks.saripaar.QuickRule}.
  *
  * @author Ragunath Jawahar {@literal <rj@mobsandgeeks.com>}
  */
-interface Rule<VALIDATABLE> {
+public interface Rule<VALIDATABLE> {
 
     /**
      * Checks if the rule is valid.
@@ -45,5 +45,5 @@ interface Rule<VALIDATABLE> {
      *
      * @return A failure message.
      */
-    String getMessage(final Context context);
+    String getMessage(Context context);
 }
