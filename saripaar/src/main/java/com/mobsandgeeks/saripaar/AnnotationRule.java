@@ -19,14 +19,13 @@ import android.content.Context;
 import java.lang.annotation.Annotation;
 
 /**
- * These are implementations that are tied to rule annotations. All stock rule annotations have an
- * {@link com.mobsandgeeks.saripaar.AnnotationRule} implementation paired to them, using the
+ * Saripaar {@link java.lang.annotation.Annotation}s have an
+ * {@link com.mobsandgeeks.saripaar.AnnotationRule} paired to them, via the
  * {@link com.mobsandgeeks.saripaar.annotation.ValidateUsing} annotation. Like stock annotations,
- * custom annotations must have a corresponding {@link com.mobsandgeeks.saripaar.AnnotationRule}
- * as well.
+ * custom annotations must also have a corresponding {@link com.mobsandgeeks.saripaar.AnnotationRule}.
  *
  * @param <RULE_ANNOTATION>  The associated rule {@link java.lang.annotation.Annotation}.
- * @param <DATA_TYPE>  The expected data type for this rule.
+ * @param <DATA_TYPE>  The data type this rule operates on.
  *
  * @author Ragunath Jawahar {@literal <rj@mobsandgeeks.com>}
  * @since 2.0
@@ -39,8 +38,8 @@ public abstract class AnnotationRule<RULE_ANNOTATION extends Annotation, DATA_TY
     /**
      * Constructor.
      *
-     * @param ruleAnnotation  The rule {@link java.lang.annotation.Annotation} to which this
-     *      rule is paired.
+     * @param ruleAnnotation  The rule {@link java.lang.annotation.Annotation} instance to which
+     *      this rule is paired.
      */
     protected AnnotationRule(final RULE_ANNOTATION ruleAnnotation) {
         if (ruleAnnotation == null) {
