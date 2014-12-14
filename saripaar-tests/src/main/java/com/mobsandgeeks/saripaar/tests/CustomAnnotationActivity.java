@@ -67,7 +67,7 @@ public class CustomAnnotationActivity extends Activity
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if (isChecked) {
-                        Validator.register(HometownZipCode.class);
+                        Validator.registerAnnotation(HometownZipCode.class);
                     }
                 }
             }

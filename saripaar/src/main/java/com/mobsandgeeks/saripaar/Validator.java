@@ -107,7 +107,7 @@ public class Validator {
         mValidationMode = Mode.BURST;
     }
 
-    public static void register(final Class<? extends Annotation> ruleAnnotation) {
+    public static void registerAnnotation(final Class<? extends Annotation> ruleAnnotation) {
         SARIPAAR_REGISTRY.register(ruleAnnotation);
     }
 
