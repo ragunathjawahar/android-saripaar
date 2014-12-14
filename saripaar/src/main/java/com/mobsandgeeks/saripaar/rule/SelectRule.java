@@ -19,6 +19,7 @@ import com.mobsandgeeks.saripaar.annotation.Select;
 
 /**
  * @author Ragunath Jawahar {@literal <rj@mobsandgeeks.com>}
+ * @since 2.0
  */
 public class SelectRule extends AnnotationRule<Select, Integer> {
 

@@ -23,6 +23,7 @@ import java.lang.annotation.Target;
 
 /**
  * @author Ragunath Jawahar {@literal <rj@mobsandgeeks.com>}
+ * @since 2.0
  */
 @ValidateUsing(CreditCardRule.class)
 @Retention(RetentionPolicy.RUNTIME)

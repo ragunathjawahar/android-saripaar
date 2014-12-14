@@ -20,6 +20,7 @@ import com.mobsandgeeks.saripaar.exception.ConversionException;
 
 /**
  * @author Ragunath Jawahar {@literal <rj@mobsandgeeks.com>}
+ * @since 2.0
  */
 public class TextViewIntegerAdapter implements ViewDataAdapter<TextView, Integer> {
     private static final String REGEX_INTEGER = "\\d+";

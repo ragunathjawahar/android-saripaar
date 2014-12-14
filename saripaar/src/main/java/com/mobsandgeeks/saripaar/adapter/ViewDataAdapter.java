@@ -20,6 +20,7 @@ import com.mobsandgeeks.saripaar.exception.ConversionException;
 
 /**
  * @author Ragunath Jawahar {@literal <rj@mobsandgeeks.com>}
+ * @since 2.0
  */
 public interface ViewDataAdapter<VIEW extends View, DATA> {
     DATA getData(VIEW view) throws ConversionException;

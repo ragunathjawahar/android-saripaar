@@ -19,6 +19,7 @@ import com.mobsandgeeks.saripaar.annotation.Digits;
 
 /**
  * @author Ragunath Jawahar {@literal <rj@mobsandgeeks.com>}
+ * @since 2.0
  */
 public class DigitsRule extends AnnotationRule<Digits, String> {
 

@@ -18,6 +18,7 @@ import android.widget.Spinner;
 
 /**
  * @author Ragunath Jawahar {@literal <rj@mobsandgeeks.com>}
+ * @since 2.0
  */
 public class SpinnerIndexAdapter implements ViewDataAdapter<Spinner, Integer> {
 

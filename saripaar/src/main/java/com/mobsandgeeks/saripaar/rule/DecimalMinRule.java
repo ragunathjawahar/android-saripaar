@@ -21,6 +21,7 @@ import commons.validator.routines.DoubleValidator;
 
 /**
  * @author Ragunath Jawahar {@literal <rj@mobsandgeeks.com>}
+ * @since 2.0
  */
 public class DecimalMinRule extends AnnotationRule<DecimalMin, Double> {
 

@@ -19,6 +19,7 @@ import com.mobsandgeeks.saripaar.annotation.ConfirmPassword;
 
 /**
  * @author Ragunath Jawahar {@literal <rj@mobsandgeeks.com>}
+ * @since 2.0
  */
 public class ConfirmPasswordRule extends AnnotationRule<ConfirmPassword, String> {
 

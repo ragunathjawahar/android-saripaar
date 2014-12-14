@@ -16,6 +16,7 @@ package com.mobsandgeeks.saripaar.exception;
 
 /**
  * @author Ragunath Jawahar {@literal <rj@mobsandgeeks.com>}
+ * @since 2.0
  */
 public class ConversionException extends Exception {
 

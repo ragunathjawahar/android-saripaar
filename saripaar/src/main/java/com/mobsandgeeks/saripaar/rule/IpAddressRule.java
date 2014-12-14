@@ -21,6 +21,7 @@ import commons.validator.routines.InetAddressValidator;
 
 /**
  * @author Ragunath Jawahar {@literal <rj@mobsandgeeks.com>}
+ * @since 2.0
  */
 public class IpAddressRule extends AnnotationRule<IpAddress, String> {
 

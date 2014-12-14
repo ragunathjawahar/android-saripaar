@@ -21,6 +21,7 @@ import java.util.Date;
 
 /**
  * @author Ragunath Jawahar {@literal <rj@mobsandgeeks.com>}
+ * @since 2.0
  */
 public class FutureRule extends AnnotationRule<Future, Date> {
 

@@ -23,6 +23,7 @@ import java.lang.annotation.Target;
 
 /**
  * @author Ragunath Jawahar {@literal <rj@mobsandgeeks.com>}
+ * @since 2.0
  */
 @ValidateUsing(SizeRule.class)
 @Retention(RetentionPolicy.RUNTIME)

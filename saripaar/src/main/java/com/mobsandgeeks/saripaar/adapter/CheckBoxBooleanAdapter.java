@@ -18,6 +18,7 @@ import android.widget.CheckBox;
 
 /**
  * @author Ragunath Jawahar {@literal <rj@mobsandgeeks.com>}
+ * @since 2.0
  */
 public class CheckBoxBooleanAdapter implements ViewDataAdapter<CheckBox, Boolean> {
 

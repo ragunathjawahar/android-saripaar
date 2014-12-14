@@ -21,6 +21,7 @@ import commons.validator.routines.RegexValidator;
 
 /**
  * @author Ragunath Jawahar {@literal <rj@mobsandgeeks.com>}
+ * @since 2.0
  */
 public class PatternRule extends AnnotationRule<Pattern, String> {
 

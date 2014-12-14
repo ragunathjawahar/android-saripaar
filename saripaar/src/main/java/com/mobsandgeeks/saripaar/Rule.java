@@ -24,6 +24,7 @@ import android.content.Context;
  *      a {@link android.view.View} for a {@link com.mobsandgeeks.saripaar.QuickRule}.
  *
  * @author Ragunath Jawahar {@literal <rj@mobsandgeeks.com>}
+ * @since 1.0
  */
 public interface Rule<VALIDATABLE> {
 

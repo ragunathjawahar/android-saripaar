@@ -20,6 +20,7 @@ import com.mobsandgeeks.saripaar.exception.ConversionException;
 
 /**
  * @author Ragunath Jawahar {@literal <rj@mobsandgeeks.com>}
+ * @since 2.0
  */
 public class TextViewDoubleAdapter implements ViewDataAdapter<TextView, Double> {
     private static final String REGEX_DECIMAL = "[-+]?[0-9]*\\.?[0-9]+([eE][-+]?[0-9]+)?";

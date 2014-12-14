@@ -21,6 +21,7 @@ import commons.validator.routines.IntegerValidator;
 
 /**
  * @author Ragunath Jawahar {@literal <rj@mobsandgeeks.com>}
+ * @since 2.0
  */
 public class MinRule extends AnnotationRule<Min, Integer> {
 

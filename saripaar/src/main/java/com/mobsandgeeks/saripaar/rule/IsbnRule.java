@@ -21,6 +21,7 @@ import commons.validator.routines.ISBNValidator;
 
 /**
  * @author Ragunath Jawahar {@literal <rj@mobsandgeeks.com>}
+ * @since 2.0
  */
 public class IsbnRule extends AnnotationRule<Isbn, String> {
 

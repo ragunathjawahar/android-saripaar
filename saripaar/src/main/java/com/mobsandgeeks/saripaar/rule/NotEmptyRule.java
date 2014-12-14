@@ -19,6 +19,7 @@ import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 
 /**
  * @author Ragunath Jawahar {@literal <rj@mobsandgeeks.com>}
+ * @since 2.0
  */
 public class NotEmptyRule extends AnnotationRule<NotEmpty, String> {
 

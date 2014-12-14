@@ -19,6 +19,7 @@ import com.mobsandgeeks.saripaar.annotation.Size;
 
 /**
  * @author Ragunath Jawahar {@literal <rj@mobsandgeeks.com>}
+ * @since 2.0
  */
 public class SizeRule extends AnnotationRule<Size, String> {
 

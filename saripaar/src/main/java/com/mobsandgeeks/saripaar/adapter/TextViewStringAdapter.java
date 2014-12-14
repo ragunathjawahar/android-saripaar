@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 /**
  * @author Ragunath Jawahar {@literal <rj@mobsandgeeks.com>}
+ * @since 2.0
  */
 public class TextViewStringAdapter implements ViewDataAdapter<TextView, String> {
 

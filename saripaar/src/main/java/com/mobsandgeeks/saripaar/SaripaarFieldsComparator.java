@@ -24,6 +24,7 @@ import java.util.Comparator;
  * {@link com.mobsandgeeks.saripaar.annotation.Order} annotation.
  *
  * @author Ragunath Jawahar {@literal <rj@mobsandgeeks.com>}
+ * @since 2.0
  */
 class SaripaarFieldsComparator implements Comparator<Field> {
     private boolean mOrderedFields = true;

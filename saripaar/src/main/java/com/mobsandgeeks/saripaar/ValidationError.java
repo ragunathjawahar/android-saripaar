@@ -21,6 +21,7 @@ import android.view.View;
  * {@link com.mobsandgeeks.saripaar.Rule}.
  *
  * @author Ragunath Jawahar {@literal <rj@mobsandgeeks.com>}
+ * @since 2.0
  */
 public class ValidationError {
     private final View view;

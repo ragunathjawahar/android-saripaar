@@ -19,6 +19,7 @@ import com.mobsandgeeks.saripaar.annotation.Password;
 
 /**
  * @author Ragunath Jawahar {@literal <rj@mobsandgeeks.com>}
+ * @since 2.0
  */
 public class PasswordRule extends AnnotationRule<Password, String> {
 

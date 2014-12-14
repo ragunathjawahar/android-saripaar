@@ -23,6 +23,7 @@ import java.lang.annotation.Target;
 
 /**
  * @author Muhammad Hewedy
+ * @since 1.0
  */
 @ValidateUsing(SelectRule.class)
 @Retention(RetentionPolicy.RUNTIME)

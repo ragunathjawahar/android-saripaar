@@ -21,6 +21,7 @@ import commons.validator.routines.EmailValidator;
 
 /**
  * @author Ragunath Jawahar {@literal <rj@mobsandgeeks.com>}
+ * @since 2.0
  */
 public class EmailRule extends AnnotationRule<Email, String> {
 
