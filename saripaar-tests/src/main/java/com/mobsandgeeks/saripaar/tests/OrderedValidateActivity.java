@@ -16,12 +16,14 @@ package com.mobsandgeeks.saripaar.tests;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.mobsandgeeks.saripaar.Rule;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.Email;
@@ -97,12 +99,7 @@ public class OrderedValidateActivity extends Activity
 
     @Override
     public void onValidationFailed(List<ValidationError> errors) {
-        StringBuilder stringBuilder = new StringBuilder();
-        for (ValidationError error : errors) {
-            TextView view = (TextView) error.getView();
-            stringBuilder.append(view.getHint().toString().toUpperCase()).append(" ");
-        }
-        mResultTextView.setText(stringBuilder.toString());
+        mResultTextView.setText(Common.getFailedFieldNames(errors));
     }
 
     @Override

@@ -87,13 +87,7 @@ public class QuickRuleOrderedActivity extends Activity
 
     @Override
     public void onValidationFailed(List<ValidationError> errors) {
-        StringBuilder stringBuilder = new StringBuilder();
-        for (ValidationError error : errors) {
-            EditText editText = (EditText) error.getView();
-            stringBuilder.append(editText.getHint().toString().toUpperCase().replaceAll(" ", "_"))
-                .append(" ");
-        }
-        mResultTextView.setText(stringBuilder.toString());
+        mResultTextView.setText(Common.getFailedFieldNames(errors));
     }
 
     @Override

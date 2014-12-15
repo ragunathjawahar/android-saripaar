@@ -16,6 +16,8 @@ package com.mobsandgeeks.saripaar;
 
 import android.view.View;
 
+import java.util.List;
+
 /**
  * Contains a failed {@link android.view.View} and the corresponding
  * {@link com.mobsandgeeks.saripaar.Rule}.
@@ -25,17 +27,17 @@ import android.view.View;
  */
 public class ValidationError {
     private final View view;
-    private final Rule failedRule;
+    private final List<Rule> failedRules;
 
     /**
      * Constructor.
      *
-     * @param view  A failed {@link View}.
-     * @param failedRule  A failed {@link com.mobsandgeeks.saripaar.Rule}.
+     * @param view  A failed {@link android.view.View}.
+     * @param failedRules  A {@link java.util.List} of failed {@link com.mobsandgeeks.saripaar.Rule}s.
      */
-    ValidationError(final View view, final Rule failedRule) {
+    ValidationError(final View view, final List<Rule> failedRules) {
         this.view = view;
-        this.failedRule = failedRule;
+        this.failedRules = failedRules;
     }
 
     /**
@@ -48,12 +50,12 @@ public class ValidationError {
     }
 
     /**
-     * Gets the failed {@link com.mobsandgeeks.saripaar.Rule}.
+     * Gets the failed {@link com.mobsandgeeks.saripaar.Rule}s.
      *
-     * @return The failed rule.
+     * @return A {@link java.util.List} of failed {@link com.mobsandgeeks.saripaar.Rule}s.
      */
-    public Rule getFailedRule() {
-        return failedRule;
+    public List<Rule> getFailedRules() {
+        return failedRules;
     }
 
     /**
@@ -63,7 +65,7 @@ public class ValidationError {
     public String toString() {
         return "ValidationError{" +
             "view=" + view +
-            ", failedRule=" + failedRule +
+            ", failedRules=" + failedRules +
             '}';
     }
 }

@@ -87,13 +87,7 @@ public class CustomMultipleViewDataAdaptersActivity extends Activity
 
     @Override
     public void onValidationFailed(List<ValidationError> errors) {
-        StringBuilder stringBuilder = new StringBuilder();
-        for (ValidationError error : errors) {
-            EditText editText = ((FloatLabeledEditText) error.getView()).getEditText();
-            stringBuilder.append(editText.getHint().toString().toUpperCase().replaceAll(" ", "_"))
-                .append(" ");
-        }
-        mResultTextView.setText(stringBuilder.toString());
+        mResultTextView.setText(Common.getFailedFieldNames(errors));
     }
 
     @Override

@@ -76,8 +76,7 @@ public class CustomViewDataAdapterActivity extends Activity
 
     @Override
     public void onValidationFailed(List<ValidationError> errors) {
-        // We have just one field anyway
-        mResultTextView.setText("EMAIL");
+        mResultTextView.setText(Common.getFailedFieldNames(errors));
     }
 
     @Override

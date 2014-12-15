@@ -673,6 +673,7 @@ public final class Validator {
             int rulesForThisView = ruleAdapterPairs.size();
 
             // Validate all the rules for the given view.
+            List<Rule> failedRules = null;
             for (int i = 0; i < rulesForThisView; i++) {
                 final RuleAdapterPair ruleAdapterPair = ruleAdapterPairs.get(i);
                 final Rule rule = ruleAdapterPair.rule;
@@ -680,12 +681,16 @@ public final class Validator {
 
                 // Validate only views that are visible and enabled
                 if (view.isShown() && view.isEnabled()) {
-                    ValidationError validationError = validateViewWithRule(view, rule, dataAdapter);
+                    Rule failedRule = validateViewWithRule(view, rule, dataAdapter);
                     boolean isLastRuleForView = rulesForThisView == i + 1;
 
-                    if (validationError != null) {
+                    if (failedRule != null) {
                         if (addErrorToReport) {
-                            validationErrors.add(validationError);
+                            if (failedRules == null) {
+                                failedRules = new ArrayList<Rule>();
+                                validationErrors.add(new ValidationError(view, failedRules));
+                            }
+                            failedRules.add(failedRule);
                         } else {
                             hasMoreErrors = true;
                         }
@@ -706,7 +711,7 @@ public final class Validator {
         return new ValidationReport(validationErrors, hasMoreErrors);
     }
 
-    private ValidationError validateViewWithRule(final View view, final Rule rule,
+    private Rule validateViewWithRule(final View view, final Rule rule,
             final ViewDataAdapter dataAdapter) {
 
         boolean valid = false;
@@ -724,7 +729,7 @@ public final class Validator {
             valid = rule.isValid(view);
         }
 
-        return !valid ? new ValidationError(view, rule) : null;
+        return valid ? null : rule;
     }
 
     private View getLastView() {

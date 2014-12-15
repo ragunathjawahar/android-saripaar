@@ -100,12 +100,7 @@ public class UnorderedValidateActivity extends Activity
 
     @Override
     public void onValidationFailed(List<ValidationError> errors) {
-        StringBuilder stringBuilder = new StringBuilder();
-        for (ValidationError error : errors) {
-            TextView view = (TextView) error.getView();
-            stringBuilder.append(view.getHint().toString().toUpperCase()).append(" ");
-        }
-        mResultTextView.setText(stringBuilder.toString());
+        mResultTextView.setText(Common.getFailedFieldNames(errors));
     }
 
     @Override
