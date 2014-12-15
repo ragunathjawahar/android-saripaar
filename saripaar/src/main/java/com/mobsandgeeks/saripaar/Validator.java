@@ -220,15 +220,15 @@ public final class Validator {
      * {@link android.view.View} fields must be ordered using the
      * {@link com.mobsandgeeks.saripaar.annotation.Order} annotation.
      */
-    public synchronized void validate() {
+    public void validate() {
         createRulesSafelyAndLazily();
 
         View lastView = getLastView();
         if (Mode.BURST.equals(mValidationMode)) {
-            validateTill(lastView, false, null);
+            handleCallbacks(validateTill(lastView, false, null));
         } else if (Mode.IMMEDIATE.equals(mValidationMode)) {
             String reasonSuffix = String.format("in %s mode.", Mode.IMMEDIATE.toString());
-            validateTill(lastView, true, reasonSuffix);
+            validateOrderedFieldsWithCallbackTill(lastView, reasonSuffix);
         } else {
             throw new RuntimeException("This should never happen!");
         }
@@ -241,10 +241,10 @@ public final class Validator {
      *
      * @param view  A {@link android.view.View}.
      */
-    public synchronized void validateBefore(final View view) {
+    public void validateBefore(final View view) {
         createRulesSafelyAndLazily();
         View previousView = getViewBefore(view);
-        validateTill(previousView, true, "when using 'validateBefore(View)'.");
+        validateOrderedFieldsWithCallbackTill(previousView, "when using 'validateBefore(View)'.");
     }
 
     /**
@@ -254,9 +254,8 @@ public final class Validator {
      *
      * @param view  A {@link android.view.View}.
      */
-    public synchronized void validateTill(final View view) {
-        createRulesSafelyAndLazily();
-        validateTill(view, true, "when using 'validateTill(View)'.");
+    public void validateTill(final View view) {
+        validateOrderedFieldsWithCallbackTill(view, "when using 'validateTill(View)'.");
     }
 
     /**
@@ -531,8 +530,13 @@ public final class Validator {
         return view;
     }
 
-    private void validateTill(final View view, final boolean requiresOrderedRules,
-            final String reasonSuffix) {
+    private void validateOrderedFieldsWithCallbackTill(final View view, final String reasonSuffix) {
+        createRulesSafelyAndLazily();
+        handleCallbacks(validateTill(view, true, reasonSuffix));
+    }
+
+    private synchronized ValidationReport validateTill(final View view,
+            final boolean requiresOrderedRules, final String reasonSuffix) {
         // Do we need ordered rules?
         if (requiresOrderedRules) {
             assertOrderedFields(mOrderedFields, reasonSuffix);
@@ -542,9 +546,12 @@ public final class Validator {
         assertNotNull(mValidationListener, "validationListener");
 
         // Everything good. Bingo! validate ;)
-        final ValidationReport validationReport = getValidationErrors(view,
-            mViewRulesMap, mValidationMode);
+        return getValidationErrors(view, mViewRulesMap, mValidationMode);
+    }
+
+    private void handleCallbacks(final ValidationReport validationReport) {
         final List<ValidationError> validationErrors = validationReport.errors;
+
         if (validationErrors.size() == 0 && !validationReport.hasMoreErrors) {
             mValidationListener.onValidationSucceeded();
         } else {
