@@ -120,7 +120,7 @@ Please visit the [wiki] for a complete guide on Android Saripaar.
 License
 ---------------------
 
-    Copyright 2012 - 2014 Mobs and Geeks
+    Copyright 2012 - 2014 Mobs & Geeks
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -134,7 +134,7 @@ License
     See the License for the specific language governing permissions and
     limitations under the License.
 
-<sub>Saripaar Logo © 2013 - 2014, Mobs & Geeks.<sub>
+<sub>Saripaar Logo © 2013 - 2014, Mobs &amp; Geeks.<sub>
 
   [jar]: http://search.maven.org/#search%7Cga%7C1%7Candroid%20saripaar
   [Apache Commons Validator]: http://commons.apache.org/proper/commons-validator/
