@@ -14,6 +14,7 @@
 
 package com.mobsandgeeks.saripaar;
 
+import android.os.AsyncTask;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.RadioButton;
@@ -127,6 +128,7 @@ public final class Validator {
     private Map<View, ArrayList<RuleAdapterPair>> mViewRulesMap;
     private boolean mOrderedFields;
     private ValidationListener mValidationListener;
+    private AsyncValidationTask mAsyncValidationTask;
 
     /**
      * Constructor.
@@ -142,9 +144,9 @@ public final class Validator {
 
     /**
      * A convenience method for registering {@link com.mobsandgeeks.saripaar.Rule} annotations that
-     * act on {@link android.widget.TextView} and it's children, the most notable being
-     * {@link android.widget.EditText}. Register custom annotations that act on data types with
-     * built-in adapters for {@link java.lang.Double}, {@link java.lang.Float},
+     * act on {@link android.widget.TextView} and it's children, the most notable one being
+     * {@link android.widget.EditText}. Register custom annotations for {@link android.widget.TextView}s
+     * that validates {@link java.lang.Double}, {@link java.lang.Float},
      * {@link java.lang.Integer} and {@link java.lang.String} types.
      *
      * @param ruleAnnotation  A rule {@link java.lang.annotation.Annotation}.
@@ -154,7 +156,7 @@ public final class Validator {
     }
 
     /**
-     * Registers a {@link com.mobsandgeeks.saripaar.adapter.ViewDataAdapter} for a
+     * Registers a {@link com.mobsandgeeks.saripaar.adapter.ViewDataAdapter} for the given
      * {@link android.view.View}.
      *
      * @param viewType  The {@link android.view.View} for which a
@@ -183,7 +185,7 @@ public final class Validator {
     }
 
     /**
-     * Setup a {@link com.mobsandgeeks.saripaar.Validator.ValidationListener} to this
+     * Setup a {@link com.mobsandgeeks.saripaar.Validator.ValidationListener} to the current
      * {@link com.mobsandgeeks.saripaar.Validator} instance.
      *
      * @param validationListener  A {@link com.mobsandgeeks.saripaar.Validator.ValidationListener}
@@ -195,7 +197,8 @@ public final class Validator {
     }
 
     /**
-     * Set the validation mode for the current {@link com.mobsandgeeks.saripaar.Validator} instance.
+     * Set the validation {@link com.mobsandgeeks.saripaar.Validator.Mode} for the current
+     * {@link com.mobsandgeeks.saripaar.Validator} instance.
      *
      * @param validationMode  {@link Mode#BURST} or {@link Mode#IMMEDIATE}, null throws an
      *      {@link java.lang.IllegalArgumentException}.
@@ -216,19 +219,54 @@ public final class Validator {
 
     /**
      * Validates all {@link android.view.View}s with {@link com.mobsandgeeks.saripaar.Rule}s.
-     * When validating in {@link com.mobsandgeeks.saripaar.Validator.Mode#IMMEDIATE} all
+     * When validating in {@link com.mobsandgeeks.saripaar.Validator.Mode#IMMEDIATE}, all
      * {@link android.view.View} fields must be ordered using the
      * {@link com.mobsandgeeks.saripaar.annotation.Order} annotation.
      */
     public void validate() {
+        validate(false);
+    }
+
+    /**
+     * Validates all {@link android.view.View}s before the specified {@link android.view.View}
+     * parameter. {@link android.view.View} fields MUST be ordered using the
+     * {@link com.mobsandgeeks.saripaar.annotation.Order} annotation.
+     *
+     * @param view  A {@link android.view.View}.
+     */
+    public void validateBefore(final View view) {
+        validateBefore(view, false);
+    }
+
+    /**
+     * Validates all {@link android.view.View}s till the specified {@link android.view.View}
+     * parameter. {@link android.view.View} fields MUST be ordered using the
+     * {@link com.mobsandgeeks.saripaar.annotation.Order} annotation.
+     *
+     * @param view  A {@link android.view.View}.
+     */
+    public void validateTill(final View view) {
+        validateTill(view, false);
+    }
+
+    /**
+     * Validates all {@link android.view.View}s with {@link com.mobsandgeeks.saripaar.Rule}s.
+     * When validating in {@link com.mobsandgeeks.saripaar.Validator.Mode#IMMEDIATE}, all
+     * {@link android.view.View} fields must be ordered using the
+     * {@link com.mobsandgeeks.saripaar.annotation.Order} annotation. Asynchronous calls will cancel
+     * any pending or ongoing asynchronous validation and start a new one.
+     *
+     * @param async  true if asynchronous, false otherwise.
+     */
+    public void validate(final boolean async) {
         createRulesSafelyAndLazily();
 
         View lastView = getLastView();
         if (Mode.BURST.equals(mValidationMode)) {
-            handleCallbacks(validateTill(lastView, false, null));
+            validateUnorderedFieldsWithCallbackTill(lastView, async);
         } else if (Mode.IMMEDIATE.equals(mValidationMode)) {
             String reasonSuffix = String.format("in %s mode.", Mode.IMMEDIATE.toString());
-            validateOrderedFieldsWithCallbackTill(lastView, reasonSuffix);
+            validateOrderedFieldsWithCallbackTill(lastView, reasonSuffix, async);
         } else {
             throw new RuntimeException("This should never happen!");
         }
@@ -236,26 +274,57 @@ public final class Validator {
 
     /**
      * Validates all {@link android.view.View}s before the specified {@link android.view.View}
-     * parameter. {@link android.view.View} fields must be ordered using the
-     * {@link com.mobsandgeeks.saripaar.annotation.Order} annotation.
+     * parameter. {@link android.view.View} fields MUST be ordered using the
+     * {@link com.mobsandgeeks.saripaar.annotation.Order} annotation. Asynchronous calls will cancel
+     * any pending or ongoing asynchronous validation and start a new one.
      *
      * @param view  A {@link android.view.View}.
+     * @param async  true if asynchronous, false otherwise.
      */
-    public void validateBefore(final View view) {
+    public void validateBefore(final View view, final boolean async) {
         createRulesSafelyAndLazily();
         View previousView = getViewBefore(view);
-        validateOrderedFieldsWithCallbackTill(previousView, "when using 'validateBefore(View)'.");
+        validateOrderedFieldsWithCallbackTill(previousView, "when using 'validateBefore(View)'.",
+            async);
     }
 
     /**
      * Validates all {@link android.view.View}s till the specified {@link android.view.View}
-     * parameter. {@link android.view.View} fields must be ordered using the
-     * {@link com.mobsandgeeks.saripaar.annotation.Order} annotation.
+     * parameter. {@link android.view.View} fields MUST be ordered using the
+     * {@link com.mobsandgeeks.saripaar.annotation.Order} annotation. Asynchronous calls will cancel
+     * any pending or ongoing asynchronous validation and start a new one.
      *
      * @param view  A {@link android.view.View}.
+     * @param async  true if asynchronous, false otherwise.
      */
-    public void validateTill(final View view) {
-        validateOrderedFieldsWithCallbackTill(view, "when using 'validateTill(View)'.");
+    public void validateTill(final View view, final boolean async) {
+        validateOrderedFieldsWithCallbackTill(view, "when using 'validateTill(View)'.", async);
+    }
+
+    /**
+     * Used to find if an asynchronous validation task is running. Useful only when you run the
+     * {@link com.mobsandgeeks.saripaar.Validator} in asynchronous mode.
+     *
+     * @return true if the asynchronous task is running, false otherwise.
+     */
+    public boolean isValidating() {
+        return mAsyncValidationTask != null &&
+            mAsyncValidationTask.getStatus() != AsyncTask.Status.FINISHED;
+    }
+
+    /**
+     * Cancels a running asynchronous validation task.
+     *
+     * @return true if a running asynchronous task was cancelled, false otherwise.
+     */
+    public boolean cancelAsync() {
+        boolean cancelled = false;
+        if (mAsyncValidationTask != null) {
+            cancelled = mAsyncValidationTask.cancel(true);
+            mAsyncValidationTask = null;
+        }
+
+        return cancelled;
     }
 
     /**
@@ -530,9 +599,27 @@ public final class Validator {
         return view;
     }
 
-    private void validateOrderedFieldsWithCallbackTill(final View view, final String reasonSuffix) {
+    private void validateUnorderedFieldsWithCallbackTill(final View view, final boolean async) {
+        validateFieldsWithCallbackTill(view, false, null, async);
+    }
+
+    private void validateOrderedFieldsWithCallbackTill(final View view, final String reasonSuffix,
+            final boolean async) {
+        validateFieldsWithCallbackTill(view, true, reasonSuffix, async);
+    }
+
+    private void validateFieldsWithCallbackTill(final View view, final boolean orderedFields,
+            final String reasonSuffix, final boolean async) {
         createRulesSafelyAndLazily();
-        handleCallbacks(validateTill(view, true, reasonSuffix));
+        if (async) {
+            if (mAsyncValidationTask != null) {
+                mAsyncValidationTask.cancel(true);
+            }
+            mAsyncValidationTask = new AsyncValidationTask(view, orderedFields, reasonSuffix);
+            mAsyncValidationTask.execute((Void[]) null);
+        } else {
+            handleCallbacks(validateTill(view, orderedFields, reasonSuffix));
+        }
     }
 
     private synchronized ValidationReport validateTill(final View view,
@@ -546,7 +633,7 @@ public final class Validator {
         assertNotNull(mValidationListener, "validationListener");
 
         // Everything good. Bingo! validate ;)
-        return getValidationErrors(view, mViewRulesMap, mValidationMode);
+        return getValidationReport(view, mViewRulesMap, mValidationMode);
     }
 
     private void handleCallbacks(final ValidationReport validationReport) {
@@ -568,7 +655,7 @@ public final class Validator {
         }
     }
 
-    private ValidationReport getValidationErrors(final View targetView,
+    private ValidationReport getValidationReport(final View targetView,
             final Map<View, ArrayList<RuleAdapterPair>> viewRulesMap, final Mode validationMode) {
 
         final List<ValidationError> validationErrors = new ArrayList<ValidationError>();
@@ -685,6 +772,29 @@ public final class Validator {
         ValidationReport(List<ValidationError> errors, boolean hasMoreErrors) {
             this.errors = errors;
             this.hasMoreErrors = hasMoreErrors;
+        }
+    }
+
+    class AsyncValidationTask extends AsyncTask<Void, Void, ValidationReport> {
+        private View mView;
+        private boolean mOrderedRules;
+        private String mReasonSuffix;
+
+        public AsyncValidationTask(final View view, final boolean orderedRules,
+                final String reasonSuffix) {
+            this.mView = view;
+            this.mOrderedRules = orderedRules;
+            this.mReasonSuffix = reasonSuffix;
+        }
+
+        @Override
+        protected ValidationReport doInBackground(final Void... params) {
+            return validateTill(mView, mOrderedRules, mReasonSuffix);
+        }
+
+        @Override
+        protected void onPostExecute(final ValidationReport validationReport) {
+            handleCallbacks(validationReport);
         }
     }
 
