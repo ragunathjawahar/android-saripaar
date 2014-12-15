@@ -58,33 +58,60 @@ import java.util.Map;
 import java.util.Set;
 
 /**
+ * The {@link com.mobsandgeeks.saripaar.Validator} takes care of validating the
+ * {@link android.view.View}s in the given controller instance. Usually, an
+ * {@link android.app.Activity} or a {@link android.app.Fragment}. However, it can also be used
+ * with other controller classes that contain references to {@link android.view.View} objects.
+ * <p>
+ * The {@link com.mobsandgeeks.saripaar.Validator} is capable of performing validations in two modes,
+ *  <ol>
+ *      <li>{@link Mode#BURST}, where all the views are validated and all errors are reported
+ *          via the callback at once. Fields need not be ordered using the
+ *          {@link com.mobsandgeeks.saripaar.annotation.Order} annotation in {@code BURST} mode.
+ *      </li>
+ *      <li>{@link Mode#IMMEDIATE}, in which the validation stops and the error is reported as soon
+ *          as a {@link com.mobsandgeeks.saripaar.Rule} fails. To use this mode, the fields SHOULD
+ *          BE ordered using the {@link com.mobsandgeeks.saripaar.annotation.Order} annotation.
+ *      </li>
+ *  </ol>
+ * <p>
+ * There are three flavors of the {@code validate()} method.
+ * <ol>
+ *      <li>{@link #validate()}, no frills regular validation that validates all
+ *          {@link android.view.View}s.
+ *      </li>
+ *      <li>{@link #validateTill(android.view.View)}, validates all {@link android.view.View}s till
+ *          the one that is specified.
+ *      </li>
+ *      <li>{@link #validateBefore(android.view.View)}, validates all {@link android.view.View}s
+ *          before the specified {@link android.view.View}.
+ *      </li>
+ * </ol>
+ * <p>
+ * It is imperative that the fields are ordered while making the
+ * {@link #validateTill(android.view.View)} and {@link #validateBefore(android.view.View)} method
+ * calls.
+ * <p>
+ * The {@link com.mobsandgeeks.saripaar.Validator} requires a
+ * {@link com.mobsandgeeks.saripaar.Validator.ValidationListener} that reports the outcome of the
+ * validation.
+ * <ul>
+ *      <li> {@link com.mobsandgeeks.saripaar.Validator.ValidationListener#onValidationSucceeded()}
+ *          is called if all {@link com.mobsandgeeks.saripaar.Rule}s pass.
+ *      </li>
+ *      <li>
+ *          The {@link com.mobsandgeeks.saripaar.Validator.ValidationListener#onValidationFailed(java.util.List)}
+ *          callback reports errors caused by failures. In {@link Mode#IMMEDIATE} this callback will
+ *          contain just one instance of the {@link com.mobsandgeeks.saripaar.ValidationError}
+ *          object.
+ *      </li>
+ * </ul>
+ *
  * @author Ragunath Jawahar {@literal <rj@mobsandgeeks.com>}
+ * @since 1.0
  */
 @SuppressWarnings("unchecked")
-public class Validator {
-
-    public interface ValidationListener {
-        void onValidationSucceeded();
-        void onValidationFailed(List<ValidationError> errors);
-    }
-
-    /**
-     * Validation modes.
-     */
-    public enum Mode {
-
-        /**
-         * BURST mode will validate all rules before calling the
-         * {@link com.mobsandgeeks.saripaar.Validator.ValidationListener#onValidationFailed(java.util.List)}
-         * callback.
-         */
-        BURST,
-
-        /**
-         * IMMEDIATE mode will stop the validation as soon as it encounters the first failing rule.
-         */
-        IMMEDIATE
-    }
+public final class Validator {
 
     // Entries are registered inside a static block (Placed at the end of source)
     private static final Registry SARIPAAR_REGISTRY = new Registry();
@@ -101,16 +128,42 @@ public class Validator {
     private boolean mOrderedFields;
     private ValidationListener mValidationListener;
 
+    /**
+     * Constructor.
+     *
+     * @param controller  The class containing {@link android.view.View}s to be validated. Usually,
+     *      an {@link android.app.Activity} or a {@link android.app.Fragment}.
+     */
     public Validator(final Object controller) {
         assertNotNull(controller, "controller");
         mController = controller;
         mValidationMode = Mode.BURST;
     }
 
+    /**
+     * A convenience method for registering {@link com.mobsandgeeks.saripaar.Rule} annotations that
+     * act on {@link android.widget.TextView} and it's children, the most notable being
+     * {@link android.widget.EditText}. Register custom annotations that act on data types with
+     * built-in adapters for {@link java.lang.Double}, {@link java.lang.Float},
+     * {@link java.lang.Integer} and {@link java.lang.String} types.
+     *
+     * @param ruleAnnotation  A rule {@link java.lang.annotation.Annotation}.
+     */
     public static void registerAnnotation(final Class<? extends Annotation> ruleAnnotation) {
         SARIPAAR_REGISTRY.register(ruleAnnotation);
     }
 
+    /**
+     * Registers a {@link com.mobsandgeeks.saripaar.adapter.ViewDataAdapter} for a
+     * {@link android.view.View}.
+     *
+     * @param viewType  The {@link android.view.View} for which a
+     *      {@link com.mobsandgeeks.saripaar.adapter.ViewDataAdapter} is being registered.
+     * @param viewDataAdapter  A {@link com.mobsandgeeks.saripaar.adapter.ViewDataAdapter} instance.
+     *
+     * @param <VIEW>  The {@link android.view.View} type.
+     * @param <DATA_TYPE>  The {@link com.mobsandgeeks.saripaar.adapter.ViewDataAdapter} type.
+     */
     public static <VIEW extends View, DATA_TYPE> void registerAdapter(
             final Class<VIEW> viewType, final ViewDataAdapter<VIEW, DATA_TYPE> viewDataAdapter) {
         assertNotNull(viewType, "viewType");
@@ -129,19 +182,44 @@ public class Validator {
         dataTypeAdapterMap.put(adapterDataType, viewDataAdapter);
     }
 
-    public Mode getValidationMode() {
-        return mValidationMode;
+    /**
+     * Setup a {@link com.mobsandgeeks.saripaar.Validator.ValidationListener} to this
+     * {@link com.mobsandgeeks.saripaar.Validator} instance.
+     *
+     * @param validationListener  A {@link com.mobsandgeeks.saripaar.Validator.ValidationListener}
+     *      instance. null throws an {@link java.lang.IllegalArgumentException}.
+     */
+    public void setValidationListener(final ValidationListener validationListener) {
+        assertNotNull(validationListener, "validationListener");
+        this.mValidationListener = validationListener;
     }
 
+    /**
+     * Set the validation mode for the current {@link com.mobsandgeeks.saripaar.Validator} instance.
+     *
+     * @param validationMode  {@link Mode#BURST} or {@link Mode#IMMEDIATE}, null throws an
+     *      {@link java.lang.IllegalArgumentException}.
+     */
     public void setValidationMode(final Mode validationMode) {
         assertNotNull(validationMode, "validationMode");
         this.mValidationMode = validationMode;
     }
 
-    public void setValidationListener(final ValidationListener validationListener) {
-        this.mValidationListener = validationListener;
+    /**
+     * Gets the current {@link com.mobsandgeeks.saripaar.Validator.Mode}.
+     *
+     * @return The current validation mode of the {@link com.mobsandgeeks.saripaar.Validator}.
+     */
+    public Mode getValidationMode() {
+        return mValidationMode;
     }
 
+    /**
+     * Validates all {@link android.view.View}s with {@link com.mobsandgeeks.saripaar.Rule}s.
+     * When validating in {@link com.mobsandgeeks.saripaar.Validator.Mode#IMMEDIATE} all
+     * {@link android.view.View} fields must be ordered using the
+     * {@link com.mobsandgeeks.saripaar.annotation.Order} annotation.
+     */
     public synchronized void validate() {
         createRulesSafelyAndLazily();
 
@@ -156,17 +234,38 @@ public class Validator {
         }
     }
 
+    /**
+     * Validates all {@link android.view.View}s before the specified {@link android.view.View}
+     * parameter. {@link android.view.View} fields must be ordered using the
+     * {@link com.mobsandgeeks.saripaar.annotation.Order} annotation.
+     *
+     * @param view  A {@link android.view.View}.
+     */
     public synchronized void validateBefore(final View view) {
         createRulesSafelyAndLazily();
         View previousView = getViewBefore(view);
         validateTill(previousView, true, "when using 'validateBefore(View)'.");
     }
 
+    /**
+     * Validates all {@link android.view.View}s till the specified {@link android.view.View}
+     * parameter. {@link android.view.View} fields must be ordered using the
+     * {@link com.mobsandgeeks.saripaar.annotation.Order} annotation.
+     *
+     * @param view  A {@link android.view.View}.
+     */
     public synchronized void validateTill(final View view) {
         createRulesSafelyAndLazily();
         validateTill(view, true, "when using 'validateTill(View)'.");
     }
 
+    /**
+     * Add one or more {@link com.mobsandgeeks.saripaar.QuickRule}s for a {@link android.view.View}.
+     *
+     * @param view  A {@link android.view.View} for which {@link com.mobsandgeeks.saripaar.QuickRule}(s)
+     *      are to be added.
+     * @param quickRules  Varargs of {@link com.mobsandgeeks.saripaar.QuickRule}s.
+     */
     public void put(final View view, final QuickRule... quickRules) {
         assertNotNull(view, "view");
         assertNotNull(quickRules, "quickRules");
@@ -190,10 +289,61 @@ public class Validator {
         ruleAdapterPairs = ruleAdapterPairs == null
             ? new ArrayList<RuleAdapterPair>() : ruleAdapterPairs;
 
+        // Add the quick rule to existing rules
         for (QuickRule quickRule : quickRules) {
-            ruleAdapterPairs.add(new RuleAdapterPair(quickRule, null));
+            if (quickRule != null) {
+                ruleAdapterPairs.add(new RuleAdapterPair(quickRule, null));
+            }
         }
         mViewRulesMap.put(view, ruleAdapterPairs);
+    }
+
+    /**
+     * Listener with callback methods that notifies the outcome of validation.
+     */
+    public interface ValidationListener {
+
+        /**
+         * Called when all {@link com.mobsandgeeks.saripaar.Rule}s pass.
+         */
+        void onValidationSucceeded();
+
+        /**
+         * Called when one or several {@link com.mobsandgeeks.saripaar.Rule}s fail.
+         *
+         * @param errors  List containing references to the {@link android.view.View}s and
+         *      {@link com.mobsandgeeks.saripaar.Rule}s that failed.
+         */
+        void onValidationFailed(List<ValidationError> errors);
+    }
+
+    /**
+     * Validation mode.
+     */
+    public enum Mode {
+
+        /**
+         * BURST mode will validate all rules before calling the
+         * {@link com.mobsandgeeks.saripaar.Validator.ValidationListener#onValidationFailed(java.util.List)}
+         * callback.
+         */
+        BURST,
+
+        /**
+         * IMMEDIATE mode will stop the validation as soon as it encounters the first failing rule.
+         */
+        IMMEDIATE
+    }
+
+    /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     *  Private Methods
+     * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     */
+    private static void assertNotNull(final Object object, final String argumentName) {
+        if (object == null) {
+            String message = String.format("'%s' cannot be null.", argumentName);
+            throw new IllegalArgumentException(message);
+        }
     }
 
     private void createRulesSafelyAndLazily() {
@@ -208,43 +358,6 @@ public class Validator {
             String message = "No rules found. You must have at least one rule to validate. " +
                 "If you are using custom annotations, make sure that you have registered " +
                 "them using the 'Validator.register()' method.";
-            throw new IllegalStateException(message);
-        }
-    }
-
-    private void validateTill(final View view, final boolean requiresOrderedRules,
-            final String reasonSuffix) {
-        // Do we need ordered rules?
-        if (requiresOrderedRules) {
-            assertOrderedFields(mOrderedFields, reasonSuffix);
-        }
-
-        // Have we registered a validation listener?
-        assertNotNull(mValidationListener, "validationListener");
-
-        // Everything good. Bingo! validate ;)
-        final ValidationReport validationReport = getValidationErrors(view,
-            mViewRulesMap, mValidationMode);
-        final List<ValidationError> validationErrors = validationReport.errors;
-        if (validationErrors.size() == 0 && !validationReport.hasMoreErrors) {
-            mValidationListener.onValidationSucceeded();
-        } else {
-            mValidationListener.onValidationFailed(validationErrors);
-        }
-    }
-
-    private static void assertNotNull(final Object object, final String argumentName) {
-        if (object == null) {
-            String message = String.format("'%s' cannot be null.", argumentName);
-            throw new IllegalArgumentException(message);
-        }
-    }
-
-    private void assertOrderedFields(boolean orderedRules, String reasonSuffix) {
-        if (!orderedRules) {
-            String message = String.format(
-                "Rules are unordered, every rule annotation and custom rule should have " +
-                    "valid 'order' attribute set " + reasonSuffix);
             throw new IllegalStateException(message);
         }
     }
@@ -271,85 +384,6 @@ public class Validator {
         return annotatedFields;
     }
 
-    private View getLastView() {
-        final Set<View> views = mViewRulesMap.keySet();
-
-        View lastView = null;
-        for (View view : views) {
-            lastView = view;
-        }
-
-        return lastView;
-    }
-
-    private View getViewBefore(final View view) {
-        ArrayList<View> views = new ArrayList<View>(mViewRulesMap.keySet());
-
-        final int nViews = views.size();
-        View currentView;
-        View previousView = null;
-        for (int i = 0; i < nViews; i++) {
-            currentView = views.get(i);
-            if (currentView == view) {
-                previousView = i > 0 ? views.get(i - 1) : null;
-                break;
-            }
-        }
-
-        return previousView;
-    }
-
-    private ValidationReport getValidationErrors(final View targetView,
-        final Map<View, ArrayList<RuleAdapterPair>> viewRulesMap, final Mode validationMode) {
-
-        final List<ValidationError> validationErrors = new ArrayList<ValidationError>();
-        final Set<View> views = viewRulesMap.keySet();
-
-        // Don't add errors for views that are placed after the specified view in validateTill()
-        boolean addErrorToReport = targetView != null;
-
-        // Does the form have more errors? Used in validateTill()
-        boolean hasMoreErrors = false;
-
-        validation:
-        for (View view : views) {
-            ArrayList<RuleAdapterPair> ruleAdapterPairs = viewRulesMap.get(view);
-            int rulesForThisView = ruleAdapterPairs.size();
-
-            // Validate all the rules for the given view.
-            for (int i = 0; i < rulesForThisView; i++) {
-                final RuleAdapterPair ruleAdapterPair = ruleAdapterPairs.get(i);
-                final Rule rule = ruleAdapterPair.rule;
-                final ViewDataAdapter dataAdapter = ruleAdapterPair.dataAdapter;
-
-                // Validate only views that are visible and enabled
-                if (view.isShown() && view.isEnabled()) {
-                    ValidationError validationError = validateViewWithRule(view, rule, dataAdapter);
-                    boolean isLastRuleForView = rulesForThisView == i + 1;
-
-                    if (validationError != null) {
-                        if (addErrorToReport) {
-                            validationErrors.add(validationError);
-                        } else {
-                            hasMoreErrors = true;
-                        }
-
-                        if (Mode.IMMEDIATE.equals(validationMode) && isLastRuleForView) {
-                            break validation;
-                        }
-                    }
-
-                    // Don't add reports for subsequent views
-                    if (view.equals(targetView) && isLastRuleForView) {
-                        addErrorToReport = false;
-                    }
-                }
-            }
-        }
-
-        return new ValidationReport(validationErrors, hasMoreErrors);
-    }
-
     private List<Field> getControllerViewFields(final Class<?> controllerClass) {
         List<Field> controllerViewFields = new ArrayList<Field>();
 
@@ -367,6 +401,18 @@ public class Validator {
         }
 
         return controllerViewFields;
+    }
+
+    private List<Field> getViewFields(final Class<?> clazz) {
+        List<Field> viewFields = new ArrayList<Field>();
+        Field[] declaredFields = clazz.getDeclaredFields();
+        for (Field field : declaredFields) {
+            if (View.class.isAssignableFrom(field.getType())) {
+                viewFields.add(field);
+            }
+        }
+
+        return viewFields;
     }
 
     private boolean isSaripaarAnnotatedField(final Field field,
@@ -387,19 +433,8 @@ public class Validator {
         return hasOrderAnnotation || hasSaripaarAnnotation;
     }
 
-    private List<Field> getViewFields(final Class<?> clazz) {
-        List<Field> viewFields = new ArrayList<Field>();
-        Field[] declaredFields = clazz.getDeclaredFields();
-        for (Field field : declaredFields) {
-            if (View.class.isAssignableFrom(field.getType())) {
-                viewFields.add(field);
-            }
-        }
-
-        return viewFields;
-    }
-
     private Map<View, ArrayList<RuleAdapterPair>> createRules(final List<Field> annotatedFields) {
+
         final Map<View, ArrayList<RuleAdapterPair>> viewRulesMap =
             new LinkedHashMap<View, ArrayList<RuleAdapterPair>>();
 
@@ -452,8 +487,8 @@ public class Validator {
     }
 
     private ViewDataAdapter getDataAdapter(final Class<? extends Annotation> annotationType,
-            final Class<?> viewFieldType,
-            final Class<?> adapterDataType) {
+            final Class<?> viewFieldType, final Class<?> adapterDataType) {
+
         // Get an adapter from the stock registry
         ViewDataAdapter dataAdapter = SARIPAAR_REGISTRY.getDataAdapter(
             annotationType, (Class) viewFieldType);
@@ -471,16 +506,8 @@ public class Validator {
     }
 
     private Class<? extends AnnotationRule> getRuleType(final Annotation ruleAnnotation) {
-        ValidateUsing validateUsing = null;
-
-        Annotation[] annotationsOfRuleAnnotation =
-            ruleAnnotation.annotationType().getAnnotations();
-        for (Annotation annotation : annotationsOfRuleAnnotation) {
-            if (ValidateUsing.class.equals(annotation.annotationType())) {
-                validateUsing = (ValidateUsing) annotation;
-            }
-        }
-
+        ValidateUsing validateUsing = ruleAnnotation.annotationType()
+            .getAnnotation(ValidateUsing.class);
         return validateUsing != null ? validateUsing.value() : null;
     }
 
@@ -504,6 +531,87 @@ public class Validator {
         return view;
     }
 
+    private void validateTill(final View view, final boolean requiresOrderedRules,
+            final String reasonSuffix) {
+        // Do we need ordered rules?
+        if (requiresOrderedRules) {
+            assertOrderedFields(mOrderedFields, reasonSuffix);
+        }
+
+        // Have we registered a validation listener?
+        assertNotNull(mValidationListener, "validationListener");
+
+        // Everything good. Bingo! validate ;)
+        final ValidationReport validationReport = getValidationErrors(view,
+            mViewRulesMap, mValidationMode);
+        final List<ValidationError> validationErrors = validationReport.errors;
+        if (validationErrors.size() == 0 && !validationReport.hasMoreErrors) {
+            mValidationListener.onValidationSucceeded();
+        } else {
+            mValidationListener.onValidationFailed(validationErrors);
+        }
+    }
+
+    private void assertOrderedFields(boolean orderedRules, String reasonSuffix) {
+        if (!orderedRules) {
+            String message = String.format(
+                "Rules are unordered, all view fields should be ordered " +
+                    "using the '@Order' annotation " + reasonSuffix);
+            throw new IllegalStateException(message);
+        }
+    }
+
+    private ValidationReport getValidationErrors(final View targetView,
+            final Map<View, ArrayList<RuleAdapterPair>> viewRulesMap, final Mode validationMode) {
+
+        final List<ValidationError> validationErrors = new ArrayList<ValidationError>();
+        final Set<View> views = viewRulesMap.keySet();
+
+        // Don't add errors for views that are placed after the specified view in validateTill()
+        boolean addErrorToReport = targetView != null;
+
+        // Does the form have more errors? Used in validateTill()
+        boolean hasMoreErrors = false;
+
+        validation:
+        for (View view : views) {
+            ArrayList<RuleAdapterPair> ruleAdapterPairs = viewRulesMap.get(view);
+            int rulesForThisView = ruleAdapterPairs.size();
+
+            // Validate all the rules for the given view.
+            for (int i = 0; i < rulesForThisView; i++) {
+                final RuleAdapterPair ruleAdapterPair = ruleAdapterPairs.get(i);
+                final Rule rule = ruleAdapterPair.rule;
+                final ViewDataAdapter dataAdapter = ruleAdapterPair.dataAdapter;
+
+                // Validate only views that are visible and enabled
+                if (view.isShown() && view.isEnabled()) {
+                    ValidationError validationError = validateViewWithRule(view, rule, dataAdapter);
+                    boolean isLastRuleForView = rulesForThisView == i + 1;
+
+                    if (validationError != null) {
+                        if (addErrorToReport) {
+                            validationErrors.add(validationError);
+                        } else {
+                            hasMoreErrors = true;
+                        }
+
+                        if (Mode.IMMEDIATE.equals(validationMode) && isLastRuleForView) {
+                            break validation;
+                        }
+                    }
+
+                    // Don't add reports for subsequent views
+                    if (view.equals(targetView) && isLastRuleForView) {
+                        addErrorToReport = false;
+                    }
+                }
+            }
+        }
+
+        return new ValidationReport(validationErrors, hasMoreErrors);
+    }
+
     private ValidationError validateViewWithRule(final View view, final Rule rule,
             final ViewDataAdapter dataAdapter) {
 
@@ -523,6 +631,34 @@ public class Validator {
         }
 
         return !valid ? new ValidationError(view, rule) : null;
+    }
+
+    private View getLastView() {
+        final Set<View> views = mViewRulesMap.keySet();
+
+        View lastView = null;
+        for (View view : views) {
+            lastView = view;
+        }
+
+        return lastView;
+    }
+
+    private View getViewBefore(final View view) {
+        ArrayList<View> views = new ArrayList<View>(mViewRulesMap.keySet());
+
+        final int nViews = views.size();
+        View currentView;
+        View previousView = null;
+        for (int i = 0; i < nViews; i++) {
+            currentView = views.get(i);
+            if (currentView == view) {
+                previousView = i > 0 ? views.get(i - 1) : null;
+                break;
+            }
+        }
+
+        return previousView;
     }
 
     static class RuleAdapterPair {
@@ -568,9 +704,7 @@ public class Validator {
         SARIPAAR_REGISTRY.register(ConfirmPassword.class, CreditCard.class, Digits.class,
             Email.class, IpAddress.class, Isbn.class, NotEmpty.class,
             Password.class, Pattern.class, Size.class, Url.class);
-//        SARIPAAR_REGISTRY.register(ConfirmPassword.class, CreditCard.class, Digits.class,
-//            Email.class, Future.class, IpAddress.class, Isbn.class, NotEmpty.class,
-//            Password.class, Past.class, Pattern.class, Size.class, Url.class);
+//            Domain.class, Future.class, Past.class
     }
 
 }
