@@ -113,6 +113,13 @@ In your `{project_base}/build.gradle` file, include the following.
         }
     }
 
+ProGuard
+---------------------
+Exclude Saripaar classes from obfuscation and minification. Add the following rules to your `proguard-rules.pro` file.
+
+    -keep class com.mobsandgeeks.saripaar.** {*;}
+    -keep class commons.validator.routines.** {*;}
+
 Wiki
 ---------------------
 Please visit the [wiki] for a complete guide on Android Saripaar.
