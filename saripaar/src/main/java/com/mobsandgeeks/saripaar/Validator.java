@@ -145,14 +145,39 @@ public final class Validator {
     /**
      * A convenience method for registering {@link com.mobsandgeeks.saripaar.Rule} annotations that
      * act on {@link android.widget.TextView} and it's children, the most notable one being
-     * {@link android.widget.EditText}. Register custom annotations for {@link android.widget.TextView}s
-     * that validates {@link java.lang.Double}, {@link java.lang.Float},
-     * {@link java.lang.Integer} and {@link java.lang.String} types.
+     * {@link android.widget.EditText}. Register custom annotations for
+     * {@link android.widget.TextView}s that validates {@link java.lang.Double},
+     * {@link java.lang.Float}, {@link java.lang.Integer} and {@link java.lang.String} types.
+     * <p>
+     * For registering rule annotations for other view types see,
+     * {@link #registerAdapter(Class, com.mobsandgeeks.saripaar.adapter.ViewDataAdapter)}.
      *
      * @param ruleAnnotation  A rule {@link java.lang.annotation.Annotation}.
      */
     public static void registerAnnotation(final Class<? extends Annotation> ruleAnnotation) {
         SARIPAAR_REGISTRY.register(ruleAnnotation);
+    }
+
+    /**
+     * An elaborate method for registering custom rule annotations.
+     *
+     * @param annotation  The annotation that you want to register.
+     * @param viewType  The {@link android.view.View} type.
+     * @param viewDataAdapter  An instance of the
+     *      {@link com.mobsandgeeks.saripaar.adapter.ViewDataAdapter} for your
+     *      {@link android.view.View}.
+     *
+     * @param <VIEW>  The {@link android.view.View} for which the
+     *      {@link java.lang.annotation.Annotation} and
+     *      {@link com.mobsandgeeks.saripaar.adapter.ViewDataAdapter} is being registered.
+     */
+    public static <VIEW extends View> void registerAnnotation(
+            final Class<? extends Annotation> annotation, final Class<VIEW> viewType,
+                final ViewDataAdapter<VIEW, ?> viewDataAdapter) {
+
+        ValidateUsing validateUsing = annotation.getAnnotation(ValidateUsing.class);
+        Class ruleDataType = Reflector.getRuleDataType(validateUsing);
+        SARIPAAR_REGISTRY.register(viewType, ruleDataType, viewDataAdapter, annotation);
     }
 
     /**

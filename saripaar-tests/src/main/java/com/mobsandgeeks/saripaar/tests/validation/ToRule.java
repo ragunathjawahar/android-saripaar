@@ -14,17 +14,17 @@
 
 package com.mobsandgeeks.saripaar.tests.validation;
 
-import com.mobsandgeeks.saripaar.annotation.ValidateUsing;
+import com.mobsandgeeks.saripaar.AnnotationRule;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+public class ToRule extends AnnotationRule<To, Integer> {
 
-@ValidateUsing(HometownZipCodeRule.class)
-@Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.FIELD)
-public @interface HometownZipCode {
-    public int messageResId()   default -1;
-    public String message()     default "We accept orders only in 635001.";
+    protected ToRule(To to) {
+        super(to);
+    }
+
+    @Override
+    public boolean isValid(Integer progress) {
+        return progress <= mRuleAnnotation.value();
+    }
+
 }

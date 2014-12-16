@@ -36,6 +36,9 @@
             android:name=".CustomAnnotationActivity"
             android:label="@string/title_activity_custom_annotation" />
         <activity
+            android:name=".CustomAnnotationWithAdapterActivity"
+            android:label="@string/title_activity_custom_annotation_with_adapter" />
+        <activity
             android:name=".QuickRuleUnorderedActivity"
             android:label="@string/title_activity_quick_rule" />
         <activity

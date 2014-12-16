@@ -105,7 +105,8 @@ final class Registry {
      * Registers {@link com.mobsandgeeks.saripaar.adapter.ViewDataAdapter}s for the associated
      * {@link AnnotationRule}s and their {@link android.view.View}s.
      *
-     * @param view  The {@link android.view.View} type on which the {@link AnnotationRule} can be used.
+     * @param viewType  The {@link android.view.View} type on which the {@link AnnotationRule}
+     *      can be used.
      * @param ruleDataType  Data type expected by the {@link AnnotationRule}.
      * @param viewDataAdapter  The {@link com.mobsandgeeks.saripaar.adapter.ViewDataAdapter}
      *      that can get the data for the {@link AnnotationRule} from the
@@ -119,14 +120,14 @@ final class Registry {
      *      is returned by the {@link com.mobsandgeeks.saripaar.adapter.ViewDataAdapter}.
      */
     public <VIEW extends View, DATA_TYPE> void register(
-            final Class<VIEW> view,
+            final Class<VIEW> viewType,
             final Class<DATA_TYPE> ruleDataType,
             final ViewDataAdapter<VIEW, DATA_TYPE> viewDataAdapter,
             final Class<? extends Annotation>... ruleAnnotations) {
 
         if (ruleAnnotations != null && ruleAnnotations.length > 0) {
             for (Class<? extends Annotation> ruleAnnotation : ruleAnnotations) {
-                register(ruleAnnotation, ruleDataType, view, viewDataAdapter);
+                register(ruleAnnotation, ruleDataType, viewType, viewDataAdapter);
             }
         }
     }

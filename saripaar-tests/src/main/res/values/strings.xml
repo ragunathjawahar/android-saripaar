@@ -10,6 +10,7 @@
 
     <string name="title_activity_custom_view">Custom View</string>
     <string name="title_activity_custom_annotation">Custom Annotation</string>
+    <string name="title_activity_custom_annotation_with_adapter">Custom Annotation with Adapter</string>
     <string name="title_activity_quick_rule">Quick Rule</string>
 
 </resources>

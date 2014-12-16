@@ -21,10 +21,12 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-@ValidateUsing(HometownZipCodeRule.class)
+@ValidateUsing(ToRule.class)
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
-public @interface HometownZipCode {
+public @interface To {
+    public int value();
+
     public int messageResId()   default -1;
-    public String message()     default "We accept orders only in 635001.";
+    public String message()     default "";
 }

@@ -34,5 +34,6 @@ public interface Constants {
 
     // State
     String STATE_SUCCESS = "SUCCESS";
+    String STATE_FAILURE = "FAILURE";
     String STATE_CRASH = "CRASH";
 }
