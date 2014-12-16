@@ -14,6 +14,7 @@
 
 package com.mobsandgeeks.saripaar;
 
+import android.content.Context;
 import android.view.View;
 
 import java.util.List;
@@ -56,6 +57,25 @@ public class ValidationError {
      */
     public List<Rule> getFailedRules() {
         return failedRules;
+    }
+
+    /**
+     * Extracts error messages from multiple failed rules and returns a {@link java.lang.String}
+     * object.
+     *
+     * @param context  A {@link android.content.Context}.
+     *
+     * @return A collated error message.
+     */
+    public String getCollatedErrorMessage(final Context context) {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (Rule failedRule : failedRules) {
+            String message = failedRule.getMessage(context).trim();
+            if (message.length() > 0) {
+                stringBuilder.append(message).append("\n");
+            }
+        }
+        return stringBuilder.toString().trim();
     }
 
     /**
