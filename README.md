@@ -140,8 +140,8 @@ License
   [Apache Commons Validator]: http://commons.apache.org/proper/commons-validator/
   [ButterKnife]: https://github.com/JakeWharton/butterknife
   [AndroidAnnotations]: https://github.com/excilys/androidannotations
-  [RoboGuice]: http://code.google.com/p/roboguice/
-  [Saripaar Annotations]: https://github.com/ragunathjawahar/android-saripaar/tree/v2/saripaar/src/main/java/com/mobsandgeeks/saripaar/annotation
-  [Validator]: https://github.com/ragunathjawahar/android-saripaar/blob/master/src/com/mobsandgeeks/saripaar/Validator.java
-  [ValidationListener]: https://github.com/ragunathjawahar/android-saripaar/blob/master/src/com/mobsandgeeks/saripaar/Validator.java
+  [RoboGuice]: https://github.com/roboguice/roboguice/
+  [Saripaar Annotations]: https://github.com/ragunathjawahar/android-saripaar/tree/master/saripaar/src/main/java/com/mobsandgeeks/saripaar/annotation
+  [Validator]: https://github.com/ragunathjawahar/android-saripaar/blob/master/saripaar/src/main/java/com/mobsandgeeks/saripaar/Validator.java
+  [ValidationListener]: https://github.com/ragunathjawahar/android-saripaar/blob/master/saripaar/src/main/java/com/mobsandgeeks/saripaar/Validator.java
   [wiki]: https://github.com/ragunathjawahar/android-saripaar/wiki
