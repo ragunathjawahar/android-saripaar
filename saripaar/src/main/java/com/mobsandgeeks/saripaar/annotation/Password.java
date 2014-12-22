@@ -29,6 +29,15 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
 public @interface Password {
+    public int min()            default 4;
+    public Scheme scheme()      default Scheme.ANY;
+
     public int messageResId()   default -1;
-    public String message()     default "";
+    public String message()     default "Invalid password";
+
+    public enum Scheme {
+        ANY, ALPHA, ALPHA_MIXED_CASE,
+        NUMERIC, ALPHA_NUMERIC, ALPHA_NUMERIC_MIXED_CASE,
+        ALPHA_NUMERIC_SYMBOLS, ALPHA_NUMERIC_MIXED_CASE_SYMBOLS
+    }
 }
