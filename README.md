@@ -28,8 +28,7 @@ Quick Start
 @Email
 private EditText emailEditText;
 
-@Password
-@Size(min = 6, message = "Enter at least 6 characters.")
+@Password(min = 6, scheme = Password.Scheme.ALPHA_NUMERIC_MIXED_CASE_SYMBOLS)
 private EditText passwordEditText;
 
 @ConfirmPassword
