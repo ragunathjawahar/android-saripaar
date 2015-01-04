@@ -29,7 +29,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
 public @interface Password {
-    public int min()            default 4;
+    public int min()            default 6;
     public Scheme scheme()      default Scheme.ANY;
 
     public int messageResId()   default -1;
