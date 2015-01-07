@@ -29,7 +29,7 @@ public class NotEmptyRule extends AnnotationRule<NotEmpty, String> {
 
     @Override
     public boolean isValid(String data) {
-        return data != null
-            && (mRuleAnnotation.trim() ? data.trim().length() > 0 : data.length() > 0);
+        return data != null && (mRuleAnnotation.trim()
+            ? data.trim().length() > 0 : data.length() > 0);
     }
 }

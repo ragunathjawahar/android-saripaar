@@ -258,12 +258,12 @@ final class Reflector {
         int modifiers = method.getModifiers();
 
         boolean isPublic = Modifier.isPublic(modifiers);
-        boolean notVolatile = !Modifier.isVolatile(modifiers);
-        boolean matchesMethodName = "isValid".equals(method.getName());
+        boolean nonVolatile = !Modifier.isVolatile(modifiers);
         boolean returnsBoolean = Boolean.TYPE.equals(method.getReturnType());
-        boolean hasSingleArgument = parameterTypes.length == 1;
+        boolean matchesMethodName = "isValid".equals(method.getName());
+        boolean hasSingleParameter = parameterTypes.length == 1;
 
-        return isPublic && notVolatile && matchesMethodName && returnsBoolean && hasSingleArgument;
+        return isPublic && nonVolatile && returnsBoolean && matchesMethodName && hasSingleParameter;
     }
 
 }
