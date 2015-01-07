@@ -17,9 +17,10 @@ package com.mobsandgeeks.saripaar;
 import android.view.View;
 
 /**
- * Unlike {@link com.mobsandgeeks.saripaar.AnnotationRule}s, {@link com.mobsandgeeks.saripaar.QuickRule}s
- * can exist without Annotations. These rules are directly applied to {@link android.view.View}s.
- * They are added to the {@link com.mobsandgeeks.saripaar.Validator} using the
+ * Unlike {@link com.mobsandgeeks.saripaar.AnnotationRule}s,
+ * {@link com.mobsandgeeks.saripaar.QuickRule}s can exist without Annotations. These rules are
+ * directly applied to {@link android.view.View}s. They are added to the
+ * {@link com.mobsandgeeks.saripaar.Validator} using the
  * {@link com.mobsandgeeks.saripaar.Validator#put(android.view.View, QuickRule[])} method.
  *
  * @param <VIEW>  The {@link android.view.View} on which this rule is to be applied.

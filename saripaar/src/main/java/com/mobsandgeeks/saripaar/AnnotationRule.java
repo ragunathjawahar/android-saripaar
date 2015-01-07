@@ -22,7 +22,8 @@ import java.lang.annotation.Annotation;
  * Saripaar {@link java.lang.annotation.Annotation}s have an
  * {@link com.mobsandgeeks.saripaar.AnnotationRule} paired to them, via the
  * {@link com.mobsandgeeks.saripaar.annotation.ValidateUsing} annotation. Like stock annotations,
- * custom annotations must also have a corresponding {@link com.mobsandgeeks.saripaar.AnnotationRule}.
+ * custom annotations must also have a corresponding
+ * {@link com.mobsandgeeks.saripaar.AnnotationRule}.
  *
  * @param <RULE_ANNOTATION>  The associated rule {@link java.lang.annotation.Annotation}.
  * @param <DATA_TYPE>  The data type this rule operates on.

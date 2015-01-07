@@ -64,7 +64,8 @@ import java.util.Set;
  * {@link android.app.Activity} or a {@link android.app.Fragment}. However, it can also be used
  * with other controller classes that contain references to {@link android.view.View} objects.
  * <p>
- * The {@link com.mobsandgeeks.saripaar.Validator} is capable of performing validations in two modes,
+ * The {@link com.mobsandgeeks.saripaar.Validator} is capable of performing validations in two
+ * modes,
  *  <ol>
  *      <li>{@link Mode#BURST}, where all the views are validated and all errors are reported
  *          via the callback at once. Fields need not be ordered using the
@@ -101,7 +102,7 @@ import java.util.Set;
  *          is called if all {@link com.mobsandgeeks.saripaar.Rule}s pass.
  *      </li>
  *      <li>
- *          The {@link com.mobsandgeeks.saripaar.Validator.ValidationListener#onValidationFailed(java.util.List)}
+ *          The {@link Validator.ValidationListener#onValidationFailed(java.util.List)}
  *          callback reports errors caused by failures. In {@link Mode#IMMEDIATE} this callback will
  *          contain just one instance of the {@link com.mobsandgeeks.saripaar.ValidationError}
  *          object.
@@ -333,8 +334,8 @@ public final class Validator {
      * @return true if the asynchronous task is running, false otherwise.
      */
     public boolean isValidating() {
-        return mAsyncValidationTask != null &&
-            mAsyncValidationTask.getStatus() != AsyncTask.Status.FINISHED;
+        return mAsyncValidationTask != null
+            && mAsyncValidationTask.getStatus() != AsyncTask.Status.FINISHED;
     }
 
     /**
@@ -355,8 +356,8 @@ public final class Validator {
     /**
      * Add one or more {@link com.mobsandgeeks.saripaar.QuickRule}s for a {@link android.view.View}.
      *
-     * @param view  A {@link android.view.View} for which {@link com.mobsandgeeks.saripaar.QuickRule}(s)
-     *      are to be added.
+     * @param view  A {@link android.view.View} for which
+     *      {@link com.mobsandgeeks.saripaar.QuickRule}(s) are to be added.
      * @param quickRules  Varargs of {@link com.mobsandgeeks.saripaar.QuickRule}s.
      */
     public void put(final View view, final QuickRule... quickRules) {
@@ -371,8 +372,8 @@ public final class Validator {
 
         // If all fields are ordered, then this field should be ordered too
         if (mOrderedFields && !mViewRulesMap.containsKey(view)) {
-            String message = String.format("All fields are ordered, so this `%s` should be " +
-                "ordered too, declare the view as a field and add the `@Order` annotation.",
+            String message = String.format("All fields are ordered, so this `%s` should be "
+                + "ordered too, declare the view as a field and add the `@Order` annotation.",
                     view.getClass().getName());
             throw new IllegalStateException(message);
         }
@@ -389,43 +390,6 @@ public final class Validator {
             }
         }
         mViewRulesMap.put(view, ruleAdapterPairs);
-    }
-
-    /**
-     * Listener with callback methods that notifies the outcome of validation.
-     */
-    public interface ValidationListener {
-
-        /**
-         * Called when all {@link com.mobsandgeeks.saripaar.Rule}s pass.
-         */
-        void onValidationSucceeded();
-
-        /**
-         * Called when one or several {@link com.mobsandgeeks.saripaar.Rule}s fail.
-         *
-         * @param errors  List containing references to the {@link android.view.View}s and
-         *      {@link com.mobsandgeeks.saripaar.Rule}s that failed.
-         */
-        void onValidationFailed(List<ValidationError> errors);
-    }
-
-    /**
-     * Validation mode.
-     */
-    public enum Mode {
-
-        /**
-         * BURST mode will validate all rules before calling the
-         * {@link com.mobsandgeeks.saripaar.Validator.ValidationListener#onValidationFailed(java.util.List)}
-         * callback.
-         */
-        BURST,
-
-        /**
-         * IMMEDIATE mode will stop the validation as soon as it encounters the first failing rule.
-         */
-        IMMEDIATE
     }
 
     /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -448,9 +412,9 @@ public final class Validator {
         }
 
         if (mViewRulesMap.size() == 0) {
-            String message = "No rules found. You must have at least one rule to validate. " +
-                "If you are using custom annotations, make sure that you have registered " +
-                "them using the 'Validator.register()' method.";
+            String message = "No rules found. You must have at least one rule to validate. "
+                + "If you are using custom annotations, make sure that you have registered "
+                    + "them using the 'Validator.register()' method.";
             throw new IllegalStateException(message);
         }
     }
@@ -674,14 +638,14 @@ public final class Validator {
     private void assertOrderedFields(boolean orderedRules, String reasonSuffix) {
         if (!orderedRules) {
             String message = String.format(
-                "Rules are unordered, all view fields should be ordered " +
-                    "using the '@Order' annotation " + reasonSuffix);
+                "Rules are unordered, all view fields should be ordered "
+                    + "using the '@Order' annotation " + reasonSuffix);
             throw new IllegalStateException(message);
         }
     }
 
-    private ValidationReport getValidationReport(final View targetView,
-            final Map<View, ArrayList<RuleAdapterPair>> viewRulesMap, final Mode validationMode) {
+    private ValidationReport getValidationReport(View targetView,
+            Map<View, ArrayList<RuleAdapterPair>> viewRulesMap, Mode validationMode) {
 
         final List<ValidationError> validationErrors = new ArrayList<ValidationError>();
         final Set<View> views = viewRulesMap.keySet();
@@ -795,6 +759,43 @@ public final class Validator {
         }
     }
 
+    /**
+     * Listener with callback methods that notifies the outcome of validation.
+     */
+    public interface ValidationListener {
+
+        /**
+         * Called when all {@link com.mobsandgeeks.saripaar.Rule}s pass.
+         */
+        void onValidationSucceeded();
+
+        /**
+         * Called when one or several {@link com.mobsandgeeks.saripaar.Rule}s fail.
+         *
+         * @param errors  List containing references to the {@link android.view.View}s and
+         *      {@link com.mobsandgeeks.saripaar.Rule}s that failed.
+         */
+        void onValidationFailed(List<ValidationError> errors);
+    }
+
+    /**
+     * Validation mode.
+     */
+    public enum Mode {
+
+        /**
+         * BURST mode will validate all rules before calling the
+         * {@link Validator.ValidationListener#onValidationFailed(java.util.List)}
+         * callback.
+         */
+        BURST,
+
+        /**
+         * IMMEDIATE mode will stop the validation as soon as it encounters the first failing rule.
+         */
+        IMMEDIATE
+    }
+
     static class ValidationReport {
         List<ValidationError> errors;
         boolean hasMoreErrors;
@@ -830,15 +831,18 @@ public final class Validator {
 
     static {
         // CheckBoxBooleanAdapter
-        SARIPAAR_REGISTRY.register(CheckBox.class, Boolean.class, new CheckBoxBooleanAdapter(),
+        SARIPAAR_REGISTRY.register(CheckBox.class, Boolean.class,
+            new CheckBoxBooleanAdapter(),
             AssertFalse.class, AssertTrue.class, Checked.class);
 
         // RadioButtonBooleanAdapter
-        SARIPAAR_REGISTRY.register(RadioButton.class, Boolean.class, new RadioButtonBooleanAdapter(),
+        SARIPAAR_REGISTRY.register(RadioButton.class, Boolean.class,
+            new RadioButtonBooleanAdapter(),
             AssertFalse.class, AssertTrue.class, Checked.class);
 
         // SpinnerIndexAdapter
-        SARIPAAR_REGISTRY.register(Spinner.class, Integer.class, new SpinnerIndexAdapter(),
+        SARIPAAR_REGISTRY.register(Spinner.class, Integer.class,
+            new SpinnerIndexAdapter(),
             Select.class);
 
         // TextViewDoubleAdapter

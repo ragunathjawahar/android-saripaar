@@ -189,8 +189,8 @@ final class Reflector {
     }
 
     /**
-     * Method finds the data type of the {@link AnnotationRule} that is
-     * tied up to the given rule annotation.
+     * Method finds the data type of the {@link AnnotationRule} that is tied up to the given rule
+     * annotation.
      *
      * @param ruleAnnotation  Rule {@link java.lang.annotation.Annotation}.
      *
@@ -203,10 +203,11 @@ final class Reflector {
     }
 
     /**
-     * Method finds the data type of the {@link AnnotationRule} that is
-     * tied up to the given rule annotation.
+     * Method finds the data type of the {@link AnnotationRule} that is tied up to the given rule
+     * annotation.
      *
-     * @param validateUsing  The {@link com.mobsandgeeks.saripaar.annotation.ValidateUsing} instance.
+     * @param validateUsing  The {@link com.mobsandgeeks.saripaar.annotation.ValidateUsing}
+     *      instance.
      *
      * @return The expected data type for the
      *      {@link com.mobsandgeeks.saripaar.adapter.ViewDataAdapter}s.
@@ -266,4 +267,6 @@ final class Reflector {
         return isPublic && nonVolatile && returnsBoolean && matchesMethodName && hasSingleParameter;
     }
 
+    private Reflector() {
+    }
 }
