@@ -140,7 +140,7 @@ License
     See the License for the specific language governing permissions and
     limitations under the License.
 
-<sub>Saripaar Logo © 2013 - 2014, Mobs &amp; Geeks.<sub>
+<sub>Saripaar Logo © 2013 - 2015, Mobs &amp; Geeks.<sub>
 
   [jar]: http://search.maven.org/#search%7Cga%7C1%7Candroid%20saripaar
   [Apache Commons Validator]: http://commons.apache.org/proper/commons-validator/
