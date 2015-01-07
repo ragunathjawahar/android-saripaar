@@ -73,7 +73,7 @@ public class ValidationError {
         for (Rule failedRule : failedRules) {
             String message = failedRule.getMessage(context).trim();
             if (message.length() > 0) {
-                stringBuilder.append(message).append("\n");
+                stringBuilder.append(message).append('\n');
             }
         }
         return stringBuilder.toString().trim();
