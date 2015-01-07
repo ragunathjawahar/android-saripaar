@@ -40,7 +40,7 @@ task pmd(type: Pmd) {
     ruleSets = ["java-basic", "java-braces", "java-strings"]
 
     source 'src'
-    include '**/*.java'
+    include '**/com/mobsandgeeks/saripaar/*.java'
     exclude '**/gen/**'
 
     reports {
