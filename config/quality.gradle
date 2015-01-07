@@ -21,7 +21,7 @@ task findbugs(type: FindBugs) {
     classes = files("$project.buildDir/intermediates/classes/")
 
     source 'src'
-    include '**/*.java'
+    include '**/com/mobsandgeeks/saripaar/*.java'
     exclude '**/gen/**'
 
     reports {
