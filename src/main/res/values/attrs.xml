@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="DefaultErrorStingsTheme">
+        <attr name="DefaultErrorStingsStyle" format="reference" />
+    </declare-styleable>
+
+    <declare-styleable name="DefaultErrorStings">
+        <attr name="requiredRule" format="string" />
+        <attr name="textRule" format="string" />
+        <attr name="regExRule" format="string" />
+        <attr name="passwordRule" format="string" />
+        <attr name="confirmPasswordRule" format="string" />
+        <attr name="ipAddressRule" format="string" />
+        <attr name="emailRule" format="string" />
+        <attr name="numberRule" format="string" />
+    </declare-styleable>
+
+</resources>

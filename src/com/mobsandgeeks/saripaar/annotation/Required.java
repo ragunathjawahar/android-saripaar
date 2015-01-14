@@ -14,6 +14,8 @@
 
 package com.mobsandgeeks.saripaar.annotation;
 
+import com.mobsandgeeks.saripaar.Rules;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -26,12 +28,12 @@ import java.lang.annotation.Target;
  */
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Required {
+public @interface   Required {
     public int order() default Integer.MAX_VALUE;
 
     public boolean trim() default true;
 
-    public String message() default "This field is required.";
+    public String message() default Rules.EMPTY_STRING;
 
     public int messageResId() default 0;
 }

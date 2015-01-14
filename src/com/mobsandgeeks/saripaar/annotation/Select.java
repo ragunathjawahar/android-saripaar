@@ -16,6 +16,8 @@ package com.mobsandgeeks.saripaar.annotation;
 
 import android.widget.Spinner;
 
+import com.mobsandgeeks.saripaar.Rules;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -33,7 +35,7 @@ public @interface Select {
 
     public int defaultSelection() default 0;
 
-    public String message() default "Select an item.";
+    public String message() default Rules.EMPTY_STRING;
 
     public int messageResId() default 0;
 }

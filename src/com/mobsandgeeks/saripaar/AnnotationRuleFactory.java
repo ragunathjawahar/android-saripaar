@@ -15,6 +15,7 @@
 package com.mobsandgeeks.saripaar;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Checkable;
@@ -122,7 +123,10 @@ class AnnotationRuleFactory {
         int messageResId = required.messageResId();
         String message = messageResId != 0 ? view.getContext().getString(messageResId) :
                 required.message();
-
+        String defaultMessage = Validator.getMessages().getRequireRuleMessage();
+        if (TextUtils.isEmpty(message) && defaultMessage != null) {
+            message = defaultMessage;
+        }
         return Rules.required(message, required.trim());
     }
 
@@ -139,7 +143,7 @@ class AnnotationRuleFactory {
             Log.w(TAG, String.format(WARN_TEXT, field.getName(), TextRule.class.getSimpleName()));
             return null;
         }
-
+        Validator.getMessages().getTextRuleMessage();
         List<Rule<?>> rules = new ArrayList<Rule<?>>();
         int messageResId = textRule.messageResId();
         String message = messageResId != 0 ? view.getContext().getString(messageResId) :
@@ -162,13 +166,17 @@ class AnnotationRuleFactory {
         if (minLength > 0) {
             rules.add(Rules.minLength(null, minLength, textRule.trim()));
         }
-        if (maxLength != Integer.MAX_VALUE) {
+        if (maxLength < Integer.MAX_VALUE) {
             rules.add(Rules.maxLength(null, maxLength, textRule.trim()));
         }
 
         Rule<?>[] ruleArray = new Rule<?>[rules.size()];
         rules.toArray(ruleArray);
 
+        String defaultMessage = Validator.getMessages().getTextRuleMessage();
+        if (TextUtils.isEmpty(message) && defaultMessage != null) {
+            message = defaultMessage;
+        }
         return Rules.and(message, ruleArray);
     }
 
@@ -193,8 +201,12 @@ class AnnotationRuleFactory {
             e.printStackTrace();
         } catch (IllegalAccessException e) {
             e.printStackTrace();
-        }catch (ClassCastException e) {
+        } catch (ClassCastException e) {
             e.printStackTrace();
+        }
+        String defaultMessage = Validator.getMessages().getRegExRuleMessage();
+        if (TextUtils.isEmpty(message) && defaultMessage != null) {
+            message = defaultMessage;
         }
         return Rules.regex(message, pattern, regexRule.trim());
     }
@@ -281,7 +293,10 @@ class AnnotationRuleFactory {
 
         Rule<?>[] ruleArray = new Rule<?>[rules.size()];
         rules.toArray(ruleArray);
-
+        String defaultMessage = Validator.getMessages().getNumberRuleMessage();
+        if (TextUtils.isEmpty(message) && defaultMessage != null) {
+            message = defaultMessage;
+        }
         return Rules.and(message, ruleArray);
     }
 
@@ -294,7 +309,10 @@ class AnnotationRuleFactory {
         int messageResId = password.messageResId();
         String message = messageResId != 0 ? view.getContext().getString(messageResId) :
                 password.message();
-
+        String defaultMessage = Validator.getMessages().getPasswordRuleMessage();
+        if (TextUtils.isEmpty(message) && defaultMessage != null) {
+            message = defaultMessage;
+        }
         return Rules.required(message, false);
     }
 
@@ -309,7 +327,10 @@ class AnnotationRuleFactory {
         int messageResId = confirmPassword.messageResId();
         String message = messageResId != 0 ? view.getContext().getString(messageResId) :
                 confirmPassword.message();
-
+        String defaultMessage = Validator.getMessages().getConfirmPasswordRuleMessage();
+        if (TextUtils.isEmpty(message) && defaultMessage != null) {
+            message = defaultMessage;
+        }
         return Rules.eq(message, passwordTextView);
     }
 
@@ -336,13 +357,15 @@ class AnnotationRuleFactory {
         int messageResId = ipAddress.messageResId();
         String message = messageResId != 0 ? view.getContext().getString(messageResId) :
                 ipAddress.message();
-
+        String defaultMessage = Validator.getMessages().getIpAddressRuleMessage();
+        if (TextUtils.isEmpty(message) && defaultMessage != null) {
+            message = defaultMessage;
+        }
         return Rules.or(message, Rules.eq(null, Rules.EMPTY_STRING),
                 Rules.regex(message, Rules.REGEX_IP_ADDRESS, true));
     }
 
-    private static Rule<Checkable> getCheckedRule(
-            Field field, View view, Checked checked) {
+    private static Rule<Checkable> getCheckedRule(Field field, View view, Checked checked) {
 
         if (!Checkable.class.isAssignableFrom(view.getClass())) {
             Log.w(TAG, String.format(WARN_CHECKABLE, field.getName(),
