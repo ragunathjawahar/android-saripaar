@@ -14,21 +14,46 @@
 
 package com.mobsandgeeks.saripaar.rule;
 
-import com.mobsandgeeks.saripaar.AnnotationRule;
+import android.view.View;
+
+import com.mobsandgeeks.saripaar.ContextualAnnotationRule;
+import com.mobsandgeeks.saripaar.ValidationContext;
 import com.mobsandgeeks.saripaar.annotation.ConfirmPassword;
+import com.mobsandgeeks.saripaar.annotation.Password;
+
+import java.util.List;
 
 /**
  * @author Ragunath Jawahar {@literal <rj@mobsandgeeks.com>}
  * @since 2.0
  */
-public class ConfirmPasswordRule extends AnnotationRule<ConfirmPassword, String> {
+public class ConfirmPasswordRule extends ContextualAnnotationRule<ConfirmPassword, String> {
 
-    protected ConfirmPasswordRule(ConfirmPassword confirmPassword) {
-        super(confirmPassword);
+    protected ConfirmPasswordRule(ValidationContext validationContext,
+            ConfirmPassword confirmPassword) {
+        super(validationContext, confirmPassword);
     }
 
     @Override
-    public boolean isValid(String data) {
-        return false;
+    public boolean isValid(String confirmPassword) {
+        List<View> passwordViews = mValidationContext.getAnnotatedViews(Password.class);
+        int nPasswordViews = passwordViews.size();
+
+        if (nPasswordViews == 0) {
+            String message = String.format(
+                    "You should have at least one view annotated with '%s' to use '%s'.",
+                            Password.class.getName(), ConfirmPassword.class.getName());
+            throw new IllegalStateException(message);
+        } else if (nPasswordViews > 0) {
+            String message = String.format(
+                    "More than 1 field annotated with '%s'.", Password.class.getName());
+            throw new IllegalStateException(message);
+        }
+
+        // There's only one, then we're good to go :)
+        View view = passwordViews.get(0);
+        Object password = mValidationContext.getData(view, Password.class);
+
+        return confirmPassword.equals(password);
     }
 }

@@ -37,7 +37,8 @@ public abstract class AnnotationRule<RULE_ANNOTATION extends Annotation, DATA_TY
     protected final RULE_ANNOTATION mRuleAnnotation;
 
     /**
-     * Constructor.
+     * Constructor. It is mandatory that all subclasses MUST have a constructor with the same
+     * signature.
      *
      * @param ruleAnnotation  The rule {@link java.lang.annotation.Annotation} instance to which
      *      this rule is paired.

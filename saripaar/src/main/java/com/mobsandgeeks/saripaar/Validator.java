@@ -126,6 +126,7 @@ public final class Validator {
     // Attributes
     private Object mController;
     private Mode mValidationMode;
+    private ValidationContext mValidationContext;
     private Map<View, ArrayList<RuleAdapterPair>> mViewRulesMap;
     private boolean mOrderedFields;
     private ValidationListener mValidationListener;
@@ -141,6 +142,7 @@ public final class Validator {
         assertNotNull(controller, "controller");
         mController = controller;
         mValidationMode = Mode.BURST;
+        mValidationContext = new ValidationContext();
     }
 
     /**
@@ -409,6 +411,7 @@ public final class Validator {
         if (mViewRulesMap == null) {
             final List<Field> annotatedFields = getSaripaarAnnotatedFields(mController.getClass());
             mViewRulesMap = createRules(annotatedFields);
+            mValidationContext.setViewRulesMap(mViewRulesMap);
         }
 
         if (mViewRulesMap.size() == 0) {
@@ -499,7 +502,7 @@ public final class Validator {
             final ArrayList<RuleAdapterPair> ruleAdapterPairs = new ArrayList<RuleAdapterPair>();
             final Annotation[] fieldAnnotations = field.getAnnotations();
             for (Annotation fieldAnnotation : fieldAnnotations) {
-                if (isSaripaarAnnotation(fieldAnnotation)) {
+                if (isSaripaarAnnotation(fieldAnnotation.annotationType())) {
                     RuleAdapterPair ruleAdapterPair = getRuleAdapterPair(fieldAnnotation, field);
                     ruleAdapterPairs.add(ruleAdapterPair);
                 }
@@ -511,8 +514,8 @@ public final class Validator {
         return viewRulesMap;
     }
 
-    private boolean isSaripaarAnnotation(final Annotation annotation) {
-        return SARIPAAR_REGISTRY.getRegisteredAnnotations().contains(annotation.annotationType());
+    static boolean isSaripaarAnnotation(final Class<? extends Annotation> annotation) {
+        return SARIPAAR_REGISTRY.getRegisteredAnnotations().contains(annotation);
     }
 
     private RuleAdapterPair getRuleAdapterPair(final Annotation saripaarAnnotation,
@@ -538,7 +541,8 @@ public final class Validator {
         }
 
         final Class<? extends AnnotationRule> ruleType = getRuleType(saripaarAnnotation);
-        final AnnotationRule rule = Reflector.instantiateRule(ruleType, saripaarAnnotation);
+        final AnnotationRule rule = Reflector.instantiateRule(ruleType,
+                saripaarAnnotation, mValidationContext);
 
         return new RuleAdapterPair(rule, dataAdapter);
     }
@@ -635,7 +639,7 @@ public final class Validator {
         }
     }
 
-    private void assertOrderedFields(boolean orderedRules, String reasonSuffix) {
+    private void assertOrderedFields(final boolean orderedRules, final String reasonSuffix) {
         if (!orderedRules) {
             String message = String.format(
                 "Rules are unordered, all view fields should be ordered "
@@ -644,8 +648,8 @@ public final class Validator {
         }
     }
 
-    private ValidationReport getValidationReport(View targetView,
-            Map<View, ArrayList<RuleAdapterPair>> viewRulesMap, Mode validationMode) {
+    private ValidationReport getValidationReport(final View targetView,
+            final Map<View, ArrayList<RuleAdapterPair>> viewRulesMap, final Mode validationMode) {
 
         final List<ValidationError> validationErrors = new ArrayList<ValidationError>();
         final Set<View> views = viewRulesMap.keySet();
@@ -753,7 +757,7 @@ public final class Validator {
         Rule rule;
         ViewDataAdapter dataAdapter;
 
-        RuleAdapterPair(Rule rule, ViewDataAdapter dataAdapter) {
+        RuleAdapterPair(final Rule rule, final ViewDataAdapter dataAdapter) {
             this.rule = rule;
             this.dataAdapter = dataAdapter;
         }
@@ -800,7 +804,7 @@ public final class Validator {
         List<ValidationError> errors;
         boolean hasMoreErrors;
 
-        ValidationReport(List<ValidationError> errors, boolean hasMoreErrors) {
+        ValidationReport(final List<ValidationError> errors, final boolean hasMoreErrors) {
             this.errors = errors;
             this.hasMoreErrors = hasMoreErrors;
         }
