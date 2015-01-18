@@ -5,7 +5,7 @@ import android.widget.TextView;
 
 import com.mobsandgeeks.saripaar.tests.ui.ConfirmPasswordWithPasswordActivity;
 
-public class ConfirmPasswordTest
+public class ConfirmPasswordWithPasswordTest
         extends ActivityInstrumentationTestCase2<ConfirmPasswordWithPasswordActivity> {
 
     private TextView mResultTextView;
@@ -32,7 +32,7 @@ public class ConfirmPasswordTest
         TestHelper.checkForText(Constants.FIELD_CONFIRM_PASSWORD, mResultTextView);
     }
 
-    public ConfirmPasswordTest() {
+    public ConfirmPasswordWithPasswordTest() {
         super(ConfirmPasswordWithPasswordActivity.class);
     }
 }

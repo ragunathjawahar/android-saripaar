@@ -9,12 +9,13 @@
     <string name="title_activity_custom_annotation">Custom Annotation</string>
     <string name="title_activity_custom_annotation_with_adapter">Custom Annotation with Adapter</string>
     <string name="title_activity_quick_rule">Quick Rule</string>
-    <string name="title_activity_confirm_password_with_password">Confirm Password</string>
+    <string name="title_activity_confirm_password">Confirm Password</string>
 
     <string name="burst">BURST</string>
     <string name="immediate">IMMEDIATE</string>
     <string name="success">SUCCESS</string>
     <string name="failure">FAILURE</string>
+    <string name="crash">CRASH</string>
 
     <string name="password">Password</string>
     <string name="confirm_password">Confirm Password</string>

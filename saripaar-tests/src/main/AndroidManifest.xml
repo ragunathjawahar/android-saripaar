@@ -49,8 +49,10 @@
             android:label="@string/title_activity_quick_rule" />
         <activity
             android:name=".ui.ConfirmPasswordWithPasswordActivity"
-            android:label="@string/title_activity_confirm_password_with_password" >
-        </activity>
+            android:label="@string/title_activity_confirm_password" />
+        <activity
+            android:name=".ui.ConfirmPasswordNoPasswordActivity"
+            android:label="@string/title_activity_confirm_password" />
     </application>
 
 </manifest>

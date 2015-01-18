@@ -3,7 +3,6 @@ package com.mobsandgeeks.saripaar.tests;
 import android.widget.TextView;
 
 import com.google.android.apps.common.testing.ui.espresso.Espresso;
-import com.mobsandgeeks.saripaar.tests.R;
 
 import static com.google.android.apps.common.testing.ui.espresso.Espresso.onView;
 import static com.google.android.apps.common.testing.ui.espresso.action.ViewActions.click;
