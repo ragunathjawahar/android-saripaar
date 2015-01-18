@@ -29,7 +29,7 @@ import java.util.List;
  */
 public final class Common {
 
-    public static final String getFailedFieldNames(List<ValidationError> errors) {
+    public static String getFailedFieldNames(List<ValidationError> errors) {
         StringBuilder stringBuilder = new StringBuilder();
         for (ValidationError error : errors) {
             View view = error.getView();

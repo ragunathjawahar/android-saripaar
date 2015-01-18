@@ -63,7 +63,7 @@ public class ValidationContext {
             ArrayList<Validator.RuleAdapterPair> ruleAdapterPairs = mViewRulesMap.get(view);
             for (Validator.RuleAdapterPair ruleAdapterPair : ruleAdapterPairs) {
                 if (annotationRuleClass.equals(ruleAdapterPair.rule.getClass())) {
-                    if (annotatedViews.contains(view)) {
+                    if (!annotatedViews.contains(view)) {
                         annotatedViews.add(view);
                     }
                 }
@@ -121,9 +121,9 @@ public class ValidationContext {
 
     private void assertIsRegisteredAnnotation(
             final Class<? extends Annotation> saripaarAnnotation) {
-        if (Validator.isSaripaarAnnotation(saripaarAnnotation)) {
+        if (!Validator.isSaripaarAnnotation(saripaarAnnotation)) {
             String message = String.format("%s is not a registered Saripaar annotation.",
-                saripaarAnnotation.getClass().getName());
+                saripaarAnnotation.getName());
             throw new IllegalArgumentException(message);
         }
     }

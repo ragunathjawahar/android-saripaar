@@ -47,6 +47,10 @@
         <activity
             android:name=".QuickRuleUnorderedInOrderedActivity"
             android:label="@string/title_activity_quick_rule" />
+        <activity
+            android:name=".ConfirmPasswordWithPasswordActivity"
+            android:label="@string/title_activity_confirm_password_with_password" >
+        </activity>
     </application>
 
 </manifest>

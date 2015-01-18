@@ -44,7 +44,7 @@ public class ConfirmPasswordRule extends ContextualAnnotationRule<ConfirmPasswor
                     "You should have at least one view annotated with '%s' to use '%s'.",
                             Password.class.getName(), ConfirmPassword.class.getName());
             throw new IllegalStateException(message);
-        } else if (nPasswordViews > 0) {
+        } else if (nPasswordViews > 1) {
             String message = String.format(
                     "More than 1 field annotated with '%s'.", Password.class.getName());
             throw new IllegalStateException(message);
