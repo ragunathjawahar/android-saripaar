@@ -91,7 +91,7 @@ public class QuickRuleUnorderedInOrderedActivity extends Activity
 
     @Override
     public void onValidationSucceeded() {
-        mResultTextView.setText("SUCCESS");
+        mResultTextView.setText(R.string.success);
     }
 
     @Override
