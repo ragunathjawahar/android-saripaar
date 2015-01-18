@@ -52,19 +52,19 @@ final class Registry {
 
     // Stock adapters that come with Saripaar
     private static final Map<Class<? extends View>,
-        HashMap<Class<?>, ViewDataAdapter>> STOCK_ADAPTERS =
-            new HashMap<Class<? extends View>, HashMap<Class<?>, ViewDataAdapter>>();
+            HashMap<Class<?>, ViewDataAdapter>> STOCK_ADAPTERS =
+                    new HashMap<Class<? extends View>, HashMap<Class<?>, ViewDataAdapter>>();
 
     // Attributes
     private Map<Class<? extends Annotation>,
-        HashMap<Class<? extends View>, ViewDataAdapter>> mMappings;
+            HashMap<Class<? extends View>, ViewDataAdapter>> mMappings;
 
     /**
      * Good Ol' constructor.
      */
     Registry() {
         mMappings = new HashMap<Class<? extends Annotation>,
-            HashMap<Class<? extends View>, ViewDataAdapter>>();
+                HashMap<Class<? extends View>, ViewDataAdapter>>();
     }
 
     /**
@@ -93,8 +93,8 @@ final class Registry {
                     register(TextView.class, ruleDataType, dataAdapter, ruleAnnotation);
                 } else {
                     String message = String.format(
-                        "Unable to find a matching adapter for `%s`, that returns a `%s`.",
-                            ruleAnnotation.getName(), ruleDataType.getName());
+                            "Unable to find a matching adapter for `%s`, that returns a `%s`.",
+                                    ruleAnnotation.getName(), ruleDataType.getName());
                     throw new SaripaarViolationException(message);
                 }
             }

@@ -31,7 +31,7 @@ import com.mobsandgeeks.saripaar.annotation.ConfirmPassword;
 import com.mobsandgeeks.saripaar.annotation.CreditCard;
 import com.mobsandgeeks.saripaar.annotation.DecimalMax;
 import com.mobsandgeeks.saripaar.annotation.DecimalMin;
-import com.mobsandgeeks.saripaar.annotation.Digits;
+import com.mobsandgeeks.saripaar.annotation.Domain;
 import com.mobsandgeeks.saripaar.annotation.Order;
 import com.mobsandgeeks.saripaar.annotation.Url;
 import com.mobsandgeeks.saripaar.annotation.Email;
@@ -836,18 +836,18 @@ public final class Validator {
     static {
         // CheckBoxBooleanAdapter
         SARIPAAR_REGISTRY.register(CheckBox.class, Boolean.class,
-            new CheckBoxBooleanAdapter(),
-            AssertFalse.class, AssertTrue.class, Checked.class);
+                new CheckBoxBooleanAdapter(),
+                AssertFalse.class, AssertTrue.class, Checked.class);
 
         // RadioButtonBooleanAdapter
         SARIPAAR_REGISTRY.register(RadioButton.class, Boolean.class,
-            new RadioButtonBooleanAdapter(),
-            AssertFalse.class, AssertTrue.class, Checked.class);
+                new RadioButtonBooleanAdapter(),
+                AssertFalse.class, AssertTrue.class, Checked.class);
 
         // SpinnerIndexAdapter
         SARIPAAR_REGISTRY.register(Spinner.class, Integer.class,
-            new SpinnerIndexAdapter(),
-            Select.class);
+                new SpinnerIndexAdapter(),
+                Select.class);
 
         // TextViewDoubleAdapter
         SARIPAAR_REGISTRY.register(DecimalMax.class, DecimalMin.class);
@@ -856,10 +856,11 @@ public final class Validator {
         SARIPAAR_REGISTRY.register(Max.class, Min.class);
 
         // TextViewStringAdapter
-        SARIPAAR_REGISTRY.register(ConfirmPassword.class, CreditCard.class, Digits.class,
-            Email.class, IpAddress.class, Isbn.class, NotEmpty.class,
-            Password.class, Pattern.class, Size.class, Url.class);
-//            Domain.class, Future.class, Past.class
+        SARIPAAR_REGISTRY.register(
+                ConfirmPassword.class, CreditCard.class, Domain.class,
+                Email.class, IpAddress.class, Isbn.class, NotEmpty.class,
+                Password.class, Pattern.class, Size.class, Url.class);
+//            Digits.class, Future.class, Past.class
     }
 
 }
