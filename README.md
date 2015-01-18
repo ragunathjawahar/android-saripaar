@@ -7,7 +7,7 @@ Android Saripaar v2
 Android Saripaar is a simple, yet powerful rule-based UI form validation library for Android.
 It is the **SIMPLEST** and **FEATURE-RICH** validation library available for Android.
 
-*Note: v2 is still in development and is available in snapshots for PREVIEW. For a feature complete version of the library, please use v1 (available from Maven Central). The following annotations are yet to be implemented in Saripaar v2 `@ConfirmPassword`, `@Future`, `@Past` and `@Digits`*.
+*Note: v2 is still under development and is available as snapshots for PREVIEW. For a feature complete version of the library, please use v1 (available from Maven Central). The following annotations are yet to be implemented in Saripaar v2 `@Domain`, `@Future`, `@Past` and `@Digits`*.
 
 Why Android Saripaar?
 ---------------------
