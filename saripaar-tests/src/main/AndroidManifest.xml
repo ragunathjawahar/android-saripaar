@@ -53,6 +53,9 @@
         <activity
             android:name=".ui.ConfirmPasswordNoPasswordActivity"
             android:label="@string/title_activity_confirm_password" />
+        <activity
+            android:name=".ui.ConfirmPasswordSeveralPasswordsActivity"
+            android:label="@string/title_activity_confirm_password" />
     </application>
 
 </manifest>
