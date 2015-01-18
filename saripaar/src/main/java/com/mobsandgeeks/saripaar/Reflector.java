@@ -272,7 +272,7 @@ final class Reflector {
                     ValidationContext.class, annotationType.getName(),
                             ruleType.getClass().getName());
         } else if (AnnotationRule.class.isAssignableFrom(ruleType)) {
-            String.format(
+            message = String.format(
                     "'%s' should have a single-argument constructor that accepts a '%s' instance.",
                             ruleType.getName(), annotationType.getName());
         }

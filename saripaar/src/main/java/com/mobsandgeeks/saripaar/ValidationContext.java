@@ -62,10 +62,11 @@ public class ValidationContext {
         for (View view : views) {
             ArrayList<Validator.RuleAdapterPair> ruleAdapterPairs = mViewRulesMap.get(view);
             for (Validator.RuleAdapterPair ruleAdapterPair : ruleAdapterPairs) {
-                if (annotationRuleClass.equals(ruleAdapterPair.rule.getClass())) {
-                    if (!annotatedViews.contains(view)) {
-                        annotatedViews.add(view);
-                    }
+                boolean uniqueMatchingView =
+                        annotationRuleClass.equals(ruleAdapterPair.rule.getClass())
+                                && !annotatedViews.contains(view);
+                if (uniqueMatchingView) {
+                    annotatedViews.add(view);
                 }
             }
         }
