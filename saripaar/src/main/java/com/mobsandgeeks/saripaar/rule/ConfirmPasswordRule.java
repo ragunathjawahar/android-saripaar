@@ -25,8 +25,8 @@ import com.mobsandgeeks.saripaar.annotation.Password;
 public class ConfirmPasswordRule extends SameValueContexualRule<ConfirmPassword, Password, String> {
 
     protected ConfirmPasswordRule(final ValidationContext validationContext,
-            final ConfirmPassword confirmAnnotation) {
-        super(validationContext, confirmAnnotation, Password.class);
+            final ConfirmPassword confirmPassword) {
+        super(validationContext, confirmPassword, Password.class);
     }
 
     @Override
