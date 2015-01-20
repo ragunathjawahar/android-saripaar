@@ -29,5 +29,4 @@ public class TextViewStringAdapter implements ViewDataAdapter<TextView, String> 
     public String getData(final TextView editText) {
         return editText.getText().toString();
     }
-
 }

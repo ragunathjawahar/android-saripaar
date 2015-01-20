@@ -39,5 +39,4 @@ public class TextViewFloatAdapter implements ViewDataAdapter<TextView, Float> {
 
         return Float.parseFloat(floatString);
     }
-
 }

@@ -235,7 +235,7 @@ final class Reflector {
                 if (returnType != null) {
                     String message = String.format(
                             "Found duplicate 'boolean isValid(T)' method signature in '%s'.",
-                                    rule.getName());
+                            rule.getName());
                     throw new SaripaarViolationException(message);
                 }
                 returnType = parameterTypes[0];
@@ -265,16 +265,17 @@ final class Reflector {
 
     private static String getMissingConstructorErrorMessage(
             final Class<? extends AnnotationRule> ruleType,
-                    final Class<? extends Annotation> annotationType) {
+            final Class<? extends Annotation> annotationType) {
+
         String message = null;
         if (ContextualAnnotationRule.class.isAssignableFrom(ruleType)) {
             message = String.format("A constructor accepting a '%s' and a '%s' is required for %s.",
                     ValidationContext.class, annotationType.getName(),
-                            ruleType.getClass().getName());
+                    ruleType.getClass().getName());
         } else if (AnnotationRule.class.isAssignableFrom(ruleType)) {
             message = String.format(
                     "'%s' should have a single-argument constructor that accepts a '%s' instance.",
-                            ruleType.getName(), annotationType.getName());
+                    ruleType.getName(), annotationType.getName());
         }
         return message;
     }

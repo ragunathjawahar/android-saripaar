@@ -25,12 +25,12 @@ import commons.validator.routines.RegexValidator;
  */
 public class PatternRule extends AnnotationRule<Pattern, String> {
 
-    protected PatternRule(Pattern pattern) {
+    protected PatternRule(final Pattern pattern) {
         super(pattern);
     }
 
     @Override
-    public boolean isValid(String text) {
+    public boolean isValid(final String text) {
         String regex = mRuleAnnotation.regex();
         boolean caseSensitive = mRuleAnnotation.caseSensitive();
         return new RegexValidator(regex, caseSensitive).isValid(text);

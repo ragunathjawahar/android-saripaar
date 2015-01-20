@@ -39,5 +39,4 @@ public class TextViewDoubleAdapter implements ViewDataAdapter<TextView, Double> 
 
         return Double.parseDouble(doubleString);
     }
-
 }

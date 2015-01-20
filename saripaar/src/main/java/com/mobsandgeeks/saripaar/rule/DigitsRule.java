@@ -23,12 +23,12 @@ import com.mobsandgeeks.saripaar.annotation.Digits;
  */
 public class DigitsRule extends AnnotationRule<Digits, String> {
 
-    protected DigitsRule(Digits digits) {
+    protected DigitsRule(final Digits digits) {
         super(digits);
     }
 
     @Override
-    public boolean isValid(String data) {
+    public boolean isValid(final String data) {
         return false;
     }
 }

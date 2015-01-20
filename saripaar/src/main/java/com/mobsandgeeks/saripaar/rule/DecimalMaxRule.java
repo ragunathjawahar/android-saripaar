@@ -25,12 +25,12 @@ import commons.validator.routines.DoubleValidator;
  */
 public class DecimalMaxRule extends AnnotationRule<DecimalMax, Double> {
 
-    protected DecimalMaxRule(DecimalMax decimalMax) {
+    protected DecimalMaxRule(final DecimalMax decimalMax) {
         super(decimalMax);
     }
 
     @Override
-    public boolean isValid(Double value) {
+    public boolean isValid(final Double value) {
         if (value == null) {
             throw new IllegalArgumentException("'Double' cannot be null.");
         }

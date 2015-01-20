@@ -38,5 +38,4 @@ public class TextViewIntegerAdapter implements ViewDataAdapter<TextView, Integer
 
         return Integer.parseInt(integerString);
     }
-
 }

@@ -25,12 +25,12 @@ import java.util.Date;
  */
 public class FutureRule extends AnnotationRule<Future, Date> {
 
-    protected FutureRule(Future future) {
+    protected FutureRule(final Future future) {
         super(future);
     }
 
     @Override
-    public boolean isValid(Date data) {
+    public boolean isValid(final Date data) {
         return false;
     }
 }

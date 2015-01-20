@@ -120,8 +120,8 @@ public final class Validator {
 
     // Holds adapter entries that are mapped to corresponding views.
     private static final
-        Map<Class<? extends View>, HashMap<Class<?>, ViewDataAdapter>> REGISTERED_ADAPTERS =
-            new HashMap<Class<? extends View>, HashMap<Class<?>, ViewDataAdapter>>();
+            Map<Class<? extends View>, HashMap<Class<?>, ViewDataAdapter>> REGISTERED_ADAPTERS =
+                    new HashMap<Class<? extends View>, HashMap<Class<?>, ViewDataAdapter>>();
 
     // Attributes
     private Object mController;
@@ -176,7 +176,7 @@ public final class Validator {
      */
     public static <VIEW extends View> void registerAnnotation(
             final Class<? extends Annotation> annotation, final Class<VIEW> viewType,
-                final ViewDataAdapter<VIEW, ?> viewDataAdapter) {
+            final ViewDataAdapter<VIEW, ?> viewDataAdapter) {
 
         ValidateUsing validateUsing = annotation.getAnnotation(ValidateUsing.class);
         Class ruleDataType = Reflector.getRuleDataType(validateUsing);
@@ -313,7 +313,7 @@ public final class Validator {
         createRulesSafelyAndLazily();
         View previousView = getViewBefore(view);
         validateOrderedFieldsWithCallbackTill(previousView, "when using 'validateBefore(View)'.",
-            async);
+                async);
     }
 
     /**
@@ -337,7 +337,7 @@ public final class Validator {
      */
     public boolean isValidating() {
         return mAsyncValidationTask != null
-            && mAsyncValidationTask.getStatus() != AsyncTask.Status.FINISHED;
+                && mAsyncValidationTask.getStatus() != AsyncTask.Status.FINISHED;
     }
 
     /**
@@ -375,15 +375,15 @@ public final class Validator {
         // If all fields are ordered, then this field should be ordered too
         if (mOrderedFields && !mViewRulesMap.containsKey(view)) {
             String message = String.format("All fields are ordered, so this `%s` should be "
-                + "ordered too, declare the view as a field and add the `@Order` annotation.",
-                    view.getClass().getName());
+                            + "ordered too, declare the view as a field and add the `@Order`"
+                            + " annotation.", view.getClass().getName());
             throw new IllegalStateException(message);
         }
 
         // If there were no rules, create an empty list
         ArrayList<RuleAdapterPair> ruleAdapterPairs = mViewRulesMap.get(view);
         ruleAdapterPairs = ruleAdapterPairs == null
-            ? new ArrayList<RuleAdapterPair>() : ruleAdapterPairs;
+                ? new ArrayList<RuleAdapterPair>() : ruleAdapterPairs;
 
         // Add the quick rule to existing rules
         for (QuickRule quickRule : quickRules) {
@@ -416,7 +416,7 @@ public final class Validator {
 
         if (mViewRulesMap.size() == 0) {
             String message = "No rules found. You must have at least one rule to validate. "
-                + "If you are using custom annotations, make sure that you have registered "
+                    + "If you are using custom annotations, make sure that you have registered "
                     + "them using the 'Validator.register()' method.";
             throw new IllegalStateException(message);
         }
@@ -424,7 +424,7 @@ public final class Validator {
 
     private List<Field> getSaripaarAnnotatedFields(final Class<?> controllerClass) {
         Set<Class<? extends Annotation>> saripaarAnnotations =
-            SARIPAAR_REGISTRY.getRegisteredAnnotations();
+                SARIPAAR_REGISTRY.getRegisteredAnnotations();
 
         List<Field> annotatedFields = new ArrayList<Field>();
         List<Field> controllerViewFields = getControllerViewFields(controllerClass);
@@ -438,8 +438,8 @@ public final class Validator {
         SaripaarFieldsComparator comparator = new SaripaarFieldsComparator();
         Collections.sort(annotatedFields, comparator);
         mOrderedFields = annotatedFields.size() == 1
-            ? annotatedFields.get(0).getAnnotation(Order.class) != null
-            : comparator.areOrderedFields();
+                ? annotatedFields.get(0).getAnnotation(Order.class) != null
+                : comparator.areOrderedFields();
 
         return annotatedFields;
     }
@@ -496,7 +496,7 @@ public final class Validator {
     private Map<View, ArrayList<RuleAdapterPair>> createRules(final List<Field> annotatedFields) {
 
         final Map<View, ArrayList<RuleAdapterPair>> viewRulesMap =
-            new LinkedHashMap<View, ArrayList<RuleAdapterPair>>();
+                new LinkedHashMap<View, ArrayList<RuleAdapterPair>>();
 
         for (Field field : annotatedFields) {
             final ArrayList<RuleAdapterPair> ruleAdapterPairs = new ArrayList<RuleAdapterPair>();
@@ -525,18 +525,18 @@ public final class Validator {
         final Class<?> ruleDataType = Reflector.getRuleDataType(saripaarAnnotation);
 
         final ViewDataAdapter dataAdapter = getDataAdapter(annotationType, viewFieldType,
-            ruleDataType);
+                ruleDataType);
 
         // If no matching adapter is found, throw.
         if (dataAdapter == null) {
             String viewType = viewFieldType.getName();
             String message = String.format(
-                "To use '%s' on '%s', register a '%s' that returns a '%s' from the '%s'.",
-                annotationType.getName(),
-                viewType,
-                ViewDataAdapter.class.getName(),
-                ruleDataType.getName(),
-                viewType);
+                    "To use '%s' on '%s', register a '%s' that returns a '%s' from the '%s'.",
+                    annotationType.getName(),
+                    viewType,
+                    ViewDataAdapter.class.getName(),
+                    ruleDataType.getName(),
+                    viewType);
             throw new UnsupportedOperationException(message);
         }
 
@@ -552,15 +552,15 @@ public final class Validator {
 
         // Get an adapter from the stock registry
         ViewDataAdapter dataAdapter = SARIPAAR_REGISTRY.getDataAdapter(
-            annotationType, (Class) viewFieldType);
+                annotationType, (Class) viewFieldType);
 
         // If we are unable to find a Saripaar stock adapter, check the registered adapters
         if (dataAdapter == null) {
             HashMap<Class<?>, ViewDataAdapter> dataTypeAdapterMap =
-                REGISTERED_ADAPTERS.get(viewFieldType);
+                    REGISTERED_ADAPTERS.get(viewFieldType);
             dataAdapter = dataTypeAdapterMap != null
-                ? dataTypeAdapterMap.get(adapterDataType)
-                : null;
+                    ? dataTypeAdapterMap.get(adapterDataType)
+                    : null;
         }
 
         return dataAdapter;
@@ -568,7 +568,7 @@ public final class Validator {
 
     private Class<? extends AnnotationRule> getRuleType(final Annotation ruleAnnotation) {
         ValidateUsing validateUsing = ruleAnnotation.annotationType()
-            .getAnnotation(ValidateUsing.class);
+                .getAnnotation(ValidateUsing.class);
         return validateUsing != null ? validateUsing.value() : null;
     }
 
@@ -580,7 +580,7 @@ public final class Validator {
 
             if (view == null) {
                 String message = String.format("'%s %s' is null.",
-                    field.getType().getSimpleName(), field.getName());
+                        field.getType().getSimpleName(), field.getName());
                 throw new IllegalStateException(message);
             }
         } catch (IllegalArgumentException e) {
@@ -642,7 +642,7 @@ public final class Validator {
     private void assertOrderedFields(final boolean orderedRules, final String reasonSuffix) {
         if (!orderedRules) {
             String message = String.format(
-                "Rules are unordered, all view fields should be ordered "
+                    "Rules are unordered, all view fields should be ordered "
                     + "using the '@Order' annotation " + reasonSuffix);
             throw new IllegalStateException(message);
         }
@@ -862,5 +862,4 @@ public final class Validator {
                 Password.class, Pattern.class, Size.class, Url.class);
 //            Digits.class, Future.class, Past.class
     }
-
 }

@@ -86,7 +86,7 @@ final class Registry {
             final Class<?> ruleDataType = Reflector.getRuleDataType(validateUsing);
 
             HashMap<Class<?>, ViewDataAdapter> viewDataAdapterMap =
-                STOCK_ADAPTERS.get(TextView.class);
+                    STOCK_ADAPTERS.get(TextView.class);
             if (viewDataAdapterMap != null) {
                 ViewDataAdapter dataAdapter = viewDataAdapterMap.get(ruleDataType);
                 if (dataAdapter != null) {
@@ -94,7 +94,7 @@ final class Registry {
                 } else {
                     String message = String.format(
                             "Unable to find a matching adapter for `%s`, that returns a `%s`.",
-                                    ruleAnnotation.getName(), ruleDataType.getName());
+                            ruleAnnotation.getName(), ruleDataType.getName());
                     throw new SaripaarViolationException(message);
                 }
             }
@@ -162,6 +162,7 @@ final class Registry {
     public <VIEW extends View> ViewDataAdapter<VIEW, ?> getDataAdapter(
             final Class< ? extends Annotation> annotationType,
             final Class<VIEW> viewType) {
+
         HashMap<Class<? extends View>, ViewDataAdapter> viewDataAdapterHashMap =
             mMappings.get(annotationType);
 
@@ -173,7 +174,7 @@ final class Registry {
             // If no 'ViewDataAdapter' is registered, check for a compatible one
             if (matchingViewAdapter == null) {
                 matchingViewAdapter = getCompatibleViewDataAdapter(viewDataAdapterHashMap,
-                    viewType);
+                        viewType);
             }
         }
 
@@ -203,7 +204,7 @@ final class Registry {
 
         if (viewAdapterPairs.containsKey(view)) {
             String message = String.format("A '%s' for '%s' has already been registered.",
-                ruleAnnotation.getName(), view.getName());
+                    ruleAnnotation.getName(), view.getName());
             Log.w(TAG, message);
         } else {
             viewAdapterPairs.put(view, viewDataAdapter);
@@ -215,7 +216,7 @@ final class Registry {
         boolean validRuleAnnotation = Reflector.isAnnotated(ruleAnnotation, ValidateUsing.class);
         if (!validRuleAnnotation) {
             String message = String.format("'%s' is not annotated with '%s'.",
-                ruleAnnotation.getName(), ValidateUsing.class.getName());
+                    ruleAnnotation.getName(), ValidateUsing.class.getName());
             throw new IllegalArgumentException(message);
         }
 
@@ -232,15 +233,15 @@ final class Registry {
 
         if (attributeMethod == null) {
             String message = String.format("'%s' requires the '%s' attribute.",
-                annotationType.getName(), attributeName);
+                    annotationType.getName(), attributeName);
             throw new SaripaarViolationException(message);
         }
 
         final Class<?> returnType = attributeMethod.getReturnType();
         if (!attributeType.equals(returnType)) {
             String message = String.format("'%s' in '%s' should be of type '%s', but was '%s'.",
-                attributeName, annotationType.getName(),
-                attributeType.getName(), returnType.getName());
+                    attributeName, annotationType.getName(),
+                    attributeType.getName(), returnType.getName());
             throw new SaripaarViolationException(message);
         }
     }
@@ -253,9 +254,9 @@ final class Registry {
         Class<?> adapterReturnType = getDataMethod.getReturnType();
         if (!ruleDataType.equals(adapterReturnType)) {
             String message = String.format("'%s' returns '%s', but expecting '%s'.",
-                viewDataAdapter.getClass().getName(),
-                adapterReturnType.getName(),
-                ruleDataType.getName());
+                    viewDataAdapter.getClass().getName(),
+                    adapterReturnType.getName(),
+                    ruleDataType.getName());
             throw new IllegalArgumentException(message);
         }
     }
@@ -301,5 +302,4 @@ final class Registry {
         adapters.put(Double.class, new TextViewDoubleAdapter());
         STOCK_ADAPTERS.put(TextView.class, adapters);
     }
-
 }

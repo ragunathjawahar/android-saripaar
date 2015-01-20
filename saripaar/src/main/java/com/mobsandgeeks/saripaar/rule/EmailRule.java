@@ -25,12 +25,12 @@ import commons.validator.routines.EmailValidator;
  */
 public class EmailRule extends AnnotationRule<Email, String> {
 
-    protected EmailRule(Email email) {
+    protected EmailRule(final Email email) {
         super(email);
     }
 
     @Override
-    public boolean isValid(String email) {
+    public boolean isValid(final String email) {
         boolean allowLocal = mRuleAnnotation.allowLocal();
         return EmailValidator.getInstance(allowLocal).isValid(email);
     }

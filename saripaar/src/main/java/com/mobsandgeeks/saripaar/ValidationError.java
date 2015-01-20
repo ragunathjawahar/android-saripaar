@@ -85,8 +85,8 @@ public class ValidationError {
     @Override
     public String toString() {
         return "ValidationError{"
-            + "view=" + view
-            + ", failedRules=" + failedRules
-            + '}';
+                + "view=" + view
+                + ", failedRules=" + failedRules
+                + '}';
     }
 }

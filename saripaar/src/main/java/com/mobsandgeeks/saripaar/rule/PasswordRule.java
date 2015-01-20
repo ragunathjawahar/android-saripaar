@@ -44,12 +44,12 @@ public class PasswordRule extends AnnotationRule<Password, String> {
                     "(?=.*[a-z])(?=.*[A-Z])(?=.*[\\d])(?=.*([^\\w])).+");
             }};
 
-    protected PasswordRule(Password password) {
+    protected PasswordRule(final Password password) {
         super(password);
     }
 
     @Override
-    public boolean isValid(String password) {
+    public boolean isValid(final String password) {
         boolean hasMinChars = password.length() >= mRuleAnnotation.min();
         boolean matchesScheme = password.matches(SCHEME_PATTERNS.get(mRuleAnnotation.scheme()));
         return hasMinChars && matchesScheme;

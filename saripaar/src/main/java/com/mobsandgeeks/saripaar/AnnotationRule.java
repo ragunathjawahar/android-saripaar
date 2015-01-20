@@ -56,11 +56,10 @@ public abstract class AnnotationRule<RULE_ANNOTATION extends Annotation, DATA_TY
     @Override
     public String getMessage(final Context context) {
         final int messageResId = Reflector.getAttributeValue(mRuleAnnotation, "messageResId",
-            Integer.class);
+                Integer.class);
 
         return messageResId != -1
-            ? context.getString(messageResId)
-            : Reflector.getAttributeValue(mRuleAnnotation, "message", String.class);
+                ? context.getString(messageResId)
+                : Reflector.getAttributeValue(mRuleAnnotation, "message", String.class);
     }
-
 }

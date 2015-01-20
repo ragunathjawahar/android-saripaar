@@ -25,12 +25,12 @@ import commons.validator.routines.DomainValidator;
  */
 public class DomainRule extends AnnotationRule<Domain, String> {
 
-    protected DomainRule(Domain domain) {
+    protected DomainRule(final Domain domain) {
         super(domain);
     }
 
     @Override
-    public boolean isValid(String domain) {
+    public boolean isValid(final String domain) {
         boolean allowLocal = mRuleAnnotation.allowLocal();
         DomainValidator domainValidator = DomainValidator.getInstance(allowLocal);
         return domainValidator.isValid(domain);

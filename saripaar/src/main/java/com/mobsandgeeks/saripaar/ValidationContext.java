@@ -53,8 +53,7 @@ public class ValidationContext {
 
         // Get the AnnotationRule class
 
-        Class<? extends AnnotationRule> annotationRuleClass =
-                getRuleClass(saripaarAnnotation);
+        Class<? extends AnnotationRule> annotationRuleClass = getRuleClass(saripaarAnnotation);
 
         // Find all views with the target rule
         List<View> annotatedViews = new ArrayList<View>();
@@ -89,8 +88,7 @@ public class ValidationContext {
 
         Object data = null;
         ArrayList<Validator.RuleAdapterPair> ruleAdapterPairs = mViewRulesMap.get(view);
-        Class<? extends AnnotationRule> annotationRuleClass =
-                getRuleClass(saripaarAnnotation);
+        Class<? extends AnnotationRule> annotationRuleClass = getRuleClass(saripaarAnnotation);
 
         for (Validator.RuleAdapterPair ruleAdapterPair : ruleAdapterPairs) {
             if (annotationRuleClass.equals(ruleAdapterPair.rule.getClass())) {
@@ -124,7 +122,7 @@ public class ValidationContext {
             final Class<? extends Annotation> saripaarAnnotation) {
         if (!Validator.isSaripaarAnnotation(saripaarAnnotation)) {
             String message = String.format("%s is not a registered Saripaar annotation.",
-                saripaarAnnotation.getName());
+                    saripaarAnnotation.getName());
             throw new IllegalArgumentException(message);
         }
     }
@@ -132,7 +130,7 @@ public class ValidationContext {
     private Class<? extends AnnotationRule> getRuleClass(
             final Class<? extends Annotation> saripaarAnnotation) {
         ValidateUsing validateUsingAnnotation = saripaarAnnotation
-            .getAnnotation(ValidateUsing.class);
+                .getAnnotation(ValidateUsing.class);
         return validateUsingAnnotation.value();
     }
 }

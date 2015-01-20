@@ -23,12 +23,12 @@ import com.mobsandgeeks.saripaar.annotation.Size;
  */
 public class SizeRule extends AnnotationRule<Size, String> {
 
-    protected SizeRule(Size size) {
+    protected SizeRule(final Size size) {
         super(size);
     }
 
     @Override
-    public boolean isValid(String text) {
+    public boolean isValid(final String text) {
         if (text == null) {
             throw new IllegalArgumentException("'text' cannot be null.");
         }
@@ -59,7 +59,7 @@ public class SizeRule extends AnnotationRule<Size, String> {
     private void assertMinMax(int min, int max) {
         if (min > max) {
             String message = String.format(
-                "'min' (%d) should be less than or equal to 'max' (%d).", min, max);
+                    "'min' (%d) should be less than or equal to 'max' (%d).", min, max);
             throw new IllegalStateException(message);
         }
     }

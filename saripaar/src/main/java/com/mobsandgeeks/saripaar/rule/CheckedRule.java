@@ -23,12 +23,12 @@ import com.mobsandgeeks.saripaar.annotation.Checked;
  */
 public class CheckedRule extends AnnotationRule<Checked, Boolean> {
 
-    protected CheckedRule(Checked checked) {
+    protected CheckedRule(final Checked checked) {
         super(checked);
     }
 
     @Override
-    public boolean isValid(Boolean value) {
+    public boolean isValid(final Boolean value) {
         if (value == null) {
             throw new IllegalArgumentException("'data' cannot be null.");
         }

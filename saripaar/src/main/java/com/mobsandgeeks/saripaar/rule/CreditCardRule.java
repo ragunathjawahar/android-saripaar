@@ -38,12 +38,12 @@ public class CreditCardRule extends AnnotationRule<CreditCard, String> {
                 put(CreditCard.Type.VISA, CreditCardValidator.VISA);
             }};
 
-    protected CreditCardRule(CreditCard creditCard) {
+    protected CreditCardRule(final CreditCard creditCard) {
         super(creditCard);
     }
 
     @Override
-    public boolean isValid(String card) {
+    public boolean isValid(final String creditCardNumber) {
         CreditCard.Type[] types = mRuleAnnotation.cardTypes();
         HashSet<CreditCard.Type> typesSet = new HashSet<CreditCard.Type>(Arrays.asList(types));
 
@@ -56,6 +56,6 @@ public class CreditCardRule extends AnnotationRule<CreditCard, String> {
             options = CreditCardValidator.NONE;
         }
 
-        return new CreditCardValidator(options).isValid(card);
+        return new CreditCardValidator(options).isValid(creditCardNumber);
     }
 }

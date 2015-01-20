@@ -29,5 +29,4 @@ public class SpinnerIndexAdapter implements ViewDataAdapter<Spinner, Integer> {
     public Integer getData(final Spinner spinner) {
         return spinner.getSelectedItemPosition();
     }
-
 }

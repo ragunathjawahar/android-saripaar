@@ -23,16 +23,15 @@ import com.mobsandgeeks.saripaar.annotation.AssertFalse;
  */
 public class AssertFalseRule extends AnnotationRule<AssertFalse, Boolean> {
 
-    protected AssertFalseRule(AssertFalse assertFalse) {
+    protected AssertFalseRule(final AssertFalse assertFalse) {
         super(assertFalse);
     }
 
     @Override
-    public boolean isValid(Boolean value) {
+    public boolean isValid(final Boolean value) {
         if (value == null) {
             throw new IllegalArgumentException("'data' cannot be null.");
         }
         return !value;
     }
-
 }

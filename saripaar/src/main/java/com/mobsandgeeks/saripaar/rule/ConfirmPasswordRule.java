@@ -29,20 +29,20 @@ import java.util.List;
  */
 public class ConfirmPasswordRule extends ContextualAnnotationRule<ConfirmPassword, String> {
 
-    protected ConfirmPasswordRule(ValidationContext validationContext,
-            ConfirmPassword confirmPassword) {
+    protected ConfirmPasswordRule(final ValidationContext validationContext,
+            final ConfirmPassword confirmPassword) {
         super(validationContext, confirmPassword);
     }
 
     @Override
-    public boolean isValid(String confirmPassword) {
+    public boolean isValid(final String confirmPassword) {
         List<View> passwordViews = mValidationContext.getAnnotatedViews(Password.class);
         int nPasswordViews = passwordViews.size();
 
         if (nPasswordViews == 0) {
             String message = String.format(
                     "You should have at least one view annotated with '%s' to use '%s'.",
-                            Password.class.getName(), ConfirmPassword.class.getName());
+                    Password.class.getName(), ConfirmPassword.class.getName());
             throw new IllegalStateException(message);
         } else if (nPasswordViews > 1) {
             String message = String.format(
