@@ -31,12 +31,12 @@ import java.util.List;
  * @author Ragunath Jawahar {@literal <rj@mobsandgeeks.com>}
  * @since 2.0
  */
-class SameValueContexualRule<CONFIRM extends Annotation, ORIGINAL extends Annotation, DATA_TYPE>
+class SameValueContextualRule<CONFIRM extends Annotation, ORIGINAL extends Annotation, DATA_TYPE>
         extends ContextualAnnotationRule<CONFIRM, DATA_TYPE> {
     private Class<ORIGINAL> mOriginalClass;
     private Class<CONFIRM> mConfirmClass;
 
-    protected SameValueContexualRule(final ValidationContext validationContext,
+    protected SameValueContextualRule(final ValidationContext validationContext,
             final CONFIRM confirmAnnotation, final Class<ORIGINAL> originalClass) {
         super(validationContext, confirmAnnotation);
         mOriginalClass = originalClass;
@@ -50,7 +50,7 @@ class SameValueContexualRule<CONFIRM extends Annotation, ORIGINAL extends Annota
 
         if (nOriginalViews == 0) {
             String message = String.format(
-                    "You should have at least one view annotated with '%s' to use '%s'.",
+                    "You should have a view annotated with '%s' to use '%s'.",
                     mOriginalClass.getName(), mConfirmClass.getName());
             throw new IllegalStateException(message);
         } else if (nOriginalViews > 1) {

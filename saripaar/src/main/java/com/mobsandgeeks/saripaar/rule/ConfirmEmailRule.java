@@ -22,7 +22,7 @@ import com.mobsandgeeks.saripaar.annotation.Email;
  * @author Ragunath Jawahar {@literal <rj@mobsandgeeks.com>}
  * @since 2.0
  */
-public class ConfirmEmailRule extends SameValueContexualRule<ConfirmEmail, Email, String> {
+public class ConfirmEmailRule extends SameValueContextualRule<ConfirmEmail, Email, String> {
 
     protected ConfirmEmailRule(final ValidationContext validationContext,
             final ConfirmEmail confirmEmail) {

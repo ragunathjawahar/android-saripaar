@@ -22,7 +22,7 @@ import com.mobsandgeeks.saripaar.annotation.Password;
  * @author Ragunath Jawahar {@literal <rj@mobsandgeeks.com>}
  * @since 2.0
  */
-public class ConfirmPasswordRule extends SameValueContexualRule<ConfirmPassword, Password, String> {
+public class ConfirmPasswordRule extends SameValueContextualRule<ConfirmPassword, Password, String> {
 
     protected ConfirmPasswordRule(final ValidationContext validationContext,
             final ConfirmPassword confirmPassword) {
