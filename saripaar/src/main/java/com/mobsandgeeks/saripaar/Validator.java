@@ -376,8 +376,8 @@ public final class Validator {
         // If all fields are ordered, then this field should be ordered too
         if (mOrderedFields && !mViewRulesMap.containsKey(view)) {
             String message = String.format("All fields are ordered, so this `%s` should be "
-                            + "ordered too, declare the view as a field and add the `@Order`"
-                            + " annotation.", view.getClass().getName());
+                            + "ordered too, declare the view as a field and add the `@Order` "
+                            + "annotation.", view.getClass().getName());
             throw new IllegalStateException(message);
         }
 
