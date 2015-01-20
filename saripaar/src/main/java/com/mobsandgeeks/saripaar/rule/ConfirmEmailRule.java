@@ -15,18 +15,18 @@
 package com.mobsandgeeks.saripaar.rule;
 
 import com.mobsandgeeks.saripaar.ValidationContext;
-import com.mobsandgeeks.saripaar.annotation.ConfirmPassword;
-import com.mobsandgeeks.saripaar.annotation.Password;
+import com.mobsandgeeks.saripaar.annotation.ConfirmEmail;
+import com.mobsandgeeks.saripaar.annotation.Email;
 
 /**
  * @author Ragunath Jawahar {@literal <rj@mobsandgeeks.com>}
  * @since 2.0
  */
-public class ConfirmPasswordRule extends SameValueContexualRule<ConfirmPassword, Password, String> {
+public class ConfirmEmailRule extends SameValueContexualRule<ConfirmEmail, Email, String> {
 
-    protected ConfirmPasswordRule(final ValidationContext validationContext,
-            final ConfirmPassword confirmAnnotation) {
-        super(validationContext, confirmAnnotation, Password.class);
+    protected ConfirmEmailRule(final ValidationContext validationContext,
+            final ConfirmEmail confirmEmail) {
+        super(validationContext, confirmEmail, Email.class);
     }
 
     @Override

@@ -223,26 +223,8 @@ final class Reflector {
      */
     public static Class<?> getRuleDataType(final ValidateUsing validateUsing) {
         Class<? extends AnnotationRule> rule = validateUsing.value();
-        Method[] declaredMethods = rule.getDeclaredMethods();
-        Class<?> returnType = null;
-
-        for (Method method : declaredMethods) {
-            Class<?>[] parameterTypes = method.getParameterTypes();
-
-            if (matchesIsValidMethodSignature(method, parameterTypes)) {
-                // This will be null, if there are no matching methods
-                // in the class with a similar signature.
-                if (returnType != null) {
-                    String message = String.format(
-                            "Found duplicate 'boolean isValid(T)' method signature in '%s'.",
-                            rule.getName());
-                    throw new SaripaarViolationException(message);
-                }
-                returnType = parameterTypes[0];
-            }
-        }
-
-        return returnType;
+        Method[] methods = rule.getDeclaredMethods();
+        return getRuleTypeFromIsValidMethod(rule, methods);
     }
 
     /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -277,7 +259,30 @@ final class Reflector {
                     "'%s' should have a single-argument constructor that accepts a '%s' instance.",
                     ruleType.getName(), annotationType.getName());
         }
+
         return message;
+    }
+
+    private static Class<?> getRuleTypeFromIsValidMethod(final Class<? extends AnnotationRule> rule,
+            final Method[] methods) {
+
+        Class<?> returnType = null;
+        for (Method method : methods) {
+            Class<?>[] parameterTypes = method.getParameterTypes();
+
+            if (matchesIsValidMethodSignature(method, parameterTypes)) {
+                // This will be null, if there are no matching methods
+                // in the class with a similar signature.
+                if (returnType != null) {
+                    String message = String.format(
+                            "Found duplicate 'boolean isValid(T)' method signature in '%s'.",
+                            rule.getName());
+                    throw new SaripaarViolationException(message);
+                }
+                returnType = parameterTypes[0];
+            }
+        }
+        return returnType;
     }
 
     private static boolean matchesIsValidMethodSignature(final Method method,

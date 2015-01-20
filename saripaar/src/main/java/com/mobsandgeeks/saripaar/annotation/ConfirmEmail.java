@@ -12,25 +12,23 @@
  * limitations under the License.
  */
 
-package com.mobsandgeeks.saripaar.rule;
+package com.mobsandgeeks.saripaar.annotation;
 
-import com.mobsandgeeks.saripaar.ValidationContext;
-import com.mobsandgeeks.saripaar.annotation.ConfirmPassword;
-import com.mobsandgeeks.saripaar.annotation.Password;
+import com.mobsandgeeks.saripaar.rule.ConfirmEmailRule;
+
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
  * @author Ragunath Jawahar {@literal <rj@mobsandgeeks.com>}
  * @since 2.0
  */
-public class ConfirmPasswordRule extends SameValueContexualRule<ConfirmPassword, Password, String> {
-
-    protected ConfirmPasswordRule(final ValidationContext validationContext,
-            final ConfirmPassword confirmAnnotation) {
-        super(validationContext, confirmAnnotation, Password.class);
-    }
-
-    @Override
-    public boolean isValid(final String confirmValue) {
-        return super.isValid(confirmValue);
-    }
+@ValidateUsing(ConfirmEmailRule.class)
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.FIELD)
+public @interface ConfirmEmail {
+    public int messageResId()   default -1;
+    public String message()     default "Emails don't match";
 }

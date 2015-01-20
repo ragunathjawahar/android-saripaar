@@ -27,6 +27,7 @@ import com.mobsandgeeks.saripaar.adapter.ViewDataAdapter;
 import com.mobsandgeeks.saripaar.annotation.AssertFalse;
 import com.mobsandgeeks.saripaar.annotation.AssertTrue;
 import com.mobsandgeeks.saripaar.annotation.Checked;
+import com.mobsandgeeks.saripaar.annotation.ConfirmEmail;
 import com.mobsandgeeks.saripaar.annotation.ConfirmPassword;
 import com.mobsandgeeks.saripaar.annotation.CreditCard;
 import com.mobsandgeeks.saripaar.annotation.DecimalMax;
@@ -857,9 +858,10 @@ public final class Validator {
 
         // TextViewStringAdapter
         SARIPAAR_REGISTRY.register(
-                ConfirmPassword.class, CreditCard.class, Domain.class,
-                Email.class, IpAddress.class, Isbn.class, NotEmpty.class,
-                Password.class, Pattern.class, Size.class, Url.class);
+                ConfirmEmail.class, ConfirmPassword.class, CreditCard.class,
+                Domain.class, Email.class, IpAddress.class, Isbn.class,
+                NotEmpty.class, Password.class, Pattern.class, Size.class,
+                Url.class);
 //            Digits.class, Future.class, Past.class
     }
 }
