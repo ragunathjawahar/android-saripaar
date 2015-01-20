@@ -395,6 +395,10 @@ public final class Validator {
         mViewRulesMap.put(view, ruleAdapterPairs);
     }
 
+    static boolean isSaripaarAnnotation(final Class<? extends Annotation> annotation) {
+        return SARIPAAR_REGISTRY.getRegisteredAnnotations().contains(annotation);
+    }
+
     /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
      *  Private Methods
      * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -513,10 +517,6 @@ public final class Validator {
         }
 
         return viewRulesMap;
-    }
-
-    static boolean isSaripaarAnnotation(final Class<? extends Annotation> annotation) {
-        return SARIPAAR_REGISTRY.getRegisteredAnnotations().contains(annotation);
     }
 
     private RuleAdapterPair getRuleAdapterPair(final Annotation saripaarAnnotation,
@@ -754,16 +754,6 @@ public final class Validator {
         return previousView;
     }
 
-    static class RuleAdapterPair {
-        Rule rule;
-        ViewDataAdapter dataAdapter;
-
-        RuleAdapterPair(final Rule rule, final ViewDataAdapter dataAdapter) {
-            this.rule = rule;
-            this.dataAdapter = dataAdapter;
-        }
-    }
-
     /**
      * Listener with callback methods that notifies the outcome of validation.
      */
@@ -799,6 +789,16 @@ public final class Validator {
          * IMMEDIATE mode will stop the validation as soon as it encounters the first failing rule.
          */
         IMMEDIATE
+    }
+
+    static class RuleAdapterPair {
+        Rule rule;
+        ViewDataAdapter dataAdapter;
+
+        RuleAdapterPair(final Rule rule, final ViewDataAdapter dataAdapter) {
+            this.rule = rule;
+            this.dataAdapter = dataAdapter;
+        }
     }
 
     static class ValidationReport {
