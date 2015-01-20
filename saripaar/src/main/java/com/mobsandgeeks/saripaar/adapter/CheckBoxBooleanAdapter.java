@@ -17,13 +17,15 @@ package com.mobsandgeeks.saripaar.adapter;
 import android.widget.CheckBox;
 
 /**
+ * Adapter returns a {@link java.lang.Boolean} value from a {@link android.widget.CheckBox}.
+ *
  * @author Ragunath Jawahar {@literal <rj@mobsandgeeks.com>}
  * @since 2.0
  */
 public class CheckBoxBooleanAdapter implements ViewDataAdapter<CheckBox, Boolean> {
 
     @Override
-    public Boolean getData(CheckBox checkBox) {
+    public Boolean getData(final CheckBox checkBox) {
         return checkBox.isChecked();
     }
 }

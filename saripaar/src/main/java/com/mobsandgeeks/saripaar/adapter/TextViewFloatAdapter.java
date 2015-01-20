@@ -19,6 +19,9 @@ import android.widget.TextView;
 import com.mobsandgeeks.saripaar.exception.ConversionException;
 
 /**
+ * Adapter returns a {@link java.lang.Float} from {@link android.widget.TextView}s or
+ * its subclasses like {@link android.widget.EditText}s.
+ *
  * @author Ragunath Jawahar {@literal <rj@mobsandgeeks.com>}
  * @since 2.0
  */
@@ -26,7 +29,7 @@ public class TextViewFloatAdapter implements ViewDataAdapter<TextView, Float> {
     private static final String REGEX_DECIMAL = "[-+]?[0-9]*\\.?[0-9]+([eE][-+]?[0-9]+)?";
 
     @Override
-    public Float getData(TextView editText) throws ConversionException {
+    public Float getData(final TextView editText) throws ConversionException {
         String floatString = editText.getText().toString().trim();
         if (!floatString.matches(REGEX_DECIMAL)) {
             String message = String.format("Expected a floating point number, but was %s",
