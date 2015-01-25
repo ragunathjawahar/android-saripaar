@@ -62,6 +62,9 @@
         <activity
             android:name=".ui.OrderedSequencingActivity"
             android:label="@string/title_activity_address" />
+        <activity
+            android:name=".ui.UnorderedSequencingActivity"
+            android:label="@string/title_activity_address" />
     </application>
 
 </manifest>
