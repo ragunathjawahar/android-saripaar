@@ -288,7 +288,7 @@ public final class Validator {
      * @param async  true if asynchronous, false otherwise.
      */
     public void validate(final boolean async) {
-        createRulesSafelyAndLazily();
+        createRulesSafelyAndLazily(false);
 
         View lastView = getLastView();
         if (Mode.BURST.equals(mValidationMode)) {
@@ -311,7 +311,7 @@ public final class Validator {
      * @param async  true if asynchronous, false otherwise.
      */
     public void validateBefore(final View view, final boolean async) {
-        createRulesSafelyAndLazily();
+        createRulesSafelyAndLazily(false);
         View previousView = getViewBefore(view);
         validateOrderedFieldsWithCallbackTill(previousView, "when using 'validateBefore(View)'.",
                 async);
@@ -371,7 +371,7 @@ public final class Validator {
         }
 
         // Create rules
-        createRulesSafelyAndLazily();
+        createRulesSafelyAndLazily(true);
 
         // If all fields are ordered, then this field should be ordered too
         if (mOrderedFields && !mViewRulesMap.containsKey(view)) {
@@ -381,7 +381,7 @@ public final class Validator {
             throw new IllegalStateException(message);
         }
 
-        // If there were no rules, create an empty list
+        // If there are no rules, create an empty list
         ArrayList<RuleAdapterPair> ruleAdapterPairs = mViewRulesMap.get(view);
         ruleAdapterPairs = ruleAdapterPairs == null
                 ? new ArrayList<RuleAdapterPair>() : ruleAdapterPairs;
@@ -410,7 +410,7 @@ public final class Validator {
         }
     }
 
-    private void createRulesSafelyAndLazily() {
+    private void createRulesSafelyAndLazily(final boolean addingQuickRules) {
         // Create rules lazily, because we don't have to worry about the order of
         // instantiating the Validator.
         if (mViewRulesMap == null) {
@@ -419,7 +419,7 @@ public final class Validator {
             mValidationContext.setViewRulesMap(mViewRulesMap);
         }
 
-        if (mViewRulesMap.size() == 0) {
+        if (!addingQuickRules && mViewRulesMap.size() == 0) {
             String message = "No rules found. You must have at least one rule to validate. "
                     + "If you are using custom annotations, make sure that you have registered "
                     + "them using the 'Validator.register()' method.";
@@ -444,7 +444,7 @@ public final class Validator {
         Collections.sort(annotatedFields, comparator);
         mOrderedFields = annotatedFields.size() == 1
                 ? annotatedFields.get(0).getAnnotation(Order.class) != null
-                : comparator.areOrderedFields();
+                : annotatedFields.size() != 0 && comparator.areOrderedFields();
 
         return annotatedFields;
     }
@@ -604,7 +604,7 @@ public final class Validator {
 
     private void validateFieldsWithCallbackTill(final View view, final boolean orderedFields,
             final String reasonSuffix, final boolean async) {
-        createRulesSafelyAndLazily();
+        createRulesSafelyAndLazily(false);
         if (async) {
             if (mAsyncValidationTask != null) {
                 mAsyncValidationTask.cancel(true);
