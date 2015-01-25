@@ -35,6 +35,7 @@ public abstract class AnnotationRule<RULE_ANNOTATION extends Annotation, DATA_TY
         implements Rule<DATA_TYPE> {
 
     protected final RULE_ANNOTATION mRuleAnnotation;
+    private final int mSequence;
 
     /**
      * Constructor. It is mandatory that all subclasses MUST have a constructor with the same
@@ -48,6 +49,15 @@ public abstract class AnnotationRule<RULE_ANNOTATION extends Annotation, DATA_TY
             throw new IllegalArgumentException("'ruleAnnotation' cannot be null.");
         }
         mRuleAnnotation = ruleAnnotation;
+        mSequence = Reflector.getAttributeValue(ruleAnnotation, "sequence", Integer.TYPE);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final int getSequence() {
+        return mSequence;
     }
 
     /**

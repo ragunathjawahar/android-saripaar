@@ -59,6 +59,9 @@
         <activity
             android:name=".ui.ConfirmPasswordSeveralPasswordsActivity"
             android:label="@string/title_activity_confirm_password" />
+        <activity
+            android:name=".ui.OrderedSequencingActivity"
+            android:label="@string/title_activity_address" />
     </application>
 
 </manifest>

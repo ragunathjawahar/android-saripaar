@@ -130,6 +130,7 @@ public final class Validator {
     private ValidationContext mValidationContext;
     private Map<View, ArrayList<RuleAdapterPair>> mViewRulesMap;
     private boolean mOrderedFields;
+    private SequenceComparator mSequenceComparator;
     private ValidationListener mValidationListener;
     private AsyncValidationTask mAsyncValidationTask;
 
@@ -144,6 +145,7 @@ public final class Validator {
         mController = controller;
         mValidationMode = Mode.BURST;
         mValidationContext = new ValidationContext();
+        mSequenceComparator = new SequenceComparator();
     }
 
     /**
@@ -392,6 +394,7 @@ public final class Validator {
                 ruleAdapterPairs.add(new RuleAdapterPair(quickRule, null));
             }
         }
+        Collections.sort(ruleAdapterPairs, mSequenceComparator);
         mViewRulesMap.put(view, ruleAdapterPairs);
     }
 
@@ -513,6 +516,7 @@ public final class Validator {
                 }
             }
 
+            Collections.sort(ruleAdapterPairs, mSequenceComparator);
             viewRulesMap.put(getView(field), ruleAdapterPairs);
         }
 

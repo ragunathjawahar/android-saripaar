@@ -47,4 +47,11 @@ public interface Rule<VALIDATABLE> {
      * @return A failure message.
      */
     String getMessage(Context context);
+
+    /**
+     * Returns the sequence of the {@link com.mobsandgeeks.saripaar.Rule}.
+     *
+     * @return The sequence.
+     */
+    int getSequence();
 }

@@ -29,6 +29,27 @@ import android.view.View;
  * @since 2.0
  */
 public abstract class QuickRule<VIEW extends View> implements Rule<VIEW> {
+    private final int mSequence;
+
+    /**
+     * Default constructor.
+     */
+    protected QuickRule() {
+        mSequence = -1;
+    }
+
+    /**
+     * Constructor.
+     *
+     * @param sequence  A non-negative integer value.
+     */
+    protected QuickRule(final int sequence) {
+        if (sequence < 0) {
+            String message = "'sequence' should be a non-negative integer.";
+            throw new IllegalArgumentException(message);
+        }
+        mSequence = sequence;
+    }
 
     /**
      * Checks if the rule is valid.
@@ -38,4 +59,12 @@ public abstract class QuickRule<VIEW extends View> implements Rule<VIEW> {
      * @return true if valid, false otherwise.
      */
     public abstract boolean isValid(VIEW view);
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public final int getSequence() {
+        return mSequence;
+    }
 }
