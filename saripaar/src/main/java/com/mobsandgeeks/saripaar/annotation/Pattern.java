@@ -32,6 +32,7 @@ public @interface Pattern {
     public String regex();
     public boolean caseSensitive()  default true;
 
+    public int sequence()           default -1;
     public int messageResId()       default -1;
-    public String message()         default "";
+    public String message()         default "Input does not match pattern";
 }

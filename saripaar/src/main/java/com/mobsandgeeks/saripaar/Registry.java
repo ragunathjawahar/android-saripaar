@@ -220,10 +220,13 @@ final class Registry {
             throw new IllegalArgumentException(message);
         }
 
-        // 2. Check for the 'message' attribute
+        // 2. Check for 'sequence' attribute
+        assertAttribute(ruleAnnotation, "sequence", Integer.TYPE);
+
+        // 3. Check for 'message' attribute
         assertAttribute(ruleAnnotation, "message", String.class);
 
-        // 3. Check for the 'messageResId' attribute
+        // 4. Check for 'messageResId' attribute
         assertAttribute(ruleAnnotation, "messageResId", Integer.TYPE);
     }
 

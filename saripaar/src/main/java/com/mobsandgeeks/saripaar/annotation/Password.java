@@ -32,6 +32,7 @@ public @interface Password {
     public int min()            default 6;
     public Scheme scheme()      default Scheme.ANY;
 
+    public int sequence()       default -1;
     public int messageResId()   default -1;
     public String message()     default "Invalid password";
 

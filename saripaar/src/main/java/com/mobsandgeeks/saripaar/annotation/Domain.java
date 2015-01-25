@@ -31,6 +31,7 @@ import java.lang.annotation.Target;
 public @interface Domain {
     public boolean allowLocal() default false;
 
+    public int sequence()       default -1;
     public int messageResId()   default -1;
-    public String message()     default "Invalid domain";
+    public String message()     default "Invalid domain name";
 }

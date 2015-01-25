@@ -33,6 +33,7 @@ public @interface Size {
     public int max()            default Integer.MAX_VALUE;
     public boolean trim()       default false;
 
+    public int sequence()       default -1;
     public int messageResId()   default -1;
-    public String message()     default "";
+    public String message()     default "Invalid length";
 }

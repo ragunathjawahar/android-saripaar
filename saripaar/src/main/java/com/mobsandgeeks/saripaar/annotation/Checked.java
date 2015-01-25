@@ -31,6 +31,7 @@ import java.lang.annotation.Target;
 public @interface Checked {
     public boolean value()      default true;
 
+    public int sequence()       default -1;
     public int messageResId()   default -1;
     public String message()     default "Must be checked";
 }

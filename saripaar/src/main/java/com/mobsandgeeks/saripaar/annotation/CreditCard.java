@@ -34,6 +34,7 @@ public @interface CreditCard {
         Type.MASTERCARD, Type.VISA,
     };
 
+    public int sequence()       default -1;
     public int messageResId()   default -1;
     public String message()     default "Invalid card";
 
