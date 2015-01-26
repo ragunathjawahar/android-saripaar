@@ -131,6 +131,7 @@ public final class Validator {
     private Map<View, ArrayList<RuleAdapterPair>> mViewRulesMap;
     private boolean mOrderedFields;
     private SequenceComparator mSequenceComparator;
+    private ViewValidatedAction mViewValidatedAction;
     private ValidationListener mValidationListener;
     private AsyncValidationTask mAsyncValidationTask;
 
@@ -146,6 +147,7 @@ public final class Validator {
         mValidationMode = Mode.BURST;
         mValidationContext = new ValidationContext();
         mSequenceComparator = new SequenceComparator();
+        mViewValidatedAction = new DefaultViewValidatedAction();
     }
 
     /**
@@ -216,8 +218,8 @@ public final class Validator {
     }
 
     /**
-     * Setup a {@link com.mobsandgeeks.saripaar.Validator.ValidationListener} to the current
-     * {@link com.mobsandgeeks.saripaar.Validator} instance.
+     * Set a {@link com.mobsandgeeks.saripaar.Validator.ValidationListener} to the
+     * {@link com.mobsandgeeks.saripaar.Validator}.
      *
      * @param validationListener  A {@link com.mobsandgeeks.saripaar.Validator.ValidationListener}
      *      instance. null throws an {@link java.lang.IllegalArgumentException}.
@@ -225,6 +227,17 @@ public final class Validator {
     public void setValidationListener(final ValidationListener validationListener) {
         assertNotNull(validationListener, "validationListener");
         this.mValidationListener = validationListener;
+    }
+
+    /**
+     * Set a {@link com.mobsandgeeks.saripaar.Validator.ViewValidatedAction} to the
+     * {@link com.mobsandgeeks.saripaar.Validator}.
+     *
+     * @param viewValidatedAction  A {@link com.mobsandgeeks.saripaar.Validator.ViewValidatedAction}
+     *      instance.
+     */
+    public void setViewValidatedAction(final ViewValidatedAction viewValidatedAction) {
+        this.mViewValidatedAction = viewValidatedAction;
     }
 
     /**
@@ -668,19 +681,18 @@ public final class Validator {
         validation:
         for (View view : views) {
             ArrayList<RuleAdapterPair> ruleAdapterPairs = viewRulesMap.get(view);
-            int rulesForThisView = ruleAdapterPairs.size();
+            int nRules = ruleAdapterPairs.size();
 
             // Validate all the rules for the given view.
             List<Rule> failedRules = null;
-            for (int i = 0; i < rulesForThisView; i++) {
-                final RuleAdapterPair ruleAdapterPair = ruleAdapterPairs.get(i);
-                final Rule rule = ruleAdapterPair.rule;
-                final ViewDataAdapter dataAdapter = ruleAdapterPair.dataAdapter;
+            for (int i = 0; i < nRules; i++) {
 
                 // Validate only views that are visible and enabled
                 if (view.isShown() && view.isEnabled()) {
-                    Rule failedRule = validateViewWithRule(view, rule, dataAdapter);
-                    boolean isLastRuleForView = rulesForThisView == i + 1;
+                    RuleAdapterPair ruleAdapterPair = ruleAdapterPairs.get(i);
+                    Rule failedRule = validateViewWithRule(
+                            view, ruleAdapterPair.rule, ruleAdapterPair.dataAdapter);
+                    boolean isLastRuleForView = nRules == i + 1;
 
                     if (failedRule != null) {
                         if (addErrorToReport) {
@@ -703,6 +715,13 @@ public final class Validator {
                         addErrorToReport = false;
                     }
                 }
+            }
+
+            // Callback if a view passes all rules
+            boolean viewPassedAllRules = (failedRules == null || failedRules.size() == 0)
+                    && !hasMoreErrors;
+            if (viewPassedAllRules && mViewValidatedAction != null) {
+                mViewValidatedAction.onAllRulesPassed(view);
             }
         }
 
@@ -760,6 +779,9 @@ public final class Validator {
 
     /**
      * Listener with callback methods that notifies the outcome of validation.
+     *
+     * @author Ragunath Jawahar {@literal <rj@mobsandgeeks.com>}
+     * @since 1.0
      */
     public interface ValidationListener {
 
@@ -778,7 +800,27 @@ public final class Validator {
     }
 
     /**
+     * Interface that provides a callback when all {@link com.mobsandgeeks.saripaar.Rule}s
+     * associated with a {@link android.view.View} passes.
+     *
+     * @author Ragunath Jawahar {@literal <rj@mobsandgeeks.com>}
+     * @since 2.0
+     */
+    public interface ViewValidatedAction {
+
+        /**
+         * Called when all rules associated with the {@link android.view.View} passes.
+         *
+         * @param view  The {@link android.view.View} that has passed validation.
+         */
+        void onAllRulesPassed(View view);
+    }
+
+    /**
      * Validation mode.
+     *
+     * @author Ragunath Jawahar {@literal <rj@mobsandgeeks.com>}
+     * @since 2.0
      */
     public enum Mode {
 
