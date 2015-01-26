@@ -31,38 +31,38 @@ import java.util.List;
  * @author Ragunath Jawahar {@literal <rj@mobsandgeeks.com>}
  * @since 2.0
  */
-class SameValueContextualRule<CONFIRM extends Annotation, ORIGINAL extends Annotation, DATA_TYPE>
+class SameValueContextualRule<CONFIRM extends Annotation, SOURCE extends Annotation, DATA_TYPE>
         extends ContextualAnnotationRule<CONFIRM, DATA_TYPE> {
-    private Class<ORIGINAL> mOriginalClass;
+    private Class<SOURCE> mSourceClass;
     private Class<CONFIRM> mConfirmClass;
 
     protected SameValueContextualRule(final ValidationContext validationContext,
-            final CONFIRM confirmAnnotation, final Class<ORIGINAL> originalClass) {
+            final CONFIRM confirmAnnotation, final Class<SOURCE> sourceClass) {
         super(validationContext, confirmAnnotation);
-        mOriginalClass = originalClass;
+        mSourceClass = sourceClass;
         mConfirmClass = (Class<CONFIRM>) confirmAnnotation.annotationType();
     }
 
     @Override
     public boolean isValid(final DATA_TYPE confirmValue) {
-        List<View> originalViews = mValidationContext.getAnnotatedViews(mOriginalClass);
-        int nOriginalViews = originalViews.size();
+        List<View> sourceViews = mValidationContext.getAnnotatedViews(mSourceClass);
+        int nSourceViews = sourceViews.size();
 
-        if (nOriginalViews == 0) {
+        if (nSourceViews == 0) {
             String message = String.format(
                     "You should have a view annotated with '%s' to use '%s'.",
-                    mOriginalClass.getName(), mConfirmClass.getName());
+                    mSourceClass.getName(), mConfirmClass.getName());
             throw new IllegalStateException(message);
-        } else if (nOriginalViews > 1) {
+        } else if (nSourceViews > 1) {
             String message = String.format(
-                    "More than 1 field annotated with '%s'.", mOriginalClass.getName());
+                    "More than 1 field annotated with '%s'.", mSourceClass.getName());
             throw new IllegalStateException(message);
         }
 
         // There's only one, then we're good to go :)
-        View view = originalViews.get(0);
-        Object originalValue = mValidationContext.getData(view, mOriginalClass);
+        View view = sourceViews.get(0);
+        Object sourceValue = mValidationContext.getData(view, mSourceClass);
 
-        return confirmValue.equals(originalValue);
+        return confirmValue.equals(sourceValue);
     }
 }
