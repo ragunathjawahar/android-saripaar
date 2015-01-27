@@ -125,7 +125,7 @@ Exclude Saripaar classes from obfuscation and minification. Add the following ru
 
 Using Saripaar?
 ---------------------
-[Tweet] to me with your Google Play URL and I'll add your app to the list :)
+[Tweet] me with your Google Play URL and I'll add your app to the list :)
 
 Icon         | App           | Icon         | App           | Icon         | App
 ------------ | ------------- | ------------ | ------------- | ------------ | -------------
