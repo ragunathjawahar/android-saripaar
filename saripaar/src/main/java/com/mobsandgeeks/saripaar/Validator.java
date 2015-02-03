@@ -411,6 +411,12 @@ public final class Validator {
         mViewRulesMap.put(view, ruleAdapterPairs);
     }
 
+
+    public void removeRules(View view){
+        assertNotNull(view, "view");
+        mViewRulesMap.remove(view);
+    }
+
     static boolean isSaripaarAnnotation(final Class<? extends Annotation> annotation) {
         return SARIPAAR_REGISTRY.getRegisteredAnnotations().contains(annotation);
     }
