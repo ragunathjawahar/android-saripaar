@@ -25,6 +25,7 @@ import java.util.Map;
  * @since 2.0
  */
 public class PasswordRule extends AnnotationRule<Password, String> {
+
     /*
      * http://stackoverflow.com/questions/1559751/
      * regex-to-make-sure-that-the-string-contains-at-least-one-lower-case-char-upper
