@@ -42,8 +42,8 @@ public class UnorderedSequencingTest
      * ============================================================================
      */
     public void testBurst_failure() {
-        TestHelper.clickView(R.id.burstRadioButton);
-        TestHelper.clickView(R.id.saripaarButton);
+        EspressoHelper.clickView(R.id.burstRadioButton);
+        EspressoHelper.clickView(R.id.saripaarButton);
 
         String[] messages = {
                 "Message 3", "Message 4", "Message 5",
@@ -56,7 +56,7 @@ public class UnorderedSequencingTest
         }
 
         String expectedErrorMessages = messageBuilder.toString().trim();
-        TestHelper.checkForText(expectedErrorMessages, mResultTextView);
+        EspressoHelper.checkForText(expectedErrorMessages, mResultTextView);
     }
 
     /* ============================================================================
@@ -64,9 +64,9 @@ public class UnorderedSequencingTest
      * ============================================================================
      */
     public void testImmediate_crash() {
-        TestHelper.clickView(R.id.immediateRadioButton);
-        TestHelper.clickView(R.id.saripaarButton);
-        TestHelper.checkForText(Constants.STATE_CRASH, mResultTextView);
+        EspressoHelper.clickView(R.id.immediateRadioButton);
+        EspressoHelper.clickView(R.id.saripaarButton);
+        EspressoHelper.checkForText(Constants.STATE_CRASH, mResultTextView);
     }
 
 }

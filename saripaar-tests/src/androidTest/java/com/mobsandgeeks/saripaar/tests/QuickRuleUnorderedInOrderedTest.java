@@ -38,15 +38,15 @@ public class QuickRuleUnorderedInOrderedTest
     }
 
     public void testInvalidZipCodeInvalidAirtelNumberNoEvenNumberQuickRule_failure() {
-        TestHelper.clickView(R.id.saripaarButton);
+        EspressoHelper.clickView(R.id.saripaarButton);
         String result = String.format("%s %s",
             Constants.FIELD_ZIP_CODE, Constants.FIELD_AIRTEL_NUMBER);
-        TestHelper.checkForText(result, mResultTextView);
+        EspressoHelper.checkForText(result, mResultTextView);
     }
 
     public void testInvalidZipCodeInvalidAirtelNumberWithEvenNumberQuickRule_crash() {
-        TestHelper.clickView(R.id.useQuickRuleRadioButton);
-        TestHelper.checkForText(Constants.STATE_CRASH, mResultTextView);
+        EspressoHelper.clickView(R.id.useQuickRuleRadioButton);
+        EspressoHelper.checkForText(Constants.STATE_CRASH, mResultTextView);
     }
 
 }

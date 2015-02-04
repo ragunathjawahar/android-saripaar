@@ -62,16 +62,16 @@ public class UnorderedValidateTest
     }
 
     public void testBurstValidAll() {
-        TestHelper.type(R.id.nameEditText, Constants.NAME);
-        TestHelper.type(R.id.addressEditText, Constants.ADDRESS);
-        TestHelper.type(R.id.emailEditText, Constants.EMAIL);
-        TestHelper.type(R.id.phoneEditText, Constants.PHONE);
-        TestHelper.clickView(R.id.saripaarButton);
+        EspressoHelper.type(R.id.nameEditText, Constants.NAME);
+        EspressoHelper.type(R.id.addressEditText, Constants.ADDRESS);
+        EspressoHelper.type(R.id.emailEditText, Constants.EMAIL);
+        EspressoHelper.type(R.id.phoneEditText, Constants.PHONE);
+        EspressoHelper.clickView(R.id.saripaarButton);
         checkForText(Arrays.asList(Constants.STATE_SUCCESS));
     }
 
     public void testBurstInvalidAll() {
-        TestHelper.clickView(R.id.saripaarButton);
+        EspressoHelper.clickView(R.id.saripaarButton);
         checkForText(Arrays.asList(Constants.FIELD_NAME, Constants.FIELD_ADDRESS,
                 Constants.FIELD_EMAIL, Constants.FIELD_PHONE));
     }
@@ -81,25 +81,25 @@ public class UnorderedValidateTest
      * ============================================================================
      */
     public void testImmediateValidAllCrash() {
-        TestHelper.clickView(R.id.immediateRadioButton);
-        TestHelper.type(R.id.nameEditText, Constants.NAME);
-        TestHelper.type(R.id.addressEditText, Constants.ADDRESS);
-        TestHelper.type(R.id.emailEditText, Constants.EMAIL);
-        TestHelper.type(R.id.phoneEditText, Constants.PHONE);
-        TestHelper.clickView(R.id.saripaarButton);
+        EspressoHelper.clickView(R.id.immediateRadioButton);
+        EspressoHelper.type(R.id.nameEditText, Constants.NAME);
+        EspressoHelper.type(R.id.addressEditText, Constants.ADDRESS);
+        EspressoHelper.type(R.id.emailEditText, Constants.EMAIL);
+        EspressoHelper.type(R.id.phoneEditText, Constants.PHONE);
+        EspressoHelper.clickView(R.id.saripaarButton);
         checkForText(Arrays.asList(Constants.STATE_CRASH));
     }
 
     public void testImmediateInvalidAllCrash() {
-        TestHelper.clickView(R.id.immediateRadioButton);
-        TestHelper.clickView(R.id.saripaarButton);
+        EspressoHelper.clickView(R.id.immediateRadioButton);
+        EspressoHelper.clickView(R.id.saripaarButton);
         checkForText(Arrays.asList(Constants.STATE_CRASH));
     }
 
     public void testImmediateValidOneCrash() {
-        TestHelper.clickView(R.id.immediateRadioButton);
-        TestHelper.type(R.id.nameEditText, Constants.NAME);
-        TestHelper.clickView(R.id.saripaarButton);
+        EspressoHelper.clickView(R.id.immediateRadioButton);
+        EspressoHelper.type(R.id.nameEditText, Constants.NAME);
+        EspressoHelper.clickView(R.id.saripaarButton);
         checkForText(Arrays.asList(Constants.STATE_CRASH));
     }
 
@@ -116,8 +116,8 @@ public class UnorderedValidateTest
             String message = String.format("Words does not contain '%s'.", fieldToIgnore);
             throw new IllegalArgumentException(message);
         }
-        TestHelper.type(viewId, textToType);
-        TestHelper.clickView(R.id.saripaarButton);
+        EspressoHelper.type(viewId, textToType);
+        EspressoHelper.clickView(R.id.saripaarButton);
         checkForText(words);
     }
 

@@ -24,7 +24,7 @@ import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static junit.framework.Assert.assertEquals;
 
-public class TestHelper {
+public class EspressoHelper {
 
     public static void type(final int viewId, final String text) {
         onView(withId(viewId)).perform(typeText(text));

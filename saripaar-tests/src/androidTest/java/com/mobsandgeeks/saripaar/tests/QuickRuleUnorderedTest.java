@@ -38,38 +38,38 @@ public class QuickRuleUnorderedTest
     }
 
     public void testInvalidZipCodeNoQuickRule_failure() {
-        TestHelper.clickView(R.id.saripaarButton);
-        TestHelper.checkForText(Constants.FIELD_ZIP_CODE, mResultTextView);
+        EspressoHelper.clickView(R.id.saripaarButton);
+        EspressoHelper.checkForText(Constants.FIELD_ZIP_CODE, mResultTextView);
     }
 
     public void testValidZipCodeNoQuickRule_success() {
-        TestHelper.type(R.id.zipCodeEditText, Constants.ZIP_CODE);
-        TestHelper.clickView(R.id.saripaarButton);
-        TestHelper.checkForText(Constants.STATE_SUCCESS, mResultTextView);
+        EspressoHelper.type(R.id.zipCodeEditText, Constants.ZIP_CODE);
+        EspressoHelper.clickView(R.id.saripaarButton);
+        EspressoHelper.checkForText(Constants.STATE_SUCCESS, mResultTextView);
     }
 
     public void testValidZipCodeAirtelNumberQuickRule_failure() {
-        TestHelper.type(R.id.zipCodeEditText, Constants.ZIP_CODE);
-        TestHelper.clickView(R.id.useQuickRuleRadioButton);
-        TestHelper.clickView(R.id.saripaarButton);
-        TestHelper.checkForText(Constants.FIELD_AIRTEL_NUMBER, mResultTextView);
+        EspressoHelper.type(R.id.zipCodeEditText, Constants.ZIP_CODE);
+        EspressoHelper.clickView(R.id.useQuickRuleRadioButton);
+        EspressoHelper.clickView(R.id.saripaarButton);
+        EspressoHelper.checkForText(Constants.FIELD_AIRTEL_NUMBER, mResultTextView);
     }
 
     public void testInvalidZipCodeInvalidAirtelNumberQuickRule_failure() {
-        TestHelper.clickView(R.id.useQuickRuleRadioButton);
-        TestHelper.clickView(R.id.saripaarButton);
+        EspressoHelper.clickView(R.id.useQuickRuleRadioButton);
+        EspressoHelper.clickView(R.id.saripaarButton);
 
         String result = String.format("%s %s",
             Constants.FIELD_ZIP_CODE, Constants.FIELD_AIRTEL_NUMBER);
-        TestHelper.checkForText(result, mResultTextView);
+        EspressoHelper.checkForText(result, mResultTextView);
     }
 
     public void testZipCodeAirtelNumberQuickRuleValid_success() {
-        TestHelper.clickView(R.id.useQuickRuleRadioButton);
-        TestHelper.type(R.id.zipCodeEditText, Constants.ZIP_CODE);
-        TestHelper.type(R.id.airtelNumberEditText, Constants.AIRTEL_NUMBER);
-        TestHelper.clickView(R.id.saripaarButton);
-        TestHelper.checkForText(Constants.STATE_SUCCESS, mResultTextView);
+        EspressoHelper.clickView(R.id.useQuickRuleRadioButton);
+        EspressoHelper.type(R.id.zipCodeEditText, Constants.ZIP_CODE);
+        EspressoHelper.type(R.id.airtelNumberEditText, Constants.AIRTEL_NUMBER);
+        EspressoHelper.clickView(R.id.saripaarButton);
+        EspressoHelper.checkForText(Constants.STATE_SUCCESS, mResultTextView);
     }
 
 }

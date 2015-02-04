@@ -41,8 +41,8 @@ public class UnorderedValidateTillTest
      * ============================================================================
      */
     public void testBurstValidateTill_crash() {
-        TestHelper.type(R.id.nameEditText, Constants.NAME);
-        TestHelper.checkForText(Constants.STATE_CRASH, mResultTextView);
+        EspressoHelper.type(R.id.nameEditText, Constants.NAME);
+        EspressoHelper.checkForText(Constants.STATE_CRASH, mResultTextView);
     }
 
     /* ============================================================================
@@ -50,9 +50,9 @@ public class UnorderedValidateTillTest
      * ============================================================================
      */
     public void testImmediateValidateTill_crash() {
-        TestHelper.clickView(R.id.immediateRadioButton);
-        TestHelper.type(R.id.nameEditText, Constants.NAME);
-        TestHelper.checkForText(Constants.STATE_CRASH, mResultTextView);
+        EspressoHelper.clickView(R.id.immediateRadioButton);
+        EspressoHelper.type(R.id.nameEditText, Constants.NAME);
+        EspressoHelper.checkForText(Constants.STATE_CRASH, mResultTextView);
     }
 
 }

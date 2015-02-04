@@ -41,15 +41,15 @@ public class OrderedValidateBeforeTest
      * ============================================================================
      */
     public void testBurstValidateBeforeFirstField_nothing() {
-        TestHelper.type(R.id.nameEditText, Constants.NAME);
-        TestHelper.checkForText("", mResultTextView);
+        EspressoHelper.type(R.id.nameEditText, Constants.NAME);
+        EspressoHelper.checkForText("", mResultTextView);
     }
 
     public void testBurstValidateBeforeLastField_failure() {
-        TestHelper.type(R.id.phoneEditText, Constants.PHONE);
+        EspressoHelper.type(R.id.phoneEditText, Constants.PHONE);
         String text = String.format("%s %s %s",
                 Constants.FIELD_NAME, Constants.FIELD_ADDRESS, Constants.FIELD_EMAIL);
-        TestHelper.checkForText(text, mResultTextView);
+        EspressoHelper.checkForText(text, mResultTextView);
     }
 
     /* ============================================================================
@@ -57,15 +57,15 @@ public class OrderedValidateBeforeTest
      * ============================================================================
      */
     public void testImmediateValidateBeforeFirstField_nothing() {
-        TestHelper.clickView(R.id.immediateRadioButton);
-        TestHelper.type(R.id.nameEditText, Constants.NAME);
-        TestHelper.checkForText("", mResultTextView);
+        EspressoHelper.clickView(R.id.immediateRadioButton);
+        EspressoHelper.type(R.id.nameEditText, Constants.NAME);
+        EspressoHelper.checkForText("", mResultTextView);
     }
 
     public void testImmediateValidateBeforeLastField_failure() {
-        TestHelper.clickView(R.id.immediateRadioButton);
-        TestHelper.type(R.id.phoneEditText, Constants.PHONE);
-        TestHelper.checkForText(Constants.FIELD_NAME, mResultTextView);
+        EspressoHelper.clickView(R.id.immediateRadioButton);
+        EspressoHelper.type(R.id.phoneEditText, Constants.PHONE);
+        EspressoHelper.checkForText(Constants.FIELD_NAME, mResultTextView);
     }
 
 }

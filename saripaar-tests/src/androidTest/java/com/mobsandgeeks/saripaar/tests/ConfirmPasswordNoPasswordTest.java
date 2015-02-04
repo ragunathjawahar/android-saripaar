@@ -33,9 +33,9 @@ public class ConfirmPasswordNoPasswordTest
 
     public void testOnlyConfirmPassword_crash() {
         String password = "there_lies_MY-S3creT";
-        TestHelper.type(R.id.confirmPasswordEditText, password);
-        TestHelper.clickView(R.id.saripaarButton);
-        TestHelper.checkForText(Constants.STATE_CRASH, mResultTextView);
+        EspressoHelper.type(R.id.confirmPasswordEditText, password);
+        EspressoHelper.clickView(R.id.saripaarButton);
+        EspressoHelper.checkForText(Constants.STATE_CRASH, mResultTextView);
     }
 
     public ConfirmPasswordNoPasswordTest() {

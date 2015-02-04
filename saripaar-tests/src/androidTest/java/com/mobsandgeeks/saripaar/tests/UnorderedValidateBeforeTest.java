@@ -41,8 +41,8 @@ public class UnorderedValidateBeforeTest
      * ============================================================================
      */
     public void testBurstValidateBeforeFirstField_crash() {
-        TestHelper.type(R.id.nameEditText, Constants.NAME);
-        TestHelper.checkForText(Constants.STATE_CRASH, mResultTextView);
+        EspressoHelper.type(R.id.nameEditText, Constants.NAME);
+        EspressoHelper.checkForText(Constants.STATE_CRASH, mResultTextView);
     }
 
     /* ============================================================================
@@ -50,8 +50,8 @@ public class UnorderedValidateBeforeTest
      * ============================================================================
      */
     public void testImmediateValidateTill_crash() {
-        TestHelper.clickView(R.id.immediateRadioButton);
-        TestHelper.type(R.id.nameEditText, Constants.NAME);
-        TestHelper.checkForText(Constants.STATE_CRASH, mResultTextView);
+        EspressoHelper.clickView(R.id.immediateRadioButton);
+        EspressoHelper.type(R.id.nameEditText, Constants.NAME);
+        EspressoHelper.checkForText(Constants.STATE_CRASH, mResultTextView);
     }
 }

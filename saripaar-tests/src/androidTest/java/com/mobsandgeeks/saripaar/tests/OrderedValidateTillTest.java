@@ -41,24 +41,24 @@ public class OrderedValidateTillTest
      * ============================================================================
      */
     public void testBurstValidateTill() {
-        TestHelper.type(R.id.emailEditText, Constants.EMAIL);
+        EspressoHelper.type(R.id.emailEditText, Constants.EMAIL);
         String text = String.format("%s %s %s",
                 Constants.FIELD_NAME, Constants.FIELD_ADDRESS, Constants.FIELD_EMAIL);
-        TestHelper.checkForText(text, mResultTextView);
+        EspressoHelper.checkForText(text, mResultTextView);
 
-        TestHelper.type(R.id.nameEditText, Constants.NAME);
-        TestHelper.checkForText(Constants.FIELD_NAME, mResultTextView);
+        EspressoHelper.type(R.id.nameEditText, Constants.NAME);
+        EspressoHelper.checkForText(Constants.FIELD_NAME, mResultTextView);
 
-        TestHelper.type(R.id.phoneEditText, Constants.PHONE);
+        EspressoHelper.type(R.id.phoneEditText, Constants.PHONE);
         text = String.format("%s %s %s",
                 Constants.FIELD_ADDRESS, Constants.FIELD_PHONE, Constants.FIELD_PHONE);
-        TestHelper.checkForText(text, mResultTextView);
+        EspressoHelper.checkForText(text, mResultTextView);
 
-        TestHelper.type(R.id.addressEditText, Constants.ADDRESS);
-        TestHelper.checkForText(Constants.FIELD_ADDRESS, mResultTextView);
+        EspressoHelper.type(R.id.addressEditText, Constants.ADDRESS);
+        EspressoHelper.checkForText(Constants.FIELD_ADDRESS, mResultTextView);
 
-        TestHelper.clickView(R.id.nameEditText);
-        TestHelper.checkForText(Constants.STATE_SUCCESS, mResultTextView);
+        EspressoHelper.clickView(R.id.nameEditText);
+        EspressoHelper.checkForText(Constants.STATE_SUCCESS, mResultTextView);
     }
 
     /* ============================================================================
@@ -66,22 +66,22 @@ public class OrderedValidateTillTest
      * ============================================================================
      */
     public void testImmediateValidateTill() {
-        TestHelper.clickView(R.id.immediateRadioButton);
+        EspressoHelper.clickView(R.id.immediateRadioButton);
 
-        TestHelper.type(R.id.emailEditText, Constants.EMAIL);
-        TestHelper.checkForText(Constants.FIELD_NAME, mResultTextView);
+        EspressoHelper.type(R.id.emailEditText, Constants.EMAIL);
+        EspressoHelper.checkForText(Constants.FIELD_NAME, mResultTextView);
 
-        TestHelper.type(R.id.nameEditText, Constants.NAME);
-        TestHelper.checkForText(Constants.FIELD_NAME, mResultTextView);
+        EspressoHelper.type(R.id.nameEditText, Constants.NAME);
+        EspressoHelper.checkForText(Constants.FIELD_NAME, mResultTextView);
 
-        TestHelper.type(R.id.phoneEditText, Constants.PHONE);
-        TestHelper.checkForText(Constants.FIELD_ADDRESS, mResultTextView);
+        EspressoHelper.type(R.id.phoneEditText, Constants.PHONE);
+        EspressoHelper.checkForText(Constants.FIELD_ADDRESS, mResultTextView);
 
-        TestHelper.type(R.id.addressEditText, Constants.ADDRESS);
-        TestHelper.checkForText(Constants.FIELD_ADDRESS, mResultTextView);
+        EspressoHelper.type(R.id.addressEditText, Constants.ADDRESS);
+        EspressoHelper.checkForText(Constants.FIELD_ADDRESS, mResultTextView);
 
-        TestHelper.clickView(R.id.nameEditText);
-        TestHelper.checkForText(Constants.STATE_SUCCESS, mResultTextView);
+        EspressoHelper.clickView(R.id.nameEditText);
+        EspressoHelper.checkForText(Constants.STATE_SUCCESS, mResultTextView);
     }
 
 }

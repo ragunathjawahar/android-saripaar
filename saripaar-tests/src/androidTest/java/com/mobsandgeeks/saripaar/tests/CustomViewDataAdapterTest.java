@@ -35,16 +35,16 @@ public class CustomViewDataAdapterTest
     }
 
     public void testNoDataAdapter_crash() {
-        TestHelper.type(R.id.booleanEditText, "true");
-        TestHelper.clickView(R.id.saripaarButton);
-        TestHelper.checkForText(Constants.STATE_CRASH, mResultTextView);
+        EspressoHelper.type(R.id.booleanEditText, "true");
+        EspressoHelper.clickView(R.id.saripaarButton);
+        EspressoHelper.checkForText(Constants.STATE_CRASH, mResultTextView);
     }
 
     public void testRegisterAdapter_success() {
-        TestHelper.type(R.id.booleanEditText, "true");
-        TestHelper.clickView(R.id.registerAdapterRadioButton);
-        TestHelper.clickView(R.id.saripaarButton);
-        TestHelper.checkForText(Constants.STATE_SUCCESS, mResultTextView);
+        EspressoHelper.type(R.id.booleanEditText, "true");
+        EspressoHelper.clickView(R.id.registerAdapterRadioButton);
+        EspressoHelper.clickView(R.id.saripaarButton);
+        EspressoHelper.checkForText(Constants.STATE_SUCCESS, mResultTextView);
     }
 
 }

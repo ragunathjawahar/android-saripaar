@@ -31,15 +31,15 @@ public class QuickRuleOnlyTest
     }
 
     public void testInputNot1_failure() {
-        TestHelper.type(R.id.oneOnlyEditText, "100");
-        TestHelper.clickView(R.id.saripaarButton);
-        TestHelper.checkForText(Constants.STATE_FAILURE, mResultTextView);
+        EspressoHelper.type(R.id.oneOnlyEditText, "100");
+        EspressoHelper.clickView(R.id.saripaarButton);
+        EspressoHelper.checkForText(Constants.STATE_FAILURE, mResultTextView);
     }
 
     public void testInput1_success() {
-        TestHelper.type(R.id.oneOnlyEditText, "1");
-        TestHelper.clickView(R.id.saripaarButton);
-        TestHelper.checkForText(Constants.STATE_SUCCESS, mResultTextView);
+        EspressoHelper.type(R.id.oneOnlyEditText, "1");
+        EspressoHelper.clickView(R.id.saripaarButton);
+        EspressoHelper.checkForText(Constants.STATE_SUCCESS, mResultTextView);
     }
 
     public QuickRuleOnlyTest() {

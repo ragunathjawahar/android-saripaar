@@ -33,17 +33,17 @@ public class ConfirmPasswordWithPasswordTest
 
     public void testValidPasswordAndConfirmPassword_success() {
         String password = "there_lies_MY-S3creT";
-        TestHelper.type(R.id.passwordEditText, password);
-        TestHelper.type(R.id.confirmPasswordEditText, password);
-        TestHelper.clickView(R.id.saripaarButton);
-        TestHelper.checkForText(Constants.STATE_SUCCESS, mResultTextView);
+        EspressoHelper.type(R.id.passwordEditText, password);
+        EspressoHelper.type(R.id.confirmPasswordEditText, password);
+        EspressoHelper.clickView(R.id.saripaarButton);
+        EspressoHelper.checkForText(Constants.STATE_SUCCESS, mResultTextView);
     }
 
     public void testPasswordMismatch_failure() {
-        TestHelper.type(R.id.passwordEditText, "password_one");
-        TestHelper.type(R.id.confirmPasswordEditText, "password_1");
-        TestHelper.clickView(R.id.saripaarButton);
-        TestHelper.checkForText(Constants.FIELD_CONFIRM_PASSWORD, mResultTextView);
+        EspressoHelper.type(R.id.passwordEditText, "password_one");
+        EspressoHelper.type(R.id.confirmPasswordEditText, "password_1");
+        EspressoHelper.clickView(R.id.saripaarButton);
+        EspressoHelper.checkForText(Constants.FIELD_CONFIRM_PASSWORD, mResultTextView);
     }
 
     public ConfirmPasswordWithPasswordTest() {

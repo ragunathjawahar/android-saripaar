@@ -35,34 +35,34 @@ public class CustomMultipleViewDataAdaptersTest
     }
 
     public void test0InvalidEmailNoEmailAdapterInvalidMaxNoMaxAdapter_crash() {
-        TestHelper.clickView(R.id.saripaarButton);
-        TestHelper.checkForText(Constants.STATE_CRASH, mResultTextView);
+        EspressoHelper.clickView(R.id.saripaarButton);
+        EspressoHelper.checkForText(Constants.STATE_CRASH, mResultTextView);
     }
 
     public void test1InvalidEmailWithEmailAdapterInvalidMaxNoMaxAdapter_crash() {
-        TestHelper.clickView(R.id.registerEmailAdapterRadioButton);
-        TestHelper.clickView(R.id.saripaarButton);
-        TestHelper.checkForText(Constants.STATE_CRASH, mResultTextView);
+        EspressoHelper.clickView(R.id.registerEmailAdapterRadioButton);
+        EspressoHelper.clickView(R.id.saripaarButton);
+        EspressoHelper.checkForText(Constants.STATE_CRASH, mResultTextView);
     }
 
     public void test2InvalidEmailWithEmailAdapterInvalidMaxWithMaxAdapter_failure() {
-        TestHelper.clickView(R.id.registerEmailAdapterRadioButton);
-        TestHelper.clickView(R.id.registerMaxAdapterRadioButton);
-        TestHelper.clickView(R.id.saripaarButton);
+        EspressoHelper.clickView(R.id.registerEmailAdapterRadioButton);
+        EspressoHelper.clickView(R.id.registerMaxAdapterRadioButton);
+        EspressoHelper.clickView(R.id.saripaarButton);
 
         String result = String.format("%s %s", Constants.FIELD_EMAIL, Constants.FIELD_MAX);
-        TestHelper.checkForText(result, mResultTextView);
+        EspressoHelper.checkForText(result, mResultTextView);
     }
 
     public void test3ValidFieldsWithAdapters_success() {
-        TestHelper.type(R.id.emailEditText, Constants.EMAIL);
-        TestHelper.clickView(R.id.registerEmailAdapterRadioButton);
+        EspressoHelper.type(R.id.emailEditText, Constants.EMAIL);
+        EspressoHelper.clickView(R.id.registerEmailAdapterRadioButton);
 
-        TestHelper.type(R.id.maxEditText, "1947");
-        TestHelper.clickView(R.id.registerMaxAdapterRadioButton);
+        EspressoHelper.type(R.id.maxEditText, "1947");
+        EspressoHelper.clickView(R.id.registerMaxAdapterRadioButton);
 
-        TestHelper.clickView(R.id.saripaarButton);
-        TestHelper.checkForText(Constants.STATE_SUCCESS, mResultTextView);
+        EspressoHelper.clickView(R.id.saripaarButton);
+        EspressoHelper.checkForText(Constants.STATE_SUCCESS, mResultTextView);
     }
 
 }

@@ -37,22 +37,22 @@ public class CustomAnnotationTest
 
     // Using 'testX' prefix, because of static variables in Validator > Registry.
     public void test0UnregisteredAnnotationWithNoOtherRules_crash() {
-        TestHelper.type(R.id.zipCodeEditText, Constants.ZIP_CODE);
-        TestHelper.clickView(R.id.saripaarButton);
-        TestHelper.checkForText(Constants.STATE_CRASH, mResultTextView);
+        EspressoHelper.type(R.id.zipCodeEditText, Constants.ZIP_CODE);
+        EspressoHelper.clickView(R.id.saripaarButton);
+        EspressoHelper.checkForText(Constants.STATE_CRASH, mResultTextView);
     }
 
     public void test1ValidZipCode_success() {
-        TestHelper.clickView(R.id.registerAnnotationRadioButton);
-        TestHelper.type(R.id.zipCodeEditText, Constants.ZIP_CODE);
-        TestHelper.clickView(R.id.saripaarButton);
-        TestHelper.checkForText(Constants.STATE_SUCCESS, mResultTextView);
+        EspressoHelper.clickView(R.id.registerAnnotationRadioButton);
+        EspressoHelper.type(R.id.zipCodeEditText, Constants.ZIP_CODE);
+        EspressoHelper.clickView(R.id.saripaarButton);
+        EspressoHelper.checkForText(Constants.STATE_SUCCESS, mResultTextView);
     }
 
     public void test2InvalidZipCode_failure() {
-        TestHelper.clickView(R.id.registerAnnotationRadioButton);
-        TestHelper.type(R.id.zipCodeEditText, "600018");
-        TestHelper.clickView(R.id.saripaarButton);
-        TestHelper.checkForText(Constants.FIELD_ZIP_CODE, mResultTextView);
+        EspressoHelper.clickView(R.id.registerAnnotationRadioButton);
+        EspressoHelper.type(R.id.zipCodeEditText, "600018");
+        EspressoHelper.clickView(R.id.saripaarButton);
+        EspressoHelper.checkForText(Constants.FIELD_ZIP_CODE, mResultTextView);
     }
 }

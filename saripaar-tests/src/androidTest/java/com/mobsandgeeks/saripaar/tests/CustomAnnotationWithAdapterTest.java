@@ -40,21 +40,21 @@ public class CustomAnnotationWithAdapterTest
     }
 
     public void test0NoRegisteredAdapter_crash() {
-        TestHelper.clickView(R.id.saripaarButton);
-        TestHelper.checkForText(Constants.STATE_CRASH, mResultTextView);
+        EspressoHelper.clickView(R.id.saripaarButton);
+        EspressoHelper.checkForText(Constants.STATE_CRASH, mResultTextView);
     }
 
     public void test1RegisteredAdapterSeekBarAboveRange_failure() {
         mSeekBar.setProgress(60);
-        TestHelper.clickView(R.id.registerAnnotationRadioButton);
-        TestHelper.clickView(R.id.saripaarButton);
-        TestHelper.checkForText(Constants.STATE_FAILURE, mResultTextView);
+        EspressoHelper.clickView(R.id.registerAnnotationRadioButton);
+        EspressoHelper.clickView(R.id.saripaarButton);
+        EspressoHelper.checkForText(Constants.STATE_FAILURE, mResultTextView);
     }
 
     public void test2RegisteredAdapterSeekBarAboveRange_success() {
         mSeekBar.setProgress(25);
-        TestHelper.clickView(R.id.registerAnnotationRadioButton);
-        TestHelper.clickView(R.id.saripaarButton);
-        TestHelper.checkForText(Constants.STATE_SUCCESS, mResultTextView);
+        EspressoHelper.clickView(R.id.registerAnnotationRadioButton);
+        EspressoHelper.clickView(R.id.saripaarButton);
+        EspressoHelper.checkForText(Constants.STATE_SUCCESS, mResultTextView);
     }
 }

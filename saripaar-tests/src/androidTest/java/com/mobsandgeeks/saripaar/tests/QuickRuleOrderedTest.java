@@ -38,34 +38,34 @@ public class QuickRuleOrderedTest
     }
 
     public void testInvalidZipCodeInvalidEmailNoQuickRule_failure() {
-        TestHelper.clickView(R.id.saripaarButton);
+        EspressoHelper.clickView(R.id.saripaarButton);
         String result = String.format("%s %s", Constants.FIELD_ZIP_CODE, Constants.FIELD_EMAIL);
-        TestHelper.checkForText(result, mResultTextView);
+        EspressoHelper.checkForText(result, mResultTextView);
     }
 
     public void testAllInvalidWithQuickRule_failure() {
-        TestHelper.clickView(R.id.useQuickRuleRadioButton);
-        TestHelper.clickView(R.id.saripaarButton);
+        EspressoHelper.clickView(R.id.useQuickRuleRadioButton);
+        EspressoHelper.clickView(R.id.saripaarButton);
         String result = String.format("%s %s %s",
             Constants.FIELD_ZIP_CODE, Constants.FIELD_AIRTEL_NUMBER, Constants.FIELD_EMAIL);
-        TestHelper.checkForText(result, mResultTextView);
+        EspressoHelper.checkForText(result, mResultTextView);
     }
 
     public void testAllValidButQuickRule_failure() {
-        TestHelper.type(R.id.zipCodeEditText, Constants.ZIP_CODE);
-        TestHelper.type(R.id.emailEditText, Constants.EMAIL);
-        TestHelper.clickView(R.id.useQuickRuleRadioButton);
-        TestHelper.clickView(R.id.saripaarButton);
-        TestHelper.checkForText(Constants.FIELD_AIRTEL_NUMBER, mResultTextView);
+        EspressoHelper.type(R.id.zipCodeEditText, Constants.ZIP_CODE);
+        EspressoHelper.type(R.id.emailEditText, Constants.EMAIL);
+        EspressoHelper.clickView(R.id.useQuickRuleRadioButton);
+        EspressoHelper.clickView(R.id.saripaarButton);
+        EspressoHelper.checkForText(Constants.FIELD_AIRTEL_NUMBER, mResultTextView);
     }
 
     public void testAllValidWithQuickRule_success() {
-        TestHelper.type(R.id.zipCodeEditText, Constants.ZIP_CODE);
-        TestHelper.type(R.id.airtelNumberEditText, Constants.AIRTEL_NUMBER);
-        TestHelper.type(R.id.emailEditText, Constants.EMAIL);
-        TestHelper.clickView(R.id.useQuickRuleRadioButton);
-        TestHelper.clickView(R.id.saripaarButton);
-        TestHelper.checkForText(Constants.STATE_SUCCESS, mResultTextView);
+        EspressoHelper.type(R.id.zipCodeEditText, Constants.ZIP_CODE);
+        EspressoHelper.type(R.id.airtelNumberEditText, Constants.AIRTEL_NUMBER);
+        EspressoHelper.type(R.id.emailEditText, Constants.EMAIL);
+        EspressoHelper.clickView(R.id.useQuickRuleRadioButton);
+        EspressoHelper.clickView(R.id.saripaarButton);
+        EspressoHelper.checkForText(Constants.STATE_SUCCESS, mResultTextView);
     }
 
 }

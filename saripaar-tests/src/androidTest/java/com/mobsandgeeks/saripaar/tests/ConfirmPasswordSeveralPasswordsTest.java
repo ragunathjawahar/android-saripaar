@@ -33,11 +33,11 @@ public class ConfirmPasswordSeveralPasswordsTest
 
     public void testSeveralPasswordAnnotations_crash() {
         String password = "there_lies_MY-S3creT";
-        TestHelper.type(R.id.passwordEditText, password);
-        TestHelper.type(R.id.anotherPasswordEditText, password);
-        TestHelper.type(R.id.confirmPasswordEditText, password);
-        TestHelper.clickView(R.id.saripaarButton);
-        TestHelper.checkForText(Constants.STATE_CRASH, mResultTextView);
+        EspressoHelper.type(R.id.passwordEditText, password);
+        EspressoHelper.type(R.id.anotherPasswordEditText, password);
+        EspressoHelper.type(R.id.confirmPasswordEditText, password);
+        EspressoHelper.clickView(R.id.saripaarButton);
+        EspressoHelper.checkForText(Constants.STATE_CRASH, mResultTextView);
     }
 
     public ConfirmPasswordSeveralPasswordsTest() {
