@@ -377,8 +377,11 @@ public final class Validator {
      * @param view  A {@link android.view.View} for which
      *      {@link com.mobsandgeeks.saripaar.QuickRule}(s) are to be added.
      * @param quickRules  Varargs of {@link com.mobsandgeeks.saripaar.QuickRule}s.
+     *
+     * @param <VIEW>  The {@link android.view.View} type for which the
+     *      {@link com.mobsandgeeks.saripaar.QuickRule}s are being registered.
      */
-    public void put(final View view, final QuickRule... quickRules) {
+    public <VIEW extends View> void put(final VIEW view, final QuickRule<VIEW>... quickRules) {
         assertNotNull(view, "view");
         assertNotNull(quickRules, "quickRules");
         if (quickRules.length == 0) {
@@ -391,8 +394,8 @@ public final class Validator {
         // If all fields are ordered, then this field should be ordered too
         if (mOrderedFields && !mViewRulesMap.containsKey(view)) {
             String message = String.format("All fields are ordered, so this `%s` should be "
-                            + "ordered too, declare the view as a field and add the `@Order` "
-                            + "annotation.", view.getClass().getName());
+                    + "ordered too, declare the view as a field and add the `@Order` "
+                    + "annotation.", view.getClass().getName());
             throw new IllegalStateException(message);
         }
 
