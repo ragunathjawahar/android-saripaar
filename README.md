@@ -69,7 +69,15 @@ public class RegistrationActivity implements ValidationListener {
 
     public void onValidationFailed(List<ValidationError> errors) {
         for (ValidationError error : errors) {
-            // Do anything you want :)
+            View view = error.getView();
+            String message = error.getCollatedErrorMessage(this);
+
+            // Display error messages ;)
+            if (view instanceof EditText) {
+              ((EditText) view).setError(message);
+            } else {
+              Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+            }
         }
     }
 
