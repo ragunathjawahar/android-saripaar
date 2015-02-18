@@ -74,9 +74,9 @@ public class RegistrationActivity implements ValidationListener {
 
             // Display error messages ;)
             if (view instanceof EditText) {
-              ((EditText) view).setError(message);
+                ((EditText) view).setError(message);
             } else {
-              Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+                Toast.makeText(this, message, Toast.LENGTH_LONG).show();
             }
         }
     }
