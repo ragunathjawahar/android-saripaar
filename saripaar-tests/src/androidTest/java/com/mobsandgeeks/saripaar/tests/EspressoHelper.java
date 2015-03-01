@@ -14,9 +14,8 @@
 
 package com.mobsandgeeks.saripaar.tests;
 
-import android.widget.TextView;
-
 import android.support.test.espresso.Espresso;
+import android.widget.TextView;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
@@ -48,7 +47,7 @@ public class EspressoHelper {
     private static void ensureViewIsVisible() {
         Espresso.closeSoftKeyboard();
         try {
-            Thread.sleep(100);
+            Thread.sleep(300);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
