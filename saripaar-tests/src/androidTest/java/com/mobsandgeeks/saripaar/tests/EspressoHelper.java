@@ -27,18 +27,30 @@ import static junit.framework.Assert.assertEquals;
 public class EspressoHelper {
 
     public static void type(final int viewId, final String text) {
+        ensureViewIsVisible();
         onView(withId(viewId)).perform(typeText(text));
     }
 
     public static void clickView(final int viewId) {
-        if (viewId == R.id.saripaarButton) {
-            Espresso.closeSoftKeyboard();
-        }
+        ensureViewIsVisible();
         onView(withId(viewId)).perform(click());
     }
 
     public static void checkForText(final String expectedText, final TextView resultTextView) {
         String actualText = resultTextView.getText().toString().trim();
         assertEquals(expectedText, actualText);
+    }
+
+    /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     *  Private Methods
+     * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     */
+    private static void ensureViewIsVisible() {
+        Espresso.closeSoftKeyboard();
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }
