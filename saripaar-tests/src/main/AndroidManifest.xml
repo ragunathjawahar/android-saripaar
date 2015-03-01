@@ -65,6 +65,9 @@
         <activity
             android:name=".ui.UnorderedSequencingActivity"
             android:label="@string/title_activity_address" />
+        <activity
+            android:name=".ui.RemoveRulesActivity"
+            android:label="@string/title_activity_remove_rules" />
     </application>
 
 </manifest>

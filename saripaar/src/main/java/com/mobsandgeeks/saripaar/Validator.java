@@ -414,9 +414,16 @@ public final class Validator {
         mViewRulesMap.put(view, ruleAdapterPairs);
     }
 
-
-    public void removeRules(View view){
+    /**
+     * Remove all {@link com.mobsandgeeks.saripaar.Rule}s for the given {@link android.view.View}.
+     *
+     * @param view  The {@link android.view.View} whose rules should be removed.
+     */
+    public void removeRules(final View view) {
         assertNotNull(view, "view");
+        if (mViewRulesMap == null) {
+            createRulesSafelyAndLazily(false);
+        }
         mViewRulesMap.remove(view);
     }
 
