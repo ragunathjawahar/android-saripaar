@@ -2,12 +2,11 @@ language: android
 jdk: oraclejdk7
 env:
   matrix:
-    - ANDROID_TARGET=android-21  ANDROID_ABI=armeabi-v7a
+    - ANDROID_TARGET=android-19  ANDROID_ABI=armeabi-v7a
 
 android:
   components:
     - build-tools-21.1.1
-    - sys-img-armeabi-v7a-android-21
 
 before_script:
   # Grant execution permissions to Gradle wrapper
