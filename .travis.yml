@@ -7,6 +7,7 @@ env:
 android:
   components:
     - build-tools-21.1.1
+    - sys-img-armeabi-v7a-android-21
 
 before_script:
   # Grant execution permissions to Gradle wrapper
@@ -18,4 +19,4 @@ before_script:
   - adb wait-for-device
   - adb shell input keyevent 82 &
 
-script: ./gradlew connectedAndroidTest --stacktrace --debug
+script: ./gradlew connectedAndroidTest --stacktrace --info
