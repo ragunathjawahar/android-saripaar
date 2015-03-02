@@ -1,4 +1,4 @@
-Android Saripaar v2
+Android Saripaar v2 [![Build Status](https://travis-ci.org/ragunathjawahar/android-saripaar.svg?branch=master)](https://travis-ci.org/ragunathjawahar/android-saripaar) [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Android%20Saripaar-brightgreen.svg?style=flat)](http://android-arsenal.com/details/1/526)
 ===================
 ![Logo](logo.png)
 
