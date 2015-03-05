@@ -698,7 +698,7 @@ public final class Validator {
         boolean hasMoreErrors = false;
 
         validation:
-        for (final View view : views) {
+        for (View view : views) {
             ArrayList<RuleAdapterPair> ruleAdapterPairs = viewRulesMap.get(view);
             int nRules = ruleAdapterPairs.size();
 
@@ -740,7 +740,7 @@ public final class Validator {
             boolean viewPassedAllRules = (failedRules == null || failedRules.size() == 0)
                     && !hasMoreErrors;
             if (viewPassedAllRules && mViewValidatedAction != null) {
-                handleViewValidatedActionCallback(mViewValidatedAction, view);
+                triggerViewValidatedCallback(mViewValidatedAction, view);
             }
         }
 
@@ -768,7 +768,7 @@ public final class Validator {
         return valid ? null : rule;
     }
 
-    private void handleViewValidatedActionCallback(final ViewValidatedAction viewValidatedAction,
+    private void triggerViewValidatedCallback(final ViewValidatedAction viewValidatedAction,
             final View view) {
         boolean isOnMainThread = Looper.myLooper() == Looper.getMainLooper();
         if (isOnMainThread) {
