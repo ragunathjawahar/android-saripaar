@@ -14,6 +14,8 @@
 
 package com.mobsandgeeks.saripaar;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.view.View;
 import android.widget.TextView;
 
@@ -27,11 +29,30 @@ import android.widget.TextView;
  */
 public class DefaultViewValidatedAction implements Validator.ViewValidatedAction {
 
+    private Handler handler;
+
     @Override
     public void onAllRulesPassed(final View view) {
         boolean isTextView = view instanceof TextView;
-        if (isTextView) {
+        if (!isTextView) return;
+
+        boolean onMainThread = Looper.myLooper() == Looper.getMainLooper();
+        if (onMainThread) {
             ((TextView) view).setError(null);
+        } else {
+            runOnMainThread(new Runnable() {
+                @Override
+                public void run() {
+                    ((TextView) view).setError(null);
+                }
+            });
         }
+    }
+
+    private void runOnMainThread(Runnable runnable) {
+        if (handler == null) {
+            handler = new Handler(Looper.getMainLooper());
+        }
+        handler.post(runnable);
     }
 }
