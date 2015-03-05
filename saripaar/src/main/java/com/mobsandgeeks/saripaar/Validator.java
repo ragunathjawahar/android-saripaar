@@ -15,6 +15,8 @@
 package com.mobsandgeeks.saripaar;
 
 import android.os.AsyncTask;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.RadioButton;
@@ -132,6 +134,7 @@ public final class Validator {
     private boolean mOrderedFields;
     private SequenceComparator mSequenceComparator;
     private ViewValidatedAction mViewValidatedAction;
+    private Handler mValidatedActionHandler;
     private ValidationListener mValidationListener;
     private AsyncValidationTask mAsyncValidationTask;
 
@@ -695,7 +698,7 @@ public final class Validator {
         boolean hasMoreErrors = false;
 
         validation:
-        for (View view : views) {
+        for (final View view : views) {
             ArrayList<RuleAdapterPair> ruleAdapterPairs = viewRulesMap.get(view);
             int nRules = ruleAdapterPairs.size();
 
@@ -737,7 +740,7 @@ public final class Validator {
             boolean viewPassedAllRules = (failedRules == null || failedRules.size() == 0)
                     && !hasMoreErrors;
             if (viewPassedAllRules && mViewValidatedAction != null) {
-                mViewValidatedAction.onAllRulesPassed(view);
+                handleViewValidatedActionCallback(mViewValidatedAction, view);
             }
         }
 
@@ -763,6 +766,28 @@ public final class Validator {
         }
 
         return valid ? null : rule;
+    }
+
+    private void handleViewValidatedActionCallback(final ViewValidatedAction viewValidatedAction,
+            final View view) {
+        boolean isOnMainThread = Looper.myLooper() == Looper.getMainLooper();
+        if (isOnMainThread) {
+            viewValidatedAction.onAllRulesPassed(view);
+        } else {
+            runOnMainThread(new Runnable() {
+                @Override
+                public void run() {
+                    viewValidatedAction.onAllRulesPassed(view);
+                }
+            });
+        }
+    }
+
+    private void runOnMainThread(final Runnable runnable) {
+        if (mValidatedActionHandler == null) {
+            mValidatedActionHandler = new Handler(Looper.getMainLooper());
+        }
+        mValidatedActionHandler.post(runnable);
     }
 
     private View getLastView() {
