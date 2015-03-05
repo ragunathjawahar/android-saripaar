@@ -134,7 +134,7 @@ public final class Validator {
     private boolean mOrderedFields;
     private SequenceComparator mSequenceComparator;
     private ViewValidatedAction mViewValidatedAction;
-    private Handler mValidatedActionHandler;
+    private Handler mViewValidatedActionHandler;
     private ValidationListener mValidationListener;
     private AsyncValidationTask mAsyncValidationTask;
 
@@ -784,10 +784,10 @@ public final class Validator {
     }
 
     private void runOnMainThread(final Runnable runnable) {
-        if (mValidatedActionHandler == null) {
-            mValidatedActionHandler = new Handler(Looper.getMainLooper());
+        if (mViewValidatedActionHandler == null) {
+            mViewValidatedActionHandler = new Handler(Looper.getMainLooper());
         }
-        mValidatedActionHandler.post(runnable);
+        mViewValidatedActionHandler.post(runnable);
     }
 
     private View getLastView() {
