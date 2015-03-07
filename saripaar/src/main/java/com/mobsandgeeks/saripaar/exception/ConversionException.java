@@ -15,6 +15,9 @@
 package com.mobsandgeeks.saripaar.exception;
 
 /**
+ * Thrown by {@link com.mobsandgeeks.saripaar.adapter.ViewDataAdapter}s when an adapter is unable
+ * to convert the data retrieved from a {@link android.view.View} into the desired type.
+ *
  * @author Ragunath Jawahar {@literal <rj@mobsandgeeks.com>}
  * @since 2.0
  */
@@ -23,5 +26,4 @@ public class ConversionException extends Exception {
     public ConversionException(String message) {
         super(message);
     }
-
 }

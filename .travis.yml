@@ -1,0 +1,21 @@
+language: android
+jdk: oraclejdk7
+env:
+  matrix:
+    - ANDROID_TARGET=android-19  ANDROID_ABI=armeabi-v7a
+
+android:
+  components:
+    - build-tools-21.1.1
+
+before_script:
+  # Grant execution permissions to Gradle wrapper
+  - chmod +x gradlew
+
+  # Create and start emulator
+  - echo no | android create avd --force -n test -t $ANDROID_TARGET --abi $ANDROID_ABI
+  - emulator -avd test -no-skin -no-audio -no-window &
+  - adb wait-for-device
+  - adb shell input keyevent 82 &
+
+script: ./gradlew connectedAndroidTest --stacktrace --info

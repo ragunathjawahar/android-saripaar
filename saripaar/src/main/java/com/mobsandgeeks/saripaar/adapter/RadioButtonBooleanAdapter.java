@@ -17,13 +17,15 @@ package com.mobsandgeeks.saripaar.adapter;
 import android.widget.RadioButton;
 
 /**
+ * Adapter that returns a {@link java.lang.Boolean} value from a {@link android.widget.RadioButton}.
+ *
  * @author Ragunath Jawahar {@literal <rj@mobsandgeeks.com>}
  * @since 2.0
  */
 public class RadioButtonBooleanAdapter implements ViewDataAdapter<RadioButton, Boolean> {
 
     @Override
-    public Boolean getData(RadioButton radioButton) {
+    public Boolean getData(final RadioButton radioButton) {
         return radioButton.isChecked();
     }
 }

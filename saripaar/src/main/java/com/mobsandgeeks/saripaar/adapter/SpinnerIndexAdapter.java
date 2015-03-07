@@ -17,14 +17,16 @@ package com.mobsandgeeks.saripaar.adapter;
 import android.widget.Spinner;
 
 /**
+ * Adapter that returns the current selection index from a {@link android.widget.Spinner} using the
+ * {@link android.widget.Spinner#getSelectedItemPosition()} method.
+ *
  * @author Ragunath Jawahar {@literal <rj@mobsandgeeks.com>}
  * @since 2.0
  */
 public class SpinnerIndexAdapter implements ViewDataAdapter<Spinner, Integer> {
 
     @Override
-    public Integer getData(Spinner spinner) {
+    public Integer getData(final Spinner spinner) {
         return spinner.getSelectedItemPosition();
     }
-
 }

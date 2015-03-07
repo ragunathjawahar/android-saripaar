@@ -25,12 +25,12 @@ import commons.validator.routines.DoubleValidator;
  */
 public class DecimalMinRule extends AnnotationRule<DecimalMin, Double> {
 
-    protected DecimalMinRule(DecimalMin decimalMin) {
+    protected DecimalMinRule(final DecimalMin decimalMin) {
         super(decimalMin);
     }
 
     @Override
-    public boolean isValid(Double value) {
+    public boolean isValid(final Double value) {
         if (value == null) {
             throw new IllegalArgumentException("'Double' cannot be null.");
         }

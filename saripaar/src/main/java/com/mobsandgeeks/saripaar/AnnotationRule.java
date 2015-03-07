@@ -22,7 +22,8 @@ import java.lang.annotation.Annotation;
  * Saripaar {@link java.lang.annotation.Annotation}s have an
  * {@link com.mobsandgeeks.saripaar.AnnotationRule} paired to them, via the
  * {@link com.mobsandgeeks.saripaar.annotation.ValidateUsing} annotation. Like stock annotations,
- * custom annotations must also have a corresponding {@link com.mobsandgeeks.saripaar.AnnotationRule}.
+ * custom annotations must also have a corresponding
+ * {@link com.mobsandgeeks.saripaar.AnnotationRule}.
  *
  * @param <RULE_ANNOTATION>  The associated rule {@link java.lang.annotation.Annotation}.
  * @param <DATA_TYPE>  The data type this rule operates on.
@@ -31,17 +32,20 @@ import java.lang.annotation.Annotation;
  * @since 2.0
  */
 public abstract class AnnotationRule<RULE_ANNOTATION extends Annotation, DATA_TYPE>
-        implements Rule<DATA_TYPE> {
+        extends Rule<DATA_TYPE> {
 
     protected final RULE_ANNOTATION mRuleAnnotation;
 
     /**
-     * Constructor.
+     * Constructor. It is mandatory that all subclasses MUST have a constructor with the same
+     * signature.
      *
      * @param ruleAnnotation  The rule {@link java.lang.annotation.Annotation} instance to which
      *      this rule is paired.
      */
     protected AnnotationRule(final RULE_ANNOTATION ruleAnnotation) {
+        super(ruleAnnotation != null ?
+                Reflector.getAttributeValue(ruleAnnotation, "sequence", Integer.TYPE) : -1);
         if (ruleAnnotation == null) {
             throw new IllegalArgumentException("'ruleAnnotation' cannot be null.");
         }
@@ -54,11 +58,10 @@ public abstract class AnnotationRule<RULE_ANNOTATION extends Annotation, DATA_TY
     @Override
     public String getMessage(final Context context) {
         final int messageResId = Reflector.getAttributeValue(mRuleAnnotation, "messageResId",
-            Integer.class);
+                Integer.class);
 
         return messageResId != -1
-            ? context.getString(messageResId)
-            : Reflector.getAttributeValue(mRuleAnnotation, "message", String.class);
+                ? context.getString(messageResId)
+                : Reflector.getAttributeValue(mRuleAnnotation, "message", String.class);
     }
-
 }

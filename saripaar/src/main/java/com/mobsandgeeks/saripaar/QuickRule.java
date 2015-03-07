@@ -17,9 +17,10 @@ package com.mobsandgeeks.saripaar;
 import android.view.View;
 
 /**
- * Unlike {@link com.mobsandgeeks.saripaar.AnnotationRule}s, {@link com.mobsandgeeks.saripaar.QuickRule}s
- * can exist without Annotations. These rules are directly applied to {@link android.view.View}s.
- * They are added to the {@link com.mobsandgeeks.saripaar.Validator} using the
+ * Unlike {@link com.mobsandgeeks.saripaar.AnnotationRule}s,
+ * {@link com.mobsandgeeks.saripaar.QuickRule}s can exist without Annotations. These rules are
+ * directly applied to {@link android.view.View}s. They are added to the
+ * {@link com.mobsandgeeks.saripaar.Validator} using the
  * {@link com.mobsandgeeks.saripaar.Validator#put(android.view.View, QuickRule[])} method.
  *
  * @param <VIEW>  The {@link android.view.View} on which this rule is to be applied.
@@ -27,7 +28,27 @@ import android.view.View;
  * @author Ragunath Jawahar {@literal <rj@mobsandgeeks.com>}
  * @since 2.0
  */
-public abstract class QuickRule<VIEW extends View> implements Rule<VIEW> {
+public abstract class QuickRule<VIEW extends View> extends Rule<VIEW> {
+
+    /**
+     * Default constructor.
+     */
+    protected QuickRule() {
+        super(-1);
+    }
+
+    /**
+     * Constructor.
+     *
+     * @param sequence  A non-negative integer value.
+     */
+    protected QuickRule(final int sequence) {
+        super(sequence);
+        if (sequence < 0) {
+            String message = "'sequence' should be a non-negative integer.";
+            throw new IllegalArgumentException(message);
+        }
+    }
 
     /**
      * Checks if the rule is valid.

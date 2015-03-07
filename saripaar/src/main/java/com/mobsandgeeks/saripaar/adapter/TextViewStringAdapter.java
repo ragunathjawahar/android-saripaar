@@ -17,14 +17,16 @@ package com.mobsandgeeks.saripaar.adapter;
 import android.widget.TextView;
 
 /**
+ * Adapter returns a {@link java.lang.String} from {@link android.widget.TextView}s or
+ * its subclasses, usually {@link android.widget.EditText}s.
+ *
  * @author Ragunath Jawahar {@literal <rj@mobsandgeeks.com>}
  * @since 2.0
  */
 public class TextViewStringAdapter implements ViewDataAdapter<TextView, String> {
 
     @Override
-    public String getData(TextView editText) {
+    public String getData(final TextView editText) {
         return editText.getText().toString();
     }
-
 }

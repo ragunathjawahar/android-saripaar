@@ -34,10 +34,11 @@ public @interface CreditCard {
         Type.MASTERCARD, Type.VISA,
     };
 
+    public int sequence()       default -1;
     public int messageResId()   default -1;
     public String message()     default "Invalid card";
 
-    public static enum Type {
+    public enum Type {
         AMEX, DINERS, DISCOVER, MASTERCARD, VISA, NONE
     }
 }

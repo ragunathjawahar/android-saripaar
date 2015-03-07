@@ -8,45 +8,66 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".OrderedValidateActivity"
+            android:name=".ui.OrderedValidateActivity"
             android:label="@string/title_activity_address" >
         </activity>
         <activity
-            android:name=".UnorderedValidateActivity"
+            android:name=".ui.UnorderedValidateActivity"
             android:label="@string/title_activity_address" />
         <activity
-            android:name=".OrderedValidateTillActivity"
+            android:name=".ui.OrderedValidateTillActivity"
             android:label="@string/title_activity_address" />
         <activity
-            android:name=".UnorderedValidateTillActivity"
+            android:name=".ui.UnorderedValidateTillActivity"
             android:label="@string/title_activity_address" />
         <activity
-            android:name=".OrderedValidateBeforeActivity"
+            android:name=".ui.OrderedValidateBeforeActivity"
             android:label="@string/title_activity_address" />
         <activity
-            android:name=".UnorderedValidateBeforeActivity"
+            android:name=".ui.UnorderedValidateBeforeActivity"
             android:label="@string/title_activity_address" />
         <activity
-            android:name=".CustomViewDataAdapterActivity"
+            android:name=".ui.CustomViewDataAdapterActivity"
             android:label="@string/title_activity_custom_view" />
         <activity
-            android:name=".CustomMultipleViewDataAdaptersActivity"
+            android:name=".ui.CustomMultipleViewDataAdaptersActivity"
             android:label="@string/title_activity_custom_view" />
         <activity
-            android:name=".CustomAnnotationActivity"
+            android:name=".ui.CustomAnnotationActivity"
             android:label="@string/title_activity_custom_annotation" />
         <activity
-            android:name=".CustomAnnotationWithAdapterActivity"
+            android:name=".ui.CustomAnnotationWithAdapterActivity"
             android:label="@string/title_activity_custom_annotation_with_adapter" />
         <activity
-            android:name=".QuickRuleUnorderedActivity"
+            android:name=".ui.QuickRuleUnorderedActivity"
             android:label="@string/title_activity_quick_rule" />
         <activity
-            android:name=".QuickRuleOrderedActivity"
+            android:name=".ui.QuickRuleOrderedActivity"
             android:label="@string/title_activity_quick_rule" />
         <activity
-            android:name=".QuickRuleUnorderedInOrderedActivity"
+            android:name=".ui.QuickRuleUnorderedInOrderedActivity"
             android:label="@string/title_activity_quick_rule" />
+        <activity
+            android:name=".ui.QuickRuleOnlyActivity"
+            android:label="@string/title_activity_quick_rule" />
+        <activity
+            android:name=".ui.ConfirmPasswordWithPasswordActivity"
+            android:label="@string/title_activity_confirm_password" />
+        <activity
+            android:name=".ui.ConfirmPasswordNoPasswordActivity"
+            android:label="@string/title_activity_confirm_password" />
+        <activity
+            android:name=".ui.ConfirmPasswordSeveralPasswordsActivity"
+            android:label="@string/title_activity_confirm_password" />
+        <activity
+            android:name=".ui.OrderedSequencingActivity"
+            android:label="@string/title_activity_address" />
+        <activity
+            android:name=".ui.UnorderedSequencingActivity"
+            android:label="@string/title_activity_address" />
+        <activity
+            android:name=".ui.RemoveRulesActivity"
+            android:label="@string/title_activity_remove_rules" />
     </application>
 
 </manifest>

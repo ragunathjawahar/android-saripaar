@@ -38,8 +38,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:gravity="center"
-        android:layout_above="@+id/saripaarButton"
-        android:layout_below="@+id/radioButton"/>
+        android:layout_above="@+id/saripaarButton"/>
 
     <RadioButton
         android:layout_width="wrap_content"

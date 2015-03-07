@@ -25,18 +25,18 @@ import commons.validator.routines.UrlValidator;
  */
 public class UrlRule extends AnnotationRule<Url, String> {
 
-    protected UrlRule(Url url) {
+    protected UrlRule(final Url url) {
         super(url);
     }
 
     @Override
-    public boolean isValid(String url) {
+    public boolean isValid(final String url) {
         String[] schemes = mRuleAnnotation.schemes();
         long options = mRuleAnnotation.allowFragments()
-            ? 0 : UrlValidator.NO_FRAGMENTS;
+                ? 0 : UrlValidator.NO_FRAGMENTS;
 
         UrlValidator urlValidator = schemes != null && schemes.length > 0
-            ? new UrlValidator(schemes, options) : UrlValidator.getInstance();
+                ? new UrlValidator(schemes, options) : UrlValidator.getInstance();
 
         return urlValidator.isValid(url);
     }

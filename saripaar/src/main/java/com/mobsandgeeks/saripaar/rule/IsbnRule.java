@@ -25,12 +25,12 @@ import commons.validator.routines.ISBNValidator;
  */
 public class IsbnRule extends AnnotationRule<Isbn, String> {
 
-    protected IsbnRule(Isbn isbn) {
+    protected IsbnRule(final Isbn isbn) {
         super(isbn);
     }
 
     @Override
-    public boolean isValid(String isbn) {
+    public boolean isValid(final String isbn) {
         return ISBNValidator.getInstance().isValid(isbn);
     }
 }

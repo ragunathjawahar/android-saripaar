@@ -25,12 +25,12 @@ import commons.validator.routines.IntegerValidator;
  */
 public class MinRule extends AnnotationRule<Min, Integer> {
 
-    protected MinRule(Min min) {
+    protected MinRule(final Min min) {
         super(min);
     }
 
     @Override
-    public boolean isValid(Integer value) {
+    public boolean isValid(final Integer value) {
         if (value == null) {
             throw new IllegalArgumentException("'Integer' cannot be null.");
         }

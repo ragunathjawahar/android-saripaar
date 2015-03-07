@@ -25,12 +25,12 @@ import commons.validator.routines.InetAddressValidator;
  */
 public class IpAddressRule extends AnnotationRule<IpAddress, String> {
 
-    protected IpAddressRule(IpAddress ipAddress) {
+    protected IpAddressRule(final IpAddress ipAddress) {
         super(ipAddress);
     }
 
     @Override
-    public boolean isValid(String ipAddress) {
+    public boolean isValid(final String ipAddress) {
         return InetAddressValidator.getInstance().isValid(ipAddress);
     }
 }

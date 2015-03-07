@@ -23,12 +23,12 @@ import com.mobsandgeeks.saripaar.annotation.AssertTrue;
  */
 public class AssertTrueRule extends AnnotationRule<AssertTrue, Boolean> {
 
-    protected AssertTrueRule(AssertTrue assertTrue) {
+    protected AssertTrueRule(final AssertTrue assertTrue) {
         super(assertTrue);
     }
 
     @Override
-    public boolean isValid(Boolean value) {
+    public boolean isValid(final Boolean value) {
         if (value == null) {
             throw new IllegalArgumentException("'data' cannot be null.");
         }

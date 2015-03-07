@@ -19,6 +19,9 @@ import android.widget.TextView;
 import com.mobsandgeeks.saripaar.exception.ConversionException;
 
 /**
+ * Adapter parses and returns an {@link java.lang.Integer} from {@link android.widget.TextView}s or
+ * its subclasses like {@link android.widget.EditText}s.
+ *
  * @author Ragunath Jawahar {@literal <rj@mobsandgeeks.com>}
  * @since 2.0
  */
@@ -26,7 +29,7 @@ public class TextViewIntegerAdapter implements ViewDataAdapter<TextView, Integer
     private static final String REGEX_INTEGER = "\\d+";
 
     @Override
-    public Integer getData(TextView editText) throws ConversionException {
+    public Integer getData(final TextView editText) throws ConversionException {
         String integerString = editText.getText().toString().trim();
         if (!integerString.matches(REGEX_INTEGER)) {
             String message = String.format("Expected an integer, but was %s", integerString);
@@ -35,5 +38,4 @@ public class TextViewIntegerAdapter implements ViewDataAdapter<TextView, Integer
 
         return Integer.parseInt(integerString);
     }
-
 }

@@ -32,6 +32,7 @@ public @interface Url {
     public String[] schemes()       default { "http", "https", "ftp" };
     public boolean allowFragments() default true;
 
+    public int sequence()           default -1;
     public int messageResId()       default -1;
-    public String message()         default "";
+    public String message()         default "Invalid URL";
 }

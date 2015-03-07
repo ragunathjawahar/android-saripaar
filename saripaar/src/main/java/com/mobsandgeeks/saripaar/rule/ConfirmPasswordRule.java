@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 Mobs & Geeks
+ * Copyright (C) 2015 Mobs & Geeks
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file
  * except in compliance with the License. You may obtain a copy of the License at
@@ -14,21 +14,23 @@
 
 package com.mobsandgeeks.saripaar.rule;
 
-import com.mobsandgeeks.saripaar.AnnotationRule;
+import com.mobsandgeeks.saripaar.ValidationContext;
 import com.mobsandgeeks.saripaar.annotation.ConfirmPassword;
+import com.mobsandgeeks.saripaar.annotation.Password;
 
 /**
  * @author Ragunath Jawahar {@literal <rj@mobsandgeeks.com>}
  * @since 2.0
  */
-public class ConfirmPasswordRule extends AnnotationRule<ConfirmPassword, String> {
+public class ConfirmPasswordRule extends SameValueContextualRule<ConfirmPassword, Password, String> {
 
-    protected ConfirmPasswordRule(ConfirmPassword confirmPassword) {
-        super(confirmPassword);
+    protected ConfirmPasswordRule(final ValidationContext validationContext,
+            final ConfirmPassword confirmPassword) {
+        super(validationContext, confirmPassword, Password.class);
     }
 
     @Override
-    public boolean isValid(String data) {
-        return false;
+    public boolean isValid(final String confirmValue) {
+        return super.isValid(confirmValue);
     }
 }

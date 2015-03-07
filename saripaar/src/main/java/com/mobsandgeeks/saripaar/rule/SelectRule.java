@@ -23,12 +23,12 @@ import com.mobsandgeeks.saripaar.annotation.Select;
  */
 public class SelectRule extends AnnotationRule<Select, Integer> {
 
-    protected SelectRule(Select select) {
+    protected SelectRule(final Select select) {
         super(select);
     }
 
     @Override
-    public boolean isValid(Integer index) {
+    public boolean isValid(final Integer index) {
         if (index == null) {
             throw new IllegalArgumentException("'index' cannot be null.");
         }

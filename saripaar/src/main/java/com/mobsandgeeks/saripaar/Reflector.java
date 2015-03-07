@@ -59,7 +59,7 @@ final class Reflector {
     /**
      * Retrieve an attribute value from an {@link java.lang.annotation.Annotation}.
      *
-     * @param instance  An {@link java.lang.annotation.Annotation} instance.
+     * @param annotation  An {@link java.lang.annotation.Annotation} instance.
      * @param attributeName  Attribute name.
      * @param attributeDataType  {@link java.lang.Class} representing the attribute data type.
      * @param <T>  Attribute value type.
@@ -67,21 +67,23 @@ final class Reflector {
      * @return The attribute value.
      */
     @SuppressWarnings("unchecked")
-    public static <T> T getAttributeValue(final Annotation instance, final String attributeName,
+    public static <T> T getAttributeValue(final Annotation annotation, final String attributeName,
             final Class<T> attributeDataType) {
+
         T attributeValue = null;
-        Method attributeMethod = getAttributeMethod(instance.annotationType(), attributeName);
+        Class<? extends Annotation> annotationType = annotation.annotationType();
+        Method attributeMethod = getAttributeMethod(annotationType, attributeName);
 
         if (attributeMethod == null) {
             String message = String.format("Cannot find attribute '%s' in annotation '%s'.",
-                attributeName, instance.annotationType().getName());
+                    attributeName, annotationType.getName());
             throw new IllegalStateException(message);
         } else {
             try {
-                Object result = attributeMethod.invoke(instance);
+                Object result = attributeMethod.invoke(annotation);
                 attributeValue = attributeDataType.isPrimitive()
-                    ? (T) result
-                    : attributeDataType.cast(result);
+                        ? (T) result
+                        : attributeDataType.cast(result);
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
             } catch (InvocationTargetException e) {
@@ -139,7 +141,7 @@ final class Reflector {
                 // Single 'View' parameter
                 Class<?>[] parameterTypes = method.getParameterTypes();
                 boolean hasSingleViewParameter = parameterTypes.length == 1
-                    && View.class.isAssignableFrom(parameterTypes[0]);
+                        && View.class.isAssignableFrom(parameterTypes[0]);
 
                 if (nonVolatile && hasSingleViewParameter) {
                     getDataMethod = method;
@@ -164,18 +166,25 @@ final class Reflector {
      *      {@link java.lang.annotation.Annotation} instance.
      */
     public static AnnotationRule instantiateRule(final Class<? extends AnnotationRule> ruleType,
-            final Annotation ruleAnnotation) throws SaripaarViolationException {
+            final Annotation ruleAnnotation, final ValidationContext validationContext)
+                    throws SaripaarViolationException {
         AnnotationRule rule = null;
 
         try {
-            Constructor<? extends AnnotationRule> constructor = ruleType.getDeclaredConstructor(
-                ruleAnnotation.annotationType());
-            constructor.setAccessible(true);
-            rule = constructor.newInstance(ruleAnnotation);
+            if (ContextualAnnotationRule.class.isAssignableFrom(ruleType)) {
+                Constructor<?> constructor = ruleType.getDeclaredConstructor(
+                        ValidationContext.class, ruleAnnotation.annotationType());
+                constructor.setAccessible(true);
+                rule = (AnnotationRule) constructor.newInstance(validationContext, ruleAnnotation);
+            } else if (AnnotationRule.class.isAssignableFrom(ruleType)) {
+                Constructor<?> constructor = ruleType.getDeclaredConstructor(
+                        ruleAnnotation.annotationType());
+                constructor.setAccessible(true);
+                rule = (AnnotationRule) constructor.newInstance(ruleAnnotation);
+            }
         } catch (NoSuchMethodException e) {
-            String message = String.format(
-                "'%s' should have a single-argument constructor that accepts a '%s' instance.",
-                ruleType.getName(), ruleAnnotation.annotationType().getName());
+            String message = getMissingConstructorErrorMessage(ruleType,
+                    ruleAnnotation.annotationType());
             throw new SaripaarViolationException(message);
         } catch (InvocationTargetException e) {
             e.printStackTrace();
@@ -189,8 +198,8 @@ final class Reflector {
     }
 
     /**
-     * Method finds the data type of the {@link AnnotationRule} that is
-     * tied up to the given rule annotation.
+     * Method finds the data type of the {@link AnnotationRule} that is tied up to the given rule
+     * annotation.
      *
      * @param ruleAnnotation  Rule {@link java.lang.annotation.Annotation}.
      *
@@ -203,36 +212,19 @@ final class Reflector {
     }
 
     /**
-     * Method finds the data type of the {@link AnnotationRule} that is
-     * tied up to the given rule annotation.
+     * Method finds the data type of the {@link AnnotationRule} that is tied up to the given rule
+     * annotation.
      *
-     * @param validateUsing  The {@link com.mobsandgeeks.saripaar.annotation.ValidateUsing} instance.
+     * @param validateUsing  The {@link com.mobsandgeeks.saripaar.annotation.ValidateUsing}
+     *      instance.
      *
      * @return The expected data type for the
      *      {@link com.mobsandgeeks.saripaar.adapter.ViewDataAdapter}s.
      */
     public static Class<?> getRuleDataType(final ValidateUsing validateUsing) {
         Class<? extends AnnotationRule> rule = validateUsing.value();
-        Method[] declaredMethods = rule.getDeclaredMethods();
-        Class<?> returnType = null;
-
-        for (Method method : declaredMethods) {
-            Class<?>[] parameterTypes = method.getParameterTypes();
-
-            if (matchesIsValidMethodSignature(method, parameterTypes)) {
-                // This will be null, if there are no matching methods
-                // in the class with a similar signature.
-                if (returnType != null) {
-                    String message = String.format(
-                        "Found duplicate 'boolean isValid(T)' method signature in '%s'.",
-                        rule.getName());
-                    throw new SaripaarViolationException(message);
-                }
-                returnType = parameterTypes[0];
-            }
-        }
-
-        return returnType;
+        Method[] methods = rule.getDeclaredMethods();
+        return getRuleTypeFromIsValidMethod(rule, methods);
     }
 
     /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -253,17 +245,59 @@ final class Reflector {
         return validateUsing;
     }
 
+    private static String getMissingConstructorErrorMessage(
+            final Class<? extends AnnotationRule> ruleType,
+            final Class<? extends Annotation> annotationType) {
+
+        String message = null;
+        if (ContextualAnnotationRule.class.isAssignableFrom(ruleType)) {
+            message = String.format("A constructor accepting a '%s' and a '%s' is required for %s.",
+                    ValidationContext.class, annotationType.getName(),
+                    ruleType.getClass().getName());
+        } else if (AnnotationRule.class.isAssignableFrom(ruleType)) {
+            message = String.format(
+                    "'%s' should have a single-argument constructor that accepts a '%s' instance.",
+                    ruleType.getName(), annotationType.getName());
+        }
+
+        return message;
+    }
+
+    private static Class<?> getRuleTypeFromIsValidMethod(final Class<? extends AnnotationRule> rule,
+            final Method[] methods) {
+
+        Class<?> returnType = null;
+        for (Method method : methods) {
+            Class<?>[] parameterTypes = method.getParameterTypes();
+
+            if (matchesIsValidMethodSignature(method, parameterTypes)) {
+                // This will be null, if there are no matching methods
+                // in the class with a similar signature.
+                if (returnType != null) {
+                    String message = String.format(
+                            "Found duplicate 'boolean isValid(T)' method signature in '%s'.",
+                            rule.getName());
+                    throw new SaripaarViolationException(message);
+                }
+                returnType = parameterTypes[0];
+            }
+        }
+        return returnType;
+    }
+
     private static boolean matchesIsValidMethodSignature(final Method method,
             final Class<?>[] parameterTypes) {
         int modifiers = method.getModifiers();
 
         boolean isPublic = Modifier.isPublic(modifiers);
-        boolean notVolatile = !Modifier.isVolatile(modifiers);
-        boolean matchesMethodName = "isValid".equals(method.getName());
+        boolean nonVolatile = !Modifier.isVolatile(modifiers);
         boolean returnsBoolean = Boolean.TYPE.equals(method.getReturnType());
-        boolean hasSingleArgument = parameterTypes.length == 1;
+        boolean matchesMethodName = "isValid".equals(method.getName());
+        boolean hasSingleParameter = parameterTypes.length == 1;
 
-        return isPublic && notVolatile && matchesMethodName && returnsBoolean && hasSingleArgument;
+        return isPublic && nonVolatile && returnsBoolean && matchesMethodName && hasSingleParameter;
     }
 
+    private Reflector() {
+    }
 }

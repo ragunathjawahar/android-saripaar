@@ -31,6 +31,7 @@ import java.lang.annotation.Target;
 public @interface Min {
     public int value();
 
+    public int sequence()       default -1;
     public int messageResId()   default -1;
-    public String message()     default "";
+    public String message()     default "Should be greater than min value";
 }

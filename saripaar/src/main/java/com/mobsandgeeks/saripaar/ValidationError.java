@@ -34,7 +34,8 @@ public class ValidationError {
      * Constructor.
      *
      * @param view  A failed {@link android.view.View}.
-     * @param failedRules  A {@link java.util.List} of failed {@link com.mobsandgeeks.saripaar.Rule}s.
+     * @param failedRules  A {@link java.util.List} of failed
+     *      {@link com.mobsandgeeks.saripaar.Rule}s.
      */
     ValidationError(final View view, final List<Rule> failedRules) {
         this.view = view;
@@ -72,7 +73,7 @@ public class ValidationError {
         for (Rule failedRule : failedRules) {
             String message = failedRule.getMessage(context).trim();
             if (message.length() > 0) {
-                stringBuilder.append(message).append("\n");
+                stringBuilder.append(message).append('\n');
             }
         }
         return stringBuilder.toString().trim();
@@ -83,9 +84,9 @@ public class ValidationError {
      */
     @Override
     public String toString() {
-        return "ValidationError{" +
-            "view=" + view +
-            ", failedRules=" + failedRules +
-            '}';
+        return "ValidationError{"
+                + "view=" + view
+                + ", failedRules=" + failedRules
+                + '}';
     }
 }

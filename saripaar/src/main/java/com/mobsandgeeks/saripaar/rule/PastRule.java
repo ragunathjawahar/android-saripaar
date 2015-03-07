@@ -25,12 +25,12 @@ import java.util.Date;
  */
 public class PastRule extends AnnotationRule<Past, Date> {
 
-    protected PastRule(Past past) {
+    protected PastRule(final Past past) {
         super(past);
     }
 
     @Override
-    public boolean isValid(Date data) {
+    public boolean isValid(final Date data) {
         return false;
     }
 }

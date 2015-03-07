@@ -23,13 +23,13 @@ import com.mobsandgeeks.saripaar.annotation.NotEmpty;
  */
 public class NotEmptyRule extends AnnotationRule<NotEmpty, String> {
 
-    protected NotEmptyRule(NotEmpty notEmpty) {
+    protected NotEmptyRule(final NotEmpty notEmpty) {
         super(notEmpty);
     }
 
     @Override
-    public boolean isValid(String data) {
-        return data != null
-            && (mRuleAnnotation.trim() ? data.trim().length() > 0 : data.length() > 0);
+    public boolean isValid(final String data) {
+        return data != null && (mRuleAnnotation.trim()
+                ? data.trim().length() > 0 : data.length() > 0);
     }
 }

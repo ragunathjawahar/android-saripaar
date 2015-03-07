@@ -25,12 +25,12 @@ import commons.validator.routines.IntegerValidator;
  */
 public class MaxRule extends AnnotationRule<Max, Integer> {
 
-    protected MaxRule(Max max) {
+    protected MaxRule(final Max max) {
         super(max);
     }
 
     @Override
-    public boolean isValid(Integer value) {
+    public boolean isValid(final Integer value) {
         if (value == null) {
             throw new IllegalArgumentException("'Integer' cannot be null.");
         }

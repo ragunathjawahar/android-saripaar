@@ -1,4 +1,4 @@
-Android Saripaar v2
+Android Saripaar v2 [![Build Status](https://travis-ci.org/ragunathjawahar/android-saripaar.svg?branch=master)](https://travis-ci.org/ragunathjawahar/android-saripaar) [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Android%20Saripaar-brightgreen.svg?style=flat)](http://android-arsenal.com/details/1/526)
 ===================
 ![Logo](logo.png)
 
@@ -6,6 +6,10 @@ Android Saripaar v2
 
 Android Saripaar is a simple, yet powerful rule-based UI form validation library for Android.
 It is the **SIMPLEST** and **FEATURE-RICH** validation library available for Android.
+
+*Note: v2 is still under development and is available as snapshots for PREVIEW. For a feature complete
+version of the library, please use v1 (available from Maven Central). The following annotations are
+yet to be implemented in Saripaar v2 `@Future`, `@Past` and `@Digits`*.
 
 Why Android Saripaar?
 ---------------------
@@ -28,8 +32,7 @@ Quick Start
 @Email
 private EditText emailEditText;
 
-@Password
-@Size(min = 6, message = "Enter at least 6 characters.")
+@Password(min = 6, scheme = Password.Scheme.ALPHA_NUMERIC_MIXED_CASE_SYMBOLS)
 private EditText passwordEditText;
 
 @ConfirmPassword
@@ -66,7 +69,15 @@ public class RegistrationActivity implements ValidationListener {
 
     public void onValidationFailed(List<ValidationError> errors) {
         for (ValidationError error : errors) {
-            // Do anything you want :)
+            View view = error.getView();
+            String message = error.getCollatedErrorMessage(this);
+
+            // Display error messages ;)
+            if (view instanceof EditText) {
+                ((EditText) view).setError(message);
+            } else {
+                Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+            }
         }
     }
 
@@ -120,6 +131,26 @@ Exclude Saripaar classes from obfuscation and minification. Add the following ru
     -keep class com.mobsandgeeks.saripaar.** {*;}
     -keep class commons.validator.routines.** {*;}
 
+Using Saripaar?
+---------------------
+[Tweet] me with your Google Play URL and I'll add your app to the list :)
+
+Icon         | App           | Icon         | App           | Icon         | App
+------------ | ------------- | ------------ | ------------- | ------------ | -------------
+<img src="https://lh3.ggpht.com/qhpfFQFd5YuLzT5d9jUCI69dMeLlW6XewLsgZ0l06D92M0SmvsMKSMd_YY1Xc9K1GyU=w300-rw" width="48" height="48" /> | [Wikipedia] | <img src="https://lh6.ggpht.com/i_pxbaojay2K2xb2RDC2W7eOnNlpGRgILoACaEDhaKz87JSg3nEJHV3Vz3wmS3L3e4M=w300-rw" width="48" height="48" /> | [Wikipedia Beta] | <img src="https://lh3.ggpht.com/o2lhzbRnq6U1oPxyqY6LDJIc2PO_tm1_sIbX-fMLpG2Sxk94QW2gQaDw8ewam1dPQrdz=w300-rw" width="48" height="48" /> | [Mizuno Baton]
+<img src="https://lh6.ggpht.com/t-WYlpXlwhLL0unTDChiVi24b4LP0kNsJQnRwFaMHd0NGqxgQ2LupQ1Dl7M1ztj8Vg8=w300-rw" width="48" height="48" /> | [Fetch] | <img src="https://lh3.ggpht.com/J3bMDphmzsPFQeMfWR-LH70g5vSGrTVggPzXQdUafKM2KmpWS3THIcSHQaTVbCQ_hjw=w300-rw" width="48" height="48" /> | [HealtheMinder] | <img src="https://lh3.ggpht.com/EhidzByoyUY1OPVcsjOmtOcRwoxphRCy1-a_qKLYKHwsS0DuHIC9cHIDEPLVKO-oTw=w300-rw" width="48" height="48" /> | [MomMe]
+<img src="https://lh5.ggpht.com/h6T-az0ip_OqNtSh__Kc5-0ZPpT7sYxSn4kFPOjrNI7o-LN9bPbovoiYDfswL-B5XQ=w300-rw" width="48" height="48" /> | [Feelknit]
+
+Publications
+---------------------
+Cover        | Book         
+------------ | -------------
+<img src="http://ecx.images-amazon.com/images/I/416xlob1VeL.jpg" width="48" /> | [Expert Android]
+<img src="http://ecx.images-amazon.com/images/I/417dVd61vKL._BO2,204,203,200_PIsitb-sticker-v3-big,TopRight,0,-55_SX324_SY324_PIkin4,BottomRight,1,22_AA346_SH20_OU03_.jpg" width="48" /> | [Android Top 10 Libraries & Frameworks (German)]
+
+**[AndroidDev Weekly issue #61]** - Open Source Project of the Week<br />
+**[AndroidWeekly issue #65]** - Libraries & Code
+
 Wiki
 ---------------------
 Please visit the [wiki] for a complete guide on Android Saripaar.
@@ -127,7 +158,7 @@ Please visit the [wiki] for a complete guide on Android Saripaar.
 License
 ---------------------
 
-    Copyright 2012 - 2014 Mobs & Geeks
+    Copyright 2012 - 2015 Mobs & Geeks
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -141,7 +172,7 @@ License
     See the License for the specific language governing permissions and
     limitations under the License.
 
-<sub>Saripaar Logo © 2013 - 2014, Mobs &amp; Geeks.<sub>
+<sub>Saripaar Logo © 2013 - 2015, Mobs &amp; Geeks.<sub>
 
   [jar]: http://search.maven.org/#search%7Cga%7C1%7Candroid%20saripaar
   [Apache Commons Validator]: http://commons.apache.org/proper/commons-validator/
@@ -151,4 +182,16 @@ License
   [Saripaar Annotations]: https://github.com/ragunathjawahar/android-saripaar/tree/master/saripaar/src/main/java/com/mobsandgeeks/saripaar/annotation
   [Validator]: https://github.com/ragunathjawahar/android-saripaar/blob/master/saripaar/src/main/java/com/mobsandgeeks/saripaar/Validator.java
   [ValidationListener]: https://github.com/ragunathjawahar/android-saripaar/blob/master/saripaar/src/main/java/com/mobsandgeeks/saripaar/Validator.java
+  [Tweet]: https://twitter.com/ragunathjawahar
+  [Wikipedia]: https://play.google.com/store/apps/details?id=org.wikipedia
+  [Wikipedia Beta]: https://play.google.com/store/apps/details?id=org.wikipedia.beta
+  [Fetch]: https://play.google.com/store/apps/details?id=com.buywithfetch.android
+  [Mizuno Baton]: https://play.google.com/store/apps/details?id=com.mizuno.baton
+  [MomMe]: https://play.google.com/store/apps/details?id=org.harthosp.momme
+  [HealtheMinder]: https://play.google.com/store/apps/details?id=org.hartfordhealthcare.healtheminder
+  [Feelknit]: https://play.google.com/store/apps/details?id=com.qubittech.feelknit.app
+  [Expert Android]: http://www.apress.com/9781430249504
+  [Android Top 10 Libraries & Frameworks (German)]: http://www.amazon.de/Android-Top10-Libraries-Frameworks-Programmieren-ebook/dp/B00OPXVJ0I/
+  [AndroidDev Weekly issue #61]: http://androiddevweekly.com/2013/06/17/Issue-61.html
+  [AndroidWeekly issue #65]: http://androidweekly.net/issues/issue-65
   [wiki]: https://github.com/ragunathjawahar/android-saripaar/wiki
