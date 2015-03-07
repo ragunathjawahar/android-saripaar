@@ -26,7 +26,15 @@ import android.content.Context;
  * @author Ragunath Jawahar {@literal <rj@mobsandgeeks.com>}
  * @since 1.0
  */
-public interface Rule<VALIDATABLE> {
+public abstract class Rule<VALIDATABLE> {
+    protected final int mSequence;
+
+    /**
+     * Constructor.
+     */
+    protected Rule(final int sequence) {
+        mSequence = sequence;
+    }
 
     /**
      * Checks if the rule is valid.
@@ -36,7 +44,7 @@ public interface Rule<VALIDATABLE> {
      *
      * @return true if valid, false otherwise.
      */
-    boolean isValid(VALIDATABLE validatable);
+    public abstract boolean isValid(VALIDATABLE validatable);
 
     /**
      * Returns a failure message associated with the rule.
@@ -46,12 +54,14 @@ public interface Rule<VALIDATABLE> {
      *
      * @return A failure message.
      */
-    String getMessage(Context context);
+    public abstract String getMessage(Context context);
 
     /**
      * Returns the sequence of the {@link com.mobsandgeeks.saripaar.Rule}.
      *
      * @return The sequence.
      */
-    int getSequence();
+    public final int getSequence() {
+        return mSequence;
+    }
 }

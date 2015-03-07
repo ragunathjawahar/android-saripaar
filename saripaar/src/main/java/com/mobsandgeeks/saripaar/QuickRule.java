@@ -28,14 +28,13 @@ import android.view.View;
  * @author Ragunath Jawahar {@literal <rj@mobsandgeeks.com>}
  * @since 2.0
  */
-public abstract class QuickRule<VIEW extends View> implements Rule<VIEW> {
-    private final int mSequence;
+public abstract class QuickRule<VIEW extends View> extends Rule<VIEW> {
 
     /**
      * Default constructor.
      */
     protected QuickRule() {
-        mSequence = -1;
+        super(-1);
     }
 
     /**
@@ -44,11 +43,11 @@ public abstract class QuickRule<VIEW extends View> implements Rule<VIEW> {
      * @param sequence  A non-negative integer value.
      */
     protected QuickRule(final int sequence) {
+        super(sequence);
         if (sequence < 0) {
             String message = "'sequence' should be a non-negative integer.";
             throw new IllegalArgumentException(message);
         }
-        mSequence = sequence;
     }
 
     /**
@@ -59,12 +58,4 @@ public abstract class QuickRule<VIEW extends View> implements Rule<VIEW> {
      * @return true if valid, false otherwise.
      */
     public abstract boolean isValid(VIEW view);
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public final int getSequence() {
-        return mSequence;
-    }
 }
