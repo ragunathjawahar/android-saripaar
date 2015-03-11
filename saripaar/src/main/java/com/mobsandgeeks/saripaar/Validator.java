@@ -648,7 +648,7 @@ public class Validator {
             mAsyncValidationTask = new AsyncValidationTask(view, orderedFields, reasonSuffix);
             mAsyncValidationTask.execute((Void[]) null);
         } else {
-            handleCallbacks(validateTill(view, orderedFields, reasonSuffix));
+            triggerValidationListenerCallback(validateTill(view, orderedFields, reasonSuffix));
         }
     }
 
@@ -666,7 +666,7 @@ public class Validator {
         return getValidationReport(view, mViewRulesMap, mValidationMode);
     }
 
-    private void handleCallbacks(final ValidationReport validationReport) {
+    private void triggerValidationListenerCallback(final ValidationReport validationReport) {
         final List<ValidationError> validationErrors = validationReport.errors;
 
         if (validationErrors.size() == 0 && !validationReport.hasMoreErrors) {
@@ -917,7 +917,7 @@ public class Validator {
 
         @Override
         protected void onPostExecute(final ValidationReport validationReport) {
-            handleCallbacks(validationReport);
+            triggerValidationListenerCallback(validationReport);
         }
     }
 
