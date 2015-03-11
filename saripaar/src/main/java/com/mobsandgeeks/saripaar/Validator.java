@@ -116,7 +116,7 @@ import java.util.Set;
  * @since 1.0
  */
 @SuppressWarnings("unchecked")
-public final class Validator {
+public class Validator {
 
     // Entries are registered inside a static block (Placed at the end of source)
     private static final Registry SARIPAAR_REGISTRY = new Registry();
