@@ -31,6 +31,8 @@ public abstract class Rule<VALIDATABLE> {
 
     /**
      * Constructor.
+     *
+     * @param sequence  The sequence number for this {@link com.mobsandgeeks.saripaar.Rule}.
      */
     protected Rule(final int sequence) {
         mSequence = sequence;
