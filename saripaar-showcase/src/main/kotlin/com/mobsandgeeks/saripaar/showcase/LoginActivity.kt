@@ -15,31 +15,30 @@
 package com.mobsandgeeks.saripaar.showcase
 
 import android.app.Activity
-import android.widget.EditText
-import android.os.Bundle
-import com.mobsandgeeks.saripaar.annotation.NotEmpty
-import com.mobsandgeeks.saripaar.annotation.Password
-import com.mobsandgeeks.saripaar.annotation.Password.Scheme
 import com.mobsandgeeks.saripaar.Validator
-import com.mobsandgeeks.saripaar.Validator.ValidationListener
+import com.mobsandgeeks.saripaar.annotation.NotEmpty
+import com.mobsandgeeks.saripaar.annotation.Order
+import android.widget.EditText
+import com.mobsandgeeks.saripaar.annotation.Password
+import android.widget.Button
+import android.os.Bundle
 import com.mobsandgeeks.saripaar.ValidationError
 import android.widget.Toast
-import android.widget.Button
-import com.mobsandgeeks.saripaar.annotation.Order
-import com.mobsandgeeks.saripaar.Validator.Mode
+import com.mobsandgeeks.saripaar.annotation.Email
 
 /**
  * @author Ragunath Jawahar {@literal <rj@mobsandgeeks.com>}
  * @since 2.0
  */
-public class LoginActivity : Activity(), ValidationListener {
+public class LoginActivity : Activity(), Validator.ValidationListener {
 
     // UI References
-    NotEmpty
+    NotEmpty(sequence = 1)
+    Email(sequence = 2)
     Order(1)
     private var emailEditText: EditText? = null
 
-    Password(scheme = Scheme.ALPHA_NUMERIC)
+    Password(scheme = Password.Scheme.ALPHA_NUMERIC)
     Order(2)
     private var passwordEditText: EditText? = null
 
@@ -58,7 +57,7 @@ public class LoginActivity : Activity(), ValidationListener {
         loginButton = findViewById(R.id.loginButton) as Button
 
         // Validator
-        validator.setValidationMode(Mode.IMMEDIATE)
+        validator.setValidationMode(Validator.Mode.IMMEDIATE)
 
         // Listeners
         validator.setValidationListener(this)
