@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
 
 android {
     compileSdkVersion 21
@@ -17,9 +18,28 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    sourceSets {
+        main.java.srcDirs += 'src/main/java'
+        main.java.srcDirs += 'src/main/kotlin'
+    }
 }
 
 dependencies {
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.mobsandgeeks:android-saripaar:2.0-SNAPSHOT'
+}
+
+buildscript {
+    ext.kotlin_version = '0.10.770'
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+repositories {
+    mavenCentral()
 }
