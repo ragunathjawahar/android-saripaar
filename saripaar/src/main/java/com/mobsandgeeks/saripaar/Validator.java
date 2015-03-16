@@ -866,14 +866,15 @@ public class Validator {
     public enum Mode {
 
         /**
-         * BURST mode will validate all rules before calling the
+         * BURST mode will validate all rules in all views before calling the
          * {@link Validator.ValidationListener#onValidationFailed(java.util.List)}
-         * callback.
+         * callback. Ordering and sequencing is optional.
          */
         BURST,
 
         /**
-         * IMMEDIATE mode will stop the validation as soon as it encounters the first failing rule.
+         * IMMEDIATE mode will stop the validation after validating all the rules
+         * of the first failing view. Requires ordered rules, sequencing is optional.
          */
         IMMEDIATE
     }
