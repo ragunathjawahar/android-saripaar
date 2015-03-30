@@ -17,6 +17,7 @@ package com.mobsandgeeks.saripaar;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Pair;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.RadioButton;
@@ -130,7 +131,7 @@ public class Validator {
     private Object mController;
     private Mode mValidationMode;
     private ValidationContext mValidationContext;
-    private Map<View, ArrayList<RuleAdapterPair>> mViewRulesMap;
+    private Map<View, ArrayList<Pair<Rule, ViewDataAdapter>>> mViewRulesMap;
     private boolean mOrderedFields;
     private SequenceComparator mSequenceComparator;
     private ViewValidatedAction mViewValidatedAction;
@@ -403,14 +404,14 @@ public class Validator {
         }
 
         // If there are no rules, create an empty list
-        ArrayList<RuleAdapterPair> ruleAdapterPairs = mViewRulesMap.get(view);
+        ArrayList<Pair<Rule, ViewDataAdapter>> ruleAdapterPairs = mViewRulesMap.get(view);
         ruleAdapterPairs = ruleAdapterPairs == null
-                ? new ArrayList<RuleAdapterPair>() : ruleAdapterPairs;
+                ? new ArrayList<Pair<Rule, ViewDataAdapter>>() : ruleAdapterPairs;
 
         // Add the quick rule to existing rules
         for (QuickRule quickRule : quickRules) {
             if (quickRule != null) {
-                ruleAdapterPairs.add(new RuleAdapterPair(quickRule, null));
+                ruleAdapterPairs.add(new Pair(quickRule, null));
             }
         }
         Collections.sort(ruleAdapterPairs, mSequenceComparator);
@@ -533,17 +534,20 @@ public class Validator {
         return hasOrderAnnotation || hasSaripaarAnnotation;
     }
 
-    private Map<View, ArrayList<RuleAdapterPair>> createRules(final List<Field> annotatedFields) {
+    private Map<View, ArrayList<Pair<Rule, ViewDataAdapter>>> createRules(
+            final List<Field> annotatedFields) {
 
-        final Map<View, ArrayList<RuleAdapterPair>> viewRulesMap =
-                new LinkedHashMap<View, ArrayList<RuleAdapterPair>>();
+        final Map<View, ArrayList<Pair<Rule, ViewDataAdapter>>> viewRulesMap =
+                new LinkedHashMap<View, ArrayList<Pair<Rule, ViewDataAdapter>>>();
 
         for (Field field : annotatedFields) {
-            final ArrayList<RuleAdapterPair> ruleAdapterPairs = new ArrayList<RuleAdapterPair>();
+            final ArrayList<Pair<Rule, ViewDataAdapter>> ruleAdapterPairs =
+                    new ArrayList<Pair<Rule, ViewDataAdapter>>();
             final Annotation[] fieldAnnotations = field.getAnnotations();
             for (Annotation fieldAnnotation : fieldAnnotations) {
                 if (isSaripaarAnnotation(fieldAnnotation.annotationType())) {
-                    RuleAdapterPair ruleAdapterPair = getRuleAdapterPair(fieldAnnotation, field);
+                    Pair<Rule, ViewDataAdapter> ruleAdapterPair =
+                            getRuleAdapterPair(fieldAnnotation, field);
                     ruleAdapterPairs.add(ruleAdapterPair);
                 }
             }
@@ -555,7 +559,7 @@ public class Validator {
         return viewRulesMap;
     }
 
-    private RuleAdapterPair getRuleAdapterPair(final Annotation saripaarAnnotation,
+    private Pair<Rule, ViewDataAdapter> getRuleAdapterPair(final Annotation saripaarAnnotation,
             final Field viewField) {
         final Class<? extends Annotation> annotationType = saripaarAnnotation.annotationType();
         final Class<?> viewFieldType = viewField.getType();
@@ -581,7 +585,7 @@ public class Validator {
         final AnnotationRule rule = Reflector.instantiateRule(ruleType,
                 saripaarAnnotation, mValidationContext);
 
-        return new RuleAdapterPair(rule, dataAdapter);
+        return new Pair<Rule, ViewDataAdapter>(rule, dataAdapter);
     }
 
     private ViewDataAdapter getDataAdapter(final Class<? extends Annotation> annotationType,
@@ -686,7 +690,8 @@ public class Validator {
     }
 
     private ValidationReport getValidationReport(final View targetView,
-            final Map<View, ArrayList<RuleAdapterPair>> viewRulesMap, final Mode validationMode) {
+            final Map<View, ArrayList<Pair<Rule, ViewDataAdapter>>> viewRulesMap,
+                    final Mode validationMode) {
 
         final List<ValidationError> validationErrors = new ArrayList<ValidationError>();
         final Set<View> views = viewRulesMap.keySet();
@@ -699,7 +704,7 @@ public class Validator {
 
         validation:
         for (View view : views) {
-            ArrayList<RuleAdapterPair> ruleAdapterPairs = viewRulesMap.get(view);
+            ArrayList<Pair<Rule, ViewDataAdapter>> ruleAdapterPairs = viewRulesMap.get(view);
             int nRules = ruleAdapterPairs.size();
 
             // Validate all the rules for the given view.
@@ -708,9 +713,9 @@ public class Validator {
 
                 // Validate only views that are visible and enabled
                 if (view.isShown() && view.isEnabled()) {
-                    RuleAdapterPair ruleAdapterPair = ruleAdapterPairs.get(i);
+                    Pair<Rule, ViewDataAdapter> ruleAdapterPair = ruleAdapterPairs.get(i);
                     Rule failedRule = validateViewWithRule(
-                            view, ruleAdapterPair.rule, ruleAdapterPair.dataAdapter);
+                            view, ruleAdapterPair.first, ruleAdapterPair.second);
                     boolean isLastRuleForView = nRules == i + 1;
 
                     if (failedRule != null) {
@@ -877,16 +882,6 @@ public class Validator {
          * of the first failing view. Requires ordered rules, sequencing is optional.
          */
         IMMEDIATE
-    }
-
-    static class RuleAdapterPair {
-        Rule rule;
-        ViewDataAdapter dataAdapter;
-
-        RuleAdapterPair(final Rule rule, final ViewDataAdapter dataAdapter) {
-            this.rule = rule;
-            this.dataAdapter = dataAdapter;
-        }
     }
 
     static class ValidationReport {

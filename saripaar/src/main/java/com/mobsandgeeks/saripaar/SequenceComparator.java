@@ -14,23 +14,28 @@
 
 package com.mobsandgeeks.saripaar;
 
+import android.util.Pair;
+
+import com.mobsandgeeks.saripaar.adapter.ViewDataAdapter;
+
 import java.util.Comparator;
 
 /**
- * Sorts the {@link com.mobsandgeeks.saripaar.Validator.RuleAdapterPair}s based on the
+ * Sorts the {@link com.mobsandgeeks.saripaar.Rule} and
+ * {@link com.mobsandgeeks.saripaar.adapter.ViewDataAdapter} pairs based on the
  * 'sequence' attribute.
  *
  * @author Ragunath Jawahar {@literal <rj@mobsandgeeks.com>}
  * @since 2.0
  */
-final class SequenceComparator implements Comparator<Validator.RuleAdapterPair> {
+final class SequenceComparator implements Comparator<Pair<Rule, ViewDataAdapter>> {
 
     @Override
-    public int compare(final Validator.RuleAdapterPair lhsPair,
-            final Validator.RuleAdapterPair rhsPair) {
+    public int compare(final Pair<Rule, ViewDataAdapter> lhsPair,
+            final Pair<Rule, ViewDataAdapter> rhsPair) {
 
-        final int lhsSequence = lhsPair.rule.getSequence();
-        final int rhsSequence = rhsPair.rule.getSequence();
+        final int lhsSequence = lhsPair.first.getSequence();
+        final int rhsSequence = rhsPair.first.getSequence();
 
         return lhsSequence > rhsSequence
                 ? 1
