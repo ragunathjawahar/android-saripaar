@@ -18,6 +18,9 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    lintOptions {
+        abortOnError false
+    }
     sourceSets {
         main.java.srcDirs += 'src/main/java'
         main.java.srcDirs += 'src/main/kotlin'

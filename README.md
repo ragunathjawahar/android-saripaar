@@ -80,7 +80,6 @@ public class RegistrationActivity implements ValidationListener {
             }
         }
     }
-
 }
 ```
  - `onValidationSucceeded()` - Called when all your views pass all validations.
