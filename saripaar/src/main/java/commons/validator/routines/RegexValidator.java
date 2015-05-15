@@ -1,12 +1,12 @@
 /*
  * Licensed to the Apache Software Foundation (ASF) under one or more
- * contributor license agreements. See the NOTICE file distributed with
+ * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
- * the License. You may obtain a copy of the License at
+ * the License.  You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ *      http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,9 +14,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package commons.validator.routines;
 
+import java.io.Serializable;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
@@ -25,22 +25,50 @@ import java.util.regex.Matcher;
  * <p>
  * Construct the validator either for a single regular expression or a set (array) of
  * regular expressions. By default validation is <i>case sensitive</i> but constructors
- * are provided to allow <i>case in-sensitive</i> validation. For example to create
+ * are provided to allow  <i>case in-sensitive</i> validation. For example to create
  * a validator which does <i>case in-sensitive</i> validation for a set of regular
  * expressions:
  * </p>
  * <pre>
+ * <code>
  * String[] regexs = new String[] {...};
  * RegexValidator validator = new RegexValidator(regexs, false);
+ * </code>
  * </pre>
+ *
+ * <ul>
+ *   <li>Validate <code>true</code> or <code>false</code>:</li>
+ *   <li>
+ *     <ul>
+ *       <li><code>boolean valid = validator.isValid(value);</code></li>
+ *     </ul>
+ *   </li>
+ *   <li>Validate returning an aggregated String of the matched groups:</li>
+ *   <li>
+ *     <ul>
+ *       <li><code>String result = validator.validate(value);</code></li>
+ *     </ul>
+ *   </li>
+ *   <li>Validate returning the matched groups:</li>
+ *   <li>
+ *     <ul>
+ *       <li><code>String[] result = validator.match(value);</code></li>
+ *     </ul>
+ *   </li>
+ * </ul>
+ *
  * <p>
  * Cached instances pre-compile and re-use {@link Pattern}(s) - which according
  * to the {@link Pattern} API are safe to use in a multi-threaded environment.
  * </p>
  *
+ * @version $Revision$
  * @since Validator 1.4
  */
-public class RegexValidator {
+public class RegexValidator implements Serializable {
+
+    private static final long serialVersionUID = -8832409930574867162L;
+
     private final Pattern[] patterns;
 
     /**
@@ -48,7 +76,7 @@ public class RegexValidator {
      * regular expression.
      *
      * @param regex The regular expression this validator will
-     *              validate against
+     * validate against
      */
     public RegexValidator(String regex) {
         this(regex, true);
@@ -58,13 +86,13 @@ public class RegexValidator {
      * Construct a validator for a single regular expression
      * with the specified case sensitivity.
      *
-     * @param regex         The regular expression this validator will
-     *                      validate against
+     * @param regex The regular expression this validator will
+     * validate against
      * @param caseSensitive when <code>true</code> matching is <i>case
-     *                      sensitive</i>, otherwise matching is <i>case in-sensitive</i>
+     * sensitive</i>, otherwise matching is <i>case in-sensitive</i>
      */
     public RegexValidator(String regex, boolean caseSensitive) {
-        this(new String[]{regex}, caseSensitive);
+        this(new String[] {regex}, caseSensitive);
     }
 
     /**
@@ -72,7 +100,7 @@ public class RegexValidator {
      * of the set of regular expressions.
      *
      * @param regexs The set of regular expressions this validator will
-     *               validate against
+     * validate against
      */
     public RegexValidator(String[] regexs) {
         this(regexs, true);
@@ -82,22 +110,22 @@ public class RegexValidator {
      * Construct a validator that matches any one of the set of regular
      * expressions with the specified case sensitivity.
      *
-     * @param regexs        The set of regular expressions this validator will
-     *                      validate against
+     * @param regexs The set of regular expressions this validator will
+     * validate against
      * @param caseSensitive when <code>true</code> matching is <i>case
-     *                      sensitive</i>, otherwise matching is <i>case in-sensitive</i>
+     * sensitive</i>, otherwise matching is <i>case in-sensitive</i>
      */
     public RegexValidator(String[] regexs, boolean caseSensitive) {
         if (regexs == null || regexs.length == 0) {
             throw new IllegalArgumentException("Regular expressions are missing");
         }
         patterns = new Pattern[regexs.length];
-        int flags = (caseSensitive ? 0 : Pattern.CASE_INSENSITIVE);
+        int flags =  (caseSensitive ? 0: Pattern.CASE_INSENSITIVE);
         for (int i = 0; i < regexs.length; i++) {
             if (regexs[i] == null || regexs[i].length() == 0) {
                 throw new IllegalArgumentException("Regular expression[" + i + "] is missing");
             }
-            patterns[i] = Pattern.compile(regexs[i], flags);
+            patterns[i] =  Pattern.compile(regexs[i], flags);
         }
     }
 
@@ -138,13 +166,14 @@ public class RegexValidator {
                 int count = matcher.groupCount();
                 String[] groups = new String[count];
                 for (int j = 0; j < count; j++) {
-                    groups[j] = matcher.group(j + 1);
+                    groups[j] = matcher.group(j+1);
                 }
                 return groups;
             }
         }
         return null;
     }
+
 
     /**
      * Validate a value against the set of regular expressions
@@ -167,7 +196,7 @@ public class RegexValidator {
                 }
                 StringBuffer buffer = new StringBuffer();
                 for (int j = 0; j < count; j++) {
-                    String component = matcher.group(j + 1);
+                    String component = matcher.group(j+1);
                     if (component != null) {
                         buffer.append(component);
                     }
@@ -180,7 +209,6 @@ public class RegexValidator {
 
     /**
      * Provide a String representation of this validator.
-     *
      * @return A String representation of this validator
      */
     public String toString() {
@@ -195,4 +223,5 @@ public class RegexValidator {
         buffer.append("}");
         return buffer.toString();
     }
+
 }

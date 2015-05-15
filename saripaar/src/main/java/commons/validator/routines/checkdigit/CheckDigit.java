@@ -1,12 +1,12 @@
 /*
  * Licensed to the Apache Software Foundation (ASF) under one or more
- * contributor license agreements. See the NOTICE file distributed with
+ * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
- * the License. You may obtain a copy of the License at
+ * the License.  You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ *      http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,7 +14,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package commons.validator.routines.checkdigit;
 
 /**
@@ -36,34 +35,37 @@ package commons.validator.routines.checkdigit;
  * and then convert them to the new ISBN-13 standard.
  * </p>
  * <p>
- * {@link CheckDigit} is used by the new generic
- * {@link commons.validator.routines.CodeValidator} implementation.
+ * CheckDigit is used by the new generic @link CodeValidator} implementation.
  * </p>
+ *
  * <h3>Implementations</h3>
- * See the
+ * See the 
  * <a href="package-summary.html">Package Summary</a> for a full
  * list of implementations provided within Commons Validator.
  *
  * @see commons.validator.routines.CodeValidator
+ * @version $Revision$
  * @since Validator 1.4
  */
 public interface CheckDigit {
 
     /**
-     * Calculate the <i>Check Digit</i> for a code.
+     * Calculates the <i>Check Digit</i> for a code.
      *
      * @param code The code to calculate the Check Digit for.
+     * The string must not include the check digit
      * @return The calculated Check Digit
      * @throws CheckDigitException if an error occurs.
      */
-    public String calculate(String code) throws CheckDigitException;
+    String calculate(String code) throws CheckDigitException;
 
     /**
-     * Validate the check digit for the code.
+     * Validates the check digit for the code.
      *
-     * @param code The code to validate.
+     * @param code The code to validate, the string must include the check digit.
      * @return <code>true</code> if the check digit is valid, otherwise
      * <code>false</code>.
      */
-    public boolean isValid(String code);
+    boolean isValid(String code);
+
 }

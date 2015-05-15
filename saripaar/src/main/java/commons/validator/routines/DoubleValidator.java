@@ -14,7 +14,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package commons.validator.routines;
 
 import java.text.Format;
@@ -38,7 +37,7 @@ import java.util.Locale;
  *    one of the <code>validate()</code> methods to validate and receive a
  *    <i>converted</i> <code>Double</code> value.</p>
  *
- * <p>Once a value has been sucessfully converted the following
+ * <p>Once a value has been successfully converted the following
  *    methods can be used to perform minimum, maximum and range checks:</p>
  *    <ul>
  *       <li><code>minValue()</code> checks whether the value is greater
@@ -60,9 +59,13 @@ import java.util.Locale;
  *       <li>using a specified pattern with a specified <code>Locale</code></li>
  *    </ul>
  *
+ * @version $Revision$
  * @since Validator 1.3.0
  */
 public class DoubleValidator extends AbstractNumberValidator {
+
+    private static final long serialVersionUID = 5867946581318211330L;
+
     private static final DoubleValidator VALIDATOR = new DoubleValidator();
 
     /**
@@ -238,10 +241,11 @@ public class DoubleValidator extends AbstractNumberValidator {
      * or <code>null</code> if invalid.
      */
     protected Object processParsedValue(Object value, Format formatter) {
+
         if (value instanceof Double) {
             return value;
-        } else {
-            return new Double(((Number) value).doubleValue());
         }
+        return new Double(((Number)value).doubleValue());
+
     }
 }

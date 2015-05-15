@@ -14,7 +14,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package commons.validator.routines;
 
 import java.text.DecimalFormatSymbols;
@@ -29,9 +28,12 @@ import java.util.Locale;
  * <p>This is a <i>base</i> class for building Number
  *    Validators using format parsing.</p>
  *
+ * @version $Revision$
  * @since Validator 1.3.0
  */
 public abstract class AbstractNumberValidator extends AbstractFormatValidator {
+
+    private static final long serialVersionUID = -3088817875906765463L;
 
     /** Standard <code>NumberFormat</code> type */
     public static final int STANDARD_FORMAT = 0;
@@ -41,8 +43,9 @@ public abstract class AbstractNumberValidator extends AbstractFormatValidator {
 
     /** Percent <code>NumberFormat</code> type */
     public static final int PERCENT_FORMAT  = 2;
+
     private final boolean allowFractions;
-    private final int formatType;
+    private final int     formatType;
 
     /**
      * Construct an instance with specified <i>strict</i>
@@ -93,7 +96,7 @@ public abstract class AbstractNumberValidator extends AbstractFormatValidator {
      */
     public boolean isValid(String value, String pattern, Locale locale) {
         Object parsedValue = parse(value, pattern, locale);
-        return parsedValue != null;
+        return (parsedValue == null ? false : true);
     }
 
     /**
@@ -120,9 +123,8 @@ public abstract class AbstractNumberValidator extends AbstractFormatValidator {
     public boolean minValue(Number value, Number min) {
         if (isAllowFractions()) {
             return (value.doubleValue() >= min.doubleValue());
-        } else {
-            return (value.longValue() >= min.longValue());
         }
+        return (value.longValue() >= min.longValue());
     }
 
     /**
@@ -136,9 +138,8 @@ public abstract class AbstractNumberValidator extends AbstractFormatValidator {
     public boolean maxValue(Number value, Number max) {
         if (isAllowFractions()) {
             return (value.doubleValue() <= max.doubleValue());
-        } else {
-            return (value.longValue() <= max.longValue());
         }
+        return (value.longValue() <= max.longValue());
     }
 
     /**
@@ -151,12 +152,14 @@ public abstract class AbstractNumberValidator extends AbstractFormatValidator {
      * @return The parsed value if valid or <code>null</code> if invalid.
      */
     protected Object parse(String value, String pattern, Locale locale) {
+
         value = (value == null ? null : value.trim());
         if (value == null || value.length() == 0) {
             return null;
         }
         Format formatter = getFormat(pattern, locale);
         return parse(value, formatter);
+
     }
 
     /**
@@ -180,6 +183,7 @@ public abstract class AbstractNumberValidator extends AbstractFormatValidator {
      * @return The <code>NumberFormat</code> to created.
      */
     protected Format getFormat(String pattern, Locale locale) {
+
         NumberFormat formatter = null;
         boolean usePattern = (pattern != null && pattern.length() > 0);
         if (!usePattern) {
@@ -190,6 +194,7 @@ public abstract class AbstractNumberValidator extends AbstractFormatValidator {
             DecimalFormatSymbols symbols = new DecimalFormatSymbols(locale);
             formatter = new DecimalFormat(pattern, symbols);
         }
+
         if (determineScale(formatter) == 0) {
             formatter.setParseIntegerOnly(true);
         }

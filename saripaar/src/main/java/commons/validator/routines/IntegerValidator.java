@@ -14,7 +14,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package commons.validator.routines;
 
 import java.text.Format;
@@ -38,7 +37,7 @@ import java.util.Locale;
  *    one of the <code>validate()</code> methods to validate and receive a
  *    <i>converted</i> <code>Integer</code> value.</p>
  *
- * <p>Once a value has been sucessfully converted the following
+ * <p>Once a value has been successfully converted the following
  *    methods can be used to perform minimum, maximum and range checks:</p>
  *    <ul>
  *       <li><code>minValue()</code> checks whether the value is greater
@@ -60,9 +59,13 @@ import java.util.Locale;
  *       <li>using a specified pattern with a specified <code>Locale</code></li>
  *    </ul>
  *
+ * @version $Revision$
  * @since Validator 1.3.0
  */
 public class IntegerValidator extends AbstractNumberValidator {
+
+    private static final long serialVersionUID = 422081746310306596L;
+
     private static final IntegerValidator VALIDATOR = new IntegerValidator();
 
     /**
@@ -114,7 +117,7 @@ public class IntegerValidator extends AbstractNumberValidator {
      *  if invalid.
      */
     public Integer validate(String value) {
-        return (Integer) parse(value, (String)null, (Locale)null);
+        return (Integer)parse(value, (String)null, (Locale)null);
     }
 
     /**
@@ -152,7 +155,7 @@ public class IntegerValidator extends AbstractNumberValidator {
      * @return The parsed <code>Integer</code> if valid or <code>null</code> if invalid.
      */
     public Integer validate(String value, String pattern, Locale locale) {
-        return (Integer) parse(value, pattern, locale);
+        return (Integer)parse(value, pattern, locale);
     }
 
     /**
@@ -239,12 +242,13 @@ public class IntegerValidator extends AbstractNumberValidator {
      *   <code>Integer</code> if valid or <code>null</code> if invalid.
      */
     protected Object processParsedValue(Object value, Format formatter) {
+
         long longValue = ((Number)value).longValue();
+
         if (longValue < Integer.MIN_VALUE ||
             longValue > Integer.MAX_VALUE) {
             return null;
-        } else {
-            return (int) longValue;
         }
+        return new Integer((int)longValue);
     }
 }

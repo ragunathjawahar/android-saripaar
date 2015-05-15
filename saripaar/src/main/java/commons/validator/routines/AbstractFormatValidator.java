@@ -14,12 +14,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package commons.validator.routines;
 
 import java.text.Format;
 import java.text.ParsePosition;
 import java.util.Locale;
+import java.io.Serializable;
 
 /**
  * <p>Abstract class for <i>Format</i> based Validation.</p>
@@ -27,9 +27,12 @@ import java.util.Locale;
  * <p>This is a <i>base</i> class for building Date and Number
  *    Validators using format parsing.</p>
  *
+ * @version $Revision$
  * @since Validator 1.3.0
  */
-public abstract class AbstractFormatValidator {
+public abstract class AbstractFormatValidator implements Serializable {
+
+    private static final long serialVersionUID = -4690687565200568258L;
 
     private final boolean strict;
 
@@ -174,18 +177,23 @@ public abstract class AbstractFormatValidator {
      * @return The parsed value if valid or <code>null</code> if invalid.
      */
     protected Object parse(String value, Format formatter) {
+
         ParsePosition pos = new ParsePosition(0);
         Object parsedValue = formatter.parseObject(value, pos);
         if (pos.getErrorIndex() > -1) {
             return null;
         }
+
         if (isStrict() && pos.getIndex() < value.length()) {
             return null;
         }
+
         if (parsedValue != null) {
             parsedValue = processParsedValue(parsedValue, formatter);
         }
+
         return parsedValue;
+
     }
 
     /**
@@ -209,4 +217,5 @@ public abstract class AbstractFormatValidator {
      * @return The <code>NumberFormat</code> to created.
      */
     protected abstract Format getFormat(String pattern, Locale locale);
+
 }
