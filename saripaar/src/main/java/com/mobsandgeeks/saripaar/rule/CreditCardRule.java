@@ -56,6 +56,6 @@ public class CreditCardRule extends AnnotationRule<CreditCard, String> {
             options = CreditCardValidator.NONE;
         }
 
-        return new CreditCardValidator(options).isValid(creditCardNumber);
+        return new CreditCardValidator(options).isValid(creditCardNumber.replaceAll("\\s", ""));
     }
 }
