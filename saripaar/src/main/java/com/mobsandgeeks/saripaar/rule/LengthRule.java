@@ -15,16 +15,16 @@
 package com.mobsandgeeks.saripaar.rule;
 
 import com.mobsandgeeks.saripaar.AnnotationRule;
-import com.mobsandgeeks.saripaar.annotation.Size;
+import com.mobsandgeeks.saripaar.annotation.Length;
 
 /**
  * @author Ragunath Jawahar {@literal <rj@mobsandgeeks.com>}
  * @since 2.0
  */
-public class SizeRule extends AnnotationRule<Size, String> {
+public class LengthRule extends AnnotationRule<Length, String> {
 
-    protected SizeRule(final Size size) {
-        super(size);
+    protected LengthRule(final Length length) {
+        super(length);
     }
 
     @Override

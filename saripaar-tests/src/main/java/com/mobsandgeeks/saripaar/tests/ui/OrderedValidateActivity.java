@@ -27,7 +27,7 @@ import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.Email;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 import com.mobsandgeeks.saripaar.annotation.Order;
-import com.mobsandgeeks.saripaar.annotation.Size;
+import com.mobsandgeeks.saripaar.annotation.Length;
 import com.mobsandgeeks.saripaar.tests.R;
 
 import java.util.List;
@@ -53,7 +53,7 @@ public class OrderedValidateActivity extends Activity
     private EditText mEmailEditText;
 
     @NotEmpty
-    @Size(min = 10, max = 10)
+    @Length(min = 10, max = 10)
     @Order(4)
     private EditText mPhoneEditText;
 

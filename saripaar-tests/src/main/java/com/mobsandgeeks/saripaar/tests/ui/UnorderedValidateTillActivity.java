@@ -25,7 +25,7 @@ import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.Email;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
-import com.mobsandgeeks.saripaar.annotation.Size;
+import com.mobsandgeeks.saripaar.annotation.Length;
 import com.mobsandgeeks.saripaar.tests.R;
 
 import java.util.List;
@@ -50,7 +50,7 @@ public class UnorderedValidateTillActivity extends Activity
     private EditText mEmailEditText;
 
     @NotEmpty
-    @Size
+    @Length
     private EditText mPhoneEditText;
 
     private TextView mResultTextView;

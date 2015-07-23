@@ -26,7 +26,7 @@ import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.Email;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
-import com.mobsandgeeks.saripaar.annotation.Size;
+import com.mobsandgeeks.saripaar.annotation.Length;
 import com.mobsandgeeks.saripaar.tests.R;
 
 import java.util.List;
@@ -40,11 +40,11 @@ public class UnorderedSequencingActivity extends Activity
 
     // Fields
     @NotEmpty(sequence = 1, message = "Message 1")
-    @Size(sequence = 2, min = 3, message = "Message 2")
+    @Length(sequence = 2, min = 3, message = "Message 2")
     private EditText mNameEditText;
 
     @NotEmpty(sequence = 1, message = "Message 3")
-    @Size(sequence = 2, min = 10, message = "Message 4")
+    @Length(sequence = 2, min = 10, message = "Message 4")
     private EditText mAddressEditText;
 
     @NotEmpty(sequence = 1, message = "Message 5")

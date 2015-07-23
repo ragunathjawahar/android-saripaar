@@ -27,7 +27,7 @@ import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.Email;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 import com.mobsandgeeks.saripaar.annotation.Order;
-import com.mobsandgeeks.saripaar.annotation.Size;
+import com.mobsandgeeks.saripaar.annotation.Length;
 import com.mobsandgeeks.saripaar.tests.R;
 
 import java.util.List;
@@ -41,12 +41,12 @@ public class OrderedSequencingActivity extends Activity
 
     // Fields
     @NotEmpty(sequence = 1, message = "Message 1")
-    @Size(sequence = 2, min = 3, message = "Message 2")
+    @Length(sequence = 2, min = 3, message = "Message 2")
     @Order(1)
     private EditText mNameEditText;
 
     @NotEmpty(sequence = 1, message = "Message 3")
-    @Size(sequence = 2, min = 10, message = "Message 4")
+    @Length(sequence = 2, min = 10, message = "Message 4")
     @Order(2)
     private EditText mAddressEditText;
 
