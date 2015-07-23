@@ -29,7 +29,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
 public @interface Past {
-    public int sequence()       default -1;
-    public int messageResId()   default -1;
-    public String message()     default "Date should be in past";
+    int sequence()       default -1;
+    int messageResId()   default -1;
+    String message()     default "Date should be in past";
 }

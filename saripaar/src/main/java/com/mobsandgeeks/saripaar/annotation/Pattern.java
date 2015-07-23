@@ -29,10 +29,10 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
 public @interface Pattern {
-    public String regex();
-    public boolean caseSensitive()  default true;
+    String regex();
+    boolean caseSensitive()  default true;
 
-    public int sequence()           default -1;
-    public int messageResId()       default -1;
-    public String message()         default "Input does not match pattern";
+    int sequence()           default -1;
+    int messageResId()       default -1;
+    String message()         default "Input does not match pattern";
 }

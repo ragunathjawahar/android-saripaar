@@ -29,9 +29,9 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
 public @interface Checked {
-    public boolean value()      default true;
+    boolean value()      default true;
 
-    public int sequence()       default -1;
-    public int messageResId()   default -1;
-    public String message()     default "Must be checked";
+    int sequence()       default -1;
+    int messageResId()   default -1;
+    String message()     default "Must be checked";
 }

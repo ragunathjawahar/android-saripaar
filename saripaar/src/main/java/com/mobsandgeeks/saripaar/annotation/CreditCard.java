@@ -29,16 +29,16 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
 public @interface CreditCard {
-    public Type[] cardTypes() default {
+    Type[] cardTypes() default {
         Type.AMEX, Type.DINERS, Type.DISCOVER,
         Type.MASTERCARD, Type.VISA,
     };
 
-    public int sequence()       default -1;
-    public int messageResId()   default -1;
-    public String message()     default "Invalid card";
+    int sequence()       default -1;
+    int messageResId()   default -1;
+    String message()     default "Invalid card";
 
-    public enum Type {
+    enum Type {
         AMEX, DINERS, DISCOVER, MASTERCARD, VISA, NONE
     }
 }
