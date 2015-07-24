@@ -9,7 +9,7 @@ It is the **SIMPLEST** and **FEATURE-RICH** validation library available for And
 
 *Note: v2 is still under development and is available as snapshots for PREVIEW. For a feature complete
 version of the library, please use v1 (available from Maven Central). The following annotations are
-yet to be implemented in Saripaar v2 `@Future`, `@Past` and `@Digits`*.
+yet to be implemented in Saripaar v2 `@Future` and `@Past`*.
 
 Why Android Saripaar?
 ---------------------

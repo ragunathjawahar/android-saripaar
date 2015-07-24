@@ -29,7 +29,10 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
 public @interface Digits {
-    int sequence()       default -1;
-    int messageResId()   default -1;
-    String message()     default "Should be a digit";
+    int integer();
+    int fraction()      default 2;
+
+    int sequence()      default -1;
+    int messageResId()  default -1;
+    String message()    default "Should be a digit";
 }
