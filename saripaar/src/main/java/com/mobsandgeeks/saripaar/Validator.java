@@ -682,9 +682,8 @@ public class Validator {
 
     private void assertOrderedFields(final boolean orderedRules, final String reasonSuffix) {
         if (!orderedRules) {
-            String message = String.format(
-                    "Rules are unordered, all view fields should be ordered "
-                    + "using the '@Order' annotation " + reasonSuffix);
+            String message = "Rules are unordered, all view fields should be ordered "
+                    + "using the '@Order' annotation " + reasonSuffix;
             throw new IllegalStateException(message);
         }
     }

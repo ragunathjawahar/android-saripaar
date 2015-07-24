@@ -46,8 +46,7 @@ final class SaripaarFieldsComparator implements Comparator<Field> {
             int rhsOrder = rhsOrderAnnotation.value();
 
             comparison = lhsOrder == rhsOrder
-                    ? 0
-                    : lhsOrder > rhsOrder ? 1 : -1;
+                    ? 0 : lhsOrder > rhsOrder ? 1 : -1;
         }
 
         return comparison;

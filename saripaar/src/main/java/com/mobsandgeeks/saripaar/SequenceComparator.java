@@ -37,8 +37,7 @@ final class SequenceComparator implements Comparator<Pair<Rule, ViewDataAdapter>
         final int lhsSequence = lhsPair.first.getSequence();
         final int rhsSequence = rhsPair.first.getSequence();
 
-        return lhsSequence > rhsSequence
-                ? 1
-                : lhsSequence < rhsSequence ? -1 : 0;
+        return lhsSequence == rhsSequence
+                ? 0 : lhsSequence > rhsSequence ? 1 : -1;
     }
 }
