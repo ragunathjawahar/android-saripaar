@@ -15,16 +15,17 @@
 package com.mobsandgeeks.saripaar.showcase
 
 import android.app.Activity
+import android.os.Bundle
+import android.widget.Button
+import android.widget.EditText
+import android.widget.Toast
+import com.mobsandgeeks.saripaar.ValidationError
 import com.mobsandgeeks.saripaar.Validator
+import com.mobsandgeeks.saripaar.annotation.Email
 import com.mobsandgeeks.saripaar.annotation.NotEmpty
 import com.mobsandgeeks.saripaar.annotation.Order
-import android.widget.EditText
 import com.mobsandgeeks.saripaar.annotation.Password
-import android.widget.Button
-import android.os.Bundle
-import com.mobsandgeeks.saripaar.ValidationError
-import android.widget.Toast
-import com.mobsandgeeks.saripaar.annotation.Email
+import kotlin.properties.Delegates
 
 /**
  * @author Ragunath Jawahar {@literal <rj@mobsandgeeks.com>}
@@ -36,13 +37,13 @@ public class LoginActivity : Activity(), Validator.ValidationListener {
     NotEmpty(sequence = 1)
     Email(sequence = 2)
     Order(1)
-    private var emailEditText: EditText? = null
+    private var emailEditText: EditText by Delegates.notNull()
 
     Password(scheme = Password.Scheme.ALPHA_NUMERIC)
     Order(2)
-    private var passwordEditText: EditText? = null
+    private var passwordEditText: EditText by Delegates.notNull()
 
-    private var loginButton: Button? = null
+    private var loginButton: Button by Delegates.notNull()
 
     // Validation
     val validator = Validator(this)
@@ -61,7 +62,7 @@ public class LoginActivity : Activity(), Validator.ValidationListener {
 
         // Listeners
         validator.setValidationListener(this)
-        loginButton?.setOnClickListener { v -> validator.validate() }
+        loginButton.setOnClickListener { v -> validator.validate() }
     }
 
     override fun onValidationSucceeded() {
