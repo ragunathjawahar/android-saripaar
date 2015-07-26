@@ -124,8 +124,8 @@ public class Validator {
     private static final Registry SARIPAAR_REGISTRY = new Registry();
 
     // Holds adapter entries that are mapped to corresponding views.
-    private static final
-            Map<Class<? extends View>, HashMap<Class<?>, ViewDataAdapter>> REGISTERED_ADAPTERS =
+    private final
+            Map<Class<? extends View>, HashMap<Class<?>, ViewDataAdapter>> mRegisteredAdaptersMap =
                     new HashMap<Class<? extends View>, HashMap<Class<?>, ViewDataAdapter>>();
 
     // Attributes
@@ -204,15 +204,15 @@ public class Validator {
      * @param <VIEW>  The {@link android.view.View} type.
      * @param <DATA_TYPE>  The {@link com.mobsandgeeks.saripaar.adapter.ViewDataAdapter} type.
      */
-    public static <VIEW extends View, DATA_TYPE> void registerAdapter(
+    public <VIEW extends View, DATA_TYPE> void registerAdapter(
             final Class<VIEW> viewType, final ViewDataAdapter<VIEW, DATA_TYPE> viewDataAdapter) {
         assertNotNull(viewType, "viewType");
         assertNotNull(viewDataAdapter, "viewDataAdapter");
 
-        HashMap<Class<?>, ViewDataAdapter> dataTypeAdapterMap = REGISTERED_ADAPTERS.get(viewType);
+        HashMap<Class<?>, ViewDataAdapter> dataTypeAdapterMap = mRegisteredAdaptersMap.get(viewType);
         if (dataTypeAdapterMap == null) {
             dataTypeAdapterMap = new HashMap<Class<?>, ViewDataAdapter>();
-            REGISTERED_ADAPTERS.put(viewType, dataTypeAdapterMap);
+            mRegisteredAdaptersMap.put(viewType, dataTypeAdapterMap);
         }
 
         // Find adapter's data type
@@ -599,7 +599,7 @@ public class Validator {
         // If we are unable to find a Saripaar stock adapter, check the registered adapters
         if (dataAdapter == null) {
             HashMap<Class<?>, ViewDataAdapter> dataTypeAdapterMap =
-                    REGISTERED_ADAPTERS.get(viewFieldType);
+                    mRegisteredAdaptersMap.get(viewFieldType);
             dataAdapter = dataTypeAdapterMap != null
                     ? dataTypeAdapterMap.get(adapterDataType)
                     : null;

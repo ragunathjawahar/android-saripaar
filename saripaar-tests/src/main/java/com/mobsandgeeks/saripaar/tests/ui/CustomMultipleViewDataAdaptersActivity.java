@@ -117,7 +117,7 @@ public class CustomMultipleViewDataAdaptersActivity extends Activity
                 default:
                     throw new RuntimeException("This should never happen.");
             }
-            Validator.registerAdapter(FloatLabeledEditText.class, viewDataAdapter);
+            mValidator.registerAdapter(FloatLabeledEditText.class, viewDataAdapter);
         }
     }
 

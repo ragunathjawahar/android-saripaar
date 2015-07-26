@@ -92,7 +92,7 @@ public class CustomViewDataAdapterActivity extends Activity
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         if (isChecked) {
-            Validator.registerAdapter(FloatLabeledEditText.class,
+            mValidator.registerAdapter(FloatLabeledEditText.class,
                 new ViewDataAdapter<FloatLabeledEditText, Boolean>() {
 
                     @Override
