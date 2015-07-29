@@ -43,5 +43,4 @@ public abstract class ContextualAnnotationRule<RULE_ANNOTATION extends Annotatio
         }
         mValidationContext = validationContext;
     }
-
 }

@@ -55,7 +55,6 @@ public class ValidationContext {
         assertIsRegisteredAnnotation(saripaarAnnotation);
 
         // Get the AnnotationRule class
-
         Class<? extends AnnotationRule> annotationRuleClass = getRuleClass(saripaarAnnotation);
 
         // Find all views with the target rule
