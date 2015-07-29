@@ -14,23 +14,42 @@
 
 package com.mobsandgeeks.saripaar.rule;
 
-import com.mobsandgeeks.saripaar.AnnotationRule;
+import android.content.Context;
+
+import com.mobsandgeeks.saripaar.ContextualAnnotationRule;
+import com.mobsandgeeks.saripaar.ValidationContext;
 import com.mobsandgeeks.saripaar.annotation.Future;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
  * @author Ragunath Jawahar {@literal <rj@mobsandgeeks.com>}
  * @since 2.0
  */
-public class FutureRule extends AnnotationRule<Future, Date> {
+public class FutureRule extends ContextualAnnotationRule<Future, String> {
+    private DateFormat mDateFormat;
 
-    protected FutureRule(final Future future) {
-        super(future);
+    protected FutureRule(ValidationContext validationContext, Future future) {
+        super(validationContext, future);
+        Context context = validationContext.getContext(future.getClass());
+        String dateFormatString = future.dateFormatResId() != -1
+                ? context.getString(future.dateFormatResId()) : future.dateFormat();
+        mDateFormat = new SimpleDateFormat(dateFormatString);
     }
 
     @Override
-    public boolean isValid(final Date data) {
-        return false;
+    public boolean isValid(final String dateString) {
+        Date parsedDate;
+        try {
+            parsedDate = mDateFormat.parse(dateString);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+
+        Date now = new Date();
+        return parsedDate.after(now);
     }
 }

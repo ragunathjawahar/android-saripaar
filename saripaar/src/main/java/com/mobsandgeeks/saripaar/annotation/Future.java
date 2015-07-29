@@ -14,6 +14,7 @@
 
 package com.mobsandgeeks.saripaar.annotation;
 
+import com.mobsandgeeks.saripaar.DateFormats;
 import com.mobsandgeeks.saripaar.rule.FutureRule;
 
 import java.lang.annotation.ElementType;
@@ -29,7 +30,10 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
 public @interface Future {
-    int sequence()       default -1;
-    int messageResId()   default -1;
-    String message()     default "Date should be in future";
+    String dateFormat()     default DateFormats.DMY;
+    int dateFormatResId()   default -1;
+
+    int sequence()          default -1;
+    int messageResId()      default -1;
+    String message()        default "Date should be in the future";
 }

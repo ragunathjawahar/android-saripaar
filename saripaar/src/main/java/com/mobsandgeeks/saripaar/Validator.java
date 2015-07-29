@@ -38,6 +38,7 @@ import com.mobsandgeeks.saripaar.annotation.DecimalMin;
 import com.mobsandgeeks.saripaar.annotation.Digits;
 import com.mobsandgeeks.saripaar.annotation.Domain;
 import com.mobsandgeeks.saripaar.annotation.Email;
+import com.mobsandgeeks.saripaar.annotation.Future;
 import com.mobsandgeeks.saripaar.annotation.IpAddress;
 import com.mobsandgeeks.saripaar.annotation.Isbn;
 import com.mobsandgeeks.saripaar.annotation.Length;
@@ -46,6 +47,7 @@ import com.mobsandgeeks.saripaar.annotation.Min;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 import com.mobsandgeeks.saripaar.annotation.Order;
 import com.mobsandgeeks.saripaar.annotation.Password;
+import com.mobsandgeeks.saripaar.annotation.Past;
 import com.mobsandgeeks.saripaar.annotation.Pattern;
 import com.mobsandgeeks.saripaar.annotation.Select;
 import com.mobsandgeeks.saripaar.annotation.Url;
@@ -942,9 +944,8 @@ public class Validator {
         // TextViewStringAdapter
         SARIPAAR_REGISTRY.register(
                 ConfirmEmail.class, ConfirmPassword.class, CreditCard.class,
-                Digits.class, Domain.class, Email.class, IpAddress.class,
-                Isbn.class, Length.class, NotEmpty.class, Password.class,
-                Pattern.class, Url.class);
-//            Future.class, Past.class
+                Digits.class, Domain.class, Email.class, Future.class,
+                IpAddress.class, Isbn.class, Length.class, NotEmpty.class,
+                Password.class, Past.class, Pattern.class, Url.class);
     }
 }
