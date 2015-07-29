@@ -14,6 +14,7 @@
 
 package com.mobsandgeeks.saripaar;
 
+import android.content.Context;
 import android.util.Pair;
 import android.view.View;
 
@@ -103,6 +104,18 @@ public class ValidationContext {
         }
 
         return data;
+    }
+
+    /**
+     * Retrieves a {@link Context} from one of the {@link View}s marked with a Saripaar annotation.
+     *
+     * @param saripaarAnnotation  An annotation class that is used inside the current controller.
+     *
+     * @return A {@link Context} retrieved from one of the annotated {@link View}s.
+     */
+    public Context getContext(final Class<? extends Annotation> saripaarAnnotation) {
+        List<View> annotatedViews = getAnnotatedViews(saripaarAnnotation);
+        return annotatedViews.size() == 0 ? null : annotatedViews.get(0).getContext();
     }
 
     void setViewRulesMap(final Map<View, ArrayList<Pair<Rule, ViewDataAdapter>>> viewRulesMap) {

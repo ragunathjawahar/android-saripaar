@@ -14,23 +14,42 @@
 
 package com.mobsandgeeks.saripaar.rule;
 
-import com.mobsandgeeks.saripaar.AnnotationRule;
+import android.content.Context;
+
+import com.mobsandgeeks.saripaar.ContextualAnnotationRule;
+import com.mobsandgeeks.saripaar.ValidationContext;
 import com.mobsandgeeks.saripaar.annotation.Past;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
  * @author Ragunath Jawahar {@literal <rj@mobsandgeeks.com>}
  * @since 2.0
  */
-public class PastRule extends AnnotationRule<Past, Date> {
+public class PastRule extends ContextualAnnotationRule<Past, String> {
+    private DateFormat mDateFormat;
 
-    protected PastRule(final Past past) {
-        super(past);
+    protected PastRule(ValidationContext validationContext, Past past) {
+        super(validationContext, past);
+        Context context = validationContext.getContext(past.getClass());
+        String dateFormatString = past.dateFormatResId() != -1
+                ? context.getString(past.dateFormatResId()) : past.dateFormat();
+        mDateFormat = new SimpleDateFormat(dateFormatString);
     }
 
     @Override
-    public boolean isValid(final Date data) {
-        return false;
+    public boolean isValid(final String dateString)  {
+        Date parsedDate;
+        try {
+            parsedDate = mDateFormat.parse(dateString);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+
+        Date now = new Date();
+        return parsedDate.before(now);
     }
 }
