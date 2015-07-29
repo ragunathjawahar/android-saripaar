@@ -1,5 +1,7 @@
 language: android
+
 jdk: oraclejdk7
+
 env:
   matrix:
     - ANDROID_TARGET=android-19  ANDROID_ABI=armeabi-v7a
@@ -7,6 +9,9 @@ env:
 android:
   components:
     - build-tools-21.1.1
+
+notifications:
+  email: false
 
 before_script:
   # Grant execution permissions to Gradle wrapper
