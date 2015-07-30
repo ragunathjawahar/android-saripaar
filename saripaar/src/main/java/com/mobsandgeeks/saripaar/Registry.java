@@ -18,11 +18,13 @@ import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.mobsandgeeks.saripaar.adapter.CheckBoxBooleanAdapter;
 import com.mobsandgeeks.saripaar.adapter.RadioButtonBooleanAdapter;
+import com.mobsandgeeks.saripaar.adapter.RadioGroupBooleanAdapter;
 import com.mobsandgeeks.saripaar.adapter.SpinnerIndexAdapter;
 import com.mobsandgeeks.saripaar.adapter.TextViewDoubleAdapter;
 import com.mobsandgeeks.saripaar.adapter.TextViewFloatAdapter;
@@ -291,6 +293,11 @@ final class Registry {
         adapters = new HashMap<Class<?>, ViewDataAdapter>();
         adapters.put(Boolean.class, new RadioButtonBooleanAdapter());
         STOCK_ADAPTERS.put(RadioButton.class, adapters);
+
+        // RadioGroup
+        adapters = new HashMap<Class<?>, ViewDataAdapter>();
+        adapters.put(Boolean.class, new RadioGroupBooleanAdapter());
+        STOCK_ADAPTERS.put(RadioGroup.class, adapters);
 
         // Spinner
         adapters = new HashMap<Class<?>, ViewDataAdapter>();
