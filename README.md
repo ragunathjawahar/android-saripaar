@@ -142,16 +142,6 @@ Icon         | App           | Icon         | App           | Icon         | App
 <img src="https://lh6.ggpht.com/t-WYlpXlwhLL0unTDChiVi24b4LP0kNsJQnRwFaMHd0NGqxgQ2LupQ1Dl7M1ztj8Vg8=w300-rw" width="48" height="48" /> | [Fetch] | <img src="https://lh3.ggpht.com/J3bMDphmzsPFQeMfWR-LH70g5vSGrTVggPzXQdUafKM2KmpWS3THIcSHQaTVbCQ_hjw=w300-rw" width="48" height="48" /> | [HealtheMinder] | <img src="https://lh3.ggpht.com/EhidzByoyUY1OPVcsjOmtOcRwoxphRCy1-a_qKLYKHwsS0DuHIC9cHIDEPLVKO-oTw=w300-rw" width="48" height="48" /> | [MomMe]
 <img src="https://lh5.ggpht.com/h6T-az0ip_OqNtSh__Kc5-0ZPpT7sYxSn4kFPOjrNI7o-LN9bPbovoiYDfswL-B5XQ=w300-rw" width="48" height="48" /> | [Feelknit] | <img src="https://lh4.ggpht.com/k5zFS5VheJKt1yBHKC-wBgJTwOQ4Q_Aa2XbG6Ea_-HvP8nXjYeSnO_227j1wVno1JZY=w300-rw" width="48" height="48" /> | [StreetBarz]
 
-Publications
----------------------
-Cover        | Book         
------------- | -------------
-<img src="http://ecx.images-amazon.com/images/I/416xlob1VeL.jpg" width="48" /> | [Expert Android]
-<img src="http://ecx.images-amazon.com/images/I/417dVd61vKL._BO2,204,203,200_PIsitb-sticker-v3-big,TopRight,0,-55_SX324_SY324_PIkin4,BottomRight,1,22_AA346_SH20_OU03_.jpg" width="48" /> | [Android Top 10 Libraries & Frameworks (German)]
-
-**[AndroidDev Weekly issue #61]** - Open Source Project of the Week<br />
-**[AndroidWeekly issue #65]** - Libraries & Code
-
 Wiki
 ---------------------
 Please visit the [wiki] for a complete guide on Android Saripaar.
@@ -193,8 +183,4 @@ License
   [HealtheMinder]: https://play.google.com/store/apps/details?id=org.hartfordhealthcare.healtheminder
   [Feelknit]: https://play.google.com/store/apps/details?id=com.qubittech.feelknit.app
   [StreetBarz]: https://play.google.com/store/apps/details?id=com.diofeher.StreetBarz
-  [Expert Android]: http://www.apress.com/9781430249504
-  [Android Top 10 Libraries & Frameworks (German)]: http://www.amazon.de/Android-Top10-Libraries-Frameworks-Programmieren-ebook/dp/B00OPXVJ0I/
-  [AndroidDev Weekly issue #61]: http://androiddevweekly.com/2013/06/17/Issue-61.html
-  [AndroidWeekly issue #65]: http://androidweekly.net/issues/issue-65
   [wiki]: https://github.com/ragunathjawahar/android-saripaar/wiki
