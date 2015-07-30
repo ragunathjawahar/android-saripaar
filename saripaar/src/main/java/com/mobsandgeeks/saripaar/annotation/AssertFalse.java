@@ -29,7 +29,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
 public @interface AssertFalse {
-    int sequence()       default -1;
-    int messageResId()   default -1;
-    String message()     default "Should be false";
+    int sequence()      default -1;
+    int messageResId()  default -1;
+    String message()    default "Should be false";
 }

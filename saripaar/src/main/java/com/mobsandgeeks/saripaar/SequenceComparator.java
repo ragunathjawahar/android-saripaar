@@ -30,6 +30,9 @@ import java.util.Comparator;
  */
 final class SequenceComparator implements Comparator<Pair<Rule, ViewDataAdapter>> {
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int compare(final Pair<Rule, ViewDataAdapter> lhsPair,
             final Pair<Rule, ViewDataAdapter> rhsPair) {

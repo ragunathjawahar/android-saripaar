@@ -29,11 +29,11 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
 public @interface Length {
-    int min()            default Integer.MIN_VALUE;
-    int max()            default Integer.MAX_VALUE;
-    boolean trim()       default false;
+    int min()           default Integer.MIN_VALUE;
+    int max()           default Integer.MAX_VALUE;
+    boolean trim()      default false;
 
-    int sequence()       default -1;
-    int messageResId()   default -1;
-    String message()     default "Invalid length";
+    int sequence()      default -1;
+    int messageResId()  default -1;
+    String message()    default "Invalid length";
 }

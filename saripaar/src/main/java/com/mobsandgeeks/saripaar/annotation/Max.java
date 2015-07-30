@@ -31,7 +31,7 @@ import java.lang.annotation.Target;
 public @interface Max {
     int value();
 
-    int sequence()       default -1;
-    int messageResId()   default -1;
-    String message()     default "Should be less than max value";
+    int sequence()      default -1;
+    int messageResId()  default -1;
+    String message()    default "Should be less than max value";
 }

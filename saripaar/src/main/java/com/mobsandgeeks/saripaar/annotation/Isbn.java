@@ -29,7 +29,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
 public @interface Isbn {
-    int sequence()       default -1;
-    int messageResId()   default -1;
-    String message()     default "Invalid ISBN";
+    int sequence()      default -1;
+    int messageResId()  default -1;
+    String message()    default "Invalid ISBN";
 }

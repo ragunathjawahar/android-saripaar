@@ -108,7 +108,8 @@ public class ValidationContext {
     /**
      * Retrieves a {@link Context} from one of the {@link View}s marked with a Saripaar annotation.
      *
-     * @param saripaarAnnotation  An annotation class that is used inside the current controller.
+     * @param saripaarAnnotation  An annotation class that is used to annotation one of the views
+     *      in the current controller.
      *
      * @return A {@link Context} retrieved from one of the annotated {@link View}s.
      */

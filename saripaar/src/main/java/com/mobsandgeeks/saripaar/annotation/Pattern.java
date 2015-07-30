@@ -30,9 +30,9 @@ import java.lang.annotation.Target;
 @Target(ElementType.FIELD)
 public @interface Pattern {
     String regex();
-    boolean caseSensitive()  default true;
+    boolean caseSensitive() default true;
 
-    int sequence()           default -1;
-    int messageResId()       default -1;
-    String message()         default "Input does not match pattern";
+    int sequence()          default -1;
+    int messageResId()      default -1;
+    String message()        default "Input does not match pattern";
 }

@@ -29,9 +29,9 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
 public @interface Domain {
-    boolean allowLocal() default false;
+    boolean allowLocal()    default false;
 
-    int sequence()       default -1;
-    int messageResId()   default -1;
-    String message()     default "Invalid domain name";
+    int sequence()          default -1;
+    int messageResId()      default -1;
+    String message()        default "Invalid domain name";
 }

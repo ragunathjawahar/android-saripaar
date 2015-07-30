@@ -29,12 +29,12 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
 public @interface Password {
-    int min()            default 6;
-    Scheme scheme()      default Scheme.ANY;
+    int min()           default 6;
+    Scheme scheme()     default Scheme.ANY;
 
-    int sequence()       default -1;
-    int messageResId()   default -1;
-    String message()     default "Invalid password";
+    int sequence()      default -1;
+    int messageResId()  default -1;
+    String message()    default "Invalid password";
 
     enum Scheme {
         ANY, ALPHA, ALPHA_MIXED_CASE,

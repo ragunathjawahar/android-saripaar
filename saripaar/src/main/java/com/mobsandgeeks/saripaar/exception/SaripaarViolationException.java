@@ -26,5 +26,4 @@ public class SaripaarViolationException extends RuntimeException {
     public SaripaarViolationException(final String message) {
         super(message);
     }
-
 }
