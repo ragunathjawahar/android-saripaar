@@ -38,8 +38,10 @@ public class ValidationContext {
 
     // Attributes
     Map<View, ArrayList<Pair<Rule, ViewDataAdapter>>> mViewRulesMap;
+    private Context mContext;
 
-    ValidationContext() {
+    ValidationContext(final Context context) {
+        this.mContext = context;
     }
 
     /**
@@ -106,16 +108,12 @@ public class ValidationContext {
     }
 
     /**
-     * Retrieves a {@link Context} from one of the {@link View}s marked with a Saripaar annotation.
+     * Get a {@link Context}.
      *
-     * @param saripaarAnnotation  An annotation class that is used to annotation one of the views
-     *      in the current controller.
-     *
-     * @return A {@link Context} retrieved from one of the annotated {@link View}s.
+     * @return A {@link Context}.
      */
-    public Context getContext(final Class<? extends Annotation> saripaarAnnotation) {
-        List<View> annotatedViews = getAnnotatedViews(saripaarAnnotation);
-        return annotatedViews.size() == 0 ? null : annotatedViews.get(0).getContext();
+    public Context getContext() {
+        return mContext;
     }
 
     void setViewRulesMap(final Map<View, ArrayList<Pair<Rule, ViewDataAdapter>>> viewRulesMap) {

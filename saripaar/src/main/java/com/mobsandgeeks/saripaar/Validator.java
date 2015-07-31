@@ -14,6 +14,7 @@
 
 package com.mobsandgeeks.saripaar;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Looper;
@@ -21,10 +22,12 @@ import android.util.Pair;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 
 import com.mobsandgeeks.saripaar.adapter.CheckBoxBooleanAdapter;
 import com.mobsandgeeks.saripaar.adapter.RadioButtonBooleanAdapter;
+import com.mobsandgeeks.saripaar.adapter.RadioGroupBooleanAdapter;
 import com.mobsandgeeks.saripaar.adapter.SpinnerIndexAdapter;
 import com.mobsandgeeks.saripaar.adapter.ViewDataAdapter;
 import com.mobsandgeeks.saripaar.annotation.AssertFalse;
@@ -152,7 +155,6 @@ public class Validator {
         assertNotNull(controller, "controller");
         mController = controller;
         mValidationMode = Mode.BURST;
-        mValidationContext = new ValidationContext();
         mSequenceComparator = new SequenceComparator();
         mViewValidatedAction = new DefaultViewValidatedAction();
     }
@@ -584,6 +586,10 @@ public class Validator {
             throw new UnsupportedOperationException(message);
         }
 
+        if (mValidationContext == null) {
+            mValidationContext = new ValidationContext(getContext(viewField));
+        }
+
         final Class<? extends AnnotationRule> ruleType = getRuleType(saripaarAnnotation);
         final AnnotationRule rule = Reflector.instantiateRule(ruleType,
                 saripaarAnnotation, mValidationContext);
@@ -608,6 +614,17 @@ public class Validator {
         }
 
         return dataAdapter;
+    }
+
+    private Context getContext(final Field viewField) {
+        Context context = null;
+        try {
+            View view = (View) viewField.get(mController);
+            context = view.getContext();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        return context;
     }
 
     private Class<? extends AnnotationRule> getRuleType(final Annotation ruleAnnotation) {
@@ -924,6 +941,11 @@ public class Validator {
         SARIPAAR_REGISTRY.register(CheckBox.class, Boolean.class,
                 new CheckBoxBooleanAdapter(),
                 AssertFalse.class, AssertTrue.class, Checked.class);
+
+        // RadioGroupBooleanAdapter
+        SARIPAAR_REGISTRY.register(RadioGroup.class, Boolean.class,
+                new RadioGroupBooleanAdapter(),
+                Checked.class);
 
         // RadioButtonBooleanAdapter
         SARIPAAR_REGISTRY.register(RadioButton.class, Boolean.class,

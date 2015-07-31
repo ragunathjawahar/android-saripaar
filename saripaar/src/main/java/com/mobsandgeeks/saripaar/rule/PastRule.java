@@ -30,26 +30,31 @@ import java.util.Date;
  * @since 2.0
  */
 public class PastRule extends ContextualAnnotationRule<Past, String> {
-    private DateFormat mDateFormat;
+    private int mDateFormatResId;
+    private String mDateFormatString;
 
-    protected PastRule(ValidationContext validationContext, Past past) {
+    protected PastRule(final ValidationContext validationContext, final Past past) {
         super(validationContext, past);
-        Context context = validationContext.getContext(past.getClass());
-        String dateFormatString = past.dateFormatResId() != -1
-                ? context.getString(past.dateFormatResId()) : past.dateFormat();
-        mDateFormat = new SimpleDateFormat(dateFormatString);
+        mDateFormatResId = past.dateFormatResId();
+        mDateFormatString = past.dateFormat();
     }
 
     @Override
-    public boolean isValid(final String dateString)  {
-        Date parsedDate;
+    public boolean isValid(final String dateString) {
+        DateFormat dateFormat = getDateFormat();
+        Date parsedDate = null;
         try {
-            parsedDate = mDateFormat.parse(dateString);
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
+            parsedDate = dateFormat.parse(dateString);
+        } catch (ParseException ignored) {}
 
         Date now = new Date();
-        return parsedDate.before(now);
+        return parsedDate != null && parsedDate.before(now);
+    }
+
+    private DateFormat getDateFormat() {
+        Context context = mValidationContext.getContext();
+        String dateFormatString =  mDateFormatResId != -1
+                ? context.getString(mDateFormatResId) : mDateFormatString;
+        return new SimpleDateFormat(dateFormatString);
     }
 }

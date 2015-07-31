@@ -30,26 +30,31 @@ import java.util.Date;
  * @since 2.0
  */
 public class FutureRule extends ContextualAnnotationRule<Future, String> {
-    private DateFormat mDateFormat;
+    private int mDateFormatResId;
+    private String mDateFormatString;
 
-    protected FutureRule(ValidationContext validationContext, Future future) {
+    protected FutureRule(final ValidationContext validationContext, final Future future) {
         super(validationContext, future);
-        Context context = validationContext.getContext(future.getClass());
-        String dateFormatString = future.dateFormatResId() != -1
-                ? context.getString(future.dateFormatResId()) : future.dateFormat();
-        mDateFormat = new SimpleDateFormat(dateFormatString);
+        mDateFormatResId = future.dateFormatResId();
+        mDateFormatString = future.dateFormat();
     }
 
     @Override
     public boolean isValid(final String dateString) {
-        Date parsedDate;
+        DateFormat dateFormat = getDateFormat();
+        Date parsedDate = null;
         try {
-            parsedDate = mDateFormat.parse(dateString);
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
+            parsedDate = dateFormat.parse(dateString);
+        } catch (ParseException ignored) {}
 
         Date now = new Date();
-        return parsedDate.after(now);
+        return parsedDate != null && parsedDate.after(now);
+    }
+
+    private DateFormat getDateFormat() {
+        Context context = mValidationContext.getContext();
+        String dateFormatString =  mDateFormatResId != -1
+                ? context.getString(mDateFormatResId) : mDateFormatString;
+        return new SimpleDateFormat(dateFormatString);
     }
 }
