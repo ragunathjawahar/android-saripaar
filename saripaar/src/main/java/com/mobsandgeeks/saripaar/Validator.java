@@ -619,6 +619,9 @@ public class Validator {
     private Context getContext(final Field viewField) {
         Context context = null;
         try {
+            if (!viewField.isAccessible()) {
+                viewField.setAccessible(true);
+            }
             View view = (View) viewField.get(mController);
             context = view.getContext();
         } catch (IllegalAccessException e) {
