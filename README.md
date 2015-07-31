@@ -4,10 +4,8 @@ Android Saripaar v2 [![Android Arsenal](https://img.shields.io/badge/Android%20A
 
 **சரிபார்** - sari-paar (Tamil for "to check", "verify" or "validate")
 
-Android Saripaar is a simple, yet powerful rule-based UI form validation library for Android.
-It is the **SIMPLEST** and **FEATURE-RICH** validation library available for Android.
-
-*Note: v2 is feature complete and snapshots are available, expect a release soon.*
+Android Saripaar is a simple, feature-rich and powerful rule-based UI form validation library for Android.
+It is the **SIMPLEST** UI validation library available for Android.
 
 Why Android Saripaar?
 ---------------------
@@ -103,13 +101,13 @@ Maven
     <dependency>
         <groupId>com.mobsandgeeks</groupId>
         <artifactId>android-saripaar</artifactId>
-        <version>2.0-SNAPSHOT</version>
+        <version>2.0.0</version>
     </dependency>
 
 Gradle
 ---------------------
     dependencies {
-        compile 'com.mobsandgeeks:android-saripaar:2.0-SNAPSHOT'
+        compile 'com.mobsandgeeks:android-saripaar:2.0.0'
     }
 
 Snapshots
@@ -130,7 +128,7 @@ ProGuard
 Exclude Saripaar classes from obfuscation and minification. Add the following rules to your `proguard-rules.pro` file.
 
     -keep class com.mobsandgeeks.saripaar.** {*;}
-    -keep class commons.validator.routines.** {*;}
+    -keep @com.mobsandgeeks.saripaar.annotation.ValidateUsing class * {*;}
 
 Using Saripaar?
 ---------------------
