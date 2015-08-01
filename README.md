@@ -16,9 +16,8 @@ Why Android Saripaar?
  - **Synchronous** and **Asynchronous** validations, you don't have to worry about threading.
  - Supports both BURST and IMMEDIATE modes.
  - Works with **Stock Android Widgets**, no custom view dependencies.
- - Quick to setup, just download the [jar] and include it in your `libs` project folder.
  - Isolates validation logic using rules.
- - Compatible with other annotation frameworks such as [ButterKnife], [AndroidAnnotations], [RoboGuice], etc.,
+ - Compatible with other annotation-based libraries and frameworks such as [ButterKnife], [AndroidAnnotations], [RoboGuice], etc.,
 
 Quick Start
 -----------
@@ -43,6 +42,7 @@ The annotations are self-explanatory. The `@Order` annotation is required ONLY w
 
 **Step 2 - Instantiate a new [Validator]**
 ```java
+@Override
 public void onCreate() {
     super.onCreate();
     // Code…
@@ -57,12 +57,16 @@ You will need a `Validator` and a `ValidationListener` for receiving callbacks o
 
 **Step 3 - Implement a [ValidationListener]**
 ```java
-public class RegistrationActivity implements ValidationListener {
+public class RegistrationActivity extends Activity implements ValidationListener {
 
+    // Code…
+
+    @Override
     public void onValidationSucceeded() {
         Toast.makeText(this, "Yay! we got it right!", Toast.LENGTH_SHORT).show();
     }
 
+    @Override
     public void onValidationFailed(List<ValidationError> errors) {
         for (ValidationError error : errors) {
             View view = error.getView();
@@ -85,6 +89,7 @@ public class RegistrationActivity implements ValidationListener {
 ```java
 registerButton.setOnClickListener(new OnClickListener() {
 
+    @Override
     public void onClick(View v) {
         validator.validate();
     }
