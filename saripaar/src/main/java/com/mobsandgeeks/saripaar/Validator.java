@@ -14,8 +14,11 @@
 
 package com.mobsandgeeks.saripaar;
 
+import android.app.Activity;
+import android.app.Fragment;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Pair;
@@ -157,6 +160,18 @@ public class Validator {
         mValidationMode = Mode.BURST;
         mSequenceComparator = new SequenceComparator();
         mViewValidatedAction = new DefaultViewValidatedAction();
+
+        // Instantiate a ValidationContext
+        if (controller instanceof Activity) {
+            mValidationContext = new ValidationContext((Activity) controller);
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB
+                && controller instanceof Fragment) {
+            Activity activity = ((Fragment) controller).getActivity();
+            mValidationContext = new ValidationContext(activity);
+        }
+        // Else, lazy init ValidationContext in #getRuleAdapterPair(Annotation, Field)
+        // or void #put(VIEW, QuickRule<VIEW>) by obtaining a Context from one of the
+        // View instances.
     }
 
     /**
@@ -395,6 +410,10 @@ public class Validator {
         assertNotNull(quickRules, "quickRules");
         if (quickRules.length == 0) {
             throw new IllegalArgumentException("'quickRules' cannot be empty.");
+        }
+
+        if (mValidationContext == null) {
+            mValidationContext = new ValidationContext(view.getContext());
         }
 
         // Create rules

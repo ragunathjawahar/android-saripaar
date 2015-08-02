@@ -9,6 +9,8 @@
     <string name="title_activity_custom_annotation">Custom Annotation</string>
     <string name="title_activity_custom_annotation_with_adapter">Custom Annotation with Adapter</string>
     <string name="title_activity_quick_rule">Quick Rule</string>
+    <string name="title_activity_quick_rule_only">Quick Rule Only</string>
+    <string name="title_activity_quick_rule_only_controller">Quick Rule Controller</string>
     <string name="title_activity_confirm_password">Confirm Password</string>
     <string name="title_activity_remove_rules">Remove Rules</string>
 

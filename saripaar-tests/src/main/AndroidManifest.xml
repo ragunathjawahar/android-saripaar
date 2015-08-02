@@ -49,7 +49,10 @@
             android:label="@string/title_activity_quick_rule" />
         <activity
             android:name=".ui.QuickRuleOnlyActivity"
-            android:label="@string/title_activity_quick_rule" />
+            android:label="@string/title_activity_quick_rule_only" />
+        <activity
+            android:name=".ui.QuickRuleOnlyControllerActivity"
+            android:label="@string/title_activity_quick_rule_only_controller" />
         <activity
             android:name=".ui.ConfirmPasswordWithPasswordActivity"
             android:label="@string/title_activity_confirm_password" />

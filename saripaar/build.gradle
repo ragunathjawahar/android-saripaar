@@ -7,6 +7,9 @@ android {
     compileSdkVersion Integer.parseInt(project.ANDROID_BUILD_SDK_VERSION)
     buildToolsVersion project.ANDROID_BUILD_TOOLS_VERSION
 
+    lintOptions {
+        abortOnError false
+    }
     defaultConfig {
         minSdkVersion 8
         targetSdkVersion 21
