@@ -30,13 +30,9 @@ import java.util.Date;
  * @since 2.0
  */
 public class FutureRule extends ContextualAnnotationRule<Future, String> {
-    private int mDateFormatResId;
-    private String mDateFormatString;
 
     protected FutureRule(final ValidationContext validationContext, final Future future) {
         super(validationContext, future);
-        mDateFormatResId = future.dateFormatResId();
-        mDateFormatString = future.dateFormat();
     }
 
     @Override
@@ -53,8 +49,9 @@ public class FutureRule extends ContextualAnnotationRule<Future, String> {
 
     private DateFormat getDateFormat() {
         Context context = mValidationContext.getContext();
-        String dateFormatString =  mDateFormatResId != -1
-                ? context.getString(mDateFormatResId) : mDateFormatString;
+        int dateFormatResId = mRuleAnnotation.dateFormatResId();
+        String dateFormatString =  dateFormatResId != -1
+                ? context.getString(dateFormatResId) : mRuleAnnotation.dateFormat();
         return new SimpleDateFormat(dateFormatString);
     }
 }
