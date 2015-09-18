@@ -29,9 +29,11 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
 public @interface NotEmpty {
-    boolean trim()      default false;
+    boolean trim()          default false;
+    String emptyText()      default "";
+    int emptyTextResId()    default -1;
 
-    int sequence()      default -1;
-    int messageResId()  default -1;
-    String message()    default "This field is required";
+    int sequence()          default -1;
+    int messageResId()      default -1;
+    String message()        default "This field is required";
 }

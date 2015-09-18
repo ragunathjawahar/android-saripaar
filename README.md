@@ -121,7 +121,7 @@ In your `{project_base}/build.gradle` file, include the following.
 
     allprojects {
         repositories {
-            mavenCentral()
+            jcenter()
             maven {
                 url "https://oss.sonatype.org/content/repositories/snapshots/"
             }

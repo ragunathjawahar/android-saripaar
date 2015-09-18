@@ -35,8 +35,8 @@ public abstract class ContextualAnnotationRule<RULE_ANNOTATION extends Annotatio
      * @param ruleAnnotation  The rule {@link java.lang.annotation.Annotation} instance to which
      *      this rule is paired.
      */
-    protected ContextualAnnotationRule(ValidationContext validationContext,
-            RULE_ANNOTATION ruleAnnotation) {
+    protected ContextualAnnotationRule(final ValidationContext validationContext,
+            final RULE_ANNOTATION ruleAnnotation) {
         super(ruleAnnotation);
         if (validationContext == null) {
             throw new IllegalArgumentException("'validationContext' cannot be null.");

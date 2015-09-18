@@ -14,22 +14,36 @@
 
 package com.mobsandgeeks.saripaar.rule;
 
-import com.mobsandgeeks.saripaar.AnnotationRule;
+import android.content.Context;
+
+import com.mobsandgeeks.saripaar.ContextualAnnotationRule;
+import com.mobsandgeeks.saripaar.ValidationContext;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 
 /**
  * @author Ragunath Jawahar {@literal <rj@mobsandgeeks.com>}
  * @since 2.0
  */
-public class NotEmptyRule extends AnnotationRule<NotEmpty, String> {
+public class NotEmptyRule extends ContextualAnnotationRule<NotEmpty, String> {
 
-    protected NotEmptyRule(final NotEmpty notEmpty) {
-        super(notEmpty);
+    protected NotEmptyRule(final ValidationContext validationContext, final NotEmpty notEmpty) {
+        super(validationContext, notEmpty);
     }
 
     @Override
     public boolean isValid(final String data) {
-        return data != null && (mRuleAnnotation.trim()
-                ? data.trim().length() > 0 : data.length() > 0);
+        boolean isEmpty = false;
+        if (data != null) {
+            String text = mRuleAnnotation.trim() ? data.trim() : data;
+
+            Context context = mValidationContext.getContext();
+            String emptyText = mRuleAnnotation.emptyTextResId() != -1
+                    ? context.getString(mRuleAnnotation.emptyTextResId())
+                    : mRuleAnnotation.emptyText();
+
+            isEmpty = emptyText.equals(text) || "".equals(text);
+        }
+
+        return !isEmpty;
     }
 }
