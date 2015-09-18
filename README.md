@@ -43,8 +43,8 @@ The annotations are self-explanatory. The `@Order` annotation is required ONLY w
 **Step 2 - Instantiate a new [Validator]**
 ```java
 @Override
-public void onCreate() {
-    super.onCreate();
+public void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
     // Code…
 
     validator = new Validator(this);
@@ -135,6 +135,10 @@ Exclude Saripaar classes from obfuscation and minification. Add the following ru
     -keep class com.mobsandgeeks.saripaar.** {*;}
     -keep @com.mobsandgeeks.saripaar.annotation.ValidateUsing class * {*;}
 
+Evolution
+---------------------
+For those interested in finding out how v2 evolved from v1, watch this (~20 second) [video].
+
 Using Saripaar?
 ---------------------
 [Tweet] me with your Google Play URL and I'll add your app to the list :)
@@ -177,6 +181,7 @@ License
   [Validator]: https://github.com/ragunathjawahar/android-saripaar/blob/master/saripaar/src/main/java/com/mobsandgeeks/saripaar/Validator.java
   [ValidationListener]: https://github.com/ragunathjawahar/android-saripaar/blob/master/saripaar/src/main/java/com/mobsandgeeks/saripaar/Validator.java
   [Saripaar X]: https://github.com/ragunathjawahar/saripaar-x
+  [video]: https://youtu.be/6Os9RxVK76A?t=23
   [Tweet]: https://twitter.com/ragunathjawahar
   [Wikipedia]: https://play.google.com/store/apps/details?id=org.wikipedia
   [Wikipedia Beta]: https://play.google.com/store/apps/details?id=org.wikipedia.beta
