@@ -394,6 +394,7 @@ public class DomainValidator implements Serializable {
         "dental",
         "dentist",
         "desi",
+        "design",
         "dev",
         "diamonds",
         "diet",
