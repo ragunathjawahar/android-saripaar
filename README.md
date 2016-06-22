@@ -148,7 +148,7 @@ Icon         | App           | Icon         | App           | Icon         | App
 <img src="https://lh3.ggpht.com/qhpfFQFd5YuLzT5d9jUCI69dMeLlW6XewLsgZ0l06D92M0SmvsMKSMd_YY1Xc9K1GyU=w300-rw" width="48" height="48" /> | [Wikipedia] | <img src="https://lh6.ggpht.com/i_pxbaojay2K2xb2RDC2W7eOnNlpGRgILoACaEDhaKz87JSg3nEJHV3Vz3wmS3L3e4M=w300-rw" width="48" height="48" /> | [Wikipedia Beta] | <img src="https://lh3.ggpht.com/o2lhzbRnq6U1oPxyqY6LDJIc2PO_tm1_sIbX-fMLpG2Sxk94QW2gQaDw8ewam1dPQrdz=w300-rw" width="48" height="48" /> | [Mizuno Baton]
 <img src="https://lh6.ggpht.com/t-WYlpXlwhLL0unTDChiVi24b4LP0kNsJQnRwFaMHd0NGqxgQ2LupQ1Dl7M1ztj8Vg8=w300-rw" width="48" height="48" /> | [Fetch] | <img src="https://lh3.ggpht.com/J3bMDphmzsPFQeMfWR-LH70g5vSGrTVggPzXQdUafKM2KmpWS3THIcSHQaTVbCQ_hjw=w300-rw" width="48" height="48" /> | [HealtheMinder] | <img src="https://lh3.ggpht.com/EhidzByoyUY1OPVcsjOmtOcRwoxphRCy1-a_qKLYKHwsS0DuHIC9cHIDEPLVKO-oTw=w300-rw" width="48" height="48" /> | [MomMe]
 <img src="https://lh5.ggpht.com/h6T-az0ip_OqNtSh__Kc5-0ZPpT7sYxSn4kFPOjrNI7o-LN9bPbovoiYDfswL-B5XQ=w300-rw" width="48" height="48" /> | [Feelknit] | <img src="https://lh4.ggpht.com/k5zFS5VheJKt1yBHKC-wBgJTwOQ4Q_Aa2XbG6Ea_-HvP8nXjYeSnO_227j1wVno1JZY=w300-rw" width="48" height="48" /> | [StreetBarz] | <img src="https://lh3.googleusercontent.com/4fO6lwPVZ7ncBsvfVpfME9xm9Nn6ggtEffCrNDFbqZ9LXBkYxSbdALWmNxQLwkhv3p6G=w300-rw" width="48" height="48" /> | [Roast Me]
-<img src="https://lh3.googleusercontent.com/Mtr7AqEN4WGJVih1rAjvvzl4rN5gYT2EwWxpVwczZXfRmixaQJBFnm-WBr8TkhGzpOA=w300-rw" width="48" height="48" /> | [Pipe] | <img src="https://lh3.googleusercontent.com/0fEpTqHqbVJ_0z7rdsG9wks5KiiaBjyA4MScLf19HSMhy8BR3vSX6agZ0NucyPMyow=w300-rw" width="48" height="48" /> | [Snagajob]
+<img src="https://lh3.googleusercontent.com/Mtr7AqEN4WGJVih1rAjvvzl4rN5gYT2EwWxpVwczZXfRmixaQJBFnm-WBr8TkhGzpOA=w300-rw" width="48" height="48" /> | [Pipe] | <img src="https://lh3.googleusercontent.com/0fEpTqHqbVJ_0z7rdsG9wks5KiiaBjyA4MScLf19HSMhy8BR3vSX6agZ0NucyPMyow=w300-rw" width="48" height="48" /> | [Snagajob] | <img src="https://lh3.googleusercontent.com/SrowFwOEDERCrVqk7SaBwifZslMoqTk5iZ9gMKOafvD1KvlyYYLxvbNJXiiUjBSsLjk=w300-rw" width="48" height="48" /> | [Tatva Moksh Lakshya]
 
 Wiki
 ---------------------
@@ -195,4 +195,5 @@ License
   [Roast Me]: https://play.google.com/store/apps/details?id=com.marsvard.roastcam
   [Pipe]: https://play.google.com/store/apps/details?id=com.pipeapp.pipe
   [Snagajob]: https://play.google.com/store/apps/details?id=com.snagajob.jobseeker
+  [Tatva Moksh Lakshya]: https://play.google.com/store/apps/details?id=siesgst.edu.in.tml16
   [wiki]: https://github.com/ragunathjawahar/android-saripaar/wiki
