@@ -1,1 +1,1 @@
-include ':saripaar', ':saripaar-tests', ':saripaar-showcase'
+include ':saripaar', ':saripaar-tests'
