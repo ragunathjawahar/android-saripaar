@@ -3,10 +3,10 @@
     package="com.mobsandgeeks.saripaar.tests" >
 
     <application
-        android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:icon="@drawable/ic_launcher"
+        android:theme="@style/AppTheme"
+        android:allowBackup="false">
         <activity
             android:name=".ui.OrderedValidateActivity"
             android:label="@string/title_activity_address" >
@@ -71,6 +71,9 @@
         <activity
             android:name=".ui.RemoveRulesActivity"
             android:label="@string/title_activity_remove_rules" />
+        <activity
+            android:name=".ui.ValidateInvisibleViewsActivity"
+            android:label="@string/title_activity_validate_invisible_views" />
     </application>
 
 </manifest>

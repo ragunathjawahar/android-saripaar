@@ -13,6 +13,7 @@
     <string name="title_activity_quick_rule_only_controller">Quick Rule Controller</string>
     <string name="title_activity_confirm_password">Confirm Password</string>
     <string name="title_activity_remove_rules">Remove Rules</string>
+    <string name="title_activity_validate_invisible_views">Invisible Views</string>
 
     <string name="burst">BURST</string>
     <string name="immediate">IMMEDIATE</string>

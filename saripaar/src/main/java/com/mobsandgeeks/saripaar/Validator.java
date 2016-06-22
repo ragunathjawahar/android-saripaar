@@ -142,6 +142,7 @@ public class Validator {
     private ValidationContext mValidationContext;
     private Map<View, ArrayList<Pair<Rule, ViewDataAdapter>>> mViewRulesMap;
     private boolean mOrderedFields;
+    private boolean mValidateInvisibleViews;
     private SequenceComparator mSequenceComparator;
     private ViewValidatedAction mViewValidatedAction;
     private Handler mViewValidatedActionHandler;
@@ -283,6 +284,15 @@ public class Validator {
      */
     public Mode getValidationMode() {
         return mValidationMode;
+    }
+
+    /**
+     * Configures the validator to validate invisible views.
+     *
+     * @param validate  {@code true} includes invisible views during validation.
+     */
+    public void validateInvisibleViews(final boolean validate) {
+        this.mValidateInvisibleViews = validate;
     }
 
     /**
@@ -753,7 +763,7 @@ public class Validator {
             for (int i = 0; i < nRules; i++) {
 
                 // Validate only views that are visible and enabled
-                if (view.isShown() && view.isEnabled()) {
+                if ((view.isShown() || mValidateInvisibleViews) && view.isEnabled()) {
                     Pair<Rule, ViewDataAdapter> ruleAdapterPair = ruleAdapterPairs.get(i);
                     Rule failedRule = validateViewWithRule(
                             view, ruleAdapterPair.first, ruleAdapterPair.second);
