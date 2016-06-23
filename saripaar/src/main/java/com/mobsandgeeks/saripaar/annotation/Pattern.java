@@ -31,7 +31,8 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
 public @interface Pattern {
-    String regex();
+    @StringRes int regexResId()     default -1;
+    String regex()                  default ".*";
     boolean caseSensitive()         default true;
 
     @StringRes int messageResId()   default -1;

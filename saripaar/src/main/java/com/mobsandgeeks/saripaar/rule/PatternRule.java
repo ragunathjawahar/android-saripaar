@@ -14,7 +14,8 @@
 
 package com.mobsandgeeks.saripaar.rule;
 
-import com.mobsandgeeks.saripaar.AnnotationRule;
+import com.mobsandgeeks.saripaar.ContextualAnnotationRule;
+import com.mobsandgeeks.saripaar.ValidationContext;
 import com.mobsandgeeks.saripaar.annotation.Pattern;
 
 import commons.validator.routines.RegexValidator;
@@ -23,15 +24,17 @@ import commons.validator.routines.RegexValidator;
  * @author Ragunath Jawahar {@literal <rj@mobsandgeeks.com>}
  * @since 2.0
  */
-public class PatternRule extends AnnotationRule<Pattern, String> {
+public class PatternRule extends ContextualAnnotationRule<Pattern, String> {
 
-    protected PatternRule(final Pattern pattern) {
-        super(pattern);
+    protected PatternRule(final ValidationContext validationContext, final Pattern pattern) {
+        super(validationContext, pattern);
     }
 
     @Override
     public boolean isValid(final String text) {
-        String regex = mRuleAnnotation.regex();
+        int regexResId = mRuleAnnotation.regexResId();
+        String regex = regexResId != -1
+                ? mValidationContext.getContext().getString(regexResId) : mRuleAnnotation.regex();
         boolean caseSensitive = mRuleAnnotation.caseSensitive();
         return new RegexValidator(regex, caseSensitive).isValid(text);
     }
