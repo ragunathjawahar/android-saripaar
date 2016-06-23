@@ -14,6 +14,8 @@
 
 package com.mobsandgeeks.saripaar.annotation;
 
+import android.support.annotation.StringRes;
+
 import com.mobsandgeeks.saripaar.rule.DigitsRule;
 
 import java.lang.annotation.ElementType;
@@ -30,9 +32,9 @@ import java.lang.annotation.Target;
 @Target(ElementType.FIELD)
 public @interface Digits {
     int integer();
-    int fraction()      default 2;
+    int fraction()                  default 2;
 
-    int sequence()      default -1;
-    int messageResId()  default -1;
-    String message()    default "Should be a digit";
+    @StringRes int messageResId()   default -1;
+    String message()                default "Should be a digit";
+    int sequence()                  default -1;
 }

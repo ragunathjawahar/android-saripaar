@@ -14,6 +14,8 @@
 
 package com.mobsandgeeks.saripaar.annotation;
 
+import android.support.annotation.StringRes;
+
 import com.mobsandgeeks.saripaar.DateFormats;
 import com.mobsandgeeks.saripaar.rule.PastRule;
 
@@ -30,10 +32,10 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
 public @interface Past {
-    String dateFormat()     default DateFormats.DMY;
-    int dateFormatResId()   default -1;
+    @StringRes int dateFormatResId()    default -1;
+    String dateFormat()                 default DateFormats.DMY;
 
-    int sequence()          default -1;
-    int messageResId()      default -1;
-    String message()        default "Date should be in the past";
+    @StringRes int messageResId()       default -1;
+    String message()                    default "Date should be in the past";
+    int sequence()                      default -1;
 }

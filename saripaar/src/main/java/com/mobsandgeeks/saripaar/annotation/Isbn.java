@@ -14,6 +14,8 @@
 
 package com.mobsandgeeks.saripaar.annotation;
 
+import android.support.annotation.StringRes;
+
 import com.mobsandgeeks.saripaar.rule.IsbnRule;
 
 import java.lang.annotation.ElementType;
@@ -29,7 +31,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
 public @interface Isbn {
-    int sequence()      default -1;
-    int messageResId()  default -1;
-    String message()    default "Invalid ISBN";
+    @StringRes int messageResId()   default -1;
+    String message()                default "Invalid ISBN";
+    int sequence()                  default -1;
 }

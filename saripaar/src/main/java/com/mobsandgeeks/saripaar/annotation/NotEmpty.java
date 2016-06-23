@@ -14,6 +14,8 @@
 
 package com.mobsandgeeks.saripaar.annotation;
 
+import android.support.annotation.StringRes;
+
 import com.mobsandgeeks.saripaar.rule.NotEmptyRule;
 
 import java.lang.annotation.ElementType;
@@ -29,11 +31,11 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
 public @interface NotEmpty {
-    boolean trim()          default false;
-    String emptyText()      default "";
-    int emptyTextResId()    default -1;
+    @StringRes int emptyTextResId() default -1;
+    String emptyText()              default "";
+    boolean trim()                  default false;
 
-    int sequence()          default -1;
-    int messageResId()      default -1;
-    String message()        default "This field is required";
+    @StringRes int messageResId()   default -1;
+    String message()                default "This field is required";
+    int sequence()                  default -1;
 }

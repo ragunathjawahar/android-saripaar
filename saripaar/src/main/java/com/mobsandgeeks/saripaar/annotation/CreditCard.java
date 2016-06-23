@@ -14,6 +14,8 @@
 
 package com.mobsandgeeks.saripaar.annotation;
 
+import android.support.annotation.StringRes;
+
 import com.mobsandgeeks.saripaar.rule.CreditCardRule;
 
 import java.lang.annotation.ElementType;
@@ -31,12 +33,12 @@ import java.lang.annotation.Target;
 public @interface CreditCard {
     Type[] cardTypes()  default {
         Type.AMEX, Type.DINERS, Type.DISCOVER,
-        Type.MASTERCARD, Type.VISA,
+        Type.MASTERCARD, Type.VISA
     };
 
-    int sequence()      default -1;
-    int messageResId()  default -1;
-    String message()    default "Invalid card";
+    @StringRes int messageResId()   default -1;
+    String message()                default "Invalid card";
+    int sequence()                  default -1;
 
     enum Type {
         AMEX, DINERS, DISCOVER, MASTERCARD, VISA, NONE

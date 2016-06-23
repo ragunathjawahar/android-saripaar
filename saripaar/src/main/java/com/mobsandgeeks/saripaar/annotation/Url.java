@@ -14,6 +14,8 @@
 
 package com.mobsandgeeks.saripaar.annotation;
 
+import android.support.annotation.StringRes;
+
 import com.mobsandgeeks.saripaar.rule.UrlRule;
 
 import java.lang.annotation.ElementType;
@@ -29,10 +31,10 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
 public @interface Url {
-    String[] schemes()          default { "http", "https", "ftp" };
-    boolean allowFragments()    default true;
+    String[] schemes()              default { "http", "https", "ftp" };
+    boolean allowFragments()        default true;
 
-    int sequence()              default -1;
-    int messageResId()          default -1;
-    String message()            default "Invalid URL";
+    @StringRes int messageResId()   default -1;
+    String message()                default "Invalid URL";
+    int sequence()                  default -1;
 }

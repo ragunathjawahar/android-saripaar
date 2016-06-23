@@ -14,6 +14,8 @@
 
 package com.mobsandgeeks.saripaar.annotation;
 
+import android.support.annotation.StringRes;
+
 import com.mobsandgeeks.saripaar.rule.CheckedRule;
 
 import java.lang.annotation.ElementType;
@@ -29,9 +31,9 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
 public @interface Checked {
-    boolean value()     default true;
+    boolean value()                 default true;
 
-    int sequence()      default -1;
-    int messageResId()  default -1;
-    String message()    default "Must be checked";
+    @StringRes int messageResId()   default -1;
+    String message()                default "Must be checked";
+    int sequence()                  default -1;
 }

@@ -14,6 +14,8 @@
 
 package com.mobsandgeeks.saripaar.annotation;
 
+import android.support.annotation.StringRes;
+
 import com.mobsandgeeks.saripaar.rule.MaxRule;
 
 import java.lang.annotation.ElementType;
@@ -31,7 +33,7 @@ import java.lang.annotation.Target;
 public @interface Max {
     int value();
 
-    int sequence()      default -1;
-    int messageResId()  default -1;
-    String message()    default "Should be less than max value";
+    @StringRes int messageResId()   default -1;
+    String message()                default "Should be less than max value";
+    int sequence()                  default -1;
 }

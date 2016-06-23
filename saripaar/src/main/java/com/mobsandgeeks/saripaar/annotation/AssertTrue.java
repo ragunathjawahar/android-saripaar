@@ -14,6 +14,8 @@
 
 package com.mobsandgeeks.saripaar.annotation;
 
+import android.support.annotation.StringRes;
+
 import com.mobsandgeeks.saripaar.rule.AssertTrueRule;
 
 import java.lang.annotation.ElementType;
@@ -29,7 +31,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
 public @interface AssertTrue {
-    int sequence()      default -1;
-    int messageResId()  default -1;
-    String message()    default "Should be true";
+    @StringRes int messageResId()   default -1;
+    String message()                default "Should be true";
+    int sequence()                  default -1;
 }
