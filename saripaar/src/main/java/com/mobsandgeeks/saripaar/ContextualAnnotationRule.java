@@ -31,12 +31,11 @@ public abstract class ContextualAnnotationRule<RULE_ANNOTATION extends Annotatio
     /**
      * Constructor. All subclasses MUST have a constructor with the same signature.
      *
-     * @param validationContext  A {@link com.mobsandgeeks.saripaar.ValidationContext}.
-     * @param ruleAnnotation  The rule {@link java.lang.annotation.Annotation} instance to which
-     *      this rule is paired.
+     * @param ruleAnnotation  The rule {@link Annotation} instance to which this rule is paired.
+     * @param validationContext  A {@link ValidationContext}.
      */
-    protected ContextualAnnotationRule(final ValidationContext validationContext,
-            final RULE_ANNOTATION ruleAnnotation) {
+    protected ContextualAnnotationRule(final RULE_ANNOTATION ruleAnnotation,
+            final ValidationContext validationContext) {
         super(ruleAnnotation);
         if (validationContext == null) {
             throw new IllegalArgumentException("'validationContext' cannot be null.");

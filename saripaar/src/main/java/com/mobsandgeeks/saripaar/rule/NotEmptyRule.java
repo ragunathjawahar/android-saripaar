@@ -27,7 +27,7 @@ import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 public class NotEmptyRule extends ContextualAnnotationRule<NotEmpty, String> {
 
     protected NotEmptyRule(final ValidationContext validationContext, final NotEmpty notEmpty) {
-        super(validationContext, notEmpty);
+        super(notEmpty, validationContext);
     }
 
     @Override

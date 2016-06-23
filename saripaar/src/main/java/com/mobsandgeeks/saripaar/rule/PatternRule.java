@@ -27,7 +27,7 @@ import commons.validator.routines.RegexValidator;
 public class PatternRule extends ContextualAnnotationRule<Pattern, String> {
 
     protected PatternRule(final ValidationContext validationContext, final Pattern pattern) {
-        super(validationContext, pattern);
+        super(pattern, validationContext);
     }
 
     @Override
