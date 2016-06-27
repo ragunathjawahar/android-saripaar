@@ -59,7 +59,7 @@ final class SaripaarFieldsComparator implements Comparator<Field> {
      *
      * @return true if all the fields are ordered, false otherwise.
      */
-    public boolean areOrderedFields() {
+    boolean areOrderedFields() {
         return mOrderedFields;
     }
 }

@@ -45,7 +45,7 @@ final class Reflector {
      * @return The {@link java.lang.reflect.Method} if the attribute is present,
      *      null otherwise.
      */
-    public static Method getAttributeMethod(final Class<? extends Annotation> annotationType,
+    static Method getAttributeMethod(final Class<? extends Annotation> annotationType,
             final String attributeName) {
         Method attributeMethod = null;
         try {
@@ -67,7 +67,7 @@ final class Reflector {
      * @return The attribute value.
      */
     @SuppressWarnings("unchecked")
-    public static <T> T getAttributeValue(final Annotation annotation, final String attributeName,
+    static <T> T getAttributeValue(final Annotation annotation, final String attributeName,
             final Class<T> attributeDataType) {
 
         T attributeValue = null;
@@ -102,7 +102,7 @@ final class Reflector {
      *
      * @return true if the annotation is present, false otherwise.
      */
-    public static boolean isAnnotated(final Class<? extends Annotation> inspected,
+    static boolean isAnnotated(final Class<? extends Annotation> inspected,
             final Class<? extends Annotation> expected) {
         boolean isAnnotated = false;
         Annotation[] declaredAnnotations = inspected.getDeclaredAnnotations();
@@ -125,7 +125,7 @@ final class Reflector {
      *
      * @return The correct {@code getData(View)} method.
      */
-    public static Method findGetDataMethod(final Class<? extends ViewDataAdapter> dataAdapterType) {
+    static Method findGetDataMethod(final Class<? extends ViewDataAdapter> dataAdapterType) {
         Method getDataMethod = null;
         Method[] declaredMethods = dataAdapterType.getDeclaredMethods();
 
@@ -165,7 +165,7 @@ final class Reflector {
      *      have a single-argument constructor that accepts a rule
      *      {@link java.lang.annotation.Annotation} instance.
      */
-    public static AnnotationRule instantiateRule(final Class<? extends AnnotationRule> ruleType,
+    static AnnotationRule instantiateRule(final Class<? extends AnnotationRule> ruleType,
             final Annotation ruleAnnotation, final ValidationContext validationContext)
                     throws SaripaarViolationException {
         AnnotationRule rule = null;
@@ -206,7 +206,7 @@ final class Reflector {
      * @return The expected data type for the
      *      {@link com.mobsandgeeks.saripaar.adapter.ViewDataAdapter}s.
      */
-    public static Class<?> getRuleDataType(final Annotation ruleAnnotation) {
+    static Class<?> getRuleDataType(final Annotation ruleAnnotation) {
         ValidateUsing validateUsing = getValidateUsingAnnotation(ruleAnnotation.annotationType());
         return getRuleDataType(validateUsing);
     }
@@ -221,7 +221,7 @@ final class Reflector {
      * @return The expected data type for the
      *      {@link com.mobsandgeeks.saripaar.adapter.ViewDataAdapter}s.
      */
-    public static Class<?> getRuleDataType(final ValidateUsing validateUsing) {
+    static Class<?> getRuleDataType(final ValidateUsing validateUsing) {
         Class<? extends AnnotationRule> rule = validateUsing.value();
         Method[] methods = rule.getDeclaredMethods();
         return getRuleTypeFromIsValidMethod(rule, methods);

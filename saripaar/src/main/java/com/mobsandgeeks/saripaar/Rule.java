@@ -27,7 +27,7 @@ import android.content.Context;
  * @since 1.0
  */
 public abstract class Rule<VALIDATABLE> {
-    protected final int mSequence;
+    private final int mSequence;
 
     /**
      * Constructor.

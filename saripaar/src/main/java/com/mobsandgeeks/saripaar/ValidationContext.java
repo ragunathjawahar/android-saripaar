@@ -37,7 +37,7 @@ import java.util.Set;
 public class ValidationContext {
 
     // Attributes
-    Map<View, ArrayList<Pair<Rule, ViewDataAdapter>>> mViewRulesMap;
+    private Map<View, ArrayList<Pair<Rule, ViewDataAdapter>>> mViewRulesMap;
     private Context mContext;
 
     ValidationContext(final Context context) {

@@ -50,7 +50,7 @@ import java.util.Set;
  */
 final class Registry {
     // Constants
-    public static final String TAG = "Registry";
+    private static final String TAG = "Registry";
 
     // Stock adapters that come with Saripaar
     private static final Map<Class<? extends View>,
@@ -80,7 +80,7 @@ final class Registry {
      *      on {@link android.widget.TextView}s.
      */
     @SuppressWarnings("unchecked")
-    public void register(final Class<? extends Annotation>... ruleAnnotations) {
+    void register(final Class<? extends Annotation>... ruleAnnotations) {
         for (Class<? extends Annotation> ruleAnnotation : ruleAnnotations) {
             assertIsValidRuleAnnotation(ruleAnnotation);
 
@@ -121,7 +121,7 @@ final class Registry {
      * @param <DATA_TYPE>  Data type expected by the {@link AnnotationRule} and
      *      is returned by the {@link com.mobsandgeeks.saripaar.adapter.ViewDataAdapter}.
      */
-    public <VIEW extends View, DATA_TYPE> void register(
+    <VIEW extends View, DATA_TYPE> void register(
             final Class<VIEW> viewType,
             final Class<DATA_TYPE> ruleDataType,
             final ViewDataAdapter<VIEW, DATA_TYPE> viewDataAdapter,
@@ -140,7 +140,7 @@ final class Registry {
      * @return {@link java.util.Set} containing all registered rule
      *      {@link java.lang.annotation.Annotation}s.
      */
-    public Set<Class<? extends Annotation>> getRegisteredAnnotations() {
+    Set<Class<? extends Annotation>> getRegisteredAnnotations() {
         return mMappings.keySet();
     }
 
@@ -161,7 +161,7 @@ final class Registry {
      *      found.
      */
     @SuppressWarnings("unchecked")
-    public <VIEW extends View> ViewDataAdapter<VIEW, ?> getDataAdapter(
+    <VIEW extends View> ViewDataAdapter<VIEW, ?> getDataAdapter(
             final Class< ? extends Annotation> annotationType,
             final Class<VIEW> viewType) {
 

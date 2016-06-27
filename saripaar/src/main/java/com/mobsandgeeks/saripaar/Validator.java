@@ -945,12 +945,12 @@ public class Validator {
         }
     }
 
-    class AsyncValidationTask extends AsyncTask<Void, Void, ValidationReport> {
+    private class AsyncValidationTask extends AsyncTask<Void, Void, ValidationReport> {
         private View mView;
         private boolean mOrderedRules;
         private String mReasonSuffix;
 
-        public AsyncValidationTask(final View view, final boolean orderedRules,
+        AsyncValidationTask(final View view, final boolean orderedRules,
                 final String reasonSuffix) {
             this.mView = view;
             this.mOrderedRules = orderedRules;
