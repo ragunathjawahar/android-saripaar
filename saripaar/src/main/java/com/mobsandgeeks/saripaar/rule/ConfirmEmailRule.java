@@ -24,9 +24,9 @@ import com.mobsandgeeks.saripaar.annotation.Email;
  */
 public class ConfirmEmailRule extends SameValueContextualRule<ConfirmEmail, Email, String> {
 
-    protected ConfirmEmailRule(final ValidationContext validationContext,
-            final ConfirmEmail confirmEmail) {
-        super(validationContext, confirmEmail, Email.class);
+    protected ConfirmEmailRule(final ConfirmEmail confirmEmail,
+            final ValidationContext validationContext) {
+        super(confirmEmail, Email.class, validationContext);
     }
 
     @Override

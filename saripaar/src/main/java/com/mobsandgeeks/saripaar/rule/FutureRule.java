@@ -31,7 +31,7 @@ import java.util.Date;
  */
 public class FutureRule extends ContextualAnnotationRule<Future, String> {
 
-    protected FutureRule(final ValidationContext validationContext, final Future future) {
+    protected FutureRule(final Future future, final ValidationContext validationContext) {
         super(future, validationContext);
     }
 

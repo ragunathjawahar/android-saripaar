@@ -173,9 +173,9 @@ final class Reflector {
         try {
             if (ContextualAnnotationRule.class.isAssignableFrom(ruleType)) {
                 Constructor<?> constructor = ruleType.getDeclaredConstructor(
-                        ValidationContext.class, ruleAnnotation.annotationType());
+                        ruleAnnotation.annotationType(), ValidationContext.class);
                 constructor.setAccessible(true);
-                rule = (AnnotationRule) constructor.newInstance(validationContext, ruleAnnotation);
+                rule = (AnnotationRule) constructor.newInstance(ruleAnnotation, validationContext);
             } else if (AnnotationRule.class.isAssignableFrom(ruleType)) {
                 Constructor<?> constructor = ruleType.getDeclaredConstructor(
                         ruleAnnotation.annotationType());
@@ -252,8 +252,8 @@ final class Reflector {
         String message = null;
         if (ContextualAnnotationRule.class.isAssignableFrom(ruleType)) {
             message = String.format("A constructor accepting a '%s' and a '%s' is required for %s.",
-                    ValidationContext.class, annotationType.getName(),
-                    ruleType.getClass().getName());
+                    annotationType.getName(), ValidationContext.class,
+                    ruleType.getName());
         } else if (AnnotationRule.class.isAssignableFrom(ruleType)) {
             message = String.format(
                     "'%s' should have a single-argument constructor that accepts a '%s' instance.",

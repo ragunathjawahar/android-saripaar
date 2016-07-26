@@ -31,7 +31,7 @@ import java.util.Date;
  */
 public class PastRule extends ContextualAnnotationRule<Past, String> {
 
-    protected PastRule(final ValidationContext validationContext, final Past past) {
+    protected PastRule(final Past past, final ValidationContext validationContext) {
         super(past, validationContext);
     }
 
