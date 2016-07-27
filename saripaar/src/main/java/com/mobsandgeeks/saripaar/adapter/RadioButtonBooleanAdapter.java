@@ -16,6 +16,8 @@ package com.mobsandgeeks.saripaar.adapter;
 
 import android.widget.RadioButton;
 
+import java.lang.annotation.Annotation;
+
 /**
  * Adapter that returns a {@link java.lang.Boolean} value from a {@link android.widget.RadioButton}.
  *
@@ -27,5 +29,11 @@ public class RadioButtonBooleanAdapter implements ViewDataAdapter<RadioButton, B
     @Override
     public Boolean getData(final RadioButton radioButton) {
         return radioButton.isChecked();
+    }
+
+    @Override
+    public <T extends Annotation> boolean containsOptionalValue(final RadioButton radioButton,
+            final T ruleAnnotation) {
+        return !radioButton.isChecked();
     }
 }

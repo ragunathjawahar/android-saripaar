@@ -25,12 +25,12 @@ import com.mobsandgeeks.saripaar.exception.ConversionException;
  * @author Ragunath Jawahar {@literal <rj@mobsandgeeks.com>}
  * @since 2.0
  */
-public class TextViewIntegerAdapter implements ViewDataAdapter<TextView, Integer> {
+public class TextViewIntegerAdapter extends TextViewBaseAdapter<Integer> {
     private static final String REGEX_INTEGER = "\\d+";
 
     @Override
-    public Integer getData(final TextView editText) throws ConversionException {
-        String integerString = editText.getText().toString().trim();
+    public Integer getData(final TextView textView) throws ConversionException {
+        String integerString = textView.getText().toString().trim();
         if (!integerString.matches(REGEX_INTEGER)) {
             String message = String.format("Expected an integer, but was %s", integerString);
             throw new ConversionException(message);

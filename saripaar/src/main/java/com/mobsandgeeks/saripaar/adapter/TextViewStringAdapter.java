@@ -23,10 +23,10 @@ import android.widget.TextView;
  * @author Ragunath Jawahar {@literal <rj@mobsandgeeks.com>}
  * @since 2.0
  */
-public class TextViewStringAdapter implements ViewDataAdapter<TextView, String> {
+public class TextViewStringAdapter extends TextViewBaseAdapter<String> {
 
     @Override
-    public String getData(final TextView editText) {
-        return editText.getText().toString();
+    public String getData(final TextView textView) {
+        return textView.getText().toString();
     }
 }

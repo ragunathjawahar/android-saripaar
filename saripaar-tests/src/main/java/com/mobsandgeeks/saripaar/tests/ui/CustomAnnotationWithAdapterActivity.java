@@ -30,6 +30,7 @@ import com.mobsandgeeks.saripaar.exception.ConversionException;
 import com.mobsandgeeks.saripaar.tests.R;
 import com.mobsandgeeks.saripaar.tests.ui.validation.To;
 
+import java.lang.annotation.Annotation;
 import java.util.List;
 
 /**
@@ -103,6 +104,12 @@ public class CustomAnnotationWithAdapterActivity extends Activity
         @Override
         public Integer getData(final SeekBar seekBar) throws ConversionException {
             return seekBar.getProgress();
+        }
+
+        @Override
+        public <T extends Annotation> boolean containsOptionalValue(
+                final SeekBar view, final T ruleAnnotation) {
+            return false;
         }
     }
 

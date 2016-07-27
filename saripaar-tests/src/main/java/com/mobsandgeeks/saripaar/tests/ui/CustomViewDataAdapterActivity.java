@@ -30,6 +30,7 @@ import com.mobsandgeeks.saripaar.exception.ConversionException;
 import com.mobsandgeeks.saripaar.tests.R;
 import com.wrapp.floatlabelededittext.FloatLabeledEditText;
 
+import java.lang.annotation.Annotation;
 import java.util.List;
 
 /**
@@ -99,6 +100,12 @@ public class CustomViewDataAdapterActivity extends Activity
                     public Boolean getData(FloatLabeledEditText flet) throws ConversionException {
                         String booleanText = flet.getEditText().getText().toString().trim();
                         return Boolean.parseBoolean(booleanText);
+                    }
+
+                    @Override
+                    public <T extends Annotation> boolean containsOptionalValue(
+                            final FloatLabeledEditText editText, final T ruleAnnotation) {
+                        return false;
                     }
                 }
             );

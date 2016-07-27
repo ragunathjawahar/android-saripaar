@@ -74,6 +74,9 @@
         <activity
             android:name=".ui.ValidateInvisibleViewsActivity"
             android:label="@string/title_activity_validate_invisible_views" />
+        <activity
+            android:name=".ui.OptionalActivity"
+            android:label="@string/title_activity_optional" />
     </application>
 
 </manifest>

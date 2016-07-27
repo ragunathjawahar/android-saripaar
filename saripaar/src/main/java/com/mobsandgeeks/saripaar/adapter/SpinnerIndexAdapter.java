@@ -16,6 +16,10 @@ package com.mobsandgeeks.saripaar.adapter;
 
 import android.widget.Spinner;
 
+import com.mobsandgeeks.saripaar.annotation.Select;
+
+import java.lang.annotation.Annotation;
+
 /**
  * Adapter that returns the current selection index from a {@link android.widget.Spinner} using the
  * {@link android.widget.Spinner#getSelectedItemPosition()} method.
@@ -28,5 +32,14 @@ public class SpinnerIndexAdapter implements ViewDataAdapter<Spinner, Integer> {
     @Override
     public Integer getData(final Spinner spinner) {
         return spinner.getSelectedItemPosition();
+    }
+
+    @Override
+    public <T extends Annotation> boolean containsOptionalValue(final Spinner spinner,
+            final T ruleAnnotation) {
+        int selection = spinner.getSelectedItemPosition();
+
+        return ruleAnnotation instanceof Select
+                && selection == ((Select) ruleAnnotation).defaultSelection();
     }
 }

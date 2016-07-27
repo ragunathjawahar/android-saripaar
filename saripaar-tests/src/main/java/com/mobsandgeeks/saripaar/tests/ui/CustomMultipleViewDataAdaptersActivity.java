@@ -32,6 +32,7 @@ import com.mobsandgeeks.saripaar.exception.ConversionException;
 import com.mobsandgeeks.saripaar.tests.R;
 import com.wrapp.floatlabelededittext.FloatLabeledEditText;
 
+import java.lang.annotation.Annotation;
 import java.util.List;
 
 /**
@@ -127,13 +128,19 @@ public class CustomMultipleViewDataAdaptersActivity extends Activity
         public String getData(FloatLabeledEditText flet) throws ConversionException {
             return flet.getEditText().getText().toString();
         }
+
+        @Override
+        public <T extends Annotation> boolean containsOptionalValue(
+                final FloatLabeledEditText editText, final T ruleAnnotation) {
+            return false;
+        }
     }
 
     static class FletIntegerAdapter implements ViewDataAdapter<FloatLabeledEditText, Integer> {
 
         @Override
-        public Integer getData(FloatLabeledEditText flet) throws ConversionException {
-            String numberText = flet.getEditText().getText().toString().trim();
+        public Integer getData(FloatLabeledEditText editText) throws ConversionException {
+            String numberText = editText.getEditText().getText().toString().trim();
             int number;
             try {
                 number = Integer.parseInt(numberText);
@@ -144,6 +151,12 @@ public class CustomMultipleViewDataAdaptersActivity extends Activity
             }
 
             return number;
+        }
+
+        @Override
+        public <T extends Annotation> boolean containsOptionalValue(
+                final FloatLabeledEditText editText, final T ruleAnnotation) {
+            return false;
         }
     }
 
