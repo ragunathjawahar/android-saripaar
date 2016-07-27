@@ -16,6 +16,8 @@ package com.mobsandgeeks.saripaar.adapter;
 
 import android.widget.CheckBox;
 
+import java.lang.annotation.Annotation;
+
 /**
  * Adapter returns a {@link java.lang.Boolean} value from a {@link android.widget.CheckBox}.
  *
@@ -27,5 +29,11 @@ public class CheckBoxBooleanAdapter implements ViewDataAdapter<CheckBox, Boolean
     @Override
     public Boolean getData(final CheckBox checkBox) {
         return checkBox.isChecked();
+    }
+
+    @Override
+    public <T extends Annotation> boolean containsOptionalValue(final CheckBox checkBox,
+            final T ruleAnnotation) {
+        return !checkBox.isChecked();
     }
 }

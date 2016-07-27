@@ -18,6 +18,8 @@ import android.view.View;
 
 import com.mobsandgeeks.saripaar.exception.ConversionException;
 
+import java.lang.annotation.Annotation;
+
 /**
  * {@link com.mobsandgeeks.saripaar.adapter.ViewDataAdapter}s are used to extract data from
  * {@link android.view.View}s. Saripaar provides a set of default adapters for stock Android
@@ -41,4 +43,15 @@ public interface ViewDataAdapter<VIEW extends View, DATA> {
      *      data type.
      */
     DATA getData(VIEW view) throws ConversionException;
+
+    /**
+     * Used to check if the {@link View} contains an optional value. This method is used
+     * to cater the {@link com.mobsandgeeks.saripaar.annotation.Optional} annotation.
+     *
+     * @param view  The view that is being validated.
+     * @param <T>  The rule annotation used to validate the view.
+     *
+     * @return  {@code true} if the value represents an optional value, {@code false} otherwise.
+     */
+    <T extends Annotation> boolean containsOptionalValue(VIEW view, T ruleAnnotation);
 }

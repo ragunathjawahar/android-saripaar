@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015 Mobs & Geeks
+ * Copyright (C) 2016 Mobs & Geeks
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file
  * except in compliance with the License. You may obtain a copy of the License at
@@ -15,29 +15,22 @@
 package com.mobsandgeeks.saripaar.adapter;
 
 import android.view.View;
-import android.widget.RadioGroup;
-
-import com.mobsandgeeks.saripaar.exception.ConversionException;
+import android.widget.TextView;
 
 import java.lang.annotation.Annotation;
 
-
 /**
- * Adapter that returns a {@link java.lang.Boolean} value from a {@link android.widget.RadioGroup}.
+ * A base class that implements the {@link #containsOptionalValue(View, Annotation)} method for concrete
+ * {@link TextView} adapters.
  *
  * @author Ragunath Jawahar {@literal <rj@mobsandgeeks.com>}
- * @since 2.0
+ * @since 2.1.0
  */
-public class RadioGroupBooleanAdapter implements ViewDataAdapter<RadioGroup, Boolean> {
+abstract class TextViewBaseAdapter<DATA> implements ViewDataAdapter<TextView, DATA> {
 
     @Override
-    public Boolean getData(RadioGroup radioGroup) throws ConversionException {
-        return radioGroup.getCheckedRadioButtonId() != View.NO_ID;
-    }
-
-    @Override
-    public <T extends Annotation> boolean containsOptionalValue(final RadioGroup radioGroup,
-            final T ruleAnnotation) {
-        return radioGroup.getCheckedRadioButtonId() == View.NO_ID;
+    public <T extends Annotation> boolean containsOptionalValue(final TextView textView,
+            final T annotation) {
+        return "".equals(textView.getText().toString());
     }
 }

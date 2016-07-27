@@ -25,12 +25,12 @@ import com.mobsandgeeks.saripaar.exception.ConversionException;
  * @author Ragunath Jawahar {@literal <rj@mobsandgeeks.com>}
  * @since 2.0
  */
-public class TextViewFloatAdapter implements ViewDataAdapter<TextView, Float> {
+public class TextViewFloatAdapter extends TextViewBaseAdapter<Float> {
     private static final String REGEX_DECIMAL = "[-+]?[0-9]*\\.?[0-9]+([eE][-+]?[0-9]+)?";
 
     @Override
-    public Float getData(final TextView editText) throws ConversionException {
-        String floatString = editText.getText().toString().trim();
+    public Float getData(final TextView textView) throws ConversionException {
+        String floatString = textView.getText().toString().trim();
         if (!floatString.matches(REGEX_DECIMAL)) {
             String message = String.format("Expected a floating point number, but was %s",
                 floatString);
