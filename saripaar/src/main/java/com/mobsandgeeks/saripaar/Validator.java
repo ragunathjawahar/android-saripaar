@@ -126,7 +126,7 @@ import java.util.Set;
  * @author Ragunath Jawahar {@literal <rj@mobsandgeeks.com>}
  * @since 1.0
  */
-@SuppressWarnings("unchecked")
+@SuppressWarnings({ "unchecked", "ForLoopReplaceableByForEach" })
 public class Validator {
 
     // Entries are registered inside a static block (Placed at the end of source)
@@ -445,7 +445,8 @@ public class Validator {
                 ? new ArrayList<Pair<Rule, ViewDataAdapter>>() : ruleAdapterPairs;
 
         // Add the quick rule to existing rules
-        for (QuickRule quickRule : quickRules) {
+        for (int i = 0, n = quickRules.length; i < n; i++) {
+            QuickRule quickRule = quickRules[i];
             if (quickRule != null) {
                 ruleAdapterPairs.add(new Pair(quickRule, null));
             }
@@ -505,7 +506,8 @@ public class Validator {
 
         List<Field> annotatedFields = new ArrayList<Field>();
         List<Field> controllerViewFields = getControllerViewFields(controllerClass);
-        for (Field field : controllerViewFields) {
+        for (int i = 0, n = controllerViewFields.size(); i < n; i++) {
+            Field field = controllerViewFields.get(i);
             if (isSaripaarAnnotatedField(field, saripaarAnnotations)) {
                 annotatedFields.add(field);
             }
@@ -543,7 +545,8 @@ public class Validator {
     private List<Field> getViewFields(final Class<?> clazz) {
         List<Field> viewFields = new ArrayList<Field>();
         Field[] declaredFields = clazz.getDeclaredFields();
-        for (Field field : declaredFields) {
+        for (int i = 0, n = declaredFields.length; i < n; i++) {
+            Field field = declaredFields[i];
             if (View.class.isAssignableFrom(field.getType())) {
                 viewFields.add(field);
             }
@@ -559,7 +562,8 @@ public class Validator {
 
         if (!hasOrderAnnotation) {
             Annotation[] annotations = field.getAnnotations();
-            for (Annotation annotation : annotations) {
+            for (int i = 0, n = annotations.length; i < n; i++) {
+                Annotation annotation = annotations[i];
                 hasSaripaarAnnotation = registeredAnnotations.contains(annotation.annotationType());
                 if (hasSaripaarAnnotation) {
                     break;
@@ -577,7 +581,8 @@ public class Validator {
                 new LinkedHashMap<View, ArrayList<Pair<Rule, ViewDataAdapter>>>();
 
         View view;
-        for (Field field : annotatedFields) {
+        for (int i = 0, n = annotatedFields.size(); i < n; i++) {
+            Field field = annotatedFields.get(i);
             final ArrayList<Pair<Rule, ViewDataAdapter>> ruleAdapterPairs =
                     new ArrayList<Pair<Rule, ViewDataAdapter>>();
             final Annotation[] fieldAnnotations = field.getAnnotations();
@@ -590,10 +595,11 @@ public class Validator {
             }
 
             view = getView(field);
-            for (Annotation fieldAnnotation : fieldAnnotations) {
-                if (isSaripaarAnnotation(fieldAnnotation.annotationType())) {
+            for (int j = 0, nAnnotations = fieldAnnotations.length; j < nAnnotations; j++) {
+                Annotation annotation = fieldAnnotations[j];
+                if (isSaripaarAnnotation(annotation.annotationType())) {
                     Pair<Rule, ViewDataAdapter> ruleAdapterPair =
-                            getRuleAdapterPair(fieldAnnotation, field);
+                            getRuleAdapterPair(annotation, field);
                     ruleAdapterPairs.add(ruleAdapterPair);
 
                     // @Optional
@@ -603,7 +609,7 @@ public class Validator {
                         if (pairs == null) {
                             pairs = new ArrayList<Pair<Annotation, ViewDataAdapter>>();
                         }
-                        pairs.add(new Pair(fieldAnnotation, ruleAdapterPair.second));
+                        pairs.add(new Pair(annotation, ruleAdapterPair.second));
                         mOptionalViewsMap.put(view, pairs);
                     }
                 }
@@ -618,7 +624,6 @@ public class Validator {
 
     private boolean hasOptionalAnnotation(final Annotation[] annotations) {
         if (annotations != null && annotations.length > 0) {
-            //noinspection ForLoopReplaceableByForEach
             for (int i = 0, n = annotations.length; i < n; i++) {
                 if (Optional.class.equals(annotations[i].annotationType())) {
                     return true;
@@ -791,7 +796,6 @@ public class Validator {
         validation:
         for (View view : views) {
             List<Pair<Rule, ViewDataAdapter>> ruleAdapterPairs = viewRulesMap.get(view);
-            int nRules = ruleAdapterPairs.size();
 
             // @Optional
             boolean isOptional = mOptionalViewsMap != null && mOptionalViewsMap.containsKey(view);
@@ -801,7 +805,7 @@ public class Validator {
 
             // Validate all the rules for the given view.
             List<Rule> failedRules = null;
-            for (int i = 0; i < nRules; i++) {
+            for (int i = 0, nRules = ruleAdapterPairs.size(); i < nRules; i++) {
 
                 // Skip views that are invisible and disabled
                 boolean disabledView = !view.isEnabled();
@@ -922,10 +926,9 @@ public class Validator {
     private View getViewBefore(final View view) {
         ArrayList<View> views = new ArrayList<View>(mViewRulesMap.keySet());
 
-        final int nViews = views.size();
         View currentView;
         View previousView = null;
-        for (int i = 0; i < nViews; i++) {
+        for (int i = 0, n = views.size(); i < n; i++) {
             currentView = views.get(i);
             if (currentView == view) {
                 previousView = i > 0 ? views.get(i - 1) : null;
