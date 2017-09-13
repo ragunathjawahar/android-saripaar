@@ -38,6 +38,7 @@ public class PastRule extends ContextualAnnotationRule<Past, String> {
     @Override
     public boolean isValid(final String dateString) {
         DateFormat dateFormat = getDateFormat();
+	dateFormat.setLenient(false);
         Date parsedDate = null;
         try {
             parsedDate = dateFormat.parse(dateString);
