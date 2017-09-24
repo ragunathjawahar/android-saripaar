@@ -172,6 +172,11 @@ public class Validator {
             Activity activity = ((Fragment) controller).getActivity();
             mValidationContext = new ValidationContext(activity);
         }
+        else if(controller instanceof android.support.v4.app.Fragment){
+            Activity activity = (Activity) ((android.support.v4.app.Fragment) controller).getContext();
+            mValidationContext = new ValidationContext(activity);
+        }
+
         // Else, lazy init ValidationContext in #getRuleAdapterPair(Annotation, Field)
         // or void #put(VIEW, QuickRule<VIEW>) by obtaining a Context from one of the
         // View instances.
