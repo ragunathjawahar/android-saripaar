@@ -40,9 +40,9 @@ public class PasswordRule extends AnnotationRule<Password, String> {
                 put(Password.Scheme.ALPHA_NUMERIC_MIXED_CASE,
                     "(?=.*[a-z])(?=.*[A-Z])(?=.*[\\d]).+");
                 put(Password.Scheme.ALPHA_NUMERIC_SYMBOLS,
-                    "(?=.*[a-zA-Z])(?=.*[\\d])(?=.*([^\\w])).+");
+                    "(?=.*[a-zA-Z])(?=.*[\\d])(?=.*([^\\w]|_)).+");
                 put(Password.Scheme.ALPHA_NUMERIC_MIXED_CASE_SYMBOLS,
-                    "(?=.*[a-z])(?=.*[A-Z])(?=.*[\\d])(?=.*([^\\w])).+");
+                    "(?=.*[a-z])(?=.*[A-Z])(?=.*[\\d])(?=.*([^\\w]|_)).+");
             }};
 
     protected PasswordRule(final Password password) {
