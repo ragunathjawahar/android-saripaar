@@ -12,7 +12,7 @@ android {
     }
     defaultConfig {
         minSdkVersion 8
-        targetSdkVersion 25
+        targetSdkVersion 27
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_6
@@ -31,8 +31,8 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:support-annotations:23.1.1'
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'com.android.support:support-annotations:28.0.0'
 }
 
 apply from: '../gradle-mvn-push.gradle'

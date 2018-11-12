@@ -7,7 +7,7 @@ android {
     defaultConfig {
         applicationId "com.mobsandgeeks.saripaar.tests"
         minSdkVersion 14
-        targetSdkVersion 25
+        targetSdkVersion 27
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -27,10 +27,10 @@ android {
 }
 
 dependencies {
-    compile project(':saripaar')
-    compile 'com.wrapp.floatlabelededittext:library:0.0.5'
-    compile 'com.android.support:support-annotations:23.1.1'
+    implementation project(':saripaar')
+    implementation 'com.wrapp.floatlabelededittext:library:0.0.5'
+    implementation 'com.android.support:support-annotations:28.0.0'
 
-    androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.2'
-    androidTestCompile 'com.android.support.test:testing-support-lib:0.1'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:2.2.2'
+    androidTestImplementation 'com.android.support.test:testing-support-lib:0.1'
 }
