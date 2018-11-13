@@ -2,13 +2,11 @@ language: android
 
 jdk: oraclejdk7
 
-env:
-  matrix:
-    - ANDROID_TARGET=android-19  ANDROID_ABI=armeabi-v7a
-
 android:
   components:
     - build-tools-21.1.1
+    - android-19
+    - sys-img-armeabi-v7a-android-19
 
 notifications:
   email: false
@@ -18,7 +16,7 @@ before_script:
   - chmod +x gradlew
 
   # Create and start emulator
-  - echo no | android create avd --force -n test -t $ANDROID_TARGET --abi $ANDROID_ABI
+  - echo no | android create avd --force -n test -t android-19 --abi armeabi-v7a
   - emulator -avd test -no-skin -no-audio -no-window &
   - adb wait-for-device
   - adb shell input keyevent 82 &
