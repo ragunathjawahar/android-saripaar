@@ -2,7 +2,7 @@ language: android
 
 jdk:
   - oraclejdk8
-  
+
 env:
   matrix:
     - ANDROID_TARGET=android-19  ANDROID_ABI=armeabi-v7a
@@ -12,7 +12,6 @@ android:
     - build-tools-21.1.1
     - android-19
     - sys-img-armeabi-v7a-android-19
-    - extra-android-m2repository
 
 notifications:
   email: false
