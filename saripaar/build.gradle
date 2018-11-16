@@ -1,10 +1,8 @@
-import com.android.builder.core.BuilderConstants
-
 apply plugin: 'com.android.library'
-apply from: '../config/quality.gradle'
-
+apply plugin: 'com.github.dcendents.android-maven'
+group='com.github.KgTeknolojiOSS'
 android {
-    compileSdkVersion Integer.parseInt(project.ANDROID_BUILD_SDK_VERSION)
+    compileSdkVersion 27
     buildToolsVersion project.ANDROID_BUILD_TOOLS_VERSION
 
     lintOptions {
@@ -18,21 +16,11 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_6
         targetCompatibility JavaVersion.VERSION_1_6
     }
-    libraryVariants.all { variant ->
-        def name = variant.buildType.name
-        if (name.equals(BuilderConstants.DEBUG)) {
-            return; // Skip debug builds.
-        }
-        def task = project.tasks.create "jar${name.capitalize()}", Jar
-        task.dependsOn variant.javaCompile
-        task.from variant.javaCompile.destinationDir
-        artifacts.add('archives', task);
-    }
+
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'com.android.support:support-annotations:28.0.0'
+    implementation 'com.android.support:support-annotations:27.1.1'
 }
 
-apply from: '../gradle-mvn-push.gradle'
