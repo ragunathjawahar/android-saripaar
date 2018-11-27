@@ -32,7 +32,7 @@ public class DigitsRule extends AnnotationRule<Digits, String> {
         int integer = mRuleAnnotation.integer();
         int fraction = mRuleAnnotation.fraction();
 
-        String digitsRegex = String.format("(\\d{0,%d})(\\.\\d{1,%d})?", integer, fraction);
+        String digitsRegex = String.format(Locale.US, "(\\d{0,%d})(\\.\\d{1,%d})?", integer, fraction);
         return digits.matches(digitsRegex);
     }
 }
