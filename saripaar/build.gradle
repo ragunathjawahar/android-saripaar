@@ -5,14 +5,14 @@ apply from: '../config/quality.gradle'
 
 android {
     compileSdkVersion Integer.parseInt(project.ANDROID_BUILD_SDK_VERSION)
-    buildToolsVersion project.ANDROID_BUILD_TOOLS_VERSION
+    buildToolsVersion '28.0.3'
 
     lintOptions {
         abortOnError false
     }
     defaultConfig {
         minSdkVersion 8
-        targetSdkVersion 25
+        targetSdkVersion 26
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_6
