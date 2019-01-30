@@ -239,7 +239,7 @@ public class Validator {
 
         // Find adapter's data type
         Method getDataMethod = Reflector.findGetDataMethod(viewDataAdapter.getClass());
-        Class<?> adapterDataType = getDataMethod.getReturnType();
+        Class<?> adapterDataType = (getDataMethod != null) ? getDataMethod.getReturnType() : "";
 
         dataTypeAdapterMap.put(adapterDataType, viewDataAdapter);
     }
