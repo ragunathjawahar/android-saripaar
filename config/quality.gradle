@@ -26,7 +26,7 @@ task findbugs(type: FindBugs) {
 
     reports {
         xml {
-            destination "$project.buildDir/reports/findbugs/findbugs.xml"
+            destination file("$project.buildDir/reports/findbugs/findbugs.xml")
             xml.withMessages true
         }
     }

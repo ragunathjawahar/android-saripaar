@@ -17,6 +17,8 @@ package com.mobsandgeeks.saripaar.rule;
 import com.mobsandgeeks.saripaar.AnnotationRule;
 import com.mobsandgeeks.saripaar.annotation.Digits;
 
+import java.util.Locale;
+
 /**
  * @author Ragunath Jawahar {@literal <rj@mobsandgeeks.com>}
  * @since 2.0
